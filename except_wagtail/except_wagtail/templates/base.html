@@ -18,6 +18,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         {# Global stylesheets #}
+        <link rel="stylesheet" href="{% static 'css/vendor/bulma.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/except_wagtail.css' %}">
         <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
     crossorigin="anonymous">
@@ -30,13 +31,53 @@
     <body class="{% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
 
+        {# Page contents #}
         {% block content %}{% endblock %}
 
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'js/except_wagtail.js' %}"></script>
+        <script src="http://localhost:35729/livereload.js?snipver=1"></script>
 
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
         {% endblock %}
+
+        {# Footer #}
+        <footer class="footer">
+            <div class="container">
+                <div class="columns">
+                    <div class="column">
+                        <h2 class="h2">Quick links</h2>
+                        <ul>
+                            <li><a href="./contact">Contact us</a></li>
+                            <li><a href="./about">About us</a></li>
+                            <li><a href="./work-with-us">Work with us</a></li>
+                            <li><a href="./calendar">Event calendar</a></li>
+                            <li><a href="./news">News</a></li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h2 class="h2">Social media</h2>
+                        <ul>
+                            <li><a href="./facebook">Facebook</a></li>
+                            <li><a href="./twitter">Twitter</a></li>
+                            <li><a href="./linkedin">LinkedIn</a></li>
+                            <li><a href="./youtube">YouTube</a></li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h2 class="h2">Keep in touch</h2>
+                        <ul>
+                            <li><a href="./newsletter">Newsletter</a></li>
+                            <li><a href="./events">Events</a></li>
+                            <li><a href="./rss">RSS</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        {# Disclaimer #}
+        <div class="content has-text-centered"><span class="is-oneliner"><span>2019 © Except Integrated Sustainability B.V. - </span><a href="./privacy">Privacy Policy</a></span></div>
     </body>
 </html>

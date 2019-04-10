@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+
 {% load static %}
 
 {% block content %}
@@ -21,13 +23,72 @@
       </div>
     </section>
 
+    {# Main navigation #}
+    {% include "includes/navbar.html" %}
+
     <div class="spacer"></div>
 
+    {% comment %} 
     <section>
       <article class="container">
         {{ page.body|richtext }}
       </article>
     </section>
+    {% endcomment %}
+
+    {% comment %} {% if page.carousel_items %}
+      {% for carousel_item in page.carousel_items.all %}
+        <p>{{ carousel_item.image.file }}</p>
+      {% endfor %}
+    {% endif %} {% endcomment %}
+
+
+    {% if page.carousel_items %}
+      <section class="section">
+        <div class="carousel is-fullheight" data-count="{{page.carousel_items.all|length}}">
+
+          <div class="carousel-inner">
+            {% for carousel_item in page.carousel_items.all %}
+
+              {% image carousel_item.image width-1000 as carouselimagedata %}
+              <article style="background-image: url({{ carouselimagedata.url }})">
+
+                <div class="container">
+                  {% if carousel_item.title %}
+                    <header>
+                      <h2 class="h2">{{ carousel_item.title }}</h2>
+                    </header>
+                  {% endif %}
+
+                  {% if carousel_item.title %}
+                    <p>{{ carousel_item.caption }}</p>
+                  {% endif %}
+                  
+                  {% if carousel_item.link_page %}
+                    <a href="{{ carousel_item.link_page }}" class="button is-next is-secondary">
+                      {% if carousel_item.link_title %}
+                        {{ carousel_item.link_title }}
+                      {% else %}
+                        More
+                      {% endif %}
+                    </a>
+                  {% endif %}
+                </div>
+              </article>
+            {% endfor %}
+          </div>
+
+          <div class="button is-secondary button-prev">&lt;</div>
+          <div class="button is-secondary button-next">&gt;</div>
+
+          <div class="container">
+            <button class="button has-icon is-primary">
+              <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+    {% endif %}
 
   {% endwith %}
 {% endblock content %}

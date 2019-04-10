@@ -18,6 +18,4 @@ window.addEventListener('scroll', function () {
   $nav.style.filter = `invert(${diff})`;
   $nav.style.transform = `translate(0, -${diff * 30}px)`;
   $logo.style.transform = `scale(${1 - diff / 5})`;
-
-  console.log(diff);
 })

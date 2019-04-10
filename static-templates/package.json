@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "There's no test command mapped yet.",
-    "scss": "sass --watch src/assets/scss/bundle.scss dist/assets/css/bundle.css",
+    "scss": "sass --watch src/assets/scss/bundle.scss ../except_wagtail/except_wagtail/static/css/except_wagtail.css",
     "pug": "pug -P src/templates -w -o dist",
     "serve": "http-server dist",
-    "livereload": "livereload .",
+    "livereload": "livereload ../except_wagtail/",
     "develop": "concurrently --kill-others \"npm run pug\" \"npm run scss\" \"npm run livereload\" \"npm run serve\""
   },
   "author": "GizmoStudios",

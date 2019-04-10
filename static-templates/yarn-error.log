@@ -1,0 +1,56 @@
+Arguments: 
+  /Users/bert/.nvm/versions/node/v8.12.0/bin/node /usr/local/Cellar/yarn/1.10.1/libexec/bin/yarn.js run develop
+
+PATH: 
+  /Users/bert/.rvm/gems/ruby-2.4.1/bin:/Users/bert/.rvm/gems/ruby-2.4.1@global/bin:/Users/bert/.rvm/rubies/ruby-2.4.1/bin:/Users/bert/Library/Android/sdk/platform-tools:/Users/bert/Library/Android/sdk/tools:/Users/bert/.nvm/versions/node/v8.12.0/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Postgres.app/Contents/Versions/latest/bin:/Users/bert/.rvm/gems/ruby-2.4.1/bin:/Users/bert/.rvm/gems/ruby-2.4.1@global/bin:/Users/bert/.rvm/rubies/ruby-2.4.1/bin:/Users/bert/Library/Android/sdk/platform-tools:/Users/bert/Library/Android/sdk/tools:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/bert/.rvm/bin:/Users/bert/.rvm/bin
+
+Yarn version: 
+  1.10.1
+
+Node version: 
+  8.12.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/bert/Projects/Except/gray-unicorn/static-templates/package.json: Unexpected token / in JSON at position 278
+      at JSON.parse (<anonymous>)
+      at /usr/local/Cellar/yarn/1.10.1/libexec/lib/cli.js:1136:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.10.1/libexec/lib/cli.js:98:30)
+      at /usr/local/Cellar/yarn/1.10.1/libexec/lib/cli.js:109:13
+      at <anonymous>
+
+npm manifest: 
+  {
+    "name": "except-static-templates",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "There's no test command mapped yet.",
+      "scss": "sass --watch src/assets/scss/bundle.scss ../except_wagtail/static/css/except_wagtail.css",
+      // "scss": "sass --watch src/assets/scss/bundle.scss dist/assets/css/bundle.css",
+      "pug": "pug -P src/templates -w -o dist",
+      "serve": "http-server dist",
+      // "livereload": "livereload .",
+      "livereload": "livereload ../except_wagtail/",
+      "develop": "concurrently --kill-others \"npm run pug\" \"npm run scss\" \"npm run livereload\" \"npm run serve\""
+    },
+    "author": "GizmoStudios",
+    "license": "ISC",
+    "devDependencies": {
+      "concurrently": "^4.1.0",
+      "http-server": "^0.11.1",
+      "livereload": "^0.7.0",
+      "pug-cli": "^1.0.0-alpha6",
+      "sass": "^1.17.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
