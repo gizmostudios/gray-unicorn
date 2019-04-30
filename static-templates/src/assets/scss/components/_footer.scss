@@ -3,6 +3,10 @@
   margin-bottom: 2em;
   background: rgba($color-text,.7);
 
+  .h2 {
+    margin-bottom: .5em;
+  }
+
   .h2, a {
     color: $color-text-invert;
 
@@ -11,12 +15,26 @@
     }
   }
 
-  ul > li {
-    padding: 0;
+  ul {
+    margin-bottom: 2em;
 
-    &:before {
-      content: '> ';
-      color: rgba($color-text-invert, .5);
+    > li {
+      padding: 0;
+
+      &:before {
+        content: '> ';
+        color: rgba($color-text-invert, .5);
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1087px) {
+  .footer {
+    .h2 {
+      &:before {
+        width: 100%;
+      }
     }
   }
 }

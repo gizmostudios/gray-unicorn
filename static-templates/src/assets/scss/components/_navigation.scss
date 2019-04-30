@@ -1,5 +1,14 @@
 nav {
   background: $color-text-invert;
+  
+  .navbar-burger {
+    background: $color-primary;
+    color: $color-text-invert;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 65px;
+  }
 
   &.inverted {
     .logo {
@@ -10,6 +19,8 @@ nav {
     .buttons .button {
       transition: color .5s ease-in-out;
       color: $color-text-invert;
+      font-weight: 700;
+      text-shadow: 0 1px 2px rgba($color-text, .5);
     }
   }
   &.opaque {
@@ -21,6 +32,15 @@ nav {
 
     .buttons .button {
       color: $color-primary;
+      text-shadow: none;
+      font-weight: 500;
+    }
+
+    & ~ nav.navbar .dropdown {
+      bottom: auto;
+      margin-bottom: 0;
+      top: 100%;
+      margin-top: 4px;
     }
   }
   &.is-compact {
@@ -44,10 +64,17 @@ nav {
   z-index: 30;
 }
 
+#main-menu-toggle:checked + .navbar,
+#main-menu-toggle:checked + .navbar .navbar-menu {
+  display: flex;
+  flex-direction: column;
+}
+
 nav.navbar {
-  .navbar-start .navbar-item:first-child {
-    padding-right: 0;
-    margin-left: 0;
+  box-shadow: none;
+
+  .navbar-start {
+    margin-left: -1em;
   }
 
   .navbar-end .navbar-item:last-child {
@@ -59,8 +86,33 @@ nav.navbar {
     }
   }
 
+  .navbar-search {
+    position: relative;
+
+    .input {
+      border: none;
+      border-radius: 10em;
+      box-shadow: none;
+    }
+
+    .fa-search {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  > .container .navbar-menu {
+    margin-right: 0;
+  }
+
   .navbar-item {
     position: relative;
+
+    label {
+      cursor: pointer;
+    }
 
     label + i {
       margin-left: $spacing;
@@ -69,8 +121,8 @@ nav.navbar {
     .dropdown {
       position: absolute;
       left: 0;
-      top: 100%;
-      margin-top: 4px;
+      bottom: 100%;
+      margin-bottom: 4px;
 
       ul {
         background: $color-primary;
@@ -114,20 +166,26 @@ nav.navbar.navbar-menu {
   background: $color-bg-block;
   height: $height-nav;
   
+
   .navbar-item {
     font-family: 'Aller';
     font-size: 1.1rem;
-    padding: 0;
-    margin: 0 1rem;
+    padding: 0 1rem;
+    margin: 0;
     border: solid transparent;
     border-width: 4px 0px;
     text-transform: uppercase;
 
-    &.is-active {
+    &.is-active:not(.is-selected) {
       border-bottom-color: $color-text;
     }
 
-    &:hover {
+    &.is-selected {
+      background: $color-primary;
+      color: $color-text-invert;
+    }
+
+    &:hover:not(.is-selected) {
       background: none;
       color: $color-text;
       border-bottom-color: rgba($color-text, .5);
@@ -136,5 +194,97 @@ nav.navbar.navbar-menu {
     span + i {
       margin-left: .5rem;
     }
+  }
+}
+
+@media screen and (max-width: 1087px) {
+  nav,
+  nav.navbar {
+    background-color: rgba($color-primary, .8) !important;
+    height: 65px;
+
+    .logo {
+      width: 150px;
+      height: 80px;
+      margin-left: -1em;
+
+      .logo-subtitle {
+        display: none;
+      }
+    }
+
+    .navbar-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 2em;
+
+      overflow: auto;
+
+      .navbar-start, 
+      .navbar-end {
+        width: 100%;
+      }
+
+      .navbar-start {
+        margin-left: -1em;
+        order: 1;
+      }
+
+      .navbar-end {
+        order: 0;
+        padding-right: 0;
+
+        .navbar-search {
+          margin: 0;
+          margin-bottom: 1em;
+          padding: 0;
+          
+          .input {
+            width: 65%;
+          }
+          
+          .fas.fa-search {
+            margin-top: .5em;
+          }
+
+          .main-menu-close {
+            position: absolute;
+            top: 0.25em;
+            right: 0;
+            transform: scale(1.5);
+          }
+        }
+      }
+
+      .navbar-item {
+        margin-bottom: 0.7em;
+
+        &.is-selected {
+          background: none;
+          color: $color-primary;
+          font-weight: 700;
+        }
+
+        &:hover {
+          border-color: transparent !important;
+        }
+        .dropdown {
+          position: relative;
+          font-weight: 500;
+
+          ul {
+            background: none;
+            border-left: solid 2px $color-primary;
+
+            > li a {
+              color: $color-text;
+            }
+          }
+        }
+      }
+    }  
   }
 }

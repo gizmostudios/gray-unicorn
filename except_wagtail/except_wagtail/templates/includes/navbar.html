@@ -1,14 +1,26 @@
-
 <nav class="is-fixed-top is-transparent inverted" id="mainNav">
   <div class="container">
 
     {% include "./logo.html" %}
 
     <div class="buttons is-pulled-right is-stretched">
-      <button class="button is-transparent"><span>ENGLISH</span><i class="fas fa-chevron-down"></i></button><a class="button is-transparent">CONTACT</a>
+      <div class="is-hidden-touch">
+        <button class="button is-transparent"><span>ENGLISH</span>
+        <i class="fas fa-chevron-down"></i>
+        </button><a class="button is-transparent">CONTACT</a>
+      </div>
+      <div class="is-hidden-desktop">
+        <label for="main-menu-toggle" class="navbar-burger burger">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </label>
+      </div>
     </div>
   </div>
 </nav>
+
+<input type="checkbox" id="main-menu-toggle" class="is-hidden" />
 <nav class="navbar navbar-menu is-sticky" role="navigation" aria-label="main navigation">
   <div class="container">
     <div class="navbar-menu">
@@ -17,8 +29,8 @@
         <!-- Navigation items-->
         <a class="navbar-item" href="./"><span>Home</span></a>
         <div class="navbar-item">
-          <input class="for-dropdown is-hidden" type="checkbox" id="About"/>
-          <label for="About">About</label><i class="fas fa-chevron-down"></i>
+          <input class="for-dropdown is-hidden" type="radio" name="main-menu" id="About"/>
+          <label for="About">About</label>
           <div class="dropdown">
             <ul>
               <li><a href="/"><span>OUR PROFILE</span><i class="fas fa-chevron-right"></i></a></li>
@@ -32,8 +44,8 @@
           </div>
         </div>
         <div class="navbar-item">
-          <input class="for-dropdown is-hidden" type="checkbox" id="Services"/>
-          <label for="Services">Services</label><i class="fas fa-chevron-down"></i>
+          <input class="for-dropdown is-hidden" type="radio" name="main-menu" id="Services"/>
+          <label for="Services">Services</label>
           <div class="dropdown">
             <ul>
               <li><a><span>Services Overview</span><i class="fas fa-chevron-right"></i></a></li>
@@ -43,17 +55,24 @@
               <li><a><span>Training</span><i class="fas fa-chevron-right"></i></a></li>
             </ul>
           </div>
-        </div><a class="navbar-item" href="./projects"><span>Projects</span></a><a class="navbar-item" href="./knowledge"><span>Knowledge</span></a>
+        </div>
+        <a class="navbar-item" href="./projects"><span>Projects</span></a>
+        <a class="navbar-item" href="./knowledge"><span>Knowledge</span></a>
       </div>
       <!-- Right menu-->
       <div class="navbar-end">
         <!-- Search bar-->
-        <div class="navbar-item">
-          <input class="input" type="text" placeholder="Search site"/><i class="fas fa-search"></i>
+        <div class="navbar-item navbar-search">
+          <form action="/search/" method="get">
+            <input class="input" name="query" placeholder="Search site"/>
+            <i class="fas fa-search"></i>
+          </form>
+          
+          <label for="main-menu-toggle" class="main-menu-close is-hidden-desktop">
+            <i class="fas fa-times"></i>
+          </label>
         </div>
       </div>
     </div>
-    <!-- Dark website overlay      -->
-    <label class="overlay" for="headerNavToggle"></label>
   </div>
 </nav>

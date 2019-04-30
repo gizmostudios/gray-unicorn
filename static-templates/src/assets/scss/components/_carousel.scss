@@ -27,6 +27,7 @@
       scroll-snap-align: center;
 
       &.background-fill {
+        background-position: top center;
         background-size: cover;
       }
 
@@ -39,7 +40,6 @@
         display: inline-block;
         background: white;
         padding: .5em .75em;
-        margin-left: -.75em;
       }
 
       header h2:before {
@@ -62,5 +62,13 @@
 
   .button-next {
     right: 0;
+  }
+}
+
+@media only screen and (max-width: 1087px) {
+  .carousel {
+    .container {
+      margin-left: 0;
+    }
   }
 }
