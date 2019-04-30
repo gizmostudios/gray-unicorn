@@ -46,51 +46,12 @@ class HomePage(Page):
     hero_image = models.ImageField(null=True, blank=True)
     hero_title = models.CharField(max_length=255, null=True, blank=True)
     hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
-    body = RichTextField(blank=True)
+    intro = models.TextField(blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel('hero_image'),
         FieldPanel('hero_title'),
         FieldPanel('hero_subtitle'),
-        FieldPanel('body', classname="full"),
+        FieldPanel('intro', classname="full"),
         InlinePanel('carousel_items', label="Carousel Items"),
-    ]
-
-class Quote(Orderable):
-    company = models.CharField(max_length=255, null=True, blank=True)
-    caption = RichTextField(blank=True)
-    name = models.CharField(max_length=255, null=True, blank=True)
-    page = ParentalKey('AboutPage', related_name='quotes')
-
-    panels = [
-        FieldPanel('company'),
-        FieldPanel('name'),
-        FieldPanel('caption', classname="full")
-    ]
-
-class Partner(Orderable):
-    image = models.ImageField(null=True, blank=True)
-    page = ParentalKey('AboutPage', related_name='partners')
-
-    panels = [
-        FieldPanel('image')
-    ]
-
-class AboutPage(Page):
-    hero_image = models.ImageField(null=True, blank=True)
-    hero_title = models.CharField(max_length=255, null=True, blank=True)
-    hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
-    except_introduction = RichTextField(blank=True)
-    team_introduction = RichTextField(blank=True)
-    collaboration_introduction = RichTextField(blank=True)
-
-    content_panels = Page.content_panels + [
-        FieldPanel('hero_image'),
-        FieldPanel('hero_title'),
-        FieldPanel('hero_subtitle'),
-        FieldPanel('except_introduction', classname="full"),
-        FieldPanel('team_introduction', classname="full"),
-        FieldPanel('collaboration_introduction', classname="full"),
-        InlinePanel('quotes', label="Quotes"),
-        InlinePanel('partners', label="Partners"),
     ]

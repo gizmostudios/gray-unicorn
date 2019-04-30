@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+
+{% load static %}
+
+{% block content %}
+  {% with mediaPath="/media/" %}
+
+  	<section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ mediaPath }}{{ page.hero_image }})">
+      <div class="hero-body">
+        <div class="container">
+          <div>
+            {% if page.hero_title %}
+              <h1 class="h1 title">{{ page.hero_title }}</h1>
+            {% endif %}
+            {% if page.hero_subtitle %}
+              <h3 class="h3 subtitle">{{ page.hero_subtitle }}</h3>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-8">
+          	{% if page.except_introduction %}
+            <p class="intro">
+              {{page.except_introduction}}
+            </p>
+            {% endif %}
+            {% if page.team_introduction %}
+            <p>
+              {{page.team_introduction |richtext}}
+            </p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+    {% if page.quotes %}
+      <section class="section">
+        <article class="container">
+          <div class="columns">
+            {% for quote in page.quotes.all %}
+            <div class="column">
+              <blockquote class="blockquote">
+                {{ quote.caption |richtext}}
+              </blockquote>
+              <h4 class="h4">{{ quote.name }}</h4><span class="subline">{{ quote.company }}</span>
+            </div>
+            {% endfor %}
+          </div>
+        </article>
+      </section>
+    {% endif %}
+    <section class="section">
+      <article class="container">
+        <header class="header">
+          <h2 class="h2">Partners &amp; Clients</h2>
+        </header>
+        {% if page.collaboration_introduction %}
+            <p>
+              {{page.collaboration_introduction |richtext}}
+            </p>
+        {% endif %}
+        <div class="grid">
+          {% for partner in page.partners.all %}
+            <figure class="image"><img src="{{ mediaPath }}{{ partner.image }}"></figure>
+          {% endfor %} 
+        </div>
+      </article>
+    </section>
+
+  {% endwith %}
+{% endblock content %}

@@ -28,13 +28,15 @@
 
     <div class="spacer"></div>
 
-    {% comment %} 
+    {% if page.intro %} 
     <section>
       <article class="container">
-        {{ page.body|richtext }}
+        <p class="intro">
+          {{ page.intro }}
+        </p>
       </article>
     </section>
-    {% endcomment %}
+    {% endif %}
 
     {% comment %} {% if page.carousel_items %}
       {% for carousel_item in page.carousel_items.all %}
