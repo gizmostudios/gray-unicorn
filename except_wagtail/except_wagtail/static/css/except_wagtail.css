@@ -192,7 +192,6 @@ p:not(.is-blocked) + .buttons,
 .carousel .carousel-inner {
   width: 100vw;
   height: 100%;
-  overflow-y: hidden;
   overflow-x: auto;
   display: flex;
   flex-wrap: nowrap;
@@ -207,7 +206,7 @@ p:not(.is-blocked) + .buttons,
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding-bottom: 1em;
+  padding-bottom: 3em;
   scroll-snap-align: center;
 }
 .carousel .carousel-inner article.background-fill {
@@ -662,13 +661,21 @@ nav {
   z-index: 30;
 }
 nav.inverted .logo {
+  transition: fill 0.5s ease-in-out;
   fill: #ffffff;
 }
 nav.inverted .buttons .button {
+  transition: color 0.5s ease-in-out;
   color: #ffffff;
 }
 nav.opaque {
-  background: black;
+  background: white;
+}
+nav.opaque .logo {
+  fill: #6B2A7E;
+}
+nav.opaque .buttons .button {
+  color: #6B2A7E;
 }
 nav.is-compact {
   padding-top: 1em;

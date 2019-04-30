@@ -8,23 +8,47 @@
   .carousel-inner {
     width: 100vw;
     height: 100%;
-    overflow-y: hidden;
+    // overflow-y: hidden;
     overflow-x: auto;
     display: flex;
     flex-wrap: nowrap;
     scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
 
     article {
       flex: none;
       width: 100vw;
       background-position: center center;
-      background-size: contain;
-      // background-size: cover;
       background-repeat: no-repeat;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding-bottom: 1em;
+      padding-bottom: 3em;
+      scroll-snap-align: center;
+
+      &.background-fill {
+        background-size: cover;
+      }
+
+      &.background-fit {
+        background-size: contain;
+      }
+
+      
+      header, p {
+        display: inline-block;
+        background: white;
+        padding: .5em .75em;
+        margin-left: -.75em;
+      }
+
+      header h2:before {
+        display: none; //border-color: white;
+      }
+
+      header + div > p {
+        padding-top: 0;
+      }
     }
   }
 

@@ -9,7 +9,7 @@ let stickyNav = false;
 window.addEventListener('scroll', function () {
   let diff = window.scrollY / $hero.clientHeight;
 
-  if (diff > 1) {
+  if (diff > .9) {
     $nav.classList.add('opaque');
     return;
   } else {
@@ -17,7 +17,7 @@ window.addEventListener('scroll', function () {
   }
 
   $hero.style.opacity = 1 - (diff * 1);
-  $nav.style.filter = `invert(${diff})`;
+  
   $nav.style.transform = `translate(0, -${diff * 30}px)`;
   $logo.style.transform = `scale(${1 - diff / 5})`;
 })

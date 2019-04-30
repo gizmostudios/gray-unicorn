@@ -3,15 +3,25 @@ nav {
 
   &.inverted {
     .logo {
+      transition: fill .5s ease-in-out;
       fill: $color-text-invert;
     }
 
     .buttons .button {
+      transition: color .5s ease-in-out;
       color: $color-text-invert;
     }
   }
   &.opaque {
-    background: black;
+    background: white;
+
+    .logo {
+      fill: $color-primary;
+    }
+
+    .buttons .button {
+      color: $color-primary;
+    }
   }
   &.is-compact {
     padding-top: 1em;
