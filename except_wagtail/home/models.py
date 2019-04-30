@@ -7,6 +7,8 @@ from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, PageChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 
+from django.forms.widgets import Select
+
 class CarouselItem(Orderable):
     image = models.ForeignKey(
         'wagtailimages.Image',
@@ -15,6 +17,7 @@ class CarouselItem(Orderable):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    
     link_page = models.ForeignKey(
         'wagtailcore.Page',
         null=True,
@@ -26,9 +29,13 @@ class CarouselItem(Orderable):
     caption = models.CharField(max_length=255, blank=True)
     link_title = models.CharField(max_length=255, blank=True)
     page = ParentalKey('HomePage', related_name='carousel_items')
+    scaling = models.CharField(max_length=15, default='fit', choices=(
+        ('fit', 'fit'), ('fill', 'fill')
+    ))
 
     panels = [
         ImageChooserPanel('image'),
+        FieldPanel('scaling'),
         FieldPanel('title'),
         FieldPanel('caption'),
         FieldPanel('link_title'),

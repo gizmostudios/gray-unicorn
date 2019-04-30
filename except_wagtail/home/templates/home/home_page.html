@@ -51,7 +51,7 @@
             {% for carousel_item in page.carousel_items.all %}
 
               {% image carousel_item.image width-1000 as carouselimagedata %}
-              <article style="background-image: url({{ carouselimagedata.url }})">
+              <article style="background-image: url({{ carouselimagedata.url }})" class="background-{{carousel_item.scaling}}">
 
                 <div class="container">
                   {% if carousel_item.title %}
@@ -61,7 +61,9 @@
                   {% endif %}
 
                   {% if carousel_item.title %}
-                    <p>{{ carousel_item.caption }}</p>
+                    <div>
+                      <p>{{ carousel_item.caption }}</p>
+                    </div>
                   {% endif %}
                   
                   {% if carousel_item.link_page %}

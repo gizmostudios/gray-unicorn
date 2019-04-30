@@ -197,17 +197,36 @@ p:not(.is-blocked) + .buttons,
   display: flex;
   flex-wrap: nowrap;
   scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
 }
 .carousel .carousel-inner article {
   flex: none;
   width: 100vw;
   background-position: center center;
-  background-size: contain;
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   padding-bottom: 1em;
+  scroll-snap-align: center;
+}
+.carousel .carousel-inner article.background-fill {
+  background-size: cover;
+}
+.carousel .carousel-inner article.background-fit {
+  background-size: contain;
+}
+.carousel .carousel-inner article header, .carousel .carousel-inner article p {
+  display: inline-block;
+  background: white;
+  padding: 0.5em 0.75em;
+  margin-left: -0.75em;
+}
+.carousel .carousel-inner article header h2:before {
+  display: none;
+}
+.carousel .carousel-inner article header + div > p {
+  padding-top: 0;
 }
 .carousel .button-prev,
 .carousel .button-next {
@@ -401,6 +420,10 @@ p:not(.is-blocked) + .buttons,
   height: 50%;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
   z-index: 1;
+}
+
+body {
+  margin-bottom: 2em;
 }
 
 .section {
