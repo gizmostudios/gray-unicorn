@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "There's no test command mapped yet.",
-    "scss": "sass --watch src/assets/scss/bundle.scss ../except_wagtail/except_wagtail/static/css/except_wagtail.css",
+    "scss": "sass --watch src/assets/scss/bundle.scss:../except_wagtail/except_wagtail/static/css/except_wagtail.css",
     "pug": "pug -P src/templates -w -o dist",
     "serve": "http-server dist",
     "livereload": "livereload ../except_wagtail/",
