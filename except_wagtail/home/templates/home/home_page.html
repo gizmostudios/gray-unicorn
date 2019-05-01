@@ -7,6 +7,7 @@
 {% block content %}
   {% with mediaPath="/media/" %}
 
+    {# Hero #}
     <section class="hero is-inverted is-darkened" style="background-image: url({{ mediaPath }}{{ page.hero_image }})">
       <div class="hero-body">
         <div class="container">
@@ -28,6 +29,7 @@
 
     <div class="spacer"></div>
 
+    {# Intro #}
     {% if page.intro %}
       <section>
         <article class="container">
@@ -38,13 +40,7 @@
       </section>
     {% endif %}
 
-    {% comment %} {% if page.carousel_items %}
-      {% for carousel_item in page.carousel_items.all %}
-        <p>{{ carousel_item.image.file }}</p>
-      {% endfor %}
-    {% endif %} {% endcomment %}
-
-
+    {# Carousel #}
     {% if page.carousel_items %}
       <section class="section">
         <div class="carousel is-fullheight" data-count="{{page.carousel_items.all|length}}">
@@ -72,6 +68,7 @@
                     <a href="{{ carousel_item.link_page }}" class="button is-next is-secondary">
                       {% if carousel_item.link_title %}
                         {{ carousel_item.link_title }}
+                        <i class="fas fa-chevron-right"></i>
                       {% else %}
                         More
                       {% endif %}
@@ -95,6 +92,35 @@
         </div>
       </section>
     {% endif %}
+
+    {# Working areas #}
+    <section class="section is-fullheight" style="background-image:url(assets/images/working-area-photo.png">
+      <div class="container">
+        <article class="article">
+          <header>
+            <h2 class="h2">Our working areas (still hardcoded)</h2>
+          </header>
+          <div class="columns has-gap">
+            <div class="column has-text-centered">
+              <figure class="image"><img src="assets/images/icons/places-icon.svg"></figure>
+              <h3 class="h3">Places, cities &amp; buildings</h3>
+            </div>
+            <div class="column has-text-centered">
+              <figure class="image"><img src="assets/images/icons/organizations-icon.svg"></figure>
+              <h3 class="h3">Organizations &amp; governance</h3>
+            </div>
+            <div class="column has-text-centered">
+              <figure class="image"><img src="assets/images/icons/industry-icon.svg"></figure>
+              <h3 class="h3">Industry &amp; sectors</h3>
+            </div>
+            <div class="column has-text-centered">
+              <figure class="image"><img src="assets/images/icons/training-icon.svg"></figure>
+              <h3 class="h3">Training</h3>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
 
   {% endwith %}
 {% endblock content %}

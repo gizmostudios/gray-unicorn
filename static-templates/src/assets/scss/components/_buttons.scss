@@ -36,9 +36,7 @@
     height: 1.2em;
   }
 
-  &.is-next:after {
-    content: ' >';
-    display: inline-block;
+  &.is-next > i {
     margin-left: 0.5em;
   }
 
