@@ -13,18 +13,46 @@
     display: flex;
     flex-wrap: nowrap;
     scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
 
     article {
       flex: none;
       width: 100vw;
       background-position: center center;
-      background-size: contain;
-      // background-size: cover;
       background-repeat: no-repeat;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding-bottom: 1em;
+      padding-bottom: 3em;
+      scroll-snap-align: center;
+
+      &.background-fill {
+        background-position: top center;
+        background-size: cover;
+      }
+
+      &.background-fit {
+        background-size: contain;
+      }
+
+      
+      header, p {
+        display: inline-block;
+        background: rgba($color-text-invert, .8);
+        padding: .5em .75em;
+      }
+
+      p {
+        max-width: 500px;
+      }
+
+      header h2:before {
+        display: none; //border-color: white;
+      }
+
+      header + div > p {
+        padding-top: 0;
+      }
     }
   }
 
@@ -34,9 +62,19 @@
     height: 5rem;
     top: 50%;
     transform: translate(0, -50%);
+    width: 1.6em;
+    overflow: hidden;
   }
 
   .button-next {
     right: 0;
+  }
+}
+
+@media only screen and (max-width: 1087px) {
+  .carousel {
+    .container {
+      margin-left: 0;
+    }
   }
 }

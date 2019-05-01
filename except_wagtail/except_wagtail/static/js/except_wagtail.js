@@ -2,14 +2,34 @@ const $hero = document.querySelector('.hero');
 const $nav = document.querySelector('#mainNav');
 const $logo = document.querySelector('.logo');
 const carousels = document.querySelectorAll('.carousel');
+const navRadios = document.getElementsByName('main-menu');
+
+navRadios.forEach(radio => {
+  radio.addEventListener('click', event => {
+    if(!radio.dataset.checked) {
+      radio.dataset.checked = true;
+      radio.parentNode.classList.add('is-selected');
+    } else {
+      radio.checked = false;
+      delete radio.dataset.checked;
+      radio.parentNode.classList.remove('is-selected');
+    }
+  })
+});
 
 let windowWidth = window.innerWidth;
 
 let stickyNav = false;
 window.addEventListener('scroll', function () {
+
+  // Cancel on mobile
+  if(windowWidth <= 1087) {
+    return;
+  }
+
   let diff = window.scrollY / $hero.clientHeight;
 
-  if (diff > 1) {
+  if (diff > .9) {
     $nav.classList.add('opaque');
     return;
   } else {
@@ -17,7 +37,7 @@ window.addEventListener('scroll', function () {
   }
 
   $hero.style.opacity = 1 - (diff * 1);
-  $nav.style.filter = `invert(${diff})`;
+  
   $nav.style.transform = `translate(0, -${diff * 30}px)`;
   $logo.style.transform = `scale(${1 - diff / 5})`;
 })

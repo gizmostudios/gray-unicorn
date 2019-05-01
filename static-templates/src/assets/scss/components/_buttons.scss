@@ -17,6 +17,11 @@
 
   &.is-primary {
     background: $color-primary;
+
+    &:hover {
+      background: $color-text-invert;
+      color: $color-primary !important;
+    }
   }
 
   &.is-secondary {
@@ -31,9 +36,7 @@
     height: 1.2em;
   }
 
-  &.is-next:after {
-    content: ' >';
-    display: inline-block;
+  &.is-next > i {
     margin-left: 0.5em;
   }
 
