@@ -13,11 +13,18 @@ nav#mainNav(class='is-fixed-top ' + navType)
       include _logo.pug
       
       .buttons.is-pulled-right.is-stretched
-        button.button.is-transparent
-          span='ENGLISH'
-          i.fas.fa-chevron-down
-      
-        a.button.is-transparent='CONTACT'
+        .is-hidden-touch
+          button.button.is-transparent
+            span='ENGLISH'
+            i.fas.fa-chevron-down
+          a.button.is-transparent='CONTACT'
+
+        .is-hidden-desktop
+          label.navbar-burger.burger(for='main-menu-toggle')
+            span(aria-hidden='true')
+            span(aria-hidden='true')
+            span(aria-hidden='true')
+
 
 nav.navbar.navbar-menu.is-sticky(role='navigation' aria-label='main navigation')
     .container

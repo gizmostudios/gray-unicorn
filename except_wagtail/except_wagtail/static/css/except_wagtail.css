@@ -273,6 +273,19 @@ p:not(.is-blocked) + .buttons,
 .image img {
   display: inline-block;
 }
+.image.portrait {
+  flex-direction: column;
+  display: flex;
+  text-align: center;
+}
+.image.portrait img {
+  display: block;
+  margin-bottom: 1em;
+}
+.image.portrait figcaption {
+  display: block;
+  width: 100%;
+}
 .image .label {
   position: absolute;
   bottom: 0;

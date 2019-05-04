@@ -5,6 +5,22 @@
     display: inline-block;
   }
 
+  &.portrait {
+    flex-direction: column;
+    display: flex;
+    text-align: center;
+
+    img {
+      display: block;
+      margin-bottom: 1em;
+    }
+
+    figcaption {
+      display: block;
+      width: 100%;
+    }
+  }
+
   .label {
     position: absolute;
     bottom: 0;

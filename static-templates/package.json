@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "There's no test command mapped yet.",
-    "scss": "sass --watch src/assets/scss/bundle.scss:../except_wagtail/except_wagtail/static/css/except_wagtail.css",
+    "scss_static": "sass --watch src/assets/scss/bundle.scss:dist/assets/css/bundle.css",
+    "scss_wagtail": "sass --watch src/assets/scss/bundle.scss:../except_wagtail/except_wagtail/static/css/except_wagtail.css",
     "pug": "pug -P src/templates -w -o dist",
     "serve": "http-server dist",
-    "livereload": "livereload ../except_wagtail/",
-    "develop": "concurrently --kill-others \"npm run pug\" \"npm run scss\" \"npm run livereload\" \"npm run serve\""
+    "livereload": "livereload dist",
+    "develop": "concurrently --kill-others \"yarn run pug\" \"yarn run livereload\" \"yarn run scss_static\" \"yarn run scss_wagtail\" \"yarn run serve\""
   },
   "author": "GizmoStudios",
   "license": "ISC",
