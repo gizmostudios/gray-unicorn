@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 
 from modelcluster.fields import ParentalKey
 
@@ -43,12 +44,16 @@ class CarouselItem(Orderable):
 
 class HomePage(Page):
     hero_image = models.ImageField(null=True, blank=True)
+    navbar_inverted = models.BooleanField(null=True, blank=True)
+    navbar_transparent = models.BooleanField(null=True, blank=True)
     hero_title = models.CharField(max_length=255, null=True, blank=True)
     hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
     intro = models.TextField(blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel('hero_image'),
+        FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
+        FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
         FieldPanel('hero_title'),
         FieldPanel('hero_subtitle'),
         FieldPanel('intro', classname="full"),

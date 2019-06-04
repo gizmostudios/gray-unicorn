@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+
+{% load static %}
+
+{% block content %}
+  {% with mediaPath="/media/" %}
+
+    {# Main navigation #}
+    {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
+  
+  	<section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ mediaPath }}{{ page.hero_image }})">
+      <div class="hero-body">
+        <div class="container">
+          <div>
+            {% if page.hero_title %}
+              <h1 class="h1 title">{{ page.hero_title }}</h1>
+            {% endif %}
+            {% if page.hero_subtitle %}
+              <h3 class="h3 subtitle">{{ page.hero_subtitle }}</h3>
+            {% endif %}
+            {% if page.date_published %}
+              <span class="date">25-02-2019</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-8">
+            {% if page.intro %}
+              <p class="intro">
+                {{page.intro}}  
+              </p>
+            {% endif %}
+            {% if page.body %}
+              {{ page.body }}
+            {% endif %}
+          </div>
+          {% if page.author %}
+            {% with author=page.author %}
+              <div class="column is-4">
+                <figure class="image"><img class="is-200x200" src="{{ mediaPath }}{{ author.picture }}">
+                  <figcaption class="caption">by {{author.first_name}} {{author.last_name}}</figcaption>
+                  <figcaption class="caption"><i class="fas fa-envelope"></i><span>{{author.email}}</span></figcaption>
+                  <figcaption class="caption"><i class="fas fa-phone"></i><span>{{author.phone}}</span></figcaption>
+                </figure>
+              </div>
+            {% endwith %}
+          {% endif %}
+        </div>
+      </div>
+    </section>
+    
+  {% endwith %}
+{% endblock content %}

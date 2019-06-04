@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+
+{% load static %}
+
+{% block content %}
+  {% with mediaPath="/media/" %}
+
+    {# Main navigation #}
+    {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
+
+
+    <section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ mediaPath }}{{ page.hero_image }})">
+      <div class="hero-body">
+        <div class="container">
+          <div>
+            {% if page.hero_title %}
+              <h1 class="h1 title">{{ page.hero_title }}</h1>
+            {% endif %}
+            {% if page.hero_subtitle %}
+              <h3 class="h3 subtitle">{{ page.hero_subtitle }}</h3>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <article class="article">
+          <header class="has-text-centered">
+            <h3 class="h3">TIMELINE</h3>
+          </header>
+          <div class="has-text-centered">
+            <div class="timeline">
+              {% include "news/timeline.html" with years=years news=news %}
+            </div>
+          </div>
+          <div class="spacer"></div>
+          <header class="has-text-centered">
+            <h3 class="h3">FILTER</h3>
+          </header>
+          <div class="has-text-centered">
+            {% csrf_token %}
+            {% for category in categories %}
+              <label class="button is-filter is-{{category.color}} is-active">
+                <input type="checkbox"><span>{{category.title}}</span>
+              </label>
+            {% endfor %}
+          </div>
+          <div class="spacer is-large"></div>
+          <header>
+            <h2 class="h2">Latest news</h2>
+          </header>
+          <div id="latestNews" class="columns is-grid">
+            {% include "news/latest_articles.html" with current_news=current_news %}
+          </div>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <article class="article">
+          <header>
+            <h2 class="h2">Except in the news</h2>
+          </header>
+          <div class="columns is-grid">
+            <div class="column is-3">
+              <div class="card is-stretched">
+                <div class="card-image">
+                  <figure class="image"><img src="assets/images/working-area-photo.png"></figure>
+                </div>
+                <div class="card-content has-label">
+                  <h3 class="h3">Centrum Ecological Chape receives...</h3>
+                  <p>21-02-2017</p>
+                  <button class="button is-selector is-purple is-pulled-left"></button><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="column is-3">
+              <div class="card is-stretched">
+                <div class="card-image">
+                  <figure class="image"><img src="assets/images/working-area-photo.png"></figure>
+                </div>
+                <div class="card-content has-label">
+                  <h3 class="h3">Centrum Ecological Chape receives...</h3>
+                  <p>21-02-2017</p>
+                  <button class="button is-selector is-blue is-pulled-left"></button><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="column is-3">
+              <div class="card is-stretched">
+                <div class="card-image">
+                  <figure class="image"><img src="assets/images/working-area-photo.png"></figure>
+                </div>
+                <div class="card-content has-label">
+                  <h3 class="h3">Centrum Ecological Chape receives...</h3>
+                  <p>21-02-2017</p>
+                  <button class="button is-selector is-red is-pulled-left"></button><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="column is-3">
+              <div class="card is-stretched">
+                <div class="card-image">
+                  <figure class="image"><img src="assets/images/working-area-photo.png"></figure>
+                </div>
+                <div class="card-content has-label">
+                  <h3 class="h3">Centrum Ecological Chape receives...</h3>
+                  <p>21-02-2017</p>
+                  <button class="button is-selector is-green is-pulled-left"></button><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="column is-3">
+              <div class="card is-stretched">
+                <div class="card-image">
+                  <figure class="image"><img src="assets/images/working-area-photo.png"></figure>
+                </div>
+                <div class="card-content has-label">
+                  <h3 class="h3">Centrum Ecological Chape receives...</h3>
+                  <p>21-02-2017</p>
+                  <button class="button is-selector is-green is-pulled-left"></button><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="column is-3">
+              <div class="card is-stretched">
+                <div class="card-image">
+                  <figure class="image"><img src="assets/images/working-area-photo.png"></figure>
+                </div>
+                <div class="card-content has-label">
+                  <h3 class="h3">Centrum Ecological Chape receives...</h3>
+                  <p>21-02-2017</p>
+                  <button class="button is-selector is-green is-pulled-left"></button><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="column is-3">
+              <div class="card is-stretched">
+                <div class="card-image">
+                  <figure class="image"><img src="assets/images/working-area-photo.png"></figure>
+                </div>
+                <div class="card-content has-label">
+                  <h3 class="h3">Centrum Ecological Chape receives...</h3>
+                  <p>21-02-2017</p>
+                  <button class="button is-selector is-red is-pulled-left"></button><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="column is-3">
+              <div class="card is-stretched">
+                <div class="card-image">
+                  <figure class="image"><img src="assets/images/working-area-photo.png"></figure>
+                </div>
+                <div class="card-content has-label">
+                  <h3 class="h3">Centrum Ecological Chape receives...</h3>
+                  <p>21-02-2017</p>
+                  <button class="button is-selector is-transparent is-pulled-left"></button><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+    <script type="text/javascript" src="{% static 'js/news.js' %}"></script>
+  {% endwith %}
+{% endblock content %}

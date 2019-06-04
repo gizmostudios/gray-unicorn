@@ -1,0 +1,20 @@
+{% with mediaPath="/media/" %}
+  {% for news in current_news %}
+    <div class="column is-4">
+      <div class="card is-stretched">
+        <div class="card-image">
+          <figure class="image"><img src="{{ mediaPath }}{{ news.hero_image }}"></figure>
+        </div>
+        <div class="card-content has-label">
+          {% if news.is_long_intro %}
+            <h3 class="h3">{{news.short_intro}}...</h3>
+          {% else %}
+            <h3 class="h3">{{news.intro}}</h3>
+          {% endif %}
+          <p>{{news.date_published}}</p>
+          <button class="button is-selector is-{{news.category.color}} is-pulled-left"></button><a class="button is-pulled-right" href={{news.url}}><i class="fas fa-chevron-right"></i></a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+{% endwith %}

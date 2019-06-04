@@ -6,10 +6,7 @@
 
 {% block content %}
   {% with mediaPath="/media/" %}
-
-    {# Main navigation #}
-    {% include "includes/navbar.html" %}
-
+  
   	<section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ mediaPath }}{{ page.hero_image }})">
       <div class="hero-body">
         <div class="container">
@@ -24,6 +21,10 @@
         </div>
       </div>
     </section>
+
+    {# Main navigation #}
+    {% include "includes/navbar.html" %}
+
     <section class="section">
       <div class="container">
         <div class="columns">

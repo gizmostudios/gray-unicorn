@@ -5,6 +5,7 @@ from django.contrib import admin
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
+from news import views as news_views
 
 from search import views as search_views
 
@@ -15,6 +16,9 @@ urlpatterns = [
     url(r'^documents/', include(wagtaildocs_urls)),
 
     url(r'^search/$', search_views.search, name='search'),
+
+    url(r'ajax/filter_news/$',news_views.filter_news, name="filter_news"),
+    url(r'ajax/filter_timeline/$',news_views.filter_timeline, name="filter_timeline"),
 
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in

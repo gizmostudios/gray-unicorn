@@ -1,0 +1,11 @@
+{% for year in years %}
+	<div class="year">
+		{% for news_item in news %}
+			{% if news_item.date_published.year == year %}
+				<a href="{{news_item.url}}">
+					<span class="project is-{{news_item.category.color}}" style="--position: {{ news_item.timeline_position }}%"></span>
+				</a>
+			{% endif %}
+		{% endfor %}
+	</div>
+{% endfor %}
