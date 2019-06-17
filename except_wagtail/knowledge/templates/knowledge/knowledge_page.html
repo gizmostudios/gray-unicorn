@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+
+{% load static %}
+
+{% block content %}
+  {% with mediaPath="/media/" %}
+
+    <section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ mediaPath }}{{ page.hero_image }})">
+      <div class="hero-body">
+        <div class="container">
+          <div>
+            {% if page.hero_title %}
+              <h1 class="h1 title">{{ page.hero_title }}</h1>
+            {% endif %}
+            {% if page.hero_subtitle %}
+              <h3 class="h3 subtitle">{{ page.hero_subtitle }}</h3>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {# Main navigation #}
+    {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
+
+    <section class="section">
+      <div class="container">
+        <article class="article">
+          <div class="columns">
+            <div class="column is-8">
+              <p class="intro">
+                {{page.intro}}
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+    <section class="section has-title">
+      <div class="container">
+        <h2 class="h2">Knowledge highlights</h2>
+      </div>
+    </section>
+    {# Carousel #}
+    {% if page.carousel_items %}
+      <section class="section">
+        <div class="container">
+          <article class="article">
+            <div class="carousel" data-count="{{page.carousel_items.all|length}}">
+
+              <div class="carousel-inner">
+                {% for carousel_item in page.carousel_items.all %}
+                  {% image carousel_item.resource.image width-1000 as carouselimagedata %}
+                  <article style="background-image: url({{ carouselimagedata.url }})" class="background-{{carousel_item.scaling}}">
+
+                    <div class="container column is-12">
+
+                      {% if carousel_item.resource.title %}
+                        <div>
+                          <p>{{ carousel_item.resource.title }}</p>
+                        </div>
+                      {% endif %}
+                      
+                      {% if carousel_item.resource.file %}
+                        <a href="{{ carousel_item.resource.file.url }}" class="button is-next is-secondary">
+                            See more.
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                      {% endif %}
+                      <div class="spacer"></div>
+                      <button class="button has-icon is-primary">
+                        <i class="fas fa-chevron-down"></i>
+                      </button>
+                    </div>
+                  </article>
+                {% endfor %}
+              </div>
+
+              <div class="button is-secondary button-prev">
+                <i class="fas fa-chevron-left"></i>
+              </div>
+              <div class="button is-secondary button-next">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    {% endif %}
+    <section class="section">
+      <div class="container">
+        <article class="article">
+          <header class="header">
+            <h2 class="h2">Knowledge database</h2>
+          </header>
+          <div class="spacer"></div>
+          <header class="has-text-centered">
+            <h3 class="h3">FILTER</h3>
+          </header>
+          <div class="has-text-centered">
+            {% csrf_token %}
+            {% for category in categories %}
+              <label class="button is-filter is-{{category.color}} is-active">
+                <input type="checkbox"><span>{{category.title}}</span>
+              </label>
+            {% endfor %}
+          </div>
+          <div class="spacer"></div>
+          <div id="resourceList" class="columns is-grid">
+            {% include "knowledge/resource_list.html" with resources=resources %}
+          </div>
+          {% if resources.paginator.count > 1 %}
+            <div class="container">
+                <div class="row">
+                    <div id="pagination" class="col-md-12">
+                    {% include "includes/pagination.html" with subpages=resources %}
+                    </div>
+                </div>
+            </div>
+          {% endif %}
+        </article>
+      </div>
+    </section>
+    <script type="text/javascript" src="{% static 'js/knowledge.js' %}"></script>
+  {% endwith %}
+{% endblock content %}

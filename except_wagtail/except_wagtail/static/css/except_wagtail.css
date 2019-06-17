@@ -54,6 +54,11 @@
   color: #ffffff;
 }
 
+.is-orange {
+  background: #FFA500;
+  color: #ffffff;
+}
+
 .spacer {
   height: 2em;
 }
@@ -191,6 +196,9 @@ p:not(.is-blocked) + .buttons,
 .carousel.is-fullheight {
   height: calc(100vh - 250px);
 }
+article .carousel {
+  height: 40vh;
+}
 .carousel .carousel-inner {
   width: 100vw;
   height: 100%;
@@ -201,6 +209,9 @@ p:not(.is-blocked) + .buttons,
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
 }
+article .carousel .carousel-inner {
+  width: 100%;
+}
 .carousel .carousel-inner article {
   flex: none;
   width: 100vw;
@@ -209,7 +220,18 @@ p:not(.is-blocked) + .buttons,
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding-bottom: 3em;
+  padding-bottom: em;
+  scroll-snap-align: center;
+}
+article .carousel .carousel-inner article {
+  wflex: none;
+  width: 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 1em;
   scroll-snap-align: center;
 }
 .carousel .carousel-inner article.background-fill {
@@ -968,4 +990,8 @@ nav.navbar .navbar-menu .navbar-item .dropdown ul > li a {
   margin: 2em 0;
 }
 
+nav[role=pagination] {
+  margin-top: 50px;
+  text-align: center;
+}
 /*# sourceMappingURL=except_wagtail.css.map */

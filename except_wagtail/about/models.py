@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 
 from modelcluster.fields import ParentalKey
 
@@ -36,8 +37,12 @@ class AboutPage(Page):
     except_introduction = models.TextField(blank=True)
     team_introduction = RichTextField(blank=True)
     collaboration_introduction = RichTextField(blank=True)
+    navbar_transparent = models.BooleanField('Transparency of the navigation bar', blank=True, null=True)
+    navbar_inverted = models.BooleanField('Colorful navigation bar', blank=True, null=True)
 
     content_panels = Page.content_panels + [
+        FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
+        FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
         FieldPanel('hero_image'),
         FieldPanel('hero_title'),
         FieldPanel('hero_subtitle'),

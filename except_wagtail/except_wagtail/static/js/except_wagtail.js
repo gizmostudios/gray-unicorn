@@ -5,6 +5,7 @@ const carousels = document.querySelectorAll('.carousel');
 const navRadios = document.getElementsByName('main-menu');
 
 navRadios.forEach(radio => {
+  console.log("test")
   radio.addEventListener('click', event => {
     if(!radio.dataset.checked) {
       radio.dataset.checked = true;
@@ -26,6 +27,7 @@ window.addEventListener('scroll', function () {
   if(windowWidth <= 1087) {
     return;
   }
+
 
   let diff = window.scrollY / $hero.clientHeight;
 

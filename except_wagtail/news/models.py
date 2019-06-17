@@ -48,10 +48,10 @@ class NewsPage(Page):
 
 
 	content_panels = Page.content_panels + [
+		FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
+        FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
 		FieldPanel('category'),
         FieldPanel('hero_image'),
-        FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
-        FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
         FieldPanel('hero_title'),
         FieldPanel('hero_subtitle'),
         FieldPanel('intro', classname="full"),
@@ -68,19 +68,51 @@ class NewsPage(Page):
 		return position
 
 	def short_intro(self):
-		return self.intro[0:70]
+		return self.hero_title[0:70]
 
 	def is_long_intro(self):
 		long_intro = True
-		if len(self.intro) <= 70:
+		if len(self.hero_title) <= 70:
 			long_intro = False
 		return long_intro
 
-	parent_page_types = ['NewsIndexPage']
+	parent_page_types = ['FolderArticlePage']
+
+class NewspaperArticlePage(Page):
+	hero_image = models.ImageField(null=True, blank=True)
+	hero_title = models.CharField(max_length=255, null=True, blank=True)
+	date_published = models.DateField("Date article published", blank=True, null=True)
+	url_article = models.CharField(max_length=500, null=True, blank=True)
+	category = models.ForeignKey(
+        Category,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+
+
+	content_panels = Page.content_panels + [
+		FieldPanel('category'),
+        FieldPanel('hero_image'),
+        FieldPanel('hero_title'),
+        FieldPanel('date_published'),
+        FieldPanel('url_article'),
+    ]
+
+	def short_intro(self):
+		return self.hero_title[0:70]
+
+	def is_long_intro(self):
+		long_intro = True
+		if len(self.hero_title) <= 70:
+			long_intro = False
+		return long_intro
+
+	parent_page_types = ['FolderNewspaperPage']
 
 class NewsIndexPage(Page):
 
-	subpage_types = ['NewsPage']
+	subpage_types = ['FolderNewspaperPage','FolderArticlePage']
 	hero_image = models.ImageField(null=True, blank=True)
 	navbar_transparent = models.BooleanField('Transparency of the navigation bar', blank=True, null=True)
 	navbar_inverted = models.BooleanField('Colorful navigation bar', blank=True, null=True)
@@ -88,9 +120,9 @@ class NewsIndexPage(Page):
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
 
 	content_panels = Page.content_panels + [
-		FieldPanel('hero_image'),
-        FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
+		FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
         FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
+		FieldPanel('hero_image'),
         FieldPanel('hero_title'),
         FieldPanel('hero_subtitle')
     ]
@@ -98,16 +130,21 @@ class NewsIndexPage(Page):
 	def get_news(self):
 		return NewsPage.objects.live().order_by('-date_published')
 
+	def get_articles(self):
+		return NewspaperArticlePage.objects.live().order_by('-date_published')
+
 
 	def get_context(self, request):
 		context = super(NewsIndexPage, self).get_context(request)
 
 		news = self.get_news()
+		articles = self.get_articles()
 		last_year = news.first().date_published.year
 		first_year = news.last().date_published.year
 
 		categories = Category.objects.all()
 
+		context['current_articles'] = articles[0:7]
 		context['current_news'] = news[0:5]
 		context['categories'] = categories
 		context['news'] = news
@@ -116,4 +153,18 @@ class NewsIndexPage(Page):
 		return context
 
 
+class FolderNewspaperPage(Page):
+	hero_title = models.CharField(max_length=255, null=True, blank=True)
+	subpage_types = ['NewspaperArticlePage']
 
+	content_panels = Page.content_panels + [
+		FieldPanel('hero_title'),
+	]
+
+class FolderArticlePage(Page):
+	hero_title = models.CharField(max_length=255, null=True, blank=True)
+	subpage_types = ['NewsPage']
+
+	content_panels = Page.content_panels + [
+		FieldPanel('hero_title'),
+	]

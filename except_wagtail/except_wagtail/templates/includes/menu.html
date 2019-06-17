@@ -1,0 +1,36 @@
+{% load menu_tags %}
+<input type="checkbox" id="main-menu-toggle" class="is-hidden" />
+<nav class="navbar navbar-menu is-sticky" role="navigation" aria-label="main navigation">
+  <div class="container">
+    <div class="navbar-menu">
+      <!-- Left menu-->
+      <div class="navbar-start">
+        <!-- Navigation items-->
+        {% for item in menu_items %}
+        	{% if item.has_children_in_menu %}
+        		<div class="navbar-item">
+          			<input class="for-dropdown is-hidden" type="checkbox" id="{{item.text}}"/>
+          			<label for="{{item.text}}">{{item.text}}</label>
+        			{% sub_menu template=sub_menu_template menuitem_or_page=item %}
+        		</div>
+        	{% else %}
+        		<a class="navbar-item" href="{{item.href}}"><span>{{item.text}}</span></a>
+        	{% endif %}
+        {% endfor %}
+      </div>
+      <div class="navbar-end">
+        <!-- Search bar-->
+        <div class="navbar-item navbar-search">
+          <form action="/search/" method="get">
+            <input class="input" name="query" placeholder="Search site"/>
+            <i class="fas fa-search"></i>
+          </form>
+          
+          <label for="main-menu-toggle" class="main-menu-close is-hidden-desktop">
+            <i class="fas fa-times"></i>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

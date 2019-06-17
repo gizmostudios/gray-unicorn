@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django import forms
 
 from modelcluster.fields import ParentalKey
 
@@ -24,8 +25,12 @@ class PeoplePage(Page):
 	description_title = models.CharField(max_length=255, null=True, blank=True)
 	intro = models.TextField(blank=True)
 	description = models.TextField(blank=True)
+	navbar_transparent = models.BooleanField('Transparency of the navigation bar', blank=True, null=True)
+	navbar_inverted = models.BooleanField('Colorful navigation bar', blank=True, null=True)
 
 	content_panels = Page.content_panels + [
+        FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
+        FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
         FieldPanel('hero_image'),
         FieldPanel('hero_title'),
         FieldPanel('hero_subtitle'),

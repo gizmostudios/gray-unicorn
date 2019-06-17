@@ -1,8 +1,10 @@
-{% if inverted == True and transparent == True %}
+{% load menu_tags %}
+
+{% if inverted == False and transparent == True %}
   <nav class="is-fixed-top is-transparent inverted" id="mainNav">
-{% elif inverted == True and transparent == False %}
+{% elif inverted == False and transparent == False %}
   <nav class="is-fixed-top inverted" id="mainNav">
-{% elif inverted == False and transparent == True %}
+{% elif inverted == True and transparent == True %}
   <nav class="is-fixed-top is-transparent " id="mainNav">
 {% else %}
   <nav class="is-fixed-top" id="mainNav">
@@ -26,60 +28,4 @@
     </div>
   </div>
 </nav>
-
-<input type="checkbox" id="main-menu-toggle" class="is-hidden" />
-<nav class="navbar navbar-menu is-sticky" role="navigation" aria-label="main navigation">
-  <div class="container">
-    <div class="navbar-menu">
-      <!-- Left menu-->
-      <div class="navbar-start">
-        <!-- Navigation items-->
-        <a class="navbar-item" href="./"><span>Home</span></a>
-        <div class="navbar-item">
-          <input class="for-dropdown is-hidden" type="radio" name="main-menu" id="About"/>
-          <label for="About">About</label>
-          <div class="dropdown">
-            <ul>
-              <li><a href="/"><span>OUR PROFILE</span><i class="fas fa-chevron-right"></i></a></li>
-              <li><a href="/"><span>SYSTEM THINKING FRAMEWORK</span><i class="fas fa-chevron-right"></i></a></li>
-              <li><a href="/"><span>HISTORY</span><i class="fas fa-chevron-right"></i></a></li>
-              <li><a href="/"><span>OUR TEAM</span><i class="fas fa-chevron-right"></i></a></li>
-              <li><a href="/"><span>NEWS</span><i class="fas fa-chevron-right"></i></a></li>
-              <li><a href="/"><span>WORKING WITH US</span><i class="fas fa-chevron-right"></i></a></li>
-              <li><a href="/"><span>ENVIRONMENTAL POLICY</span><i class="fas fa-chevron-right"></i></a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="navbar-item">
-          <input class="for-dropdown is-hidden" type="radio" name="main-menu" id="Services"/>
-          <label for="Services">Services</label>
-          <div class="dropdown">
-            <ul>
-              <li><a><span>Services Overview</span><i class="fas fa-chevron-right"></i></a></li>
-              <li><a><span>Places, cities &amp; buildings</span><i class="fas fa-chevron-right"></i></a></li>
-              <li><a><span>Companies &amp; organizations</span><i class="fas fa-chevron-right"></i></a></li>
-              <li><a><span>Industry &amp; Sectors</span><i class="fas fa-chevron-right"></i></a></li>
-              <li><a><span>Training</span><i class="fas fa-chevron-right"></i></a></li>
-            </ul>
-          </div>
-        </div>
-        <a class="navbar-item" href="./projects"><span>Projects</span></a>
-        <a class="navbar-item" href="./knowledge"><span>Knowledge</span></a>
-      </div>
-      <!-- Right menu-->
-      <div class="navbar-end">
-        <!-- Search bar-->
-        <div class="navbar-item navbar-search">
-          <form action="/search/" method="get">
-            <input class="input" name="query" placeholder="Search site"/>
-            <i class="fas fa-search"></i>
-          </form>
-          
-          <label for="main-menu-toggle" class="main-menu-close is-hidden-desktop">
-            <i class="fas fa-times"></i>
-          </label>
-        </div>
-      </div>
-    </div>
-  </div>
-</nav>
+{% main_menu template="includes/menu.html" sub_menu_template="includes/sub_menu.html" %}

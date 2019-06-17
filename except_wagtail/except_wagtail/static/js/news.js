@@ -37,46 +37,58 @@ $.ajaxSetup({
 
 
 function updateFilterDisplay(categoryFilter){
-	const categoryFiltersActive = $("is-filter.is-active");
-	console.log(categoryFilter)
+	const categoryFiltersActive = $(".is-filter.is-active");
 	if(categoryFiltersActive.length == categoryFilters.length){
 		categoryFilters.removeClass("is-active").addClass("is-inactive");
 		categoryFilter.removeClass("is-inactive").addClass("is-active");
 	}
 	else if(categoryFilter.hasClass("is-active")){
-		console.log("is active")
 		categoryFilter.removeClass("is-active").addClass("is-inactive");
 	}
 	else{
-		console.log("is inactive")
 		categoryFilter.removeClass("is-inactive").addClass("is-active");
+	}
+	const categoryFiltersActiveUpdated = $(".is-filter.is-active");
+	if (categoryFiltersActiveUpdated.length == 0){
+		categoryFilters.removeClass("is-inactive").addClass("is-active");
 	}
 }
 
-function ajaxRequestFilter(category){
+function ajaxRequestFilter(){
+	const categoryFiltersActive = $(".is-filter.is-active");
+	var listActiveCat = [];
+	for( var j = 0; j < categoryFiltersActive.length; j++){
+		listActiveCat.push(categoryFiltersActive[j].querySelector("span").innerHTML)
+	}
 	$.post("/ajax/filter_news/",
-			{ category: category.innerHTML })
-			.done(function(data){
-				var section = document.querySelector("#latestNews");
-				section.innerHTML = data.html;
-			})
-		$.post("/ajax/filter_timeline/",
-			{ category: category.innerHTML })
-			.done(function(data){
-				console.log(data.html)
-				var section = document.querySelector(".timeline");
-				section.innerHTML = data.html;
-			})
+		JSON.stringify({ categories: listActiveCat,
+		type: "except" }))
+		.done(function(data){
+			var section = document.querySelector("#latestNews");
+			section.innerHTML = data.html;
+		})
+	$.post("/ajax/filter_news/",
+		JSON.stringify({ categories: listActiveCat,
+		type: "newspaper" }))
+		.done(function(data){
+			var section = document.querySelector("#lastestArticle");
+			section.innerHTML = data.html;
+		})
+	$.post("/ajax/filter_timeline/",
+		JSON.stringify({ categories: listActiveCat }))
+		.done(function(data){
+			var section = document.querySelector(".timeline");
+			section.innerHTML = data.html;
+		})
+		lock = 1
 }
 
 function clickFilter(categoryFilter){
 	return function(){
-		const $category = $(this).find("span");
 		categoryFilter.off().on('click', function(){
 			if( lock == 0){
 				updateFilterDisplay($(this));
-				ajaxRequestFilter($category);
-				lock = 1;
+				ajaxRequestFilter();
 			}
 			else{
 				lock = 0;
