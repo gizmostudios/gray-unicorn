@@ -17,15 +17,15 @@ from django.forms.widgets import Select
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from news.blocks import BaseStreamBlock
-from news.models import Category
+from services.models import ServicePage as Service
 
 from modelcluster.fields import ParentalManyToManyField
 
 @register_snippet
 class Resource(models.Model):
 	title = models.CharField(max_length=100)
-	category = models.ForeignKey(
-        Category,
+	service = models.ForeignKey(
+        Service,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -49,7 +49,7 @@ class Resource(models.Model):
 	panels = [        
 		FieldPanel('title'),
 		FieldPanel('file'),
-		FieldPanel('category'),
+		FieldPanel('service'),
         ImageChooserPanel('image'),
         FieldPanel('date_published'),
     ]
@@ -68,6 +68,9 @@ class CarouselItem(Orderable):
     ]
 
 class KnowledgePage(Page):
+    parent_page_types = ['index.HomePage']
+    subpage_types = []
+    
     hero_image = models.ImageField(null=True, blank=True)
     navbar_inverted = models.BooleanField(null=True, blank=True)
     navbar_transparent = models.BooleanField(null=True, blank=True)
@@ -105,6 +108,6 @@ class KnowledgePage(Page):
         resources = self.paginate(request, self.get_resources())
 
         context['resources'] = resources
-        context['categories'] = Category.objects.all()
+        context['services'] = Service.objects.all()
 
         return context

@@ -42,9 +42,9 @@
           </header>
           <div class="has-text-centered">
             {% csrf_token %}
-            {% for category in categories %}
-              <label class="button is-filter is-{{category.color}} is-active">
-                <input type="checkbox"><span>{{category.title}}</span>
+            {% for service in services %}
+              <label class="button is-filter is-{{service.color}} is-active">
+                <input type="checkbox"><span>{{service.title}}</span>
               </label>
             {% endfor %}
           </div>
@@ -55,6 +55,15 @@
           <div id="latestNews" class="columns is-grid">
             {% include "news/latest_news.html" with current_news=current_news type='except' %}
           </div>
+          {% if current_news.paginator.count > 1 %}
+            <div class="container">
+                <div class="row">
+                    <div id="paginationExcept" class="col-md-12">
+                    {% include "includes/pagination.html" with subpages=current_news %}
+                    </div>
+                </div>
+            </div>
+          {% endif %}
         </article>
       </div>
     </section>
@@ -67,6 +76,15 @@
           <div id="lastestArticle" class="columns is-grid">
             {% include "news/latest_news.html" with current_news=current_articles type='newspaper' %}
           </div>
+          {% if current_articles.paginator.count > 1 %}
+            <div class="container">
+                <div class="row">
+                    <div id="paginationNewspaper" class="col-md-12">
+                    {% include "includes/pagination.html" with subpages=current_articles %}
+                    </div>
+                </div>
+            </div>
+          {% endif %}
         </article>
       </div>
     </section>

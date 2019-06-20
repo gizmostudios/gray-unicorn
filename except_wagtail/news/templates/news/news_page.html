@@ -55,6 +55,56 @@
         </div>
       </div>
     </section>
+    <section class="section">
+      <div class="container">
+        <article class="article">
+          <header>
+            <h2 class="h2">Related articles</h2>
+          </header>
+          <div class="columns is-grid">
+            {% for article in related_articles %}
+              <div class="column is-4">
+                <a href="{{article.url}}">
+                  <div class="card is-stretched">
+                    <div class="card-image">
+                      <figure class="image"><img src="{{ mediaPath }}{{ article.hero_image }}"></figure>
+                    </div>
+                    {% if news.is_long_intro %}
+                      <div class="card-content"><a class="link">{{article.short_intro}}...</a></div>
+                    {% else %}
+                      <div class="card-content"><a class="link">{{article.hero_title}}</a></div>
+                    {% endif %}
+                  </div>
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <article class="article">
+          <header>
+            <h2 class="h2">Related resources</h2>
+          </header>
+          <div class="columns is-grid">
+            {% for resource in related_resources %}
+              <div class="column is-4">
+                <a href="{{resource.url}}">
+                  <div class="card is-stretched">
+                    <div class="card-image">
+                      <figure class="image"><img src="{{ mediaPath }}{{ resource.image }}"></figure>
+                    </div>
+                    <div class="card-content"><a class="link">{{resource.title}}</a></div>
+                  </div>
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+        </article>
+      </div>
+    </section>
     
   {% endwith %}
 {% endblock content %}

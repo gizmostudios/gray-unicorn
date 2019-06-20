@@ -195,6 +195,7 @@ p:not(.is-blocked) + .buttons,
 }
 .carousel.is-fullheight {
   height: calc(100vh - 250px);
+  min-height: 50vw;
 }
 article .carousel {
   height: 40vh;
@@ -995,3 +996,9 @@ nav[role=pagination] {
   text-align: center;
 }
 /*# sourceMappingURL=except_wagtail.css.map */
+
+a.anchor {
+    display: block;
+    position: relative;
+    visibility: hidden;
+}

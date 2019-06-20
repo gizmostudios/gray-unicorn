@@ -30,12 +30,12 @@ def update_pagination(request):
 
 
 def get_pagination(body):
-	decoded_categories = get_categories(body)
+	decoded_services = get_services(body)
 
 	url = "/home"+body["page_url"]
 
 	page = KnowledgePage.objects.all().filter(url_path=url).all()[0]
-	resources = Resource.objects.all().filter(category__title__in=decoded_categories).all().order_by('-date_published')
+	resources = Resource.objects.all().filter(service__title__in=decoded_services).all().order_by('-date_published')
 	paginator = Paginator(resources, 12)
 
 	try:
@@ -54,13 +54,13 @@ def get_pagination(body):
 
 
 def get_resources(body):
-	decoded_categories = get_categories(body)
+	decoded_services = get_services(body)
 	try:
 		page_number = int(body["page_number"])
 	except:
 		page_number = 1
 
-	resources = Resource.objects.all().filter(category__title__in=decoded_categories).all().order_by('-date_published')
+	resources = Resource.objects.all().filter(service__title__in=decoded_services).all().order_by('-date_published')
 	min_len_resources = min(12*(page_number),len(resources))
 	print(12*(page_number-1))
 	print(min_len_resources)
@@ -70,10 +70,10 @@ def get_resources(body):
 	return resources_live
 
 
-def get_categories(body):
-	categories = body["categories"]
-	decoded_categories = []
-	for category in categories:
-		decoded_categories.append(unescape(category))
+def get_services(body):
+	services = body["services"]
+	decoded_services = []
+	for service in services:
+		decoded_services.append(unescape(service))
 
-	return decoded_categories
+	return decoded_services

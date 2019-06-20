@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'ajax/filter_timeline/$',news_views.filter_timeline, name="filter_timeline"),
     url(r'ajax/filter_resources/$',knowledge_views.filter_resources, name="filter_resources"),
     url(r'ajax/update_pagination/$',knowledge_views.update_pagination, name="update_pagination"),
+    url(r'ajax/update_pagination_news/$',news_views.update_pagination, name="update_pagination"),
 
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in

@@ -18,7 +18,7 @@
             {% if page.hero_subtitle %}
               <h3 class="h3 subtitle">{{ page.hero_subtitle }}</h3>
             {% endif %}
-            <button class="button has-icon is-primary"><i class="fas fa-chevron-down"></i></button>
+            <a href='#top'><button class="button has-icon is-primary"><i class="fas fa-chevron-down"></i></button></a>
           </div>
         </div>
       </div>
@@ -26,7 +26,7 @@
 
     {# Main navigation #}
     {% include "includes/navbar.html" with inverted=page.navbar_inverted transparent=page.navbar_transparent%}
-
+    <a class="anchor" id="introduction"></a>
     <div class="spacer"></div>
 
     {# Intro #}
@@ -94,28 +94,24 @@
     {% endif %}
 
     {# Working areas #}
-    <section class="section is-fullheight" style="background-image:url(assets/images/working-area-photo.png">
+    <section class="section is-fullheight" style="background-image: url({{ mediaPath }}{{ page.services_image }})">
       <div class="container">
         <article class="article">
           <header>
-            <h2 class="h2">Our working areas (still hardcoded)</h2>
+            <h2 class="h2">Our working areas</h2>
           </header>
           <div class="columns has-gap">
-            <div class="column has-text-centered">
-              <figure class="image"><img src="assets/images/icons/places-icon.svg"></figure>
-              <h3 class="h3">Places, cities &amp; buildings</h3>
-            </div>
-            <div class="column has-text-centered">
-              <figure class="image"><img src="assets/images/icons/organizations-icon.svg"></figure>
-              <h3 class="h3">Organizations &amp; governance</h3>
-            </div>
-            <div class="column has-text-centered">
-              <figure class="image"><img src="assets/images/icons/industry-icon.svg"></figure>
-              <h3 class="h3">Industry &amp; sectors</h3>
-            </div>
-            <div class="column has-text-centered">
-              <figure class="image"><img src="assets/images/icons/training-icon.svg"></figure>
-              <h3 class="h3">Training</h3>
+            {% for service in services %}
+              <div class="column has-text-centered">
+                <figure class="image"><img src="{{ mediaPath }}{{ service.image }}"></figure>
+                <h3 class="h3">{{service.hero_title}}</h3>
+              </div>
+            {% endfor %}
+          </div>
+          <div class="buttons">
+            <div class="container"><a href='{{indexService.url}}' class="button is-next is-secondary">View our services</a></div>
+            <div class="container">
+              <button class="button has-icon is-primary"><i class="fas fa-chevron-down"></i></button>
             </div>
           </div>
         </article>

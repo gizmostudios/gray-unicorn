@@ -9,11 +9,11 @@ class CustomUserEditForm(UserEditForm):
     introduction = RichTextField(blank=True)
     picture = forms.ImageField(required=True)
     job_title = forms.CharField(required=True)
-    phone = forms.CharField(required=True)
+    phone = forms.CharField(required=False)
 
 class CustomUserCreationForm(UserCreationForm):
     biography = RichTextField(blank=True)
     introduction = RichTextField(blank=True)
     picture = forms.ImageField(required=True)
     job_title = forms.CharField(required=True)
-    phone = forms.CharField(required=True)
+    phone = forms.CharField(required=False)

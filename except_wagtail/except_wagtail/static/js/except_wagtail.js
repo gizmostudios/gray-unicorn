@@ -3,6 +3,8 @@ const $nav = document.querySelector('#mainNav');
 const $logo = document.querySelector('.logo');
 const carousels = document.querySelectorAll('.carousel');
 const navRadios = document.getElementsByName('main-menu');
+const anchor = document.querySelector('.anchor');
+const navbar = document.querySelector('.navbar');
 
 navRadios.forEach(radio => {
   console.log("test")
@@ -79,3 +81,6 @@ function scrollCarousel($container, target) {
     left: windowWidth * (target - 1)
   })
 }
+
+anchor.style.top = -$('.navbar').height() - $('#mainNav').height()+"px";
+console.log(anchor.style.top)

@@ -101,9 +101,9 @@
           </header>
           <div class="has-text-centered">
             {% csrf_token %}
-            {% for category in categories %}
-              <label class="button is-filter is-{{category.color}} is-active">
-                <input type="checkbox"><span>{{category.title}}</span>
+            {% for service in services %}
+              <label class="button is-filter is-{{service.color}} is-active">
+                <input type="checkbox"><span>{{service.title}}</span>
               </label>
             {% endfor %}
           </div>

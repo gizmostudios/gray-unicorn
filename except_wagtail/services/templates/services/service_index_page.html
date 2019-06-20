@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+
+{% load static %}
+
+{% block content %}
+  {% with mediaPath="/media/" %}
+    <section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ mediaPath }}{{ page.hero_image }})">
+      <div class="hero-body">
+        <div class="container">
+          <div>
+            {% if page.hero_title %}
+              <h1 class="h1 title">{{ page.hero_title }}</h1>
+            {% endif %}
+            {% if page.hero_subtitle %}
+              <h3 class="h3 subtitle">{{ page.hero_subtitle }}</h3>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {# Main navigation #}
+    {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
+
+    <div class="spacer"></div>
+    <section class="section">
+      <div class="container">
+        <article class="article">
+          <header class="header">
+            <h2 class="h2">Our working areas</h2>
+          </header>
+          <div class="columns has-gap">
+            {% for service in services %}
+              <div class="column has-text-centered">
+                <figure class="image"><img src="{{ mediaPath }}{{ service.image }}"></figure>
+                <h3 class="h3">{{service.hero_title}}</h3>
+              </div>
+            {% endfor %}
+          </div>
+        </article>
+      </div>
+    </section>
+    <section class="section is-fullheight" style="background-image: url({{ mediaPath }}{{ page.expertise_background }})">
+      <div class="container">
+        <article class="article">
+          <header class="header">
+            <h2 class="h2 is-inverted">Our services</h2>
+          </header>
+          <div id="expertises" class="columns is-grid">
+            {% for expertise in page.expertises.all %}
+              <div class="column is-3">
+                <div class="card is-stretched">
+                  <div class="card-image">
+                    <figure class="image"><img src="{{ mediaPath }}{{ expertise.image }}"></figure>
+                  </div>
+                  <div class="card-content has-label">
+                    <h3 class="h3">{{expertise.title}}</h3>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="columns has-gap">
+          <div class="column is-2 has-text-centered">
+            <figure class="image"><img src="assets/images/icons/places-icon.svg"></figure>
+            <h3 class="h3">Places, cities &amp; buildings</h3>
+          </div>
+          <div class="column is-10">
+            <div class="columns">
+              <div class="column is-1 has-text-right">
+                <button class="button is-primary is-fullheight">&gt;</button>
+              </div>
+              <div class="column is-11">
+                <h3 class="h3">URBAN RENAISSANCE</h3>
+                <p>A complete analysis, strategy, design and manage- ment service for sustainable cities, neighborhoods and regions</p>
+              </div>
+            </div>
+            <div class="spacer"></div>
+            <div class="columns">
+              <div class="column is-1 has-text-right">
+                <button class="button is-primary is-fullheight">&gt;</button>
+              </div>
+              <div class="column is-11">
+                <h3 class="h3">ISLAND RENAISSANCE</h3>
+                <p>A complete analysis, strategy, design and manage- ment service for sustainable cities, neighborhoods and regions</p>
+              </div>
+            </div>
+            <div class="spacer"></div>
+            <div class="columns">
+              <div class="column is-1 has-text-right">
+                <button class="button is-primary is-fullheight">&gt;</button>
+              </div>
+              <div class="column is-11">
+                <h3 class="h3">SUSTAINABLE ESTATES</h3>
+                <p>A complete analysis, strategy, design and manage- ment service for sustainable cities, neighborhoods and regions</p>
+              </div>
+            </div>
+            <div class="spacer"></div>
+            <div class="columns">
+              <div class="column is-1 has-text-right">
+                <button class="button is-primary is-fullheight">&gt;</button>
+              </div>
+              <div class="column is-11">
+                <h3 class="h3">INNOVATION COMMUNITIES</h3>
+                <p>A complete analysis, strategy, design and manage- ment service for sustainable cities, neighborhoods and regions</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="columns has-gap">
+          <div class="column is-2 has-text-centered">
+            <figure class="image"><img src="assets/images/icons/organizations-icon.svg"></figure>
+            <h3 class="h3">Organizations &amp; Governance</h3>
+          </div>
+          <div class="column is-10">
+            <div class="columns">
+              <div class="column is-1 has-text-right">
+                <button class="button is-primary is-fullheight">&gt;</button>
+              </div>
+              <div class="column is-11">
+                <h3 class="h3">ROUTEMAPS TO SUSTAINABILITY</h3>
+                <p>Supporting organizations develop action- able pathways towards sustainable, profitable, and ethical operations.</p>
+              </div>
+            </div>
+            <div class="spacer"></div>
+            <div class="columns">
+              <div class="column is-1 has-text-right">
+                <button class="button is-primary is-fullheight">&gt;</button>
+              </div>
+              <div class="column is-11">
+                <h3 class="h3">SUSTAINABLE SUPPLY CHAINS</h3>
+                <p>Supporting organizations develop action- able pathways towards sustainable, profitable, and ethical operations.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="columns has-gap">
+          <div class="column is-2 has-text-centered">
+            <figure class="image"><img src="assets/images/icons/industry-icon.svg"></figure>
+            <h3 class="h3">Industry &amp; sectors</h3>
+          </div>
+          <div class="column is-10">
+            <div class="columns">
+              <div class="column is-1 has-text-right">
+                <button class="button is-primary is-fullheight">&gt;</button>
+              </div>
+              <div class="column is-11">
+                <h3 class="h3">CIRCULAR INDUSTRIES</h3>
+                <p>Supporting organizations develop action- able pathways towards sustainable, profitable, and ethical operations.</p>
+              </div>
+            </div>
+            <div class="spacer"></div>
+            <div class="columns">
+              <div class="column is-1 has-text-right">
+                <button class="button is-primary is-fullheight">&gt;</button>
+              </div>
+              <div class="column is-11">
+                <h3 class="h3">SUSTAINABLE FOOD SYSTEMS</h3>
+                <p>Supporting organizations develop action- able pathways towards sustainable, profitable, and ethical operations.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="columns has-gap">
+          <div class="column is-2 has-text-centered">
+            <figure class="image"><img src="assets/images/icons/training-icon.svg"></figure>
+            <h3 class="h3">Training</h3>
+          </div>
+          <div class="column is-10">
+            <div class="columns">
+              <div class="column is-1 has-text-right">
+                <button class="button is-primary is-fullheight">&gt;</button>
+              </div>
+              <div class="column is-11">
+                <h3 class="h3">IN-COMPANY TRAINING &amp; WORKSHOPS</h3>
+                <p>Supporting organizations develop action- able pathways towards sustainable, profitable, and ethical operations.</p>
+              </div>
+            </div>
+            <div class="spacer"></div>
+            <div class="columns">
+              <div class="column is-1 has-text-right">
+                <button class="button is-primary is-fullheight">&gt;</button>
+              </div>
+              <div class="column is-11">
+                <h3 class="h3">OPEN REGISTRATION TRAINING &amp; WORKSHOPS</h3>
+                <p>Supporting organizations develop action- able pathways towards sustainable, profitable, and ethical operations.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endwith %}
+{% endblock content %}

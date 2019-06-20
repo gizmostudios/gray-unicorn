@@ -17,19 +17,15 @@ from django.forms.widgets import Select
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from news.blocks import BaseStreamBlock
+from services.models import ServicePage as Service
+from knowledge.models import *
 
-@register_snippet
-class Category(models.Model):
-	title = models.CharField(max_length=100)
-	color = models.CharField(max_length=100, blank=True, null=True)
-
-	def __str__(self):
-		return self.title
-
-	class Meta:
-		verbose_name_plural = "Categories"
 
 class NewsPage(Page):
+
+	parent_page_types = ['FolderArticlePage']
+	subpage_types = []
+
 	hero_image = models.ImageField(null=True, blank=True)
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
@@ -39,26 +35,26 @@ class NewsPage(Page):
 	navbar_inverted = models.BooleanField('Colorful navigation bar', blank=True, null=True)
 	body = StreamField(BaseStreamBlock(), verbose_name="Page body", blank=True)
 	author = models.ForeignKey('people.People',on_delete=models.SET_NULL,null=True,blank=True,)
-	category = models.ForeignKey(
-        Category,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-    )
+	service = models.ForeignKey(
+		Service,
+		on_delete=models.SET_NULL,
+		null=True,
+		blank=True,
+	)
 
 
 	content_panels = Page.content_panels + [
 		FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
-        FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
-		FieldPanel('category'),
-        FieldPanel('hero_image'),
-        FieldPanel('hero_title'),
-        FieldPanel('hero_subtitle'),
-        FieldPanel('intro', classname="full"),
-        StreamFieldPanel('body'),
-        FieldPanel('date_published'),
-        FieldPanel('author'),
-    ]
+		FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
+		FieldPanel('service'),
+		FieldPanel('hero_image'),
+		FieldPanel('hero_title'),
+		FieldPanel('hero_subtitle'),
+		FieldPanel('intro', classname="full"),
+		StreamFieldPanel('body'),
+		FieldPanel('date_published'),
+		FieldPanel('author'),
+	]
 
 	def timeline_position(self):
 		d0 = datetime(self.date_published.year, 1, 1).date()
@@ -76,28 +72,38 @@ class NewsPage(Page):
 			long_intro = False
 		return long_intro
 
-	parent_page_types = ['FolderArticlePage']
+	def get_context(self, request):
+		context = super(NewsPage, self).get_context(request)
+
+		resources = Resource.objects.all().filter(service__id=self.service.id).order_by('-date_published')[0:3]
+		articles = NewsPage.objects.live().filter(service__id=self.service.id).exclude(id=self.id).order_by('-date_published')[0:3]
+
+		context["related_resources"] = resources
+		context["related_articles"] = articles
+
+		return context
+
 
 class NewspaperArticlePage(Page):
 	hero_image = models.ImageField(null=True, blank=True)
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
 	date_published = models.DateField("Date article published", blank=True, null=True)
 	url_article = models.CharField(max_length=500, null=True, blank=True)
-	category = models.ForeignKey(
-        Category,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-    )
+	service = models.ForeignKey(
+		Service,
+		on_delete=models.SET_NULL,
+		null=True,
+		blank=True,
+	)
 
 
 	content_panels = Page.content_panels + [
-		FieldPanel('category'),
-        FieldPanel('hero_image'),
-        FieldPanel('hero_title'),
-        FieldPanel('date_published'),
-        FieldPanel('url_article'),
-    ]
+		FieldPanel('service'),
+		FieldPanel('hero_image'),
+		FieldPanel('hero_title'),
+		FieldPanel('date_published'),
+		FieldPanel('url_article'),
+	]
 
 	def short_intro(self):
 		return self.hero_title[0:70]
@@ -109,10 +115,12 @@ class NewspaperArticlePage(Page):
 		return long_intro
 
 	parent_page_types = ['FolderNewspaperPage']
+	subpage_types = []
 
 class NewsIndexPage(Page):
 
 	subpage_types = ['FolderNewspaperPage','FolderArticlePage']
+	parent_page_types = ['index.HomePage']
 	hero_image = models.ImageField(null=True, blank=True)
 	navbar_transparent = models.BooleanField('Transparency of the navigation bar', blank=True, null=True)
 	navbar_inverted = models.BooleanField('Colorful navigation bar', blank=True, null=True)
@@ -121,11 +129,11 @@ class NewsIndexPage(Page):
 
 	content_panels = Page.content_panels + [
 		FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
-        FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
+		FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
 		FieldPanel('hero_image'),
-        FieldPanel('hero_title'),
-        FieldPanel('hero_subtitle')
-    ]
+		FieldPanel('hero_title'),
+		FieldPanel('hero_subtitle')
+	]
 
 	def get_news(self):
 		return NewsPage.objects.live().order_by('-date_published')
@@ -133,20 +141,45 @@ class NewsIndexPage(Page):
 	def get_articles(self):
 		return NewspaperArticlePage.objects.live().order_by('-date_published')
 
+	def paginate_news(self, request, *args):
+		page = request.GET.get('page')
+		paginator = Paginator(self.get_news(), 6)
+		try:
+			pages = paginator.page(page)
+		except PageNotAnInteger:
+			pages = paginator.page(1)
+		except EmptyPage:
+			pages = paginator.page(paginator.num_pages)
+		return pages
+
+	def paginate_articles(self, request, *args):
+		page = request.GET.get('page')
+		paginator = Paginator(self.get_articles(), 8)
+		try:
+			pages = paginator.page(page)
+		except PageNotAnInteger:
+			pages = paginator.page(1)
+		except EmptyPage:
+			pages = paginator.page(paginator.num_pages)
+		return pages
+
 
 	def get_context(self, request):
 		context = super(NewsIndexPage, self).get_context(request)
 
-		news = self.get_news()
-		articles = self.get_articles()
-		last_year = news.first().date_published.year
-		first_year = news.last().date_published.year
+		news = self.paginate_news(request, self.get_news())
+		articles = self.paginate_articles(request, self.get_articles())
 
-		categories = Category.objects.all()
+		news_all = self.get_news()
+		articles_all = self.get_articles()
+		last_year = news_all.first().date_published.year
+		first_year = articles_all.last().date_published.year
 
-		context['current_articles'] = articles[0:7]
-		context['current_news'] = news[0:5]
-		context['categories'] = categories
+		services = Service.objects.live()
+
+		context['current_articles'] = articles
+		context['current_news'] = news
+		context['services'] = services
 		context['news'] = news
 		context['years'] = range(first_year, last_year+1)
 
@@ -156,6 +189,7 @@ class NewsIndexPage(Page):
 class FolderNewspaperPage(Page):
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
 	subpage_types = ['NewspaperArticlePage']
+	parent_page_types = ['NewsIndexPage']
 
 	content_panels = Page.content_panels + [
 		FieldPanel('hero_title'),
@@ -164,6 +198,7 @@ class FolderNewspaperPage(Page):
 class FolderArticlePage(Page):
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
 	subpage_types = ['NewsPage']
+	parent_page_types = ['NewsIndexPage']
 
 	content_panels = Page.content_panels + [
 		FieldPanel('hero_title'),

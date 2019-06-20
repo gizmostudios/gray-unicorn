@@ -31,6 +31,9 @@ class Partner(Orderable):
     ]
 
 class AboutPage(Page):
+    parent_page_types = ['index.HomePage']
+    subpage_types = []
+    
     hero_image = models.ImageField(null=True, blank=True)
     hero_title = models.CharField(max_length=255, null=True, blank=True)
     hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
