@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'knowledge',
     'except_wagtail',
     'services',
+    'projects',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -113,12 +114,6 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-
-AUTH_USER_MODEL = 'people.People'
-WAGTAIL_USER_EDIT_FORM = 'people.forms.CustomUserEditForm'
-WAGTAIL_USER_CREATION_FORM = 'people.forms.CustomUserCreationForm'
-WAGTAIL_USER_CUSTOM_FIELDS = ['introduction', 'biography', 'picture','job_title', 'phone']
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators

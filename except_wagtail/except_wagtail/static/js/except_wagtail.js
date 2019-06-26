@@ -75,6 +75,8 @@ carousels.forEach(carousel => {
 })
 
 function scrollCarousel($container, target) {
+  console.log($container)
+  console.log(target)
   $container.scroll({
     behavior: 'smooth',
     top: 0,

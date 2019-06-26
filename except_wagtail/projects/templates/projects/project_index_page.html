@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+
+{% load static %}
+
+{% block content %}
+  {% with mediaPath="/media/" %}
+
+    <section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ mediaPath }}{{ page.hero_image }})">
+      <div class="hero-body">
+        <div class="container">
+          <div>
+            {% if page.hero_title %}
+              <h1 class="h1 title">{{ page.hero_title }}</h1>
+            {% endif %}
+            {% if page.hero_subtitle %}
+              <h3 class="h3 subtitle">{{ page.hero_subtitle }}</h3>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {# Main navigation #}
+    {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
+
+    <section class="section">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-8">
+            {% if page.intro %}
+              <p class="intro">
+                {{page.intro}}
+              </p>
+            {% endif %}
+          </div>
+      </div>
+    </section>
+    {% if page.carousel_items %}
+      <section class="section has-carousel">
+        <div class="container has-carousel" data-count="{{page.carousel_items.all|length}}">
+          <article class="article carousel-inner">
+            {% for item in page.carousel_items.all %}
+              <div class="carousel has-text-centered" style="background-image:url({{ mediaPath }}{{ item.project.hero_image }})">
+                <div class="caption-carousel-article">
+                  <h2 class="h2 is-blocked">{{ item.project.hero_title }}</h2>
+                  <p class="is-blocked description">{{ item.project.summary }}</p>
+                  <div class="buttons"><a href="{{item.project.url}}" class="button is-next is-secondary">View project</a></div>
+                </div>
+              </div>       
+            {% endfor %}
+          </article>
+        </div>
+      </section>
+      <section class="section has-selectors">
+        <div class="container flex-centered">
+          <div class="buttons">
+            {% for item in page.carousel_items.all %}
+              {% if item == page.carousel_items.all.0 %}
+                <button class="button is-selector is-primary is-carousel"></button>
+              {% else %}
+                <button class="button is-selector is-secondary is-carousel"></button>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+    {% endif %}
+    <section class="section">
+      <div class="container">
+        <article class="article">
+          <header>
+            <h2 class="h2">Latest projects</h2>
+          </header>
+          <div class="columns is-grid">
+            {% for project in latest_project %}
+            <div class="column is-4">
+              <div class="card is-stretched">
+                <div class="card-image">
+                  <figure class="image"><img src="{{ mediaPath }}{{ project.hero_image }}"></figure>
+                </div>
+                <div class="card-content has-label">
+                  <h3 class="h3">{{project.hero_title}}</h3>
+                  <p>{{project.date_published}}</p>
+                  <button class="button is-selector is-{{project.service.color}} is-pulled-left"></button><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <article class="article">
+          <header>
+            <h2 class="h2">Latest projects</h2>
+          </header>
+          <header class="has-text-centered">
+            <h3 class="h3">TIMELINE</h3>
+          </header>
+          <div class="has-text-centered">
+            <div class="timeline">
+              {% include "news/timeline.html" with years=years news=current_projects %}
+            </div>
+          </div>
+          <div class="spacer"></div>
+          <header class="has-text-centered">
+            <h3 class="h3">FILTER</h3>
+          </header>
+          <div class="has-text-centered">
+            {% csrf_token %}
+            {% for service in services %}
+              <label class="button is-filter is-{{service.color}} is-active">
+                <input type="checkbox"><span>{{service.title}}</span>
+              </label>
+            {% endfor %}
+          </div>
+          <div class="spacer is-large"></div>
+          <div id="latestNews" class="columns is-grid">
+            {% include "projects/projects_list.html" with projects=current_projects %}
+          </div>
+          {% if current_projects.paginator.count > 1 %}
+            <div class="container">
+                <div class="row">
+                    <div id="paginationExcept" class="col-md-12">
+                    {% include "includes/pagination.html" with subpages=current_projects %}
+                    </div>
+                </div>
+            </div>
+          {% endif %}
+        </article>
+      </div>
+    </section>
+    <script type="text/javascript" src="{% static 'js/carousel_article.js' %}"></script>
+  {% endwith %}
+{% endblock content %}

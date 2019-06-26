@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+
+{% load static %}
+
+{% block content %}
+  {% with mediaPath="/media/" %}
+  
+    <section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ mediaPath }}{{ parent_page.hero_image }})">
+      <div class="hero-body">
+        <div class="container">
+          <div>
+            {% if parent_page.hero_title %}
+              <h1 class="h1 title">{{ parent_page.hero_title }}</h1>
+            {% endif %}
+            {% if parent_page.hero_subtitle %}
+              <h3 class="h3 subtitle">{{ parent_page.hero_subtitle }}</h3>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {# Main navigation #}
+    {% include "includes/navbar.html" with transparent=parent_page.navbar_transparent inverted=parent_page.navbar_inverted %}
+
+    <section class="section">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-3">
+            <figure class="image"><img src="{{ mediaPath }}{{ person.picture }}"></figure>
+            <div class="column is-10">
+              {% if person.expertises %}
+                <h4 class="h4">Areas of expertise:</h4>
+                <ul>
+                  {% for expertise in person.expertises.all %}
+                  <div>                    
+                    <li class="profile-item"><i class="fas fa-chevron-right"></i> {{expertise.competency}}</li>
+                  </div>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+              <div class="spacer"></div>
+              {% if person.hobbies %}
+                <h4 class="h4">Enjoys:</h4>
+                <ul>
+                  {% for hobby in person.hobbies.all %}
+                  <div>
+                    <li class="profile-item"><i class="fas fa-chevron-right"></i> {{hobby.activity}}</li>
+                  </div>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+              <div class="spacer"></div>
+                <h4 class="h4">Contact:</h4>
+                <ul>
+                  <div>
+                    {% if user.email %}
+                      <li class="profile-item"><i class="fas fa-envelope"></i><a href="mailto:{{user.email}}">  {{user.email}}</a></li>
+                    {% endif %}
+                    {% if person.phone %}
+                      <li class="profile-item"><i class="fas fa-phone"></i> {{person.phone}}</li>
+                    {% endif %}
+                  </div>
+                </ul>
+            </div>
+          </div>
+          <div class="column is-7">
+            <header>
+              <h2 class="h2">{{user.first_name}} {{user.last_name}}</h2>
+            </header>
+            <div class="spacer is-large"></div>
+            {% if person.biography %}
+              <p class="intro">
+                {{person.biography}}
+              </p>
+            {% endif %}
+            {% if person.introduction %}
+              {{ person.introduction }}
+            {% endif %}
+            <header>
+              <h2 class="h2">Articles</h2>
+            </header>
+            {% if articles %}
+            <div class="columns is-grid">
+              {% for article in articles %}
+                <div class="column is-4">
+                  <div class="card is-stretched">
+                    <div class="card-image">
+                      <figure class="image">
+                        <a href="{{article.url}}">
+                          <img src="{{ mediaPath }}{{ article.hero_image }}">
+                        </a>
+                      </figure>
+                    </div>
+                    <div class="card-content has-label"><a href="{{article.url}}" class="link">{{article.hero_title}}</a>
+                      <p class="date">{{article.date_published}}</p><a class="button is-{{article.service.color}} is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+          <header>
+              <h2 class="h2">Projects</h2>
+            </header>
+            {% if projects %}
+            <div class="columns is-grid">
+              {% for project in projects %}
+                <div class="column is-4">
+                  <div class="card is-stretched">
+                    <div class="card-image">
+                      <figure class="image">
+                        <a href="{{project.url}}">
+                          <img src="{{ mediaPath }}{{ project.hero_image }}">
+                        </a>
+                      </figure>
+                    </div>
+                    <div class="card-content has-label"><a href="{{project.url}}" class="link">{{project.hero_title}}</a>
+                      <p class="date">{{project.date_published}}</p><a class="button is-{{project.service.color}} is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+  {% endwith %}
+{% endblock content %}

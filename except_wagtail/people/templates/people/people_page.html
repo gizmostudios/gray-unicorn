@@ -41,12 +41,14 @@
           <p>{{ page.description }}</p>
         {% endif %}
         <div class="grid">
-          {% for people in page.get_people %}
-          <figure class="image portrait"><img src="{{ mediaPath }}{{ people.picture }}">
-            <figcaption>
-              <h3 class="h3">{{people.first_name}} {{people.last_name}}</h3><span>{{people.job_title}}</span>
-            </figcaption>
-          </figure>
+          {% for people in people_list %}
+            <a href="{{people.url}}">
+              <figure class="image portrait"><img src="{{ mediaPath }}{{ people.person.picture }}">
+                <figcaption>
+                  <h3 class="h3">{{people.person.user.first_name}} {{people.person.user.last_name}}</h3><span>{{people.person.job_title}}</span>
+                </figcaption>
+              </figure>
+            </a>
           {% endfor %}
         </div>
       </article>

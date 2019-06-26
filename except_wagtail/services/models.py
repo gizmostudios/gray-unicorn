@@ -29,6 +29,20 @@ class Expertise(Orderable):
 		FieldPanel('image'),
 	]
 
+class SubServicePage(Page):
+	parent_page_types = ['ServicePage']
+	subpage_types = []
+
+	hero_title = models.CharField(max_length=100)
+	description = models.TextField(blank=True)
+	body = StreamField(BaseStreamBlock(), verbose_name="Page body", blank=True)
+
+	content_panels = Page.content_panels + [
+		FieldPanel('hero_title'),
+		FieldPanel('description', classname="full"),
+		StreamFieldPanel('body'),
+	]
+
 class ServicePage(Page):
 	hero_title = models.CharField(max_length=100)
 	color = models.CharField(max_length=100, blank=True, null=True)
@@ -47,8 +61,18 @@ class ServicePage(Page):
 		FieldPanel('image'),
 	]
 
+	def get_subservices(self):
+		subservices = SubServicePage.objects.descendant_of(self)
+		return subservices
+
+	def get_context(self, request):
+		context = super(ServicePage, self).get_context(request)
+
+		context['subservices'] = self.get_subservices()
+		return context
+
 	parent_page_types = ['ServiceIndexPage']
-	subpage_types = []
+	subpage_types = ['SubServicePage']
 
 
 class ServiceIndexPage(Page):
@@ -81,6 +105,6 @@ class ServiceIndexPage(Page):
 		context = super(ServiceIndexPage, self).get_context(request)
 
 		services = self.get_news()
-		context['services'] = services
+		context['service_list'] = services
 
 		return context

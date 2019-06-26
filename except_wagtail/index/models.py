@@ -13,6 +13,7 @@ from knowledge.models import *
 from news.models import *
 from people.models import *
 from services.models import *
+from projects.models import *
 
 class CarouselItem(Orderable):
 	image = models.ForeignKey(
@@ -48,7 +49,7 @@ class CarouselItem(Orderable):
 	]
 
 class HomePage(Page):
-	subpage_types = [AboutPage,PeoplePage,ServiceIndexPage,NewsIndexPage,KnowledgePage]
+	subpage_types = [AboutPage,PeoplePage,ServiceIndexPage,NewsIndexPage,KnowledgePage,ProjectIndexPage]
 	hero_image = models.ImageField(null=True, blank=True)
 	navbar_inverted = models.BooleanField(null=True, blank=True)
 	navbar_transparent = models.BooleanField(null=True, blank=True)

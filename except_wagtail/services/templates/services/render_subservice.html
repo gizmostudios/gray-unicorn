@@ -1,0 +1,20 @@
+<section class="section {{service.id}} render-service">
+  <div class="container">
+    <div class="columns has-gap">
+      <div class="column is-12">
+        {% for subservice in subservices %}
+          <div class="columns">
+            <div class="column is-1 has-text-right">
+              <button class="button is-primary is-fullheight">&gt;</button>
+            </div>
+            <div class="column is-11">
+              <h3 class="h3">{{subservice.title}}</h3>
+              <p>{{subservice.description}}</p>
+            </div>
+          </div>
+          <div class="spacer"></div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>

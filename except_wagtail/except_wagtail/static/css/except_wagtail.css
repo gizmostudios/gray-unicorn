@@ -100,6 +100,9 @@
   background: #ffffff;
   color: #6B2A7E !important;
 }
+.button.is-selector.is-primary {
+  background: #6B2A7E;
+}
 .button.is-secondary {
   color: #ffffff;
   background: #A5A7AA;
@@ -225,7 +228,7 @@ article .carousel .carousel-inner {
   scroll-snap-align: center;
 }
 article .carousel .carousel-inner article {
-  wflex: none;
+  flex: none;
   width: 100%;
   background-position: center center;
   background-repeat: no-repeat;
@@ -685,7 +688,6 @@ p.description {
 }
 
 .is-blocked {
-  display: inline-block;
   color: #ffffff;
   background: rgba(0, 0, 0, 0.3);
   padding: 1em 2em;
@@ -1001,4 +1003,67 @@ a.anchor {
     display: block;
     position: relative;
     visibility: hidden;
+}
+
+.render-service {
+    transition: max-height 0.5s;
+    transition-timing-function: ease-out;
+    padding: 0;
+    height: 0;
+    max-height:0;
+    overflow: hidden;
+}
+
+.render-service.active {
+  height: auto;
+  max-height: 500px;
+}
+.render-service .container{
+  margin: 0;
+}
+.render-service.active .container{
+  margin: 4em 0;
+}
+.carousel.has-text-centered{
+  width: 100%;
+  position:relative;
+  background-size: cover;
+  flex: none;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: em;
+  scroll-snap-align: center;
+}
+.caption-carousel-article{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 3em;
+  max-width:50%;
+  text-align: left;
+}
+.has-carousel .carousel-inner{
+  height:100%;
+  flex-direction: initial;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  display: flex;
+  flex-wrap: nowrap;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+
+.is-blocked.description{
+  margin: 0;
+}
+
+.is-blocked{
+  width: initial;
+}
+
+.profile-item{
+  margin-top: 0.5em;
 }

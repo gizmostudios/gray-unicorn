@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+
+{% load static %}
+
+{% block content %}
+  {% with mediaPath="/media/" %}
+
+    <section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ mediaPath }}{{ page.hero_image }})">
+      <div class="hero-body">
+        <div class="container">
+          <div>
+            {% if page.hero_title %}
+              <h1 class="h1 title">{{ page.hero_title }}</h1>
+            {% endif %}
+            {% if page.hero_subtitle %}
+              <h3 class="h3 subtitle">{{ page.hero_subtitle }}</h3>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {# Main navigation #}
+    {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
+
+    <section class="section">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-8">
+            {% if page.intro %}
+              <p class="intro">
+                {{page.intro}}
+              </p>
+            {% endif %}
+          </div>
+          <div class="column is-4 has-text-right">
+            {% if page.author %}
+              {% with author=page.author %}
+                <figure class="image"><img class="is-200x200" src="{{ mediaPath }}{{ author.picture }}">
+                  <figcaption class="caption">by {{author.first_name}} {{author.last_name}}</figcaption>
+                  <figcaption class="caption"><i class="fas fa-envelope"></i><span>{{author.email}}</span></figcaption>
+                  <figcaption class="caption"><i class="fas fa-phone"></i><span>{{author.phone}}</span></figcaption>
+                </figure>
+              {% endwith %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+    {% if page.carousel_items %}
+      <section class="section has-carousel">
+        <div class="container has-carousel" data-count="{{page.carousel_items.all|length}}">
+          <article class="article carousel-inner">
+            {% for item in page.carousel_items.all %}
+              <div class="carousel has-text-centered" style="background-image:url({{ mediaPath }}{{ item.image }})">
+                <div class="caption-carousel-article">
+                  <p class="is-blocked description">{{ item.description }}</p>
+                </div>
+              </div>
+            {% endfor %}
+          </article>
+        </div>
+      </section>
+      <section class="section has-selectors">
+        <div class="container flex-centered">
+          <div class="buttons">
+            {% for item in page.carousel_items.all %}
+              {% if item == page.carousel_items.all.0 %}
+                <button class="button is-selector is-primary is-carousel"></button>
+              {% else %}
+                <button class="button is-selector is-secondary is-carousel"></button>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+    {% endif %}
+    <section class="section">
+      <div class="container">
+        <article class="article">
+          <div class="columns">
+            <div class="column is-8">
+              {% if page.body %}
+                {{ page.body }}
+              {% endif %}
+            </div>
+            <div class="column is-4 has-text-right">
+              {% if page.project_partners %}
+                <h4 class="h4">Project partners</h4>
+                <ul>
+                {% for project_partner in page.project_partners.all %}
+                  <li>
+                    <figure class="image"><img class="is-200x200" src="{{ mediaPath }}{{ project_partner.partner.image }}">
+                      <figcaption class="caption">{{project_partner.partner.company}}</figcaption>
+                    </figure>
+                  </li>
+                {% endfor %}
+                </ul>
+              {% endif %}
+              <div class="spacer is-large"></div>
+              {% if page.team_members %}
+                <h4 class="h4">Project team</h4>
+                <ul>
+                {% for team_member in page.team_members.all %}
+                <li>
+                    <figure class="image"><img class="is-200x200" src="{{ mediaPath }}{{ team_member.member.picture }}">
+                      <figcaption class="caption">{{team_member.member.first_name}} {{team_member.member.last_name}}</figcaption>
+                    </figure>
+                  </li>
+                {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <article class="article">
+          <header>
+            <h2 class="h2">Images &amp; Downloads</h2>
+          </header>
+          {% if page.project_resources %}
+            {% with project_resources=page.project_resources %}
+              <div class="columns is-grid">
+                {% for project_resource in project_resources.all %}
+                  <div class="column is-4">
+                    <div class="card is-stretched">
+                      <div class="card-image">
+                        <figure class="image">
+                          <a href="{{project_resource.resource.file.url}}">
+                            <img src="{{ mediaPath }}{{ project_resource.resource.image }}">
+                          </a>
+                        </figure>
+                      </div>
+                      <div class="card-content"><a href="{{project_resource.resource.file.url}}" class="link">{{project_resource.resource.title}}</a></div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endwith %}
+          {% else %}
+            {% with resources=related_resources %}
+              <div class="columns is-grid">
+                {% for resource in resources %}
+                  <div class="column is-4">
+                    <div class="card is-stretched">
+                      <div class="card-image">
+                        <figure class="image">
+                        <a href="{{project_resource.resource.file.url}}">
+                          <img src="{{ mediaPath }}{{ project_resource.resource.image }}">
+                        </a>
+                      </figure>
+                      <div class="card-content"><a href="{{resource.file.url}}" class="link">{{resource.title}}</a></div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endwith %}
+          {% endif %}
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <article class="article">
+          <header>
+            <h2 class="h2">Related items</h2>
+          </header>
+          {% if projects %}
+            <div class="columns is-grid">
+              {% for project in projects %}
+                <div class="column is-4">
+                  <div class="card is-stretched">
+                    <div class="card-image">
+                      <figure class="image">
+                        <a href="{{project.url}}">
+                          <img src="{{ mediaPath }}{{ project.hero_image }}">
+                        </a>
+                      </figure>
+                    </div>
+                    <div class="card-content has-label"><a href="{{project.url}}" class="link">{{project.hero_title}}</a>
+                      <p class="date">{{project.date_published}}</p><a class="button is-{{project.service.color}} is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </article>
+      </div>
+    </section>
+    <script type="text/javascript" src="{% static 'js/carousel_article.js' %}"></script>
+  {% endwith %}
+{% endblock content %}

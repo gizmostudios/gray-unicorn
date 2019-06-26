@@ -7,8 +7,10 @@ from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, PageChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.snippets.models import register_snippet
 
 from django.forms.widgets import Select
+
 
 class Quote(Orderable):
     company = models.CharField(max_length=255, null=True, blank=True)
@@ -22,14 +24,19 @@ class Quote(Orderable):
         FieldPanel('caption', classname="full")
     ]
 
+@register_snippet
 class Partner(Orderable):
+    company = models.CharField(max_length=255, null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
-    page = ParentalKey('AboutPage', related_name='partners')
 
     panels = [
-        FieldPanel('image')
+        FieldPanel('company'),
+        FieldPanel('image'),
     ]
 
+    def __str__(self):
+        return self.company
+    
 class AboutPage(Page):
     parent_page_types = ['index.HomePage']
     subpage_types = []
@@ -53,5 +60,11 @@ class AboutPage(Page):
         FieldPanel('team_introduction', classname="full"),
         FieldPanel('collaboration_introduction', classname="full"),
         InlinePanel('quotes', label="Quotes"),
-        InlinePanel('partners', label="Partners"),
     ]
+
+    def get_context(self, request):
+        context = super(AboutPage, self).get_context(request)
+
+        context['partners'] = Partner.objects.all()
+
+        return context

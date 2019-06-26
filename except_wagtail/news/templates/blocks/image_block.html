@@ -1,6 +1,13 @@
 {% load wagtailimages_tags %}
-
-<figure>
-    {% image self.image fill-600x600 %}
-    <figcaption>{{ self.caption }} - {{ self.attribution }}</figcaption>
-</figure>
+{% with mediaPath="/media/" %}
+	<div class="spacer"></div>
+	<figure>
+		<figure class="image is-fullwidth"><img src="{{mediaPath}}{{self.image}}">
+	    {% if self.attribution %}
+	    	<figcaption  class="caption">{{ self.caption }} - {{ self.attribution }}</figcaption>
+	    {% else %}
+	    	<figcaption  class="caption">{{ self.caption }}</figcaption>
+	    {% endif %}
+	</figure>
+	<div class="spacer"></div>
+{% endwith %}
