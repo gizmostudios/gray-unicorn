@@ -14,6 +14,7 @@ from wagtail.snippets.models import register_snippet
 from django.forms.widgets import Select
 from news.blocks import BaseStreamBlock
 from projects.models import *
+from news.models import *
 
 class Expertise(Orderable):
 	parent = ParentalKey('People', related_name='expertises')
@@ -43,17 +44,20 @@ class People(ClusterableModel):
 	phone = models.CharField(max_length=255, null=True, blank=True)
 
 	panels = [
-        FieldPanel('user'),
-        FieldPanel('education_title'),
-        FieldPanel('date_joined'),
-        FieldPanel('picture'),
-        FieldPanel('job_title'),
-        FieldPanel('phone'),
-        InlinePanel('expertises', label="Areas of expertise"),
-        InlinePanel('hobbies', label="Hobbies"),
-        FieldPanel('biography'),
-        StreamFieldPanel('introduction'),
-    ]
+		FieldPanel('user'),
+		FieldPanel('education_title'),
+		FieldPanel('date_joined'),
+		FieldPanel('picture'),
+		FieldPanel('job_title'),
+		FieldPanel('phone'),
+		InlinePanel('expertises', label="Areas of expertise"),
+		InlinePanel('hobbies', label="Hobbies"),
+		FieldPanel('biography'),
+		StreamFieldPanel('introduction'),
+	]
+
+	class Meta:
+		verbose_name_plural = "People"
 
 	def __str__(self):
 		return self.user.first_name +" "+ self.user.last_name
@@ -69,11 +73,13 @@ class ProfilePage(Page):
 	]
 
 	def get_projects(self):
-		projects = ProjectPage.objects.filter(team_members__member__contains=self).all()
+		participations = TeamMember.objects.filter(member=self.person).all()
+		projects = ProjectPage.objects.filter(team_members__in=participations).all()
+
 		return projects
 
 	def get_articles(self):
-		articles = NewsPage.objects.filter(author=self).all()
+		articles = NewsPage.objects.filter(author=self.person).all()
 		return articles
 
 	def get_context(self, request):
@@ -85,6 +91,7 @@ class ProfilePage(Page):
 		context['parent_page'] = PeoplePage.objects.ancestor_of(self).first()
 		context['person'] = self.person
 		context['user'] = self.person.user
+		print(context)
 		return context
 
 

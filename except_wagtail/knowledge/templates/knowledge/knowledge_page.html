@@ -45,47 +45,31 @@
     </section>
     {# Carousel #}
     {% if page.carousel_items %}
-      <section class="section">
-        <div class="container">
-          <article class="article">
-            <div class="carousel" data-count="{{page.carousel_items.all|length}}">
-
-              <div class="carousel-inner">
-                {% for carousel_item in page.carousel_items.all %}
-                  {% image carousel_item.resource.image width-1000 as carouselimagedata %}
-                  <article style="background-image: url({{ carouselimagedata.url }})" class="background-{{carousel_item.scaling}}">
-
-                    <div class="container column is-12">
-
-                      {% if carousel_item.resource.title %}
-                        <div>
-                          <p>{{ carousel_item.resource.title }}</p>
-                        </div>
-                      {% endif %}
-                      
-                      {% if carousel_item.resource.file %}
-                        <a href="{{ carousel_item.resource.file.url }}" class="button is-next is-secondary">
-                            See more.
-                            <i class="fas fa-chevron-right"></i>
-                        </a>
-                      {% endif %}
-                      <div class="spacer"></div>
-                      <button class="button has-icon is-primary">
-                        <i class="fas fa-chevron-down"></i>
-                      </button>
-                    </div>
-                  </article>
-                {% endfor %}
-              </div>
-
-              <div class="button is-secondary button-prev">
-                <i class="fas fa-chevron-left"></i>
-              </div>
-              <div class="button is-secondary button-next">
-                <i class="fas fa-chevron-right"></i>
-              </div>
-            </div>
+      <section class="section has-carousel">
+        <div class="container has-carousel" data-count="{{page.carousel_items.all|length}}">
+          <article class="article carousel-inner">
+            {% for item in page.carousel_items.all %}
+              <div class="carousel has-text-centered" style="background-image:url({{ mediaPath }}{{ item.resource.image }})">
+                <div class="caption-carousel-article">
+                  <h2 class="h2 is-blocked">{{ item.resource.title }}</h2>
+                  <div class="buttons"><a href="{{item.resource.file.url}}" class="button is-next is-secondary">See more</a></div>
+                </div>
+              </div>       
+            {% endfor %}
           </article>
+        </div>
+      </section>
+      <section class="section has-selectors">
+        <div class="container flex-centered">
+          <div class="buttons">
+            {% for item in page.carousel_items.all %}
+              {% if item == page.carousel_items.all.0 %}
+                <button class="button is-selector is-primary is-carousel"></button>
+              {% else %}
+                <button class="button is-selector is-secondary is-carousel"></button>
+              {% endif %}
+            {% endfor %}
+          </div>
         </div>
       </section>
     {% endif %}
@@ -124,5 +108,6 @@
       </div>
     </section>
     <script type="text/javascript" src="{% static 'js/knowledge.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/carousel_article.js' %}"></script>
   {% endwith %}
 {% endblock content %}

@@ -48,33 +48,24 @@
         <footer class="footer">
             <div class="container">
                 <div class="columns">
-                    <div class="column">
-                        <h2 class="h2">Quick links</h2>
-                        <ul>
-                            <li><a href="./contact">Contact us</a></li>
-                            <li><a href="./about">About us</a></li>
-                            <li><a href="./work-with-us">Work with us</a></li>
-                            <li><a href="./calendar">Event calendar</a></li>
-                            <li><a href="./news">News</a></li>
-                        </ul>
-                    </div>
-                    <div class="column">
-                        <h2 class="h2">Social media</h2>
-                        <ul>
-                            <li><a href="./facebook">Facebook</a></li>
-                            <li><a href="./twitter">Twitter</a></li>
-                            <li><a href="./linkedin">LinkedIn</a></li>
-                            <li><a href="./youtube">YouTube</a></li>
-                        </ul>
-                    </div>
-                    <div class="column">
-                        <h2 class="h2">Keep in touch</h2>
-                        <ul>
-                            <li><a href="./newsletter">Newsletter</a></li>
-                            <li><a href="./events">Events</a></li>
-                            <li><a href="./rss">RSS</a></li>
-                        </ul>
-                    </div>
+                    {% for category in footer_categories %}
+                        <div class="column">
+                            <h2 class="h2">{{category.name}}</h2>
+                            <ul>
+                                {% for link in category.get_links %}
+                                    <li>
+                                        {% if link.link_page %}
+                                            <a href="{{link.link_page.url}}">{{link.name}}</a>
+                                        {% elif link.link %}
+                                            <a href="{{link.link}}">{{link.name}}</a>
+                                        {% else %}
+                                            <a href="{{self.url}}">{{link.name}}</a>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </footer>

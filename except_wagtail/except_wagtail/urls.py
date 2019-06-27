@@ -7,6 +7,8 @@ from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 from news import views as news_views
 from knowledge import views as knowledge_views
+from projects import views as projects_views
+
 
 from search import views as search_views
 
@@ -23,6 +25,9 @@ urlpatterns = [
     url(r'ajax/filter_resources/$',knowledge_views.filter_resources, name="filter_resources"),
     url(r'ajax/update_pagination/$',knowledge_views.update_pagination, name="update_pagination"),
     url(r'ajax/update_pagination_news/$',news_views.update_pagination, name="update_pagination"),
+    url(r'ajax/update_pagination_projects/$',projects_views.update_pagination, name="update_pagination"),
+    url(r'ajax/filter_timeline_projects/$',projects_views.filter_timeline, name="filter_timeline"),
+    url(r'ajax/filter_projects/$',projects_views.filter_projects, name="filter_resources"),
 
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in

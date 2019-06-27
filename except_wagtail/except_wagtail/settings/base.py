@@ -89,6 +89,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
 
                 'wagtailmenus.context_processors.wagtailmenus',
+                'except_wagtail.footer.footer_categories'
             ],
         },
     },

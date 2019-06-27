@@ -58,7 +58,7 @@
           <div id="expertises" class="columns is-grid">
             {% for expertise in page.expertises.all %}
               <div class="column is-3">
-                <div class="card is-stretched">
+                <div class="card is-stretched is-expertise">
                   <div class="card-image">
                     <figure class="image"><img src="{{ mediaPath }}{{ expertise.image }}"></figure>
                   </div>
@@ -70,7 +70,7 @@
             {% endfor %}
           </div>
           <div class="buttons">
-            <div class="container"><a href='' class="button is-next is-secondary"></a></div>
+            <div class="container"><a href='' class="button is-next is-secondary">Services overview</a></div>
             <div class="container">
             <button class="button has-icon is-primary"><i class="fas fa-chevron-down"></i></button>
           </div>

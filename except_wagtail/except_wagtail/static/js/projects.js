@@ -54,7 +54,7 @@ function updateFilterDisplay(serviceFilter){
 	}
 }
 
-function ajaxRequestFilter(type,page_selector){
+function ajaxRequestFilter(page_selector){
 	const serviceFiltersActive = $(".is-filter.is-active");
 	const page_url = window.location.pathname;
 	var listActiveCat = [];
@@ -67,38 +67,29 @@ function ajaxRequestFilter(type,page_selector){
 	}else{
 		page_number = 1;
 	}
+	console.log(page_number)
 	for( var j = 0; j < serviceFiltersActive.length; j++){
 		listActiveCat.push(serviceFiltersActive[j].querySelector("span").innerHTML)
 	}
-	$.post("/ajax/filter_news/",
+	$.post("/ajax/filter_projects/",
 		JSON.stringify({ services: listActiveCat,
-			type: type,
 			page_number: page_number,
 			page_url: page_url }))
 		.done(function(data){
 			var section;
-			if(type == "except"){
-				section = document.querySelector("#latestNews");
-			}else{
-				section = document.querySelector("#lastestArticle");
-			}
+			section = document.querySelector("#latestProjects");
 			section.innerHTML = data.html;
 		})
-	$.post("/ajax/update_pagination_news/",
+	$.post("/ajax/update_pagination_projects/",
 		JSON.stringify({ services: listActiveCat,
 			page_number: page_number,
-			type: type,
 			page_url: page_url }))
 		.done(function(data){
-			if(type == "except"){
-				var section = document.querySelector("#paginationExcept");
-			}else{
-				var section = document.querySelector("#paginationNewspaper");
-			}
+			var section = document.querySelector("#pagination");
 			section.innerHTML = data.html;	
 		})
-	if (typeof page_selector !== "undefined" & type == 'except'){
-		$.post("/ajax/filter_timeline/",
+	if (typeof page_selector !== "undefined"){
+		$.post("/ajax/filter_timeline_projects/",
 			JSON.stringify({ services: listActiveCat }))
 			.done(function(data){
 				var section = document.querySelector(".timeline");
@@ -112,8 +103,7 @@ function clickFilter(serviceFilter){
 		serviceFilter.off().on('click', function(){
 			if( lock == 0){
 				updateFilterDisplay($(this));
-				ajaxRequestFilter('except');
-				ajaxRequestFilter('newspaper');
+				ajaxRequestFilter();
 				lock=1
 			}
 			else{
@@ -141,12 +131,13 @@ for( var j = 0; j < serviceFiltersActive.length; j++){
 	listActiveCat.push(serviceFiltersActive[j].querySelector("span").innerHTML)
 }
 
-function pageNumberClick(pageNumber,type){
+function pageNumberClick(pageNumber){
 	pageNumber.off().on('click', function(){
-		ajaxRequestFilter(type,pageNumber);
+		ajaxRequestFilter(pageNumber);
 	})
 }
-function pageChangeClick(element,type,direction){
+
+function pageChangeClick(element,direction){
 	element.off().on('click', function(){
 		var active_page, page, offset;
 		if(direction == 'next'){
@@ -155,59 +146,31 @@ function pageChangeClick(element,type,direction){
 			offset = -2;
 		}
 
-		if (type == 'except'){
-			active_page = parseInt($('#paginationExcept').find('.active')[0].childNodes[0].innerText[0]);
-			page = $('#paginationExcept').find('.page-number')[active_page+offset];
-		}else{
-			active_page = parseInt($('#paginationNewspaper').find('.active')[0].childNodes[0].innerText[0]);		
-			page = $('#paginationNewspaper').find('.page-number')[active_page+offset];
-			console.log(active_page+offset);
-		}
+		active_page = parseInt($('#pagination').find('.active')[0].childNodes[0].innerText[0]);
+		page = $('#pagination').find('.page-number')[active_page+offset];
 		ajaxRequestFilter(type,page);
 	});
 }
 
-function setUpNewsPagination(type){
-	if(type == 'except'){
-		var pagination_numbers_except = $('#paginationExcept').find(".page-number");
-		var previous_except = $('#paginationExcept').find(".previous");
-		var next_except = $('#paginationExcept').find(".next");
+function setUpNewsPagination(){
+	var pagination_numbers = $('#pagination').find(".page-number");
+	var previous = $('#pagination').find(".previous");
+	var next = $('#pagination').find(".next");
 
-		pagination_numbers_except.each(function(){
-			pageNumberClick($(this),type);
-		});
-		previous_except.each(function(){
-			pageChangeClick($(this),type,'previous')
-		});
-		next_except.each(function(){
-			pageChangeClick($(this),type,'next')
-		});
-	}else{
-		var pagination_numbers_newspaper = $('#paginationNewspaper').find(".page-number");
-		var previous_newspaper = $('#paginationNewspaper').find(".previous");
-		var next_newspaper = $('#paginationNewspaper').find(".next");
-		pagination_numbers_newspaper.each(function(){
-			pageNumberClick($(this),type);
-		});
-		previous_newspaper.each(function(){
-			pageChangeClick($(this),type,'previous')
-		});
-		next_newspaper.each(function(){
-			pageChangeClick($(this),type,'next')
-		});
-	}
+	pagination_numbers.each(function(){
+		pageNumberClick($(this));
+	});
+	previous.each(function(){
+		pageChangeClick($(this),'previous')
+	});
+	next.each(function(){
+		pageChangeClick($(this),'next')
+	});
 }
 
-setUpNewsPagination('except')
-setUpNewsPagination('newspaper')
+setUpNewsPagination()
 
-$("body").on('DOMSubtreeModified', "#paginationNewspaper", function() {
-	setUpNewsPagination('newspaper');
+$("body").on('DOMSubtreeModified', "#pagination", function() {
+	setUpNewsPagination();
     
-});
-
-$("body").on('DOMSubtreeModified', "#paginationExcept", function() {
-
-
-	setUpNewsPagination('except');
 });

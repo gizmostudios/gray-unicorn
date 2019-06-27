@@ -78,12 +78,16 @@
             <div class="column is-4">
               <div class="card is-stretched">
                 <div class="card-image">
-                  <figure class="image"><img src="{{ mediaPath }}{{ project.hero_image }}"></figure>
+                  <a href="{{project.url}}">
+                    <figure class="image"><img src="{{ mediaPath }}{{ project.hero_image }}"></figure>
+                  </a>
                 </div>
                 <div class="card-content has-label">
-                  <h3 class="h3">{{project.hero_title}}</h3>
-                  <p>{{project.date_published}}</p>
-                  <button class="button is-selector is-{{project.service.color}} is-pulled-left"></button><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                  <a href="{{project.url}}">
+                    <h3 class="h3">{{project.hero_title}}</h3>
+                    <p>{{project.date_published}}</p>
+                    <button class="button is-selector is-{{project.service.color}} is-pulled-left"></button><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                  </a>
                 </div>
               </div>
             </div>
@@ -96,7 +100,7 @@
       <div class="container">
         <article class="article">
           <header>
-            <h2 class="h2">Latest projects</h2>
+            <h2 class="h2">Project archives</h2>
           </header>
           <header class="has-text-centered">
             <h3 class="h3">TIMELINE</h3>
@@ -119,13 +123,13 @@
             {% endfor %}
           </div>
           <div class="spacer is-large"></div>
-          <div id="latestNews" class="columns is-grid">
+          <div id="latestProjects" class="columns is-grid">
             {% include "projects/projects_list.html" with projects=current_projects %}
           </div>
           {% if current_projects.paginator.count > 1 %}
             <div class="container">
                 <div class="row">
-                    <div id="paginationExcept" class="col-md-12">
+                    <div id="pagination" class="col-md-12">
                     {% include "includes/pagination.html" with subpages=current_projects %}
                     </div>
                 </div>
@@ -135,5 +139,6 @@
       </div>
     </section>
     <script type="text/javascript" src="{% static 'js/carousel_article.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/projects.js' %}"></script>
   {% endwith %}
 {% endblock content %}
