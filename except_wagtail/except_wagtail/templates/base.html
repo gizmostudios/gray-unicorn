@@ -59,7 +59,9 @@
                                         {% elif link.link %}
                                             <a href="{{link.link}}">{{link.name}}</a>
                                         {% else %}
-                                            <a href="{{self.url}}">{{link.name}}</a>
+                                            <div class="popup"><a>{{link.name}}</a>
+                                                <span class="popuptext" id="{{link.name}}">{{link.popup_html}}</span>
+                                            </div>
                                         {% endif %}
                                     </li>
                                 {% endfor %}

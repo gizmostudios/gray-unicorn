@@ -37,16 +37,16 @@
           </div>
       </div>
     </section>
-    {% if page.carousel_items %}
+    {% if highlights.all %}
       <section class="section has-carousel">
         <div class="container has-carousel" data-count="{{page.carousel_items.all|length}}">
           <article class="article carousel-inner">
-            {% for item in page.carousel_items.all %}
-              <div class="carousel has-text-centered" style="background-image:url({{ mediaPath }}{{ item.project.hero_image }})">
+            {% for item in highlights.all %}
+              <div class="carousel has-text-centered" style="background-image:url({{ mediaPath }}{{ item.hero_image }})">
                 <div class="caption-carousel-article">
-                  <h2 class="h2 is-blocked">{{ item.project.hero_title }}</h2>
-                  <p class="is-blocked description">{{ item.project.summary }}</p>
-                  <div class="buttons"><a href="{{item.project.url}}" class="button is-next is-secondary">View project</a></div>
+                  <h2 class="h2 is-blocked">{{ item.hero_title }}</h2>
+                  <p class="is-blocked description">{{ item.summary }}</p>
+                  <div class="buttons"><a href="{{item.url}}" class="button is-next is-secondary">View project</a></div>
                 </div>
               </div>       
             {% endfor %}
@@ -56,8 +56,8 @@
       <section class="section has-selectors">
         <div class="container flex-centered">
           <div class="buttons">
-            {% for item in page.carousel_items.all %}
-              {% if item == page.carousel_items.all.0 %}
+            {% for item in highlights.all %}
+              {% if item == highlights.0 %}
                 <button class="button is-selector is-primary is-carousel"></button>
               {% else %}
                 <button class="button is-selector is-secondary is-carousel"></button>
@@ -110,7 +110,7 @@
               {% include "news/timeline.html" with years=years news=current_projects %}
             </div>
           </div>
-          <div class="spacer"></div>
+          <div class="spacer is-large"></div>
           <header class="has-text-centered">
             <h3 class="h3">FILTER</h3>
           </header>

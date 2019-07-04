@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from django.utils.translation import gettext_lazy as _
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
@@ -24,9 +25,14 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Application definition
 
 INSTALLED_APPS = [
-    'index',
-    'search',
+
+    'wagtail_modeltranslation',
+    'wagtail_modeltranslation.makemigrations',
+    'wagtail_modeltranslation.migrate',
+
     'about',
+    'index',
+    'search',  
     'people',
     'news',
     'knowledge',
@@ -48,6 +54,7 @@ INSTALLED_APPS = [
     'wagtailmenus',
     'wagtail.contrib.modeladmin',
 
+
     'modelcluster',
     'taggit',
 
@@ -57,10 +64,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
 ]
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -89,7 +98,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
 
                 'wagtailmenus.context_processors.wagtailmenus',
-                'except_wagtail.footer.footer_categories'
+                'except_wagtail.base_variable.footer_categories',
+                'except_wagtail.base_variable.logo_link',
             ],
         },
     },
@@ -147,6 +157,14 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+LANGUAGES = (
+    ('en', _('English')),
+    ('nl', _('Dutch')),
+)
+
+WAGTAILADMIN_PERMITTED_LANGUAGES = [('en','English'), ('nl', 'Dutch')]
+MODELTRANSLATION_DEFAULT_LANGUAGES = 'en'
 
 
 # Static files (CSS, JavaScript, Images)

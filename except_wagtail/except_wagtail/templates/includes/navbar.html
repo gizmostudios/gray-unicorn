@@ -1,4 +1,6 @@
 {% load menu_tags %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 
 {% if inverted == False and transparent == True %}
   <nav class="is-fixed-top is-transparent inverted" id="mainNav">
@@ -14,8 +16,11 @@
 
     <div class="buttons is-pulled-right is-stretched">
       <div class="is-hidden-touch">
-        <button class="button is-transparent"><span>ENGLISH</span>
-        <i class="fas fa-chevron-down"></i>
+        {% if LANGUAGE_CODE == 'nl' %}
+          <button class="button is-transparent lang-selection"><span>ENGLISH</span>
+        {% elif LANGUAGE_CODE == 'en' %}
+          <button class="button is-transparent lang-selection"><span>DUTCH</span>
+        {% endif %}
         </button><a class="button is-transparent">CONTACT</a>
       </div>
       <div class="is-hidden-desktop">

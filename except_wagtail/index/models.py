@@ -4,16 +4,19 @@ from django import forms
 from modelcluster.fields import ParentalKey
 
 from wagtail.core.models import Page, Orderable
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, PageChooserPanel
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, PageChooserPanel, TabbedInterface, ObjectList, MultiFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 
 from django.forms.widgets import Select
-from about.models import *
+
 from knowledge.models import *
 from news.models import *
-from people.models import *
-from services.models import *
 from projects.models import *
+from services.models import *
+
+from modeltranslation.utils import build_localized_fieldname
+from django.conf import settings
+
 
 class CarouselItem(Orderable):
 	image = models.ForeignKey(
@@ -42,32 +45,47 @@ class CarouselItem(Orderable):
 	panels = [
 		ImageChooserPanel('image'),
 		FieldPanel('scaling'),
-		FieldPanel('title'),
-		FieldPanel('caption'),
-		FieldPanel('link_title'),
+		MultiFieldPanel([FieldPanel('title')], heading='Title'),
+		MultiFieldPanel([FieldPanel('caption')], heading='Caption'),
+		MultiFieldPanel([FieldPanel('link_title')], heading='Link Title'),
 		PageChooserPanel('link_page'),
 	]
 
 class HomePage(Page):
-	subpage_types = [AboutPage,PeoplePage,ServiceIndexPage,NewsIndexPage,KnowledgePage,ProjectIndexPage]
+	subpage_types = ['about.AboutPage','services.ServiceIndexPage','knowledge.KnowledgePage','projects.ProjectIndexPage']
 	hero_image = models.ImageField(null=True, blank=True)
 	navbar_inverted = models.BooleanField(null=True, blank=True)
 	navbar_transparent = models.BooleanField(null=True, blank=True)
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
-	intro = models.TextField(blank=True)
+	introduction = models.TextField(blank=True)
 	services_image = models.ImageField(null=True, blank=True)
 
-	content_panels = Page.content_panels + [
+	content_panels = [
+		MultiFieldPanel([
+            FieldPanel('title'),
+        ], heading='Title'),
 		FieldPanel('hero_image'),
+		MultiFieldPanel([FieldPanel('hero_title')], heading='Top section title'),
+		MultiFieldPanel([FieldPanel('hero_subtitle')], heading='Top section subtitle'),
 		FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
 		FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
-		FieldPanel('hero_title'),
-		FieldPanel('hero_subtitle'),
-		FieldPanel('intro', classname="full"),
+		MultiFieldPanel([FieldPanel('introduction', classname="full")], heading='Introduction'),
 		InlinePanel('carousel_items', label="Carousel Items"),
 		FieldPanel('services_image'),
 	]
+
+	def get_highlight_resources(self):
+		highlight = Resource.objects.filter(hightlight=True).order_by('-date_published')
+		return highlight
+
+	def get_highlight_news(self):
+		highlight = NewsPage.objects.filter(hightlight=True).order_by('-date_published')
+		return highlight
+
+	def get_highlight_projects(self):
+		highlight = ProjectPage.objects.filter(hightlight=True).order_by('-date_published')
+		return highlight
 
 	def get_context(self, request):
 		context = super(HomePage, self).get_context(request)

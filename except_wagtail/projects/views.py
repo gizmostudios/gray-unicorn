@@ -10,7 +10,7 @@ from html import unescape
 def filter_projects(request):
 	body = simplejson.loads(request.body)
 	services = get_services(body)
-	news = get_projects(type_article,body)
+	projects = get_projects(body)
 	mimetype = 'application/json'
 	
 	html = render_to_string("projects/projects_list.html", {'projects' : projects})
@@ -68,7 +68,6 @@ def get_services(body):
 
 def get_pagination(body):
 	decoded_services = get_services(body)
-	type_article = get_type(body)
 
 	url = "/home"+body["page_url"]
 

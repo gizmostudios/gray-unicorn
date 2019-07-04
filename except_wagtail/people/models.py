@@ -96,7 +96,7 @@ class ProfilePage(Page):
 
 
 class PeoplePage(Page):
-	parent_page_types = ['index.HomePage']
+	parent_page_types = ['about.AboutPage']
 	subpage_types = ['ProfilePage']
 	
 	hero_image = models.ImageField(null=True, blank=True)

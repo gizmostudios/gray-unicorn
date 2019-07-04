@@ -26,6 +26,7 @@ class NewsPage(Page):
 	parent_page_types = ['FolderArticlePage']
 	subpage_types = []
 
+	highlight = models.BooleanField(blank=True, null=True)
 	hero_image = models.ImageField(null=True, blank=True)
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
@@ -44,6 +45,7 @@ class NewsPage(Page):
 
 
 	content_panels = Page.content_panels + [
+		FieldPanel('highlight', widget=forms.CheckboxInput),
 		FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
 		FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
 		FieldPanel('service'),
@@ -120,7 +122,7 @@ class NewspaperArticlePage(Page):
 class NewsIndexPage(Page):
 
 	subpage_types = ['FolderNewspaperPage','FolderArticlePage']
-	parent_page_types = ['index.HomePage']
+	parent_page_types = ['about.aboutPage']
 	hero_image = models.ImageField(null=True, blank=True)
 	navbar_transparent = models.BooleanField('Transparency of the navigation bar', blank=True, null=True)
 	navbar_inverted = models.BooleanField('Colorful navigation bar', blank=True, null=True)

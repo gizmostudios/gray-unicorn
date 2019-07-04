@@ -1,25 +1,43 @@
 const serviceSelectors = $(".service");
 
 function displaySubServices(service){
-	console.log(service)
 	var selectedServiceId = service.attr('id');
 	var selectedService = $("."+selectedServiceId);
-	selectedService.addClass("active");
+	console.log(selectedService.get(0).scrollHeight);
+	selectedService.addClass('active')
+	selectedService.css({'height':''});
+	selectedService.animate({
+		height: selectedService.get(0).scrollHeight},
+		500,
+		function(){
+			selectedService.css({'max-height': '500'});
+			selectedService.height(selectedService.get(0).scrollHeight);
+		}
+	);
 }
 
 serviceSelectors.each(function(){
 	$(this).off().on('click', function(){
-		var wasActive = $(".active")
+		var activeSection = $(".active");
+		var activeService = $(".active-service")
 		var renderServices = $(".render-service");
-		renderServices.each(function(){
-			$(this).removeClass("active");
-		});
-		if(wasActive.length != 0){
-			setTimeout(displaySubServices, 500, $(this));
+		
+		if( $(this)[0] != activeService[0]){
+			$(this).addClass("active-service");
+			if(activeSection.length != 0){
+				activeSection.animate({height:'0'},500);
+				activeSection.removeClass("active");
+				setTimeout(displaySubServices, 500, $(this));
+			}else{
+				displaySubServices($(this))
+			}
 		}else{
+			$(this).removeClass("active-service");
 			var selectedServiceId = $(this).attr('id');
 			var selectedService = $("."+selectedServiceId);
-			selectedService.addClass("active");
+			selectedService.animate({height:'0'},500);
+			selectedService.removeClass("active");
 		}
+		
 	});
 })

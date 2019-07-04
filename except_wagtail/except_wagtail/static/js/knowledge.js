@@ -44,8 +44,10 @@ function updateFilterDisplay(serviceFilter){
 	}
 	else if(serviceFilter.hasClass("is-active")){
 		serviceFilter.removeClass("is-active").addClass("is-inactive");
+		serviceFilters.removeClass("is-inactive").addClass("is-active");
 	}
 	else{
+		serviceFilters.removeClass("is-active").addClass("is-inactive");
 		serviceFilter.removeClass("is-inactive").addClass("is-active");
 	}
 	const serviceFiltersActiveUpdated = $(".is-filter.is-active");

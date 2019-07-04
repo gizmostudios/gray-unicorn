@@ -104,10 +104,12 @@
                 <h4 class="h4">Project team</h4>
                 <ul>
                 {% for team_member in page.team_members.all %}
-                <li>
-                    <figure class="image"><img class="is-200x200" src="{{ mediaPath }}{{ team_member.member.picture }}">
-                      <figcaption class="caption">{{team_member.member.first_name}} {{team_member.member.last_name}}</figcaption>
-                    </figure>
+                  <li>
+                    <a href='{{team_member.get_page.url}}'>
+                      <figure class="image"><img class="is-200x200" src="{{ mediaPath }}{{ team_member.member.picture }}">
+                        <figcaption class="caption">{{team_member.member.user.first_name}} {{team_member.member.user.last_name}}</figcaption>
+                      </figure>
+                    </a>
                   </li>
                 {% endfor %}
                 </ul>

@@ -19,7 +19,6 @@ from wagtail.images.blocks import ImageChooserBlock
 from news.blocks import BaseStreamBlock
 from services.models import ServicePage as Service
 from knowledge.models import *
-from people.models import *
 from about.models import *
 
 class TeamMember(Orderable):   
@@ -30,6 +29,10 @@ class TeamMember(Orderable):
 	panels = [
 		FieldPanel('member'),
 	]
+
+	def get_page(self):
+		page = self.member.profilepage_set.first()
+		return page
 
 class ProjectPartner(Orderable):   
 	page = ParentalKey('ProjectPage', related_name='project_partners')
@@ -71,6 +74,7 @@ class ProjectPage(Page):
 	parent_page_types = ['ProjectIndexPage']
 	subpage_types = []
 
+	highlight = models.BooleanField(blank=True, null=True)
 	hero_image = models.ImageField(null=True, blank=True)
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
@@ -90,6 +94,7 @@ class ProjectPage(Page):
 
 
 	content_panels = Page.content_panels + [
+		FieldPanel('highlight', widget=forms.CheckboxInput),
 		FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
 		FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
 		FieldPanel('service'),
@@ -135,16 +140,6 @@ class ProjectPage(Page):
 		return context
 
 
-class CarouselIndexItem(Orderable):   
-    page = ParentalKey('ProjectIndexPage', related_name='carousel_items')
-
-    project = models.ForeignKey('ProjectPage', on_delete=models.SET_NULL, null=True, blank=True,)
-
-    panels = [
-        FieldPanel('project'),
-    ]
-
-
 class ProjectIndexPage(Page):
 
 	subpage_types = ['ProjectPage']
@@ -163,11 +158,13 @@ class ProjectIndexPage(Page):
 		FieldPanel('hero_image'),
 		FieldPanel('hero_title'),
 		FieldPanel('hero_subtitle'),
-		InlinePanel('carousel_items', label="Project carousel item"),
 	]
 
 	def get_projects(self):
 		return ProjectPage.objects.live().order_by('-date_published')
+
+	def highlight_projects(self):
+		return ProjectPage.objects.live().filter(highlight=True).order_by('-date_published').all()
 
 
 	def paginate_projects(self, request, *args):
@@ -193,6 +190,7 @@ class ProjectIndexPage(Page):
 
 		services = Service.objects.live()
 
+		context['highlights'] = self.highlight_projects()[0:4]
 		context['latest_project'] = projects[0:5]
 		context['current_projects'] = projects
 		context['services'] = services

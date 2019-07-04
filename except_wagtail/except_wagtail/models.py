@@ -6,7 +6,7 @@ from datetime import datetime
 
 from modelcluster.fields import ParentalKey
 
-from wagtail.core.fields import StreamField
+from wagtail.core.fields import StreamField, RichTextField
 from wagtail.core.models import Page, Orderable
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, PageChooserPanel, StreamFieldPanel, MultiFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
@@ -16,7 +16,7 @@ from django.forms.widgets import Select
 
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
-from news.blocks import BaseStreamBlock
+from news.blocks import FooterStreamBlock
 from services.models import ServicePage as Service
 
 from modelcluster.fields import ParentalManyToManyField
@@ -40,9 +40,33 @@ class FooterCategory(models.Model):
 	]
 
 @register_snippet
+class LinkType(models.Model):
+	name = models.CharField(max_length=100)
+
+	class Meta:
+		verbose_name_plural = "Link types"
+
+	def __str__(self):
+		return self.name
+
+	def get_links(self):
+		links = FooterLink.objects.filter(type=self).all()
+		return links
+
+	panels = [        
+		FieldPanel('name'),
+	]
+
+@register_snippet
 class FooterLink(models.Model):
 	category = models.ForeignKey(
 		FooterCategory,
+		on_delete=models.SET_NULL,
+		null=True,
+		blank=True,
+	)
+	type_link = models.ForeignKey(
+		LinkType,
 		on_delete=models.SET_NULL,
 		null=True,
 		blank=True,
@@ -55,7 +79,8 @@ class FooterLink(models.Model):
 		on_delete=models.SET_NULL,
 		related_name='+',
 	)
-	link = models.CharField("Link to an external page (Leave it blank for a link to a page on the website)", max_length=10000, null=True, blank=True)
+	link = models.CharField("Link to an external page", max_length=10000, null=True, blank=True)
+	popup_html = StreamField(FooterStreamBlock(), verbose_name="HTML for the pop-up", null=True, blank=True)
 
 	def __str__(self):
 		return self.name
@@ -66,7 +91,9 @@ class FooterLink(models.Model):
 	panels = [        
 		FieldPanel('name'),
 		FieldPanel('category'),
+		FieldPanel('type_link'),
 		PageChooserPanel('link_page'),
 		FieldPanel('link'),
+		StreamFieldPanel('popup_html',classname='full'),
 	]
 

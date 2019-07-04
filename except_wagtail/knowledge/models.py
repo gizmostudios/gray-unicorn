@@ -20,24 +20,27 @@ from news.blocks import BaseStreamBlock
 from services.models import ServicePage as Service
 
 from modelcluster.fields import ParentalManyToManyField
+from news.models import *
 
 @register_snippet
 class Resource(models.Model):
-	title = models.CharField(max_length=100)
+	hero_title = models.CharField(max_length=100)
 	service = models.ForeignKey(
-        Service,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-    )
+		Service,
+		on_delete=models.SET_NULL,
+		null=True,
+		blank=True,
+	)
 	file = models.FileField(null=True, blank=True)
-	image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
+	hero_image = models.ForeignKey(
+		'wagtailimages.Image',
+		null=True,
+		blank=True,
+		on_delete=models.SET_NULL,
+		related_name='+'
+	)
+
+	highlight = models.BooleanField(blank=True, null=True)
 	date_published = models.DateField("Date resource published", blank=True, null=True)
 
 	def __str__(self):
@@ -46,68 +49,63 @@ class Resource(models.Model):
 	class Meta:
 		verbose_name_plural = "Resources"
 
-	panels = [        
+	panels = [
+		FieldPanel('highlight', widget=forms.CheckboxInput),        
 		FieldPanel('title'),
 		FieldPanel('file'),
 		FieldPanel('service'),
-        ImageChooserPanel('image'),
-        FieldPanel('date_published'),
-    ]
-
-class CarouselItem(Orderable):   
-    page = ParentalKey('KnowledgePage', related_name='carousel_items')
-    scaling = models.CharField(max_length=15, default='fit', choices=(
-        ('fit', 'fit'), ('fill', 'fill')
-    ))
-
-    resource = models.ForeignKey('Resource', on_delete=models.SET_NULL, null=True, blank=True,)
-
-    panels = [
-        FieldPanel('scaling'),
-        FieldPanel('resource'),
-    ]
+		ImageChooserPanel('image'),
+		FieldPanel('date_published'),
+	]
 
 class KnowledgePage(Page):
-    parent_page_types = ['index.HomePage']
-    subpage_types = []
-    
-    hero_image = models.ImageField(null=True, blank=True)
-    navbar_inverted = models.BooleanField(null=True, blank=True)
-    navbar_transparent = models.BooleanField(null=True, blank=True)
-    hero_title = models.CharField(max_length=255, null=True, blank=True)
-    hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
-    intro = models.TextField(blank=True)
+	parent_page_types = ['index.HomePage']
+	subpage_types = []
+	
+	hero_image = models.ImageField(null=True, blank=True)
+	navbar_inverted = models.BooleanField(null=True, blank=True)
+	navbar_transparent = models.BooleanField(null=True, blank=True)
+	hero_title = models.CharField(max_length=255, null=True, blank=True)
+	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
+	intro = models.TextField(blank=True)
 
-    content_panels = Page.content_panels + [
-        FieldPanel('hero_image'),
-        FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
-        FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
-        FieldPanel('hero_title'),
-        FieldPanel('hero_subtitle'),
-        FieldPanel('intro', classname="full"),
-        InlinePanel('carousel_items', label="Carousel Items"),
-    ]
+	content_panels = Page.content_panels + [
+		FieldPanel('hero_image'),
+		FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
+		FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
+		FieldPanel('hero_title'),
+		FieldPanel('hero_subtitle'),
+		FieldPanel('intro', classname="full"),
+	]
 
-    def get_resources(self):
-        return Resource.objects.all().order_by('-date_published')
+	def get_resources(self):
+		return Resource.objects.all().order_by('-date_published')
 
-    def paginate(self, request, *args):
-        page = request.GET.get('page')
-        paginator = Paginator(self.get_resources(), 12)
-        try:
-            pages = paginator.page(page)
-        except PageNotAnInteger:
-            pages = paginator.page(1)
-        except EmptyPage:
-            pages = paginator.page(paginator.num_pages)
-        return pages
+	def get_news(self):
+		return NewsPage.objects.live().order_by('-date_published').all()[0:5]
 
-    def get_context(self, request):
-        context = super(KnowledgePage, self).get_context(request)
+	def highlight_resources(self):
+		return Resource.objects.filter(highlight=True).order_by('-date_published').all()
 
-        resources = self.paginate(request, self.get_resources())
+	def paginate(self, request, *args):
+		page = request.GET.get('page')
+		paginator = Paginator(self.get_resources(), 12)
+		try:
+			pages = paginator.page(page)
+		except PageNotAnInteger:
+			pages = paginator.page(1)
+		except EmptyPage:
+			pages = paginator.page(paginator.num_pages)
+		return pages
 
-        context['resources'] = resources
-        context['services'] = Service.objects.all()
+	def get_context(self, request):
+		context = super(KnowledgePage, self).get_context(request)
 
-        return context
+		resources = self.paginate(request, self.get_resources())
+
+		context['highlights'] = self.highlight_resources()[0:4]
+		context['news'] = self.get_news()
+		context['resources'] = resources
+		context['services'] = Service.objects.all()
+
+		return context

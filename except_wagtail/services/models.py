@@ -45,8 +45,10 @@ class SubServicePage(Page):
 
 class ServicePage(Page):
 	hero_title = models.CharField(max_length=100)
+	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
 	color = models.CharField(max_length=100, blank=True, null=True)
 	image = models.ImageField(null=True, blank=True)
+	introduction = models.TextField(null=True, blank=True)
 
 	def __str__(self):
 		return self.hero_title
@@ -57,17 +59,35 @@ class ServicePage(Page):
 
 	content_panels = Page.content_panels + [
 		FieldPanel('hero_title'),
+		FieldPanel('hero_subtitle'),
 		FieldPanel('color'),
 		FieldPanel('image'),
+		FieldPanel('introduction')
 	]
 
 	def get_subservices(self):
 		subservices = SubServicePage.objects.descendant_of(self)
 		return subservices
 
+	def get_projects(self):
+		projects = self.projectpage_set.all()[0:5]
+		return projects
+
+	def get_resources(self):
+		resources = self.resource_set.all()[0:5]
+		return resources
+
+	def get_news(self):
+		news = self.newspage_set.all()[0:5]
+		return news
+
 	def get_context(self, request):
 		context = super(ServicePage, self).get_context(request)
 
+		context['projects'] = self.get_projects()
+		context['resources'] = self.get_resources()
+		context['news'] = self.get_news()
+		context['parent_page'] = ServiceIndexPage.objects.ancestor_of(self).first()
 		context['subservices'] = self.get_subservices()
 		return context
 

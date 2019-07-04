@@ -83,6 +83,34 @@ function scrollCarousel($container, target) {
     left: windowWidth * (target - 1)
   })
 }
+if (anchor != null){
+  anchor.style.top = -$('.navbar').height() - $('#mainNav').height()+"px";
+}
 
-anchor.style.top = -$('.navbar').height() - $('#mainNav').height()+"px";
-console.log(anchor.style.top)
+$('.lang-selection').off().on('click', function(){
+  var url = window.location.pathname;
+  $.post("/lang/selection/",
+    JSON.stringify({ url: url}))
+    .done(function(data){
+      window.location.reload();
+    })
+})
+
+function hidePopup(popup){
+  popup.removeClass("transition");
+};
+
+$(document).ready(function(){
+  $('.popup').each(function(){
+    $(this).off().on('click', function(){
+      if ($(this).find('span').hasClass("show")){
+        console.log('test')
+        $(this).find('span').removeClass("show");
+        $(this).find('span').addClass("transition");
+        setTimeout(hidePopup, 1000, $(this).find('span'));
+      }else{
+        $(this).find('span').addClass("show");
+      }
+    });
+  })
+});

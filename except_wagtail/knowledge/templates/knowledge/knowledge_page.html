@@ -44,15 +44,15 @@
       </div>
     </section>
     {# Carousel #}
-    {% if page.carousel_items %}
+    {% if highlights %}
       <section class="section has-carousel">
         <div class="container has-carousel" data-count="{{page.carousel_items.all|length}}">
           <article class="article carousel-inner">
-            {% for item in page.carousel_items.all %}
-              <div class="carousel has-text-centered" style="background-image:url({{ mediaPath }}{{ item.resource.image }})">
+            {% for item in highlights %}
+              <div class="carousel has-text-centered" style="background-image:url({{ mediaPath }}{{ item.image }})">
                 <div class="caption-carousel-article">
-                  <h2 class="h2 is-blocked">{{ item.resource.title }}</h2>
-                  <div class="buttons"><a href="{{item.resource.file.url}}" class="button is-next is-secondary">See more</a></div>
+                  <h2 class="h2 is-blocked">{{ item.title }}</h2>
+                  <div class="buttons"><a href="{{item.file.url}}" class="button is-next is-secondary">See more</a></div>
                 </div>
               </div>       
             {% endfor %}
@@ -62,14 +62,28 @@
       <section class="section has-selectors">
         <div class="container flex-centered">
           <div class="buttons">
-            {% for item in page.carousel_items.all %}
-              {% if item == page.carousel_items.all.0 %}
+            {% for item in highlights %}
+              {% if item == highlights.0 %}
                 <button class="button is-selector is-primary is-carousel"></button>
               {% else %}
                 <button class="button is-selector is-secondary is-carousel"></button>
               {% endif %}
             {% endfor %}
           </div>
+        </div>
+      </section>
+    {% endif %}
+    {% if news %}
+      <section class="section">
+        <div class="container">
+          <article class="article">
+            <header>
+              <h2 class="h2">Latest news</h2>
+            </header>
+            <div id="latestNews" class="columns is-grid">
+              {% include "news/latest_news.html" with current_news=news type='except' %}
+            </div>
+          </article>
         </div>
       </section>
     {% endif %}
