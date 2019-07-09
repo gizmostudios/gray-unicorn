@@ -75,16 +75,25 @@ class HomePage(Page):
 		FieldPanel('services_image'),
 	]
 
+	def get_highlight_videos(self):
+		resources = Resource.objects.filter(highlight=True).order_by('-date_published').all()
+		for resource in resources:
+			if resource.file.name.split('.')[1] == 'pdf':
+				highlight = resource
+				return highlight
+		return
+
 	def get_highlight_resources(self):
-		highlight = Resource.objects.filter(hightlight=True).order_by('-date_published')
+		highlight = Resource.objects.filter(highlight=True).order_by('-date_published').all()
+		print(highlight[0:2])
 		return highlight
 
 	def get_highlight_news(self):
-		highlight = NewsPage.objects.filter(hightlight=True).order_by('-date_published')
+		highlight = NewsPage.objects.filter(highlight=True).order_by('-date_published').all()
 		return highlight
 
 	def get_highlight_projects(self):
-		highlight = ProjectPage.objects.filter(hightlight=True).order_by('-date_published')
+		highlight = ProjectPage.objects.filter(highlight=True).order_by('-date_published').all()
 		return highlight
 
 	def get_context(self, request):
@@ -93,6 +102,10 @@ class HomePage(Page):
 		services = ServicePage.objects.live()
 		indexService = ServiceIndexPage.objects.live()[0]
 
+		context['highlight_video'] = self.get_highlight_videos()
+		context['highlight_resources'] = self.get_highlight_resources()[0:2]
+		context['highlight_news'] = self.get_highlight_news()[0:2]
+		context['highlight_projects'] = self.get_highlight_projects()[0:2]
 		context['services'] = services
 		context['indexService'] = indexService
 

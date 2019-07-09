@@ -44,17 +44,17 @@ class Resource(models.Model):
 	date_published = models.DateField("Date resource published", blank=True, null=True)
 
 	def __str__(self):
-		return self.title
+		return self.hero_title
 
 	class Meta:
 		verbose_name_plural = "Resources"
 
 	panels = [
 		FieldPanel('highlight', widget=forms.CheckboxInput),        
-		FieldPanel('title'),
+		FieldPanel('hero_title'),
 		FieldPanel('file'),
 		FieldPanel('service'),
-		ImageChooserPanel('image'),
+		ImageChooserPanel('hero_image'),
 		FieldPanel('date_published'),
 	]
 
@@ -77,7 +77,7 @@ class KnowledgePage(Page):
 		FieldPanel('hero_subtitle'),
 		FieldPanel('intro', classname="full"),
 	]
-
+	
 	def get_resources(self):
 		return Resource.objects.all().order_by('-date_published')
 

@@ -1,4 +1,8 @@
 @charset "UTF-8";
+
+html{
+  scroll-behavior: smooth;
+}
 .debug, .no-flex {
   border: solid 1px #f00;
   background: rgba(255, 0, 0, 0.2);
@@ -12,6 +16,14 @@
   position: -webkit-sticky;
   position: sticky;
   top: 100px;
+}
+
+.scroll-up{
+  position: -webkit-sticky;
+  position: sticky;
+  top: 100%;
+  padding-left: 90%;
+  z-index:10000;
 }
 
 .is-transparent {
@@ -1148,3 +1160,11 @@ a.anchor {
   from {opacity: 1;}
   to {opacity:0 ;}
 } 
+
+label .fas {
+  padding: 0 0.5rem;
+}
+
+.scroll-anchor {
+  color: #ffffff;
+}

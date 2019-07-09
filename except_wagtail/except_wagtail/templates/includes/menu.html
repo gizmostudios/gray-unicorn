@@ -10,7 +10,8 @@
         	{% if item.has_children_in_menu %}
         		<div class="navbar-item">
           			<input class="for-dropdown is-hidden" type="checkbox" id="{{item.text}}"/>
-          			<label for="{{item.text}}">{{item.text}}</label>
+                <a href="{{item.href}}">{{item.text}} </a>
+          			<label for="{{item.text}}"><i class="fas fa-chevron-up sub-menu"></i></label>
         			{% sub_menu template=sub_menu_template menuitem_or_page=item %}
         		</div>
         	{% else %}

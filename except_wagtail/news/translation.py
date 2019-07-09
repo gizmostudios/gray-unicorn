@@ -7,6 +7,8 @@ class NewsPageTR(TranslationOptions):
 	fields = (
 		'hero_title',
 		'hero_subtitle',
+		'intro',
+		'body',
 		)
 
 @register(NewspaperArticlePage)
@@ -19,6 +21,7 @@ class NewspaperArticlePageTR(TranslationOptions):
 class NewsIndexPagePageTR(TranslationOptions):
 	fields = (
 		'hero_title',
+		'hero_subtitle',
 		)
 
 @register(FolderNewspaperPage)

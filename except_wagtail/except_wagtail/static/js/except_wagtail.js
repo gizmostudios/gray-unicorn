@@ -3,8 +3,9 @@ const $nav = document.querySelector('#mainNav');
 const $logo = document.querySelector('.logo');
 const carousels = document.querySelectorAll('.carousel');
 const navRadios = document.getElementsByName('main-menu');
-const anchor = document.querySelector('.anchor');
+const anchors = document.querySelectorAll('.anchor');
 const navbar = document.querySelector('.navbar');
+const stickyScrollUp = $('.scroll-up');
 
 navRadios.forEach(radio => {
   console.log("test")
@@ -19,8 +20,13 @@ navRadios.forEach(radio => {
     }
   })
 });
-
+stickyScrollUp.css('display','none');
 let windowWidth = window.innerWidth;
+console.log($('button')[0].scrollHeight);
+stickyScrollUp.css('top',window.innerHeight-$('button')[0].scrollHeight+'px');
+stickyScrollUp.css('left','100px');
+
+
 
 let stickyNav = false;
 window.addEventListener('scroll', function () {
@@ -35,9 +41,13 @@ window.addEventListener('scroll', function () {
 
   if (diff > .9) {
     $nav.classList.add('opaque');
+    $('.navbar-menu').find('.fa-chevron-up').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+    $('.scroll-up').css('display','block');
     return;
   } else {
     $nav.classList.remove('opaque');
+    $('.navbar-menu').find('.fa-chevron-down').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+    $('.scroll-up').css('display','none');
   }
 
   $hero.style.opacity = 1 - (diff * 1);
@@ -75,17 +85,18 @@ carousels.forEach(carousel => {
 })
 
 function scrollCarousel($container, target) {
-  console.log($container)
-  console.log(target)
   $container.scroll({
     behavior: 'smooth',
     top: 0,
     left: windowWidth * (target - 1)
   })
 }
-if (anchor != null){
-  anchor.style.top = -$('.navbar').height() - $('#mainNav').height()+"px";
-}
+anchors.forEach(anchor => {
+  if (anchor != null){
+    anchor.style.top = -($nav.scrollHeight)+'px';
+  }
+})
+
 
 $('.lang-selection').off().on('click', function(){
   var url = window.location.pathname;
@@ -104,7 +115,6 @@ $(document).ready(function(){
   $('.popup').each(function(){
     $(this).off().on('click', function(){
       if ($(this).find('span').hasClass("show")){
-        console.log('test')
         $(this).find('span').removeClass("show");
         $(this).find('span').addClass("transition");
         setTimeout(hidePopup, 1000, $(this).find('span'));
@@ -112,5 +122,29 @@ $(document).ready(function(){
         $(this).find('span').addClass("show");
       }
     });
-  })
+  });
+
+  $('.sub-menu').each(function(){
+    $(this).off().on('click',function(){
+      var dropdown = $(this).closest('.navbar-item').find('.dropdown')
+      console.log('test')
+      if(dropdown.css('display') == 'flex'){
+        console.log('test')
+        $('.dropdown').css('display','none');
+      }else{
+        $('.dropdown').css('display','none');
+        dropdown.css('display','flex');
+      }
+    });
+  });
+
+  $('.scroll-full-height').each(function(){
+    $(this).off().on('click',function(){
+      window.scrollBy({
+        top: window.innerHeight - $nav.scrollHeight,
+        left: 0,
+        behavior: 'smooth'
+      });
+    });
+  });
 });

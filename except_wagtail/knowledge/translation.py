@@ -1,4 +1,4 @@
-from knowledge.models import KnowledgePage
+from knowledge.models import *
 from modeltranslation.translator import TranslationOptions
 from modeltranslation.decorators import register
 
@@ -7,4 +7,12 @@ class KnowledgePageTR(TranslationOptions):
 	fields = (
 		'hero_title',
 		'hero_subtitle',
+		'hero_subtitle',
+		)
+
+
+@register(Resource)
+class ResourceTR(TranslationOptions):
+	fields = (
+		'hero_title',
 		)

@@ -18,7 +18,7 @@
             {% if page.hero_subtitle %}
               <h3 class="h3 subtitle">{{ page.hero_subtitle }}</h3>
             {% endif %}
-            <a href='#introduction'><button class="button has-icon is-primary"><i class="fas fa-chevron-down"></i></button></a>
+            <a href='#introduction' class='scroll-anchor'><button class="button has-icon is-primary"><i class="fas fa-chevron-down"></i></button></a>
           </div>
         </div>
       </div>
@@ -75,9 +75,11 @@
                     </a>
                   {% endif %}
                   <div class="spacer"></div>
-                  <button class="button has-icon is-primary">
-                    <i class="fas fa-chevron-down"></i>
-                  </button>
+                  <a href='#services-section' class='scroll-anchor'>
+                    <button class="button has-icon is-primary">
+                      <i class="fas fa-chevron-down"></i>
+                    </button>
+                  </a>
                 </div>
               </article>
             {% endfor %}
@@ -94,6 +96,7 @@
     {% endif %}
 
     {# Working areas #}
+    <a class="anchor" id="services-section"></a>
     <section class="section is-fullheight" style="background-image: url({{ mediaPath }}{{ page.services_image }})">
       <div class="container">
         <article class="article">
@@ -111,12 +114,14 @@
           <div class="buttons">
             <div class="container"><a href='{{indexService.url}}' class="button is-next is-secondary">View our services</a></div>
             <div class="container">
-              <button class="button has-icon is-primary"><i class="fas fa-chevron-down"></i></button>
+              <a href='#highlight-section' class='scroll-anchor'><button class="button has-icon is-primary"><i class="fas fa-chevron-down"></i></button></a>
             </div>
           </div>
         </article>
       </div>
     </section>
+
+    <a class="anchor" id="highlight-section"></a>
     <section class="section">
       <div class="container">
         <article class="article">
@@ -127,23 +132,23 @@
             <div class="column is-8">
               <div class="card is-stretched">
                 <div class="card-image">
-                  <figure class="image"><img src="assets/images/working-area-photo.png"></figure>
+                  <figure class="image"><img src="{{ mediaPath }}{{ highlight_video.hero_image }}"></figure>
                 </div>
-                <div class="card-footer"><a class="link"><span>Watch the video &quot;A passion for Change&quot;</span><i class="fas fa-chevron-right"></i></a></div>
+                <div class="card-footer"><a href="{{ highlight_video.file.url }}" class="link"><span>{{highlight_video.hero_title}}</span><i class="fas fa-chevron-right"></i></a></div>
               </div>
             </div>
             <div class="column is-4">
               <div class="card is-stretched">
                 <div class="card-image">
-                  <figure class="image"><img src="assets/images/working-area-photo.png">
+                  <figure class="image"><img src="{{ mediaPath }}{{ highlight_resources.0.hero_image }}">
                     <h4 class="h4 label is-red">Event</h4>
                   </figure>
                 </div>
                 <div class="card-content">
-                  <h3 class="h3">New SID intro workshops in July and August 2018</h3>
+                  <h3 class="h3">{{ highlight_resources.0.hero_title }}</h3>
                   <p>Learn about the SiD advanced sustainability framework SiD in these 3 day intensive hands-on workshops.</p>
                 </div>
-                <div class="card-footer"><a class="link"><span>Register now</span><i class="fas fa-chevron-right"></i></a></div>
+                <div class="card-footer"><a href="{{ highlight_resources.0.file.url }}" class="link"><span>Register now</span><i class="fas fa-chevron-right"></i></a></div>
               </div>
             </div>
           </div>
@@ -151,43 +156,43 @@
             <div class="column is-4">
               <div class="card is-stretched">
                 <div class="card-image">
-                  <figure class="image"><img src="assets/images/working-area-photo.png">
+                  <figure class="image"><img src="{{ mediaPath }}{{ highlight_news.0.hero_image }}">
                     <h4 class="h4 label is-purple">News</h4>
                   </figure>
                 </div>
                 <div class="card-content">
-                  <h3 class="h3">Centrum Ecological Chapel receives design prize in contest for world’s most...</h3>
-                  <p>21-02-2017</p><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                  <h3 class="h3">{{ highlight_news.0.hero_title }}</h3>
+                  <p>{{ highlight_news.0.date_published }}</p><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
                 </div>
-                <div class="card-footer"><a class="link"><span>Register now</span><i class="fas fa-chevron-right"></i></a></div>
+                <div class="card-footer"><a href="{{ highlight_news.0.url }}" class="link"><span>Read our news</span><i class="fas fa-chevron-right"></i></a></div>
               </div>
             </div>
             <div class="column is-4">
               <div class="card is-stretched">
                 <div class="card-image">
-                  <figure class="image"><img src="assets/images/working-area-photo.png">
+                  <figure class="image"><img src="{{ mediaPath }}{{ highlight_projects.0.hero_image }}">
                     <h4 class="h4 label is-blue">Project</h4>
                   </figure>
                 </div>
                 <div class="card-content">
-                  <h3 class="h3">Centrum Ecological Chapel receives design prize in contest for world’s most...</h3>
-                  <p>21-02-2017</p><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                  <h3 class="h3">{{ highlight_projects.0.hero_title }}</h3>
+                  <p>{{ highlight_projects.0.date_published }}</p><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
                 </div>
-                <div class="card-footer"><a class="link"><span>Register now</span><i class="fas fa-chevron-right"></i></a></div>
+                <div class="card-footer"><a href="{{ highlight_projects.0.url }}" class="link"><span>See more projects</span><i class="fas fa-chevron-right"></i></a></div>
               </div>
             </div>
             <div class="column is-4">
               <div class="card is-stretched">
                 <div class="card-image">
-                  <figure class="image"><img src="assets/images/working-area-photo.png">
+                  <figure class="image"><img src="{{ mediaPath }}{{ highlight_resources.1.hero_image }}">
                     <h4 class="h4 label is-green">Knowledge</h4>
                   </figure>
                 </div>
                 <div class="card-content">
-                  <h3 class="h3">Centrum Ecological Chapel receives design prize in contest for world’s most...</h3>
-                  <p>21-02-2017</p><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                  <h3 class="h3">{{ highlight_resources.1.hero_title }}</h3>
+                  <p>{{ highlight_news.1.date_published }}</p><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
                 </div>
-                <div class="card-footer"><a class="link"><span>Register now</span><i class="fas fa-chevron-right"></i></a></div>
+                <div class="card-footer"><a href="{{ highlight_resources.1.file.url }}" class="link"><span>See more resources</span><i class="fas fa-chevron-right"></i></a></div>
               </div>
             </div>
           </div>

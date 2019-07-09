@@ -7,6 +7,9 @@ class ProjectPageTR(TranslationOptions):
 	fields = (
 		'hero_title',
 		'hero_subtitle',
+		'summary',
+		'intro',
+		'body',
 		)
 
 @register(ProjectIndexPage)
@@ -14,4 +17,11 @@ class ProjectIndexPageTR(TranslationOptions):
 	fields = (
 		'hero_title',
 		'hero_subtitle',
+		'intro',
+		)
+
+@register(CarouselItem)
+class CarouselItemTR(TranslationOptions):
+	fields = (
+		'description',
 		)
