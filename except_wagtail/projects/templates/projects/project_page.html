@@ -93,7 +93,6 @@
                 {% for project_partner in page.project_partners.all %}
                   <li>
                     <figure class="image"><img class="is-200x200" src="{{ mediaPath }}{{ project_partner.partner.image }}">
-                      <figcaption class="caption">{{project_partner.partner.company}}</figcaption>
                     </figure>
                   </li>
                 {% endfor %}
@@ -105,11 +104,24 @@
                 <ul>
                 {% for team_member in page.team_members.all %}
                   <li>
-                    <a href='{{team_member.get_page.url}}'>
-                      <figure class="image"><img class="is-200x200" src="{{ mediaPath }}{{ team_member.member.picture }}">
-                        <figcaption class="caption">{{team_member.member.user.first_name}} {{team_member.member.user.last_name}}</figcaption>
-                      </figure>
-                    </a>
+                    {% if team_member.get_page %}
+                      <a class="team-member" href='{{team_member.get_page.url}}'>{{team_member.member.user.first_name}} {{team_member.member.user.last_name}}</a>
+                      <p class="former-member">{{team_member.member.job_title}}</p>
+                    {% else %}
+                      <figcaption class="caption">{{team_member.member.user.first_name}} {{team_member.member.user.last_name}}</figcaption>
+                      <p class="former-member">{{team_member.member.job_title}}</p>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+                {% for team_member in page.external_members.all %}
+                  <li>
+                    {% if team_member.get_page %}
+                      <a class="team-member" href='{{team_member.get_page.url}}'>{{team_member.member.user.first_name}} {{team_member.member.user.last_name}}</a>
+                      <p class="former-member">{{team_member.member.job_title}}</figcaption>
+                    {% else %}
+                      <figcaption class="caption">{{team_member.first_name}} {{team_member.last_name}}</figcaption>
+                      <p class="former-member">{{team_member.job_title}}</p>
+                    {% endif %}
                   </li>
                 {% endfor %}
                 </ul>

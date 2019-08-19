@@ -12,6 +12,55 @@ html{
   position: fixed;
 }
 
+.sub-menu{
+  display:none;
+}
+
+.sub-menu.is-selected {
+  display:block;
+}
+
+.carousel.cover {
+  position:absolute;
+  z-index:11;
+  top: 0;
+}
+
+.has-cover .h2:before{
+  border-color: white;
+}
+
+.has-cover{
+  z-index:10;
+}
+
+.has-cover .container{
+  z-index:12;
+}
+.has-cover .h2{
+  color:white;
+  margin-top: 10%;
+}
+
+.has-cover article .caption{
+  margin-bottom: 10%;
+  color:white;
+  width:60%;
+}
+
+.has-cover .buttons,  .has-cover .buttons div{
+  padding-top: 1rem;
+}
+
+.has-cover .carousel .button.is-secondary{
+  z-index:10000;
+}
+
+section.is-fullheight.has-cover{
+  position:relative;
+  padding:0;
+}
+
 .is-sticky {
   position: -webkit-sticky;
   position: sticky;
@@ -210,7 +259,6 @@ p:not(.is-blocked) + .buttons,
 }
 .carousel.is-fullheight {
   height: calc(100vh - 250px);
-  min-height: 50vw;
 }
 article .carousel {
   height: 40vh;
@@ -701,8 +749,8 @@ p.description {
 
 .is-blocked {
   color: #ffffff;
-  background: rgba(0, 0, 0, 0.3);
-  padding: 1em 2em;
+  background: rgba(0, 0, 0, 0.5);
+  text-align: left;
 }
 .is-blocked:before {
   display: none;
@@ -872,9 +920,6 @@ nav.navbar .navbar-item .dropdown ul > li a span {
 nav.navbar .navbar-item .dropdown ul > li a i {
   flex: none;
 }
-nav.navbar .navbar-item input.for-dropdown:not(:checked) ~ .dropdown {
-  display: none;
-}
 
 nav.navbar.navbar-menu {
   background: #E5E6E7;
@@ -1028,8 +1073,8 @@ a.anchor {
 }
 
 .has-carousel article .carousel{
-  max-height: 672px;
-  height:40vw;
+  max-height: 1200px;
+  height:60vw;
 
 }
 .carousel.has-text-centered{
@@ -1066,6 +1111,8 @@ a.anchor {
 
 .is-blocked.description{
   margin: 0;
+  padding: 0.5rem;
+}
 }
 
 .is-blocked{
@@ -1167,4 +1214,55 @@ label .fas {
 
 .scroll-anchor {
   color: #ffffff;
+}
+
+.team-member {
+  color: #6B2A7E;
+}
+
+.former-member {
+  color: #C0C0C0;
+}
+
+.is-4 .card > div.card-image.is-front {
+  height:70%;
+}
+
+.is-4 .card > div.card-content.is-front {
+  height:30%;
+}
+
+.is-4 .card figure{
+  height:100%;
+}
+
+.is-3 .card > a, .is-4 .card .card-image {
+  height:60%;
+}
+
+.is-3 .card > div, .is-4 .card .card-content {
+  height:40%;
+}
+
+.is-3 .card > a figure, .is-3 .card > a div, .is-4 .card .card-image > a, .is-4 .card .card-image > figure {
+  height:100%;
+}
+
+.full-width{
+  width: 100%;
+  max-width: 100%;
+}
+
+.not-full-height{
+  padding-bottom: 2rem;
+}
+
+.not-full-height * {
+  max-width: 60%;
+  padding: 0.5rem;
+  margin: 0;
+}
+
+.column-service:hover, .column-service:active{
+  background-color: #e5e6e7;
 }

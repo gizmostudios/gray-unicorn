@@ -16,17 +16,21 @@ $(document).ready(function(){
 			$(this).off().on('click', function(){
 				var option_value = parseInt($(this)[0].value);
 				if(option_value == 1){
-					link_internal_page.style.display = '';
+					link_internal_page.style.display = 'block';
 					link_external_page.style.display = 'none';
 					popup.style.display = 'none';
 				}else if(option_value == 2){
 					link_internal_page.style.display = 'none';
-					link_external_page.style.display = '';
+					link_external_page.style.display = 'block';
 					popup.style.display = 'none';
 				}else if(option_value == 3){
 					link_internal_page.style.display = 'none';
 					link_external_page.style.display = 'none';
-					popup.style.display = '';
+					$('fieldset').each(function(){
+						console.log($(this)[0])
+						$(this)[0].style.marginLeft = '0px';
+					});
+					popup.style.display = 'block';
 				}else{
 					link_internal_page.style.display = 'none';
 					link_external_page.style.display = 'none';

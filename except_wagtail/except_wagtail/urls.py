@@ -20,11 +20,9 @@ urlpatterns = [
 
     url(r'^search/$', search_views.search, name='search'),
 
-    url(r'ajax/filter_news/$',news_views.filter_news, name="filter_news"),
-    url(r'ajax/filter_timeline/$',news_views.filter_timeline, name="filter_timeline"),
+    url(r'ajax/load_more_news/$',news_views.load_more_news, name="load_more_news"),
     url(r'ajax/filter_resources/$',knowledge_views.filter_resources, name="filter_resources"),
     url(r'ajax/update_pagination/$',knowledge_views.update_pagination, name="update_pagination"),
-    url(r'ajax/update_pagination_news/$',news_views.update_pagination, name="update_pagination"),
     url(r'ajax/update_pagination_projects/$',projects_views.update_pagination, name="update_pagination"),
     url(r'ajax/filter_timeline_projects/$',projects_views.filter_timeline, name="filter_timeline"),
     url(r'ajax/filter_projects/$',projects_views.filter_projects, name="filter_resources"),

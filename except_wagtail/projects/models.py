@@ -43,6 +43,19 @@ class ProjectPartner(Orderable):
 		FieldPanel('partner'),
 	]
 
+class ExternalMember(Orderable):
+	page = ParentalKey('ProjectPage', related_name='external_members')
+
+	first_name = models.CharField(max_length=255, null=True, blank=True)
+	last_name = models.CharField(max_length=255, null=True, blank=True)
+	job_title = models.CharField(max_length=255, null=True, blank=True)
+
+	panels = [
+		FieldPanel('first_name'),
+		FieldPanel('last_name'),
+		FieldPanel('job_title'),
+	]
+
 class CarouselItem(Orderable):
 	image = models.ForeignKey(
 		'wagtailimages.Image',
@@ -102,6 +115,7 @@ class ProjectPage(Page):
 		FieldPanel('hero_title'),
 		FieldPanel('hero_subtitle'),
 		InlinePanel('team_members', label="Team members"),
+		InlinePanel('external_members', label="External members"),
 		InlinePanel('project_partners', label="Partners of the project"),
 		InlinePanel('project_resources', label="Resources related to the project"),
 		FieldPanel('intro', classname="full"),
@@ -158,6 +172,7 @@ class ProjectIndexPage(Page):
 		FieldPanel('hero_image'),
 		FieldPanel('hero_title'),
 		FieldPanel('hero_subtitle'),
+		FieldPanel('intro'),
 	]
 
 	def get_projects(self):

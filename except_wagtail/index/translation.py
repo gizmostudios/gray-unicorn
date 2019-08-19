@@ -7,13 +7,9 @@ class HomePageTR(TranslationOptions):
 	fields = (
 		'hero_title',
 		'hero_subtitle',
-		'introduction',
 		)
 
 @register(CarouselItem)
 class CarouselItemR(TranslationOptions):
 	fields = (
-		'title',
-		'caption',
-		'link_title',
 		)

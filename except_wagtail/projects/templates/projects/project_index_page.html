@@ -39,14 +39,22 @@
     </section>
     {% if highlights.all %}
       <section class="section has-carousel">
-        <div class="container has-carousel" data-count="{{page.carousel_items.all|length}}">
+        <div class="container">
+          <article class="article">
+            <header>
+              <h2 class="h2">Project highlights</h2>
+            </header>
+          </article>
+        </div>
+        <div class="spacer"></div>
+        <div class="container has-carousel full-width" data-count="{{page.carousel_items.all|length}}">
           <article class="article carousel-inner">
             {% for item in highlights.all %}
               <div class="carousel has-text-centered" style="background-image:url({{ mediaPath }}{{ item.hero_image }})">
-                <div class="caption-carousel-article">
+                <div class="container not-full-height">
                   <h2 class="h2 is-blocked">{{ item.hero_title }}</h2>
                   <p class="is-blocked description">{{ item.summary }}</p>
-                  <div class="buttons"><a href="{{item.url}}" class="button is-next is-secondary">View project</a></div>
+                  <div class="buttons is-blocked"><a href="{{item.url}}" class="button is-next is-secondary">View project</a></div>
                 </div>
               </div>       
             {% endfor %}

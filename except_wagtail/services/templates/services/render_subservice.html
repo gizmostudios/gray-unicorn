@@ -5,17 +5,14 @@
       <div class="column is-12">
         {% for subservice in subservices %}
           <div class="columns">
-            <div class="column is-1 has-text-right">
-              <button class="button is-primary is-fullheight">&gt;</button>
-            </div>
-            <div class="column is-11">
-              <h3 class="h3">{{subservice.title}}</h3>
+            <div class="column is-12">
+              <h3 class="h3"><i class="fas fa-chevron-right"></i>  {{subservice.title}}</h3>
               <p>{{subservice.description}}</p>
             </div>
           </div>
           <div class="spacer"></div>
         {% endfor %}
-        <div class="buttons"><a href="{{service.url}}" class="button is-next is-secondary">See more</a></div>
+        <div class="buttons"><a href="{{service.url}}" class="button is-next is-secondary">See more <i class="fas fa-chevron-right"></i></a></div>
       </div>
     </div>
   </div>

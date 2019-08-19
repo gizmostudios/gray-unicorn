@@ -6,26 +6,29 @@ const navRadios = document.getElementsByName('main-menu');
 const anchors = document.querySelectorAll('.anchor');
 const navbar = document.querySelector('.navbar');
 const stickyScrollUp = $('.scroll-up');
+const main_menus = document.querySelectorAll('.main-menu');
 
-navRadios.forEach(radio => {
-  console.log("test")
-  radio.addEventListener('click', event => {
-    if(!radio.dataset.checked) {
-      radio.dataset.checked = true;
-      radio.parentNode.classList.add('is-selected');
-    } else {
-      radio.checked = false;
-      delete radio.dataset.checked;
-      radio.parentNode.classList.remove('is-selected');
-    }
-  })
+
+main_menus.forEach(menu => {
+  menu.addEventListener('mouseover', event => {
+      menu.querySelector('.sub-menu').classList.add('is-selected');
+  });
+  menu.addEventListener('mouseout', event => {
+      menu.querySelector('.sub-menu').classList.remove('is-selected');
+  });
+  menu.addEventListener('click', event => {
+    main_menus.forEach(menu => {
+        menu.querySelector('.sub-menu').classList.remove('is-selected');
+      });
+      menu.querySelector('.sub-menu').classList.add('is-selected');
+  });
 });
 stickyScrollUp.css('display','none');
 let windowWidth = window.innerWidth;
-console.log($('button')[0].scrollHeight);
 stickyScrollUp.css('top',window.innerHeight-$('button')[0].scrollHeight+'px');
 stickyScrollUp.css('left','100px');
 
+var lastScrollTop = 0;
 
 
 let stickyNav = false;
@@ -36,6 +39,14 @@ window.addEventListener('scroll', function () {
     return;
   }
 
+  var st = $(this).scrollTop();
+   if (st > lastScrollTop){
+      if( window.scrollY < $hero.clientHeight/2){
+        $('#bottom-navbar')[0].scrollIntoView( true );
+      }
+   } else {
+   }
+   lastScrollTop = st;
 
   let diff = window.scrollY / $hero.clientHeight;
 
@@ -43,6 +54,10 @@ window.addEventListener('scroll', function () {
     $nav.classList.add('opaque');
     $('.navbar-menu').find('.fa-chevron-up').removeClass('fa-chevron-up').addClass('fa-chevron-down');
     $('.scroll-up').css('display','block');
+    $hero.style.opacity = 1 - (0.9 * 1);
+  
+    $nav.style.transform = `translate(0, -${0.9 * 30}px)`;
+    $logo.style.transform = `scale(${1 - 0.9 / 5})`;
     return;
   } else {
     $nav.classList.remove('opaque');
@@ -93,7 +108,7 @@ function scrollCarousel($container, target) {
 }
 anchors.forEach(anchor => {
   if (anchor != null){
-    anchor.style.top = -($nav.scrollHeight)+'px';
+    anchor.style.top = -($nav.scrollHeight*0.7)+'px';
   }
 })
 
@@ -127,9 +142,7 @@ $(document).ready(function(){
   $('.sub-menu').each(function(){
     $(this).off().on('click',function(){
       var dropdown = $(this).closest('.navbar-item').find('.dropdown')
-      console.log('test')
       if(dropdown.css('display') == 'flex'){
-        console.log('test')
         $('.dropdown').css('display','none');
       }else{
         $('.dropdown').css('display','none');

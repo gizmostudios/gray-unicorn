@@ -20,6 +20,9 @@ from news.blocks import BaseStreamBlock
 from services.models import ServicePage as Service
 from knowledge.models import *
 
+from itertools import chain
+from operator import attrgetter
+
 
 class NewsPage(Page):
 
@@ -89,6 +92,7 @@ class NewsPage(Page):
 class NewspaperArticlePage(Page):
 	hero_image = models.ImageField(null=True, blank=True)
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
+	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
 	date_published = models.DateField("Date article published", blank=True, null=True)
 	url_article = models.CharField(max_length=500, null=True, blank=True)
 	service = models.ForeignKey(
@@ -103,6 +107,7 @@ class NewspaperArticlePage(Page):
 		FieldPanel('service'),
 		FieldPanel('hero_image'),
 		FieldPanel('hero_title'),
+		FieldPanel('hero_subtitle'),
 		FieldPanel('date_published'),
 		FieldPanel('url_article'),
 	]
@@ -138,52 +143,18 @@ class NewsIndexPage(Page):
 	]
 
 	def get_news(self):
-		return NewsPage.objects.live().order_by('-date_published')
-
-	def get_articles(self):
-		return NewspaperArticlePage.objects.live().order_by('-date_published')
-
-	def paginate_news(self, request, *args):
-		page = request.GET.get('page')
-		paginator = Paginator(self.get_news(), 6)
-		try:
-			pages = paginator.page(page)
-		except PageNotAnInteger:
-			pages = paginator.page(1)
-		except EmptyPage:
-			pages = paginator.page(paginator.num_pages)
-		return pages
-
-	def paginate_articles(self, request, *args):
-		page = request.GET.get('page')
-		paginator = Paginator(self.get_articles(), 8)
-		try:
-			pages = paginator.page(page)
-		except PageNotAnInteger:
-			pages = paginator.page(1)
-		except EmptyPage:
-			pages = paginator.page(paginator.num_pages)
-		return pages
-
+		result_list = sorted(
+    		chain(NewsPage.objects.live(), NewspaperArticlePage.objects.live()),
+    		key=attrgetter('date_published'), reverse=True)
+		return result_list
 
 	def get_context(self, request):
 		context = super(NewsIndexPage, self).get_context(request)
 
-		news = self.paginate_news(request, self.get_news())
-		articles = self.paginate_articles(request, self.get_articles())
-
-		news_all = self.get_news()
-		articles_all = self.get_articles()
-		last_year = news_all.first().date_published.year
-		first_year = articles_all.last().date_published.year
-
-		services = Service.objects.live()
-
-		context['current_articles'] = articles
-		context['current_news'] = news
-		context['services'] = services
+		news = self.get_news()
 		context['news'] = news
-		context['years'] = range(first_year, last_year+1)
+		context['not_last'] = len(news)>6
+		context['current_news'] = news[0:6]
 
 		return context
 

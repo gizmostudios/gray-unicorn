@@ -26,61 +26,68 @@
 
     {# Main navigation #}
     {% include "includes/navbar.html" with inverted=page.navbar_inverted transparent=page.navbar_transparent%}
-    <a class="anchor" id="introduction"></a>
+    <a class="anchor" id="first_anchor"></a>
     <div class="spacer"></div>
-
-    {# Intro #}
-    {% if page.introduction %}
-      <section>
-        <article class="container">
-          <p class="intro">
-            {{ page.introduction }}
-          </p>
+    <section class="section is-fullheight">
+      <div class="container">
+        <article class="article">
+          <header>
+            {% if page.introduction_title %}
+              <h2 class="h2">{{page.introduction_title}}</h2>
+            {% endif %}
+          </header>
+          {% if page.introduction_image %}
+            <img src="{{ mediaPath }}{{ page.introduction_image }}">
+          {% endif %}
+          {% if page.introduction_text %}
+            <p class="intro" style="font-size: 1.3rem;">{{page.introduction_text}}</p>
+          {% endif %}
+          <div class="buttons">
+            {% if page.introduction_link %}
+              <div class="container"><a href='{{page.introduction_link.url}}' class="button is-next is-secondary">More about us</a></div>
+            {% endif %}
+            <div class="container">
+              <a href='#carousel-section' class='scroll-anchor'><button class="button has-icon is-primary"><i class="fas fa-chevron-down"></i></button></a>
+            </div>
+          </div>
         </article>
-      </section>
-    {% endif %}
+      </div>
+    </section>
 
+    <a class="anchor" id="carousel-section"></a>
     {# Carousel #}
-    {% if page.carousel_items %}
-      <section class="section">
-        <div class="carousel is-fullheight" data-count="{{page.carousel_items.all|length}}">
+    {% if page.carousel_images %}
+      <section class="section is-fullheight has-cover">
+        <div class="container">
+          <article class="article">
+            {% if page.carousel_title %}
+              <header>
+                <h2 class="h2">{{page.carousel_title}}</h2>
+              </header>
+            {% endif %}
+            {% if page.carousel_description %}
+              <div class="caption">
+                <h3 class="h3">{{page.carousel_description}}</h3>
+                <div class="buttons">
+                  {% for link_button in page.carousel_links.all %}
+                    <a href='{{link_button.link.url}}' class="button is-next is-secondary">{{link_button.link_description}} <i class="fas fa-chevron-right"></i></a>
+                  {% endfor %}
+                  <div class="container">
+                    <a href='#services-section' class='scroll-anchor'><button class="button has-icon is-primary"><i class="fas fa-chevron-down"></i></button></a>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          </article>
+        </div>
+
+        <div class="carousel is-fullheight cover" data-count="{{page.carousel_images.all|length}}">
 
           <div class="carousel-inner">
-            {% for carousel_item in page.carousel_items.all %}
+            {% for carousel_image in page.carousel_images.all %}
 
-              {% image carousel_item.image width-1000 as carouselimagedata %}
-              <article style="background-image: url({{ carouselimagedata.url }})" class="background-{{carousel_item.scaling}}">
-
-                <div class="container">
-                  {% if carousel_item.title %}
-                    <header>
-                      <h2 class="h2">{{ carousel_item.title }}</h2>
-                    </header>
-                  {% endif %}
-
-                  {% if carousel_item.title %}
-                    <div>
-                      <p>{{ carousel_item.caption }}</p>
-                    </div>
-                  {% endif %}
-                  
-                  {% if carousel_item.link_page %}
-                    <a href="{{ carousel_item.link_page }}" class="button is-next is-secondary">
-                      {% if carousel_item.link_title %}
-                        {{ carousel_item.link_title }}
-                        <i class="fas fa-chevron-right"></i>
-                      {% else %}
-                        More
-                      {% endif %}
-                    </a>
-                  {% endif %}
-                  <div class="spacer"></div>
-                  <a href='#services-section' class='scroll-anchor'>
-                    <button class="button has-icon is-primary">
-                      <i class="fas fa-chevron-down"></i>
-                    </button>
-                  </a>
-                </div>
+              {% image carousel_image.image width-1000 as carouselimagedata %}
+              <article style="background-image: url({{ carouselimagedata.url }})" class="background-{{carousel_image.scaling}}">
               </article>
             {% endfor %}
           </div>
@@ -96,8 +103,9 @@
     {% endif %}
 
     {# Working areas #}
+    <div class="spacer is-large"></div>
     <a class="anchor" id="services-section"></a>
-    <section class="section is-fullheight" style="background-image: url({{ mediaPath }}{{ page.services_image }})">
+    <section class="section is-fullheight">
       <div class="container">
         <article class="article">
           <header>
@@ -129,94 +137,104 @@
             <h2 class="h2">Latest news</h2>
           </header>
           <div class="columns">
-            <div class="column is-8">
+            <div class="column is-8 is-front">
               <div class="card is-stretched">
                 <div class="card-image">
                   <figure class="image"><img src="{{ mediaPath }}{{ highlight_video.hero_image }}"></figure>
                 </div>
-                <div class="card-footer"><a href="{{ highlight_video.file.url }}" class="link"><span>{{highlight_video.hero_title}}</span><i class="fas fa-chevron-right"></i></a></div>
+                <div class="card-footer is-front"><a href="{{ highlight_video.file.url }}" class="link"><span>{{highlight_video.hero_title}}</span><i class="fas fa-chevron-right"></i></a></div>
               </div>
             </div>
             <div class="column is-4">
               <div class="card is-stretched">
-                <div class="card-image">
+                <div class="card-image is-front">
                   <figure class="image"><img src="{{ mediaPath }}{{ highlight_resources.0.hero_image }}">
                     <h4 class="h4 label is-red">Event</h4>
                   </figure>
                 </div>
-                <div class="card-content">
+                <div class="card-content is-front">
                   <h3 class="h3">{{ highlight_resources.0.hero_title }}</h3>
                   <p>Learn about the SiD advanced sustainability framework SiD in these 3 day intensive hands-on workshops.</p>
                 </div>
-                <div class="card-footer"><a href="{{ highlight_resources.0.file.url }}" class="link"><span>Register now</span><i class="fas fa-chevron-right"></i></a></div>
+                <div class="card-footer is-front"><a href="{{ highlight_resources.0.file.url }}" class="link"><span>Register now</span><i class="fas fa-chevron-right"></i></a></div>
               </div>
             </div>
           </div>
           <div class="columns">
             <div class="column is-4">
               <div class="card is-stretched">
-                <div class="card-image">
-                  <figure class="image"><img src="{{ mediaPath }}{{ highlight_news.0.hero_image }}">
-                    <h4 class="h4 label is-purple">News</h4>
-                  </figure>
+                <div class="card is-stretched">
+                  <div class="card-image is-front">
+                    <figure class="image"><img src="{{ mediaPath }}{{ highlight_news.0.hero_image }}">
+                      <h4 class="h4 label is-purple">News</h4>
+                    </figure>
+                  </div>
+                  <div class="card-content is-front">
+                    <h3 class="h3">{{ highlight_news.0.hero_title }}</h3>
+                    <p>{{ highlight_news.0.date_published }}</p><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                  </div>
                 </div>
-                <div class="card-content">
-                  <h3 class="h3">{{ highlight_news.0.hero_title }}</h3>
-                  <p>{{ highlight_news.0.date_published }}</p><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
-                </div>
-                <div class="card-footer"><a href="{{ highlight_news.0.url }}" class="link"><span>Read our news</span><i class="fas fa-chevron-right"></i></a></div>
+                <div class="card-footer is-front"><a href="{{ highlight_news.0.url }}" class="link"><span>Read our news</span><i class="fas fa-chevron-right"></i></a></div>
               </div>
             </div>
             <div class="column is-4">
               <div class="card is-stretched">
-                <div class="card-image">
-                  <figure class="image"><img src="{{ mediaPath }}{{ highlight_projects.0.hero_image }}">
-                    <h4 class="h4 label is-blue">Project</h4>
-                  </figure>
+                <div class="card is-stretched">
+                  <div class="card-image is-front">
+                    <figure class="image"><img src="{{ mediaPath }}{{ highlight_projects.0.hero_image }}">
+                      <h4 class="h4 label is-blue">Project</h4>
+                    </figure>
+                  </div>
+                  <div class="card-content is-front">
+                    <h3 class="h3">{{ highlight_projects.0.hero_title }}</h3>
+                    <p>{{ highlight_projects.0.date_published }}</p><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                  </div>
                 </div>
-                <div class="card-content">
-                  <h3 class="h3">{{ highlight_projects.0.hero_title }}</h3>
-                  <p>{{ highlight_projects.0.date_published }}</p><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
-                </div>
-                <div class="card-footer"><a href="{{ highlight_projects.0.url }}" class="link"><span>See more projects</span><i class="fas fa-chevron-right"></i></a></div>
+                <div class="card-footer is-front"><a href="{{ highlight_projects.0.url }}" class="link"><span>See more projects</span><i class="fas fa-chevron-right"></i></a></div>
               </div>
             </div>
             <div class="column is-4">
               <div class="card is-stretched">
-                <div class="card-image">
-                  <figure class="image"><img src="{{ mediaPath }}{{ highlight_resources.1.hero_image }}">
-                    <h4 class="h4 label is-green">Knowledge</h4>
-                  </figure>
+                <div class="card is-stretched">
+                  <div class="card-image is-front">
+                    <figure class="image"><img src="{{ mediaPath }}{{ highlight_resources.1.hero_image }}">
+                      <h4 class="h4 label is-green">Knowledge</h4>
+                    </figure>
+                  </div>
+                  <div class="card-content is-front">
+                    <h3 class="h3">{{ highlight_resources.1.hero_title }}</h3>
+                    <p>{{ highlight_news.1.date_published }}</p><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                  </div>
                 </div>
-                <div class="card-content">
-                  <h3 class="h3">{{ highlight_resources.1.hero_title }}</h3>
-                  <p>{{ highlight_news.1.date_published }}</p><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
-                </div>
-                <div class="card-footer"><a href="{{ highlight_resources.1.file.url }}" class="link"><span>See more resources</span><i class="fas fa-chevron-right"></i></a></div>
+                <div class="card-footer is-front"><a href="{{ highlight_resources.1.file.url }}" class="link"><span>See more resources</span><i class="fas fa-chevron-right"></i></a></div>
               </div>
             </div>
           </div>
           <div class="columns">
             <div class="column is-4">
               <div class="card is-stretched">
-                <div class="card-image">
-                  <figure class="image"><img src="assets/images/working-area-photo.png">
-                    <h4 class="h4 label is-red">People</h4>
-                  </figure>
+                <div class="card is-stretched">
+                  <div class="card-image is-front">
+                    <figure class="image"><img src="assets/images/working-area-photo.png">
+                      <h4 class="h4 label is-red">People</h4>
+                    </figure>
+                  </div>
+                  <div class="card-content is-front">
+                    <h3 class="h3">New SID intro workshops in July and August 2018</h3>
+                    <p>Learn about the SiD advanced sustainability framework SiD in these 3 day intensive hands-on workshops.</p>
+                  </div>
                 </div>
-                <div class="card-content">
-                  <h3 class="h3">New SID intro workshops in July and August 2018</h3>
-                  <p>Learn about the SiD advanced sustainability framework SiD in these 3 day intensive hands-on workshops.</p>
-                </div>
-                <div class="card-footer"><a class="link"><span>More info</span><i class="fas fa-chevron-right"></i></a></div>
+                <div class="card-footer is-front"><a class="link"><span>More info</span><i class="fas fa-chevron-right"></i></a></div>
               </div>
             </div>
-            <div class="column is-8">
+            <div class="column is-8 is-front">
               <div class="card is-stretched">
                 <div class="card-image">
-                  <figure class="image"><img src="assets/images/working-area-photo.png"></figure>
+                   <iframe style="height: 100%;"
+                    src="{{page.video_link}}">
+                    </iframe> 
                 </div>
-                <div class="card-footer"><a class="link"><span>Watch the video &quot;A passion for Change&quot;</span><i class="fas fa-chevron-right"></i></a></div>
+                <div class="card-footer is-front"><a class="link"><span>{{page.video_description}}</span><i class="fas fa-chevron-right"></i></a></div>
               </div>
             </div>
           </div>

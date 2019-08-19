@@ -8,11 +8,15 @@
         <!-- Navigation items-->
         {% for item in menu_items %}
         	{% if item.has_children_in_menu %}
-        		<div class="navbar-item">
-          			<input class="for-dropdown is-hidden" type="checkbox" id="{{item.text}}"/>
-                <a href="{{item.href}}">{{item.text}} </a>
-          			<label for="{{item.text}}"><i class="fas fa-chevron-up sub-menu"></i></label>
-        			{% sub_menu template=sub_menu_template menuitem_or_page=item %}
+        		<div class="navbar-item main-menu">
+        			<input class="for-dropdown is-hidden" type="checkbox" id="{{item.text}}"/>
+        			<a><label for="{{item.text}}">{{item.text}}<i class="fas fa-chevron-up"></i></label></a>
+              <div class="dropdown sub-menu">
+                <ul>
+                  <li><a href="{{item.href}}"><span>{{item.text}} Overview</span><i class="fas fa-chevron-right"></i></a></li>
+                  {% sub_menu template=sub_menu_template menuitem_or_page=item %}
+                </ul>
+              </div>
         		</div>
         	{% else %}
         		<a class="navbar-item" href="{{item.href}}"><span>{{item.text}}</span></a>

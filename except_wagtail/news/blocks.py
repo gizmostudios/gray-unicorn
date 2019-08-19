@@ -2,7 +2,7 @@
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.core.blocks import (
-    CharBlock, ChoiceBlock, RichTextBlock, StreamBlock, StructBlock, TextBlock, RawHTMLBlock,
+    CharBlock, ChoiceBlock, RichTextBlock, StreamBlock, StructBlock, TextBlock, RawHTMLBlock, ListBlock
 )
 
 
@@ -57,9 +57,9 @@ class ParagraphBlock(StructBlock):
 		con="fa-paragraph",
 		template="blocks/paragraph_block.html"
 
-class HtmlBlock(StructBlock):
+class CarouselBlock(StructBlock):
 
-    text=RawHTMLBlock()
+    image_list = ListBlock(ImageBlock)
 
     class Meta:
         con="fa-paragraph",
@@ -71,6 +71,7 @@ class BaseStreamBlock(StreamBlock):
     """
     Define the custom blocks that `StreamField` will utilize
     """
+    carousel_block = CarouselBlock()
     heading_block = HeadingBlock()
     paragraph_block = ParagraphBlock()
     image_block = ImageBlock()
@@ -79,10 +80,14 @@ class BaseStreamBlock(StreamBlock):
         help_text='Insert an embed URL e.g https://www.youtube.com/embed/SGJFWirQ3ks',
         icon="fa-s15",
         template="blocks/embed_block.html")
+   
 
 # StreamBlocks
 class FooterStreamBlock(StreamBlock):
     """
     Define the custom blocks that `StreamField` will utilize
     """
-    html_block = HtmlBlock()
+    html_block = RawHTMLBlock(
+        icon="fa-paragraph",
+        template="blocks/html_block.html",
+        required=False)

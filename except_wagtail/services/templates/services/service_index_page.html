@@ -24,6 +24,7 @@
     {# Main navigation #}
     {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
 
+    <a class="anchor" id="first_anchor"></a>
     <div class="spacer"></div>
     <section class="section">
       <div class="container">
@@ -33,7 +34,7 @@
           </header>
           <div class="columns has-gap">
             {% for service in service_list %}
-              <div class="column has-text-centered">
+              <div class="column has-text-centered column-service">
                 <a id="{{service.id}}" class="service">
                   <figure class="image"><img src="{{ mediaPath }}{{ service.image }}"></figure>
                   <h3 class="h3">{{service.hero_title}}</h3>

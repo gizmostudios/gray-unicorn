@@ -9,6 +9,8 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 
 from django.forms.widgets import Select
 
+from wagtail.core.fields import RichTextField
+
 from knowledge.models import *
 from news.models import *
 from projects.models import *
@@ -18,7 +20,7 @@ from modeltranslation.utils import build_localized_fieldname
 from django.conf import settings
 
 
-class CarouselItem(Orderable):
+class CarouselImage(Orderable):
 	image = models.ForeignKey(
 		'wagtailimages.Image',
 		null=True,
@@ -26,18 +28,7 @@ class CarouselItem(Orderable):
 		on_delete=models.SET_NULL,
 		related_name='+'
 	)
-	
-	link_page = models.ForeignKey(
-		'wagtailcore.Page',
-		null=True,
-		blank=True,
-		on_delete=models.SET_NULL,
-		related_name='+',
-	)
-	title = models.CharField(max_length=255, blank=True)
-	caption = models.CharField(max_length=255, blank=True)
-	link_title = models.CharField(max_length=255, blank=True)
-	page = ParentalKey('HomePage', related_name='carousel_items')
+	page = ParentalKey('HomePage', related_name='carousel_images')
 	scaling = models.CharField(max_length=15, default='fit', choices=(
 		('fit', 'fit'), ('fill', 'fill')
 	))
@@ -45,10 +36,21 @@ class CarouselItem(Orderable):
 	panels = [
 		ImageChooserPanel('image'),
 		FieldPanel('scaling'),
-		MultiFieldPanel([FieldPanel('title')], heading='Title'),
-		MultiFieldPanel([FieldPanel('caption')], heading='Caption'),
-		MultiFieldPanel([FieldPanel('link_title')], heading='Link Title'),
-		PageChooserPanel('link_page'),
+	]
+
+class CarouselItem(Orderable):
+	link = models.ForeignKey(
+		'wagtailcore.Page',
+		null=True,
+		blank=True,
+		on_delete=models.SET_NULL,
+		related_name='+')
+	page = ParentalKey('HomePage', related_name='carousel_links')
+	link_description = models.CharField(max_length=255, null=True, blank=True)
+
+	panels = [
+		PageChooserPanel('link'),
+		MultiFieldPanel([FieldPanel('link_description', classname="full")], heading='Link button text'),
 	]
 
 class HomePage(Page):
@@ -58,8 +60,25 @@ class HomePage(Page):
 	navbar_transparent = models.BooleanField(null=True, blank=True)
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
-	introduction = models.TextField(blank=True)
-	services_image = models.ImageField(null=True, blank=True)
+	introduction_title = models.CharField(max_length=255, null=True, blank=True)
+	introduction_image = models.ForeignKey(
+		'wagtailimages.Image',
+		null=True,
+		blank=True,
+		on_delete=models.SET_NULL,
+		related_name='+'
+	)
+	introduction_text = models.TextField(blank=True)
+	carousel_title = models.CharField(max_length=255, null=True, blank=True)
+	carousel_description = models.TextField(blank=True)
+	introduction_link = models.ForeignKey(
+		'wagtailcore.Page',
+		null=True,
+		blank=True,
+		on_delete=models.SET_NULL,
+		related_name='+')
+	video_link = models.CharField(max_length=1000, null=True, blank=True)
+	video_description = models.TextField(blank=True)
 
 	content_panels = [
 		MultiFieldPanel([
@@ -70,9 +89,15 @@ class HomePage(Page):
 		MultiFieldPanel([FieldPanel('hero_subtitle')], heading='Top section subtitle'),
 		FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
 		FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
-		MultiFieldPanel([FieldPanel('introduction', classname="full")], heading='Introduction'),
-		InlinePanel('carousel_items', label="Carousel Items"),
-		FieldPanel('services_image'),
+		MultiFieldPanel([FieldPanel('introduction_title', classname="full")], heading='Introduction Title'),
+		ImageChooserPanel('introduction_image'),
+		MultiFieldPanel([FieldPanel('carousel_title', classname="full")], heading='Carousel Section Title'),
+		MultiFieldPanel([FieldPanel('carousel_description', classname="full")], heading='Carousel Section Description'),
+		InlinePanel('carousel_links', label="Carousel Section Links"),
+		PageChooserPanel('introduction_link'),
+		InlinePanel('carousel_images', label="Carousel Images"),
+		FieldPanel('video_link'),
+		FieldPanel('video_description'),
 	]
 
 	def get_highlight_videos(self):
