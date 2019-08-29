@@ -8,22 +8,32 @@
 {% block content %}
     {% include "includes/navbar.html" %}
     <div class="spacer is-large"></div>
+    <div class="spacer is-large"></div>
     <section class="section">
         <div class="container">
-            <h1 class="h1">Search</h1>
+            <h1 class="h1">Search results</h1>
+
+            <div class="spacer is-large"></div>
 
             <form action="{% url 'search' %}" method="get">
                 <input class="input" name="query" {% if search_query %} value="{{ search_query }}"{% endif %}/>
                 <i class="fas fa-search"></i>
             </form>
-
+            <div class="spacer is-large"></div>
             {% if search_results %}
                 <ul>
                     {% for result in search_results %}
                         <li>
-                            <h4 class="h4"><a href="{% pageurl result %}">{{ result }}</a></h4>
-                            {% if result.search_description %}
-                                {{ result.search_description }}
+                            {% if result.content_type.model|slice:":-4" != "newspaperarticle" %}
+                                <h4 class="h4"><a href="{% pageurl result %}">{{ result.content_type.model|slice:":-4" }} | {{ result }}</a></h4>
+                                {% if result.search_description %}
+                                    {{ result.search_description }}
+                                {% endif %}
+                            {% else %}
+                                <h4 class="h4"><a href="{% pageurl result %}">Newspaper link | {{ result }}</a></h4>
+                                {% if result.search_description %}
+                                    {{ result.search_description }}
+                                {% endif %}
                             {% endif %}
                         </li>
                     {% endfor %}

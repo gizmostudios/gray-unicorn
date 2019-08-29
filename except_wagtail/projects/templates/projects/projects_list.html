@@ -1,13 +1,14 @@
 {% with mediaPath="/media/" %}
   {% for project in projects %}
-    <div class="column is-3">
+    <div class="column is-3 is-loadable">
       <a href="{{project.url}}">
         <div class="card is-stretched">
           <div class="card-image">
             <figure class="image"><img src="{{ mediaPath }}{{ project.hero_image }}"></figure>
           </div>
           <div class="card-content has-label">
-            <h3 class="h3">{{project.hero_title}}</h3>
+            <h4 class="h4">{{project.hero_title}}</h4>
+            <p class='trunc-text'>{{project.hero_subtitle}}</p>
             <p>{{project.date_published}}</p>
             <button class="button is-selector is-{{project.service.color}} is-pulled-left"></button><a class="button is-pulled-right" href={{project.url}}><i class="fas fa-chevron-right"></i></a>
           </div>

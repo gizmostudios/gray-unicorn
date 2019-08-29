@@ -19,9 +19,3 @@ class ProjectIndexPageTR(TranslationOptions):
 		'hero_subtitle',
 		'intro',
 		)
-
-@register(CarouselItem)
-class CarouselItemTR(TranslationOptions):
-	fields = (
-		'description',
-		)

@@ -32,11 +32,11 @@
           <header>
             <h2 class="h2">Latest news</h2>
           </header>
-          <div id="news" class="columns is-grid">
+          <div id="news" class="columns is-grid grid-loading">
             {% include "news/latest_news.html" with current_news=current_news %}
           </div>
           <div class='button-load-container'>
-            {% include "news/button_load.html" with not_last=not_last %}
+            {% include "modules/button_load.html" with not_last=not_last %}
           </div>
         </article>
       </div>

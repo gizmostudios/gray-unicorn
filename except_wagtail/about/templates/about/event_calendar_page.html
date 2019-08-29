@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+
+{% load static %}
+
+{% block content %}
+  {% with mediaPath="/media/" %}
+
+    {# Main navigation #}
+    {% include "includes/navbar.html" with transparent=false inverted=false %}
+    <div class="spacer is-large"></div>
+    <div class="spacer is-large"></div>
+    <section class="section">
+      	<div class="container">
+    		<div id='calendar'><div>
+    	</div>
+    </section>
+    <script type="text/javascript" src="{% static 'js/calendar.js' %}"></script>
+  {% endwith %}
+{% endblock content %}

@@ -22,6 +22,8 @@
         <link rel="stylesheet" href="{% static 'css/except_wagtail.css' %}">
         <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
     crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/vendor/fullcalendar/core.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/vendor/fullcalendar/daygrid.min.css' %}">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 
@@ -38,6 +40,9 @@
         {% block content %}{% endblock %}
 
         {# Global javascript #}
+        <script type="text/javascript" src="{% static 'js/vendor/fullcalendar/core.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/vendor/fullcalendar/interaction.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/vendor/fullcalendar/daygrid.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/except_wagtail.js' %}"></script>
         <script src="http://localhost:35729/livereload.js?snipver=1"></script>
 
@@ -60,9 +65,7 @@
                                         {% elif link.link %}
                                             <a href="{{link.link}}">{{link.name}}</a>
                                         {% else %}
-                                            <div class="popup"><a>{{link.name}}</a>
-                                                <span class="popuptext" id="{{link.name}}">{{link.popup_html}}</span>
-                                            </div>
+                                            <div class="popup"><a>{{link.name}}</a><span class="popuptext" id="{{link.name}}">{{link.popup_html}}</span></div>
                                         {% endif %}
                                     </li>
                                 {% endfor %}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+
+{% load static %}
+
+{% block content %}
+  {% with mediaPath="/media/" %}
+  
+  	<section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ mediaPath }}{{ page.hero_image }})">
+      <div class="hero-body">
+        <div class="container">
+          <div>
+            {% if page.hero_title %}
+              <h1 class="h1 title">{{ page.hero_title }}</h1>
+            {% endif %}
+            {% if page.hero_subtitle %}
+              <h3 class="h3 subtitle">{{ page.hero_subtitle }}</h3>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {# Main navigation #}
+    {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
+
+    <section class="section">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-6">
+            {% if page.body %}
+              {{ page.body }}
+            {% endif %}
+          </div>
+          <div class="column is-6">
+            <section class="section has-carousel">
+              <div class="container has-carousel full-width" data-count="{{page.carousel_items.all|length}}">
+                <article class="article carousel-inner">
+                  {% for item in page.carousel_images.all %}
+                    <div class="carousel is-carousel-block has-text-centered is-contact" style="background-image:url({{ mediaPath }}{{ item.image }})">
+                    </div>       
+                  {% endfor %}
+                </article>
+              </div>
+            </section>
+            <section class="section has-selectors">
+              <div class="container flex-centered">
+                <div class="buttons">
+                  {% for item in page.carousel_images.all %}
+                    {% if item == page.carousel_images.all.0 %}
+                      <button class="button is-selector is-primary is-carousel"></button>
+                    {% else %}
+                      <button class="button is-selector is-secondary is-carousel"></button>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script type="text/javascript" src="{% static 'js/carousel_article.js' %}"></script>
+  {% endwith %}
+{% endblock content %}

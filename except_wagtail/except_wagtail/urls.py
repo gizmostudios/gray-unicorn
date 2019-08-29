@@ -20,12 +20,8 @@ urlpatterns = [
 
     url(r'^search/$', search_views.search, name='search'),
 
-    url(r'ajax/load_more_news/$',news_views.load_more_news, name="load_more_news"),
-    url(r'ajax/filter_resources/$',knowledge_views.filter_resources, name="filter_resources"),
-    url(r'ajax/update_pagination/$',knowledge_views.update_pagination, name="update_pagination"),
-    url(r'ajax/update_pagination_projects/$',projects_views.update_pagination, name="update_pagination"),
-    url(r'ajax/filter_timeline_projects/$',projects_views.filter_timeline, name="filter_timeline"),
-    url(r'ajax/filter_projects/$',projects_views.filter_projects, name="filter_resources"),
+    url(r'ajax/load_elements/$',except_wagtail_views.load_elements, name="load_elements"),
+    url(r'ajax/load_calendar/$',except_wagtail_views.load_calendar, name="load_calendar"),
     url(r'lang/selection/$',except_wagtail_views.lang_selection, name="lang_selection"),
 
     # For anything not caught by a more specific rule above, hand over to

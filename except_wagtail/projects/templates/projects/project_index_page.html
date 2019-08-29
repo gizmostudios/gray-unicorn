@@ -53,7 +53,7 @@
               <div class="carousel has-text-centered" style="background-image:url({{ mediaPath }}{{ item.hero_image }})">
                 <div class="container not-full-height">
                   <h2 class="h2 is-blocked">{{ item.hero_title }}</h2>
-                  <p class="is-blocked description">{{ item.summary }}</p>
+                  <h3 class="h3 is-blocked description">{{ item.hero_subtitle }}</h3>
                   <div class="buttons is-blocked"><a href="{{item.url}}" class="button is-next is-secondary">View project</a></div>
                 </div>
               </div>       
@@ -115,7 +115,7 @@
           </header>
           <div class="has-text-centered">
             <div class="timeline">
-              {% include "news/timeline.html" with years=years news=current_projects %}
+              {% include "modules/timeline.html" with years=years elements=projects %}
             </div>
           </div>
           <div class="spacer is-large"></div>
@@ -131,22 +131,16 @@
             {% endfor %}
           </div>
           <div class="spacer is-large"></div>
-          <div id="latestProjects" class="columns is-grid">
+          <div id="projects" class="columns is-grid grid-loading">
             {% include "projects/projects_list.html" with projects=current_projects %}
           </div>
-          {% if current_projects.paginator.count > 1 %}
-            <div class="container">
-                <div class="row">
-                    <div id="pagination" class="col-md-12">
-                    {% include "includes/pagination.html" with subpages=current_projects %}
-                    </div>
-                </div>
-            </div>
-          {% endif %}
+          <div class='button-load-container'>
+            {% include "modules/button_load.html" with not_last=not_last %}
+          </div>
         </article>
       </div>
     </section>
     <script type="text/javascript" src="{% static 'js/carousel_article.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/projects.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/loading_more.js' %}"></script>
   {% endwith %}
 {% endblock content %}

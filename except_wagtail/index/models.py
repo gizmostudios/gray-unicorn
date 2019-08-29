@@ -100,21 +100,21 @@ class HomePage(Page):
 		FieldPanel('video_description'),
 	]
 
-	def get_highlight_videos(self):
-		resources = Resource.objects.filter(highlight=True).order_by('-date_published').all()
-		for resource in resources:
-			if resource.file.name.split('.')[1] == 'pdf':
-				highlight = resource
-				return highlight
-		return
 
 	def get_highlight_resources(self):
-		highlight = Resource.objects.filter(highlight=True).order_by('-date_published').all()
-		print(highlight[0:2])
+		highlight = ArticlePage.objects.filter(highlight=True).order_by('-date_published').all()
 		return highlight
 
-	def get_highlight_news(self):
-		highlight = NewsPage.objects.filter(highlight=True).order_by('-date_published').all()
+	def get_highlight_article(self):
+		highlight = NewsPage.objects.filter(highlight=True, type_of_news='AR').order_by('-date_published').all()
+		return highlight
+
+	def get_highlight_event(self):
+		highlight = NewsPage.objects.filter(highlight=True, type_of_news='EV').order_by('-date_published').all()
+		return highlight
+
+	def get_highlight_open_position(self):
+		highlight = NewsPage.objects.filter(highlight=True, type_of_news='OP').order_by('-date_published').all()
 		return highlight
 
 	def get_highlight_projects(self):
@@ -127,10 +127,15 @@ class HomePage(Page):
 		services = ServicePage.objects.live()
 		indexService = ServiceIndexPage.objects.live()[0]
 
-		context['highlight_video'] = self.get_highlight_videos()
-		context['highlight_resources'] = self.get_highlight_resources()[0:2]
-		context['highlight_news'] = self.get_highlight_news()[0:2]
-		context['highlight_projects'] = self.get_highlight_projects()[0:2]
+		context['highlight_pdf'] = self.get_highlight_resources().first()
+		context['highlight_resources'] = self.get_highlight_resources().all()[1]
+		context['highlight_article'] = self.get_highlight_article().first()
+		context['highlight_event'] = self.get_highlight_event().first()
+		context['highlight_open_position'] = self.get_highlight_open_position().first()
+		context['highlight_projects'] = self.get_highlight_projects().first()
+		context['news_index'] = NewsIndexPage.objects.live().first()
+		context['projects_index'] = ProjectIndexPage.objects.live().first()
+		context['knowledge'] = KnowledgePage.objects.live().first()
 		context['services'] = services
 		context['indexService'] = indexService
 

@@ -39,26 +39,17 @@
               {{page.team_introduction |richtext}}
             </p>
             {% endif %}
+            <div class="spacer is-large"></div>
+            {% if page.quote %}
+              <blockquote class="blockquote">
+                {{ page.quote.caption |richtext}}
+              </blockquote>
+              <h4 class="h4">{{ page.quote.name }}</h4><span class="subline">{{ page.quote.company }}</span>
+            {% endif %}
           </div>
         </div>
       </div>
     </section>
-    {% if page.quotes %}
-      <section class="section">
-        <article class="container">
-          <div class="columns">
-            {% for quote in page.quotes.all %}
-            <div class="column">
-              <blockquote class="blockquote">
-                {{ quote.caption |richtext}}
-              </blockquote>
-              <h4 class="h4">{{ quote.name }}</h4><span class="subline">{{ quote.company }}</span>
-            </div>
-            {% endfor %}
-          </div>
-        </article>
-      </section>
-    {% endif %}
     <section class="section">
       <article class="container">
         <header class="header">
@@ -76,6 +67,5 @@
         </div>
       </article>
     </section>
-
   {% endwith %}
 {% endblock content %}

@@ -13,11 +13,12 @@ from operator import attrgetter
 def load_more_news(request):
 	body = simplejson.loads(request.body)
 	iteration = get_iteration(body)
+	for_news_index = body['news_index']
 	news = get_news(iteration,body)
 	not_last = is_last(iteration,body)
 
 	mimetype = 'application/json'
-	
+
 	html = render_to_string("news/latest_news.html", {'current_news' : news})+"|"+render_to_string("news/button_load.html", {'not_last' : not_last})
 	res = {'html' : html}
 	return HttpResponse( simplejson.dumps(res), mimetype)

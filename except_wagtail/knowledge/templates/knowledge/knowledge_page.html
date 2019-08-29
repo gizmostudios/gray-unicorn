@@ -46,13 +46,14 @@
     {# Carousel #}
     {% if highlights %}
       <section class="section has-carousel">
-        <div class="container has-carousel" data-count="{{page.carousel_items.all|length}}">
+        <div class="container has-carousel full-width" data-count="{{page.carousel_items.all|length}}">
           <article class="article carousel-inner">
             {% for item in highlights %}
-              <div class="carousel has-text-centered" style="background-image:url({{ mediaPath }}{{ item.image }})">
-                <div class="caption-carousel-article">
-                  <h2 class="h2 is-blocked">{{ item.title }}</h2>
-                  <div class="buttons"><a href="{{item.file.url}}" class="button is-next is-secondary">See more</a></div>
+              <div class="carousel has-text-centered" style="background-image:url({{ mediaPath }}{{ item.top_images.all.0.image }})">
+                <div class="container not-full-height">
+                  <h2 class="h2 is-blocked">{{ item.hero_title }}</h2>
+                  <h3 class="h3 is-blocked description">{{ item.hero_subtitle }}</h3>
+                  <div class="buttons is-blocked"><a href="{{item.url}}" class="button is-next is-secondary">See more</a></div>
                 </div>
               </div>       
             {% endfor %}
@@ -73,27 +74,25 @@
         </div>
       </section>
     {% endif %}
-    {% if news %}
-      <section class="section">
-        <div class="container">
-          <article class="article">
-            <header>
-              <h2 class="h2">Latest news</h2>
-            </header>
-            <div id="latestNews" class="columns is-grid">
-              {% include "news/latest_news.html" with current_news=news type='except' %}
-            </div>
-          </article>
-        </div>
-      </section>
-    {% endif %}
     <section class="section">
       <div class="container">
         <article class="article">
-          <header class="header">
+          <header>
+            <h2 class="h2">Latest articles</h2>
+          </header>
+          <div class="columns is-grid">
+            {% include "news/latest_news.html" with current_news=latest_resources %}
+          </div>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <article class="article">
+          <header>
             <h2 class="h2">Knowledge database</h2>
           </header>
-          <div class="spacer"></div>
+          <div class="spacer is-large"></div>
           <header class="has-text-centered">
             <h3 class="h3">FILTER</h3>
           </header>
@@ -105,23 +104,18 @@
               </label>
             {% endfor %}
           </div>
-          <div class="spacer"></div>
-          <div id="resourceList" class="columns is-grid">
-            {% include "knowledge/resource_list.html" with resources=resources %}
+          <div class="spacer is-large"></div>
+          <div id="articles" class="columns is-grid grid-loading">
+            {% include "projects/projects_list.html" with projects=resources %}
           </div>
-          {% if resources.paginator.count > 1 %}
-            <div class="container">
-                <div class="row">
-                    <div id="pagination" class="col-md-12">
-                    {% include "includes/pagination.html" with subpages=resources %}
-                    </div>
-                </div>
-            </div>
-          {% endif %}
+          <div class='button-load-container'>
+            {% include "modules/button_load.html" with not_last=not_last %}
+          </div>
         </article>
       </div>
     </section>
     <script type="text/javascript" src="{% static 'js/knowledge.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/carousel_article.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/loading_more.js' %}"></script>
   {% endwith %}
 {% endblock content %}

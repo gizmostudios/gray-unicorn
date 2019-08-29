@@ -63,7 +63,7 @@ class CarouselBlock(StructBlock):
 
     class Meta:
         con="fa-paragraph",
-        template="blocks/html_block.html"
+        template="blocks/carousel_block.html"
 
 
 # StreamBlocks

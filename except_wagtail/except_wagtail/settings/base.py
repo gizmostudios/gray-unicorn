@@ -163,6 +163,12 @@ LANGUAGES = (
     ('nl', _('Dutch')),
 )
 
+WAGTAILSEARCH_BACKENDS = {
+    'default': {
+        'BACKEND': 'wagtail.search.backends.db',
+    }
+}
+
 WAGTAILADMIN_PERMITTED_LANGUAGES = [('en','English'), ('nl', 'Dutch')]
 MODELTRANSLATION_DEFAULT_LANGUAGES = 'en'
 
@@ -178,6 +184,7 @@ STATICFILES_FINDERS = [
 STATICFILES_DIRS = [
     os.path.join(PROJECT_DIR, 'static'),
 ]
+
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'

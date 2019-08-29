@@ -11,8 +11,8 @@ class KnowledgePageTR(TranslationOptions):
 		)
 
 
-@register(Resource)
-class ResourceTR(TranslationOptions):
+@register(ArticlePage)
+class ArticlePageTR(TranslationOptions):
 	fields = (
 		'hero_title',
 		)

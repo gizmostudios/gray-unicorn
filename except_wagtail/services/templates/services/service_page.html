@@ -76,35 +76,21 @@
                 <h2 class="h2">Related projects</h2>
               </header>
               <div id="latestNews" class="columns is-grid">
-                {% include "news/latest_news.html" with current_news=projects type='except' %}
+                {% include "news/latest_news.html" with current_news=projects %}
               </div>
             </article>
           </div>
         </section>
       {% endif %}
-      {% if news %}
+      {% if articles %}
         <section class="section">
           <div class="container">
             <article class="article">
               <header>
-                <h2 class="h2">Related news</h2>
+                <h2 class="h2">Related articles</h2>
               </header>
               <div id="latestNews" class="columns is-grid">
-                {% include "news/latest_news.html" with current_news=news type='except' %}
-              </div>
-            </article>
-          </div>
-        </section>
-      {% endif %}
-      {% if resources %}
-        <section class="section">
-          <div class="container">
-            <article class="article">
-              <header>
-                <h2 class="h2">Related knowledge</h2>
-              </header>
-              <div id="latestNews" class="columns is-grid">
-                {% include "news/latest_news.html" with current_news=resources type='except' %}
+                {% include "news/latest_news.html" with current_news=articles %}
               </div>
             </article>
           </div>

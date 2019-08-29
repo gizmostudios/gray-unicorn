@@ -21,6 +21,52 @@ from services.models import ServicePage as Service
 from knowledge.models import *
 from about.models import *
 
+class TopImage(Orderable):
+	image = models.ForeignKey(
+		'wagtailimages.Image',
+		null=True,
+		blank=True,
+		on_delete=models.SET_NULL,
+		related_name='+'
+	)
+	page = ParentalKey('ProjectPage', related_name='top_images')
+
+	panels = [
+		ImageChooserPanel('image'),
+	]
+
+class File(models.Model):
+	name = models.CharField(max_length=255, null=True, blank=True)
+	file = models.FileField(null=True, blank=True)
+	path_to_thumbnail = models.CharField(max_length=255, null=True, blank=True)
+
+	page = ParentalKey('ProjectPage', related_name='downloads', null=True)
+
+	def extension(self):
+		name, extension = os.path.splitext(self.file.name)
+		return extension
+
+	def thumbnail(self):
+		
+		dir_path = os.path.dirname(os.path.realpath(__file__))
+		par_dir = os.path.abspath(os.path.join(dir_path, os.pardir))
+		if self.path_to_thumbnail is None:
+			cache_path = par_dir+'/media/'
+			pdf_or_odt_to_preview_path = par_dir+self.file.url
+			manager = PreviewManager(cache_path, create_folder= True)
+			path_to_preview_image = manager.get_jpeg_preview(pdf_or_odt_to_preview_path)
+			path, file = path_to_preview_image.split('/media/')
+			self.thumbnail = file
+			print(self.thumbnail)
+			return self.thumbnail
+		else:		
+			return self.path_to_thumbnail
+
+	panels = [
+		FieldPanel('name'),
+		FieldPanel('file'),
+	]
+
 class TeamMember(Orderable):   
 	page = ParentalKey('ProjectPage', related_name='team_members')
 
@@ -48,37 +94,32 @@ class ExternalMember(Orderable):
 
 	first_name = models.CharField(max_length=255, null=True, blank=True)
 	last_name = models.CharField(max_length=255, null=True, blank=True)
+	company = models.CharField(max_length=255, null=True, blank=True)
 	job_title = models.CharField(max_length=255, null=True, blank=True)
 
 	panels = [
 		FieldPanel('first_name'),
 		FieldPanel('last_name'),
+		FieldPanel('company'),
 		FieldPanel('job_title'),
 	]
 
-class CarouselItem(Orderable):
-	image = models.ForeignKey(
-		'wagtailimages.Image',
-		null=True,
-		blank=True,
-		on_delete=models.SET_NULL,
-		related_name='+'
-	)
-	description = models.CharField(max_length=255, blank=True)
-	page = ParentalKey('ProjectPage', related_name='carousel_items')
+class LinkedArticle(Orderable):
+	page = ParentalKey('ProjectPage', related_name='linked_articles')
+
+	element = models.ForeignKey('knowledge.ArticlePage', on_delete=models.SET_NULL, null=True, blank=True,)
 
 	panels = [
-		ImageChooserPanel('image'),
-		FieldPanel('description'),
+		FieldPanel('element'),
 	]
 
-class ProjectResource(Orderable):
-	page = ParentalKey('ProjectPage', related_name='project_resources')
+class LinkedProject(Orderable):
+	page = ParentalKey('ProjectPage', related_name='linked_projects')
 
-	resource = models.ForeignKey('knowledge.Resource', on_delete=models.SET_NULL, null=True, blank=True,)
+	element = models.ForeignKey('projects.ProjectPage', on_delete=models.SET_NULL, null=True, blank=True,)
 
 	panels = [
-		FieldPanel('resource'),
+		FieldPanel('element'),
 	]
 
 
@@ -88,7 +129,6 @@ class ProjectPage(Page):
 	subpage_types = []
 
 	highlight = models.BooleanField(blank=True, null=True)
-	hero_image = models.ImageField(null=True, blank=True)
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
 	date_published = models.DateField("Date article published", blank=False, null=False)
@@ -104,26 +144,27 @@ class ProjectPage(Page):
 		null=True,
 		blank=True,
 	)
-
+	path_to_thumbnail = models.CharField(max_length=255, null=True, blank=True)
 
 	content_panels = Page.content_panels + [
 		FieldPanel('highlight', widget=forms.CheckboxInput),
 		FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
 		FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
 		FieldPanel('service'),
-		FieldPanel('hero_image'),
+		InlinePanel('top_images', label='Top section carousel images'),
 		FieldPanel('hero_title'),
 		FieldPanel('hero_subtitle'),
+		FieldPanel('date_published'),
+		FieldPanel('author'),
 		InlinePanel('team_members', label="Team members"),
 		InlinePanel('external_members', label="External members"),
 		InlinePanel('project_partners', label="Partners of the project"),
-		InlinePanel('project_resources', label="Resources related to the project"),
 		FieldPanel('intro', classname="full"),
 		FieldPanel('summary'),
-		InlinePanel('carousel_items', label="Image Carousel"),
 		StreamFieldPanel('body'),
-		FieldPanel('date_published'),
-		FieldPanel('author'),
+		InlinePanel('linked_articles', max_num=2, label="Articles linked to the project"),
+		InlinePanel('linked_projects', max_num=2, label="Projects linked to the project"),
+		InlinePanel('downloads', label='Files to downloads'),
 	]
 
 	def timeline_position(self):
@@ -142,14 +183,30 @@ class ProjectPage(Page):
 			long_intro = False
 		return long_intro
 
+	def thumbnail(self):
+		
+		dir_path = os.path.dirname(os.path.realpath(__file__))
+		par_dir = os.path.abspath(os.path.join(dir_path, os.pardir))
+		if self.path_to_thumbnail is None:
+			cache_path = par_dir+'/media/'
+			pdf_or_odt_to_preview_path = par_dir+self.hero_image.url
+			manager = PreviewManager(cache_path, create_folder= True)
+			path_to_preview_image = manager.get_jpeg_preview(pdf_or_odt_to_preview_path, height=270,width=431)
+			path, file = path_to_preview_image.split('/media/')
+			self.thumbnail = file
+			print(self.thumbnail)
+			return self.thumbnail
+		else:		
+			return self.path_to_thumbnail
+
 	def get_context(self, request):
 		context = super(ProjectPage, self).get_context(request)
 
-		resources = Resource.objects.all().filter(service__id=self.service.id).order_by('-date_published')[0:3]
+		resources = ArticlePage.objects.all().filter(service__id=self.service.id).order_by('-date_published')[0:3]
 		projects = ProjectPage.objects.live().filter(service__id=self.service.id).exclude(id=self.id).order_by('-date_published')[0:3]
 
+
 		context["related_resources"] = resources
-		context["projects"] = projects
 
 		return context
 
@@ -182,22 +239,9 @@ class ProjectIndexPage(Page):
 		return ProjectPage.objects.live().filter(highlight=True).order_by('-date_published').all()
 
 
-	def paginate_projects(self, request, *args):
-		page = request.GET.get('page')
-		paginator = Paginator(self.get_projects(), 8)
-		try:
-			pages = paginator.page(page)
-		except PageNotAnInteger:
-			pages = paginator.page(1)
-		except EmptyPage:
-			pages = paginator.page(paginator.num_pages)
-		return pages
-
-
 	def get_context(self, request):
 		context = super(ProjectIndexPage, self).get_context(request)
 
-		projects = self.paginate_projects(request, self.get_projects())
 
 		projects_all = self.get_projects()
 		last_year = projects_all.first().date_published.year
@@ -205,9 +249,11 @@ class ProjectIndexPage(Page):
 
 		services = Service.objects.live()
 
+		context['not_last'] = len(projects_all)>8
 		context['highlights'] = self.highlight_projects()[0:4]
-		context['latest_project'] = projects[0:5]
-		context['current_projects'] = projects
+		context['latest_project'] = projects_all[0:5]
+		context['current_projects'] = projects_all[0:8]
+		context['projects'] = projects_all
 		context['services'] = services
 		context['years'] = range(first_year, last_year+1)
 

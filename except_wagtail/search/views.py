@@ -1,15 +1,22 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 
+from django.conf import settings
+
 from wagtail.core.models import Page
 from wagtail.search.models import Query
+from knowledge.models import *
+from news.models import *
+from people.models import *
+from projects.models import *
+from services.models import *
 
 
 def search(request):
     # Search
-    search_query = request.GET.get('q', None)
+    search_query = request.GET.get('query', None)
     if search_query:
-        if 'elasticsearch' in settings.WAGTAILSEARCH_BACKENDS['default']['BACKEND']:
+        if 'elasticsearch2' in settings.WAGTAILSEARCH_BACKENDS['default']['BACKEND']:
             # In production, use ElasticSearch and a simplified search query, per
             # http://docs.wagtail.io/en/v1.12.1/topics/search/backends.html
             # like this:
@@ -18,16 +25,25 @@ def search(request):
             # If we aren't using ElasticSearch for the demo, fall back to native db search.
             # But native DB search can't search specific fields in our models on a `Page` query.
             # So for demo purposes ONLY, we hard-code in the model names we want to search.
-            blog_results = BlogPage.objects.live().search(search_query)
-            blog_page_ids = [p.page_ptr.id for p in blog_results]
+            article_results = ArticlePage.objects.live().search(search_query)
+            article_page_ids = [p.page_ptr.id for p in article_results]
 
-            bread_results = BreadPage.objects.live().search(search_query)
-            bread_page_ids = [p.page_ptr.id for p in bread_results]
+            except_news_results = NewsPage.objects.live().search(search_query)
+            article_page_ids = [p.page_ptr.id for p in except_news_results]
 
-            location_results = LocationPage.objects.live().search(search_query)
-            location_result_ids = [p.page_ptr.id for p in location_results]
+            newspaper_news_results = NewspaperArticlePage.objects.live().search(search_query)
+            newspaper_news_ids = [p.page_ptr.id for p in newspaper_news_results]
 
-            page_ids = blog_page_ids + bread_page_ids + location_result_ids
+            people_results = ProfilePage.objects.live().search(search_query)
+            people_ids = [p.page_ptr.id for p in people_results]
+
+            project_results = ProjectPage.objects.live().search(search_query)
+            project_ids = [p.page_ptr.id for p in project_results]
+
+            service_results = ServicePage.objects.live().search(search_query)
+            service_ids = [p.page_ptr.id for p in service_results]
+
+            page_ids = article_page_ids + article_page_ids + newspaper_news_ids + people_ids + project_ids + service_ids
             search_results = Page.objects.live().filter(id__in=page_ids)
 
         query = Query.get(search_query)
@@ -40,13 +56,15 @@ def search(request):
 
     # Pagination
     page = request.GET.get('page', 1)
-    paginator = Paginator(search_results, 10)
+    paginator = Paginator(search_results, 50)
     try:
         search_results = paginator.page(page)
     except PageNotAnInteger:
         search_results = paginator.page(1)
     except EmptyPage:
         search_results = paginator.page(paginator.num_pages)
+
+    print(search_results[0].content_type.model)
 
     return render(request, 'search/search_results.html', {
         'search_query': search_query,

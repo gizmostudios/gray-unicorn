@@ -1,4 +1,5 @@
 const serviceSelectors = $(".service");
+const serviceColumns = $(".column-service");
 
 function displaySubServices(service){
 	var selectedServiceId = service.attr('id');
@@ -40,4 +41,23 @@ serviceSelectors.each(function(){
 		}
 		
 	});
-})
+});
+
+var popService;
+var iteration = 0;
+
+function serviceFadeIn(){
+	serviceColumns.each(function(index) {
+		if(iteration == index){
+			$(this).css('display','none');
+			$(this).css('opacity','1');
+			console.log($(this));
+			$(this).fadeIn( 2000 );
+		}
+	});
+	iteration += 1
+}
+
+$(document).ready(function(){
+	popService = setInterval(serviceFadeIn, 1000)
+});

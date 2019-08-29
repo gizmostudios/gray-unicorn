@@ -7,7 +7,7 @@
 {% block content %}
   {% with mediaPath="/media/" %}
 
-    <section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ mediaPath }}{{ page.hero_image }})">
+    <section class="hero is-inverted is-darkened is-compact">
       <div class="hero-body">
         <div class="container">
           <div>
@@ -18,6 +18,18 @@
               <h3 class="h3 subtitle">{{ page.hero_subtitle }}</h3>
             {% endif %}
           </div>
+        </div>
+      </div>
+      
+      <div class="carousel top-section cover" data-count="{{page.top_images.all|length}}">
+
+        <div class="carousel-inner">
+          {% for carousel_image in page.top_images.all %}
+
+            {% image carousel_image.image width-1000 as carouselimagedata %}
+            <article style="background-image: url({{ carouselimagedata.url }})" class="background-fill">
+            </article>
+          {% endfor %}
         </div>
       </div>
     </section>
@@ -49,34 +61,6 @@
         </div>
       </div>
     </section>
-    {% if page.carousel_items %}
-      <section class="section has-carousel">
-        <div class="container has-carousel" data-count="{{page.carousel_items.all|length}}">
-          <article class="article carousel-inner">
-            {% for item in page.carousel_items.all %}
-              <div class="carousel has-text-centered" style="background-image:url({{ mediaPath }}{{ item.image }})">
-                <div class="caption-carousel-article">
-                  <p class="is-blocked description">{{ item.description }}</p>
-                </div>
-              </div>
-            {% endfor %}
-          </article>
-        </div>
-      </section>
-      <section class="section has-selectors">
-        <div class="container flex-centered">
-          <div class="buttons">
-            {% for item in page.carousel_items.all %}
-              {% if item == page.carousel_items.all.0 %}
-                <button class="button is-selector is-primary is-carousel"></button>
-              {% else %}
-                <button class="button is-selector is-secondary is-carousel"></button>
-              {% endif %}
-            {% endfor %}
-          </div>
-        </div>
-      </section>
-    {% endif %}
     <section class="section">
       <div class="container">
         <article class="article">
@@ -120,7 +104,7 @@
                       <p class="former-member">{{team_member.member.job_title}}</figcaption>
                     {% else %}
                       <figcaption class="caption">{{team_member.first_name}} {{team_member.last_name}}</figcaption>
-                      <p class="former-member">{{team_member.job_title}}</p>
+                      <p class="former-member">{{team_member.job_title}} for {{team_member.company}}</p>
                     {% endif %}
                   </li>
                 {% endfor %}
@@ -135,45 +119,43 @@
       <div class="container">
         <article class="article">
           <header>
-            <h2 class="h2">Images &amp; Downloads</h2>
+            <h2 class="h2">Related projects & articles</h2>
           </header>
-          {% if page.project_resources %}
-            {% with project_resources=page.project_resources %}
-              <div class="columns is-grid">
-                {% for project_resource in project_resources.all %}
-                  <div class="column is-4">
+          {% if page.linked_projects or page.linked_articles %}
+            <div class="columns is-grid">
+              {% for project in page.linked_projects.all %}
+                <div class="column is-3 is-loadable">
+                  <a href="{{project.element.url}}">
                     <div class="card is-stretched">
                       <div class="card-image">
-                        <figure class="image">
-                          <a href="{{project_resource.resource.file.url}}">
-                            <img src="{{ mediaPath }}{{ project_resource.resource.image }}">
-                          </a>
-                        </figure>
+                        <figure class="image"><img src="{{ mediaPath }}{{ project.element.hero_image }}"></figure>
                       </div>
-                      <div class="card-content"><a href="{{project_resource.resource.file.url}}" class="link">{{project_resource.resource.title}}</a></div>
+                      <div class="card-content has-label">
+                        <h4 class="h4">{{project.element.hero_title}}</h4>
+                        <p class='trunc-text'>{{project.element.hero_subtitle}}</p>
+                        <a class="button is-pulled-right" href={{project.element.url}}><i class="fas fa-chevron-right"></i></a>
+                      </div>
                     </div>
-                  </div>
-                {% endfor %}
-              </div>
-            {% endwith %}
-          {% else %}
-            {% with resources=related_resources %}
-              <div class="columns is-grid">
-                {% for resource in resources %}
-                  <div class="column is-4">
+                  </a>
+                </div>
+              {% endfor %}
+              {% for article in page.linked_articles.all %}
+                <div class="column is-3 is-loadable">
+                  <a href="{{article.element.url}}">
                     <div class="card is-stretched">
                       <div class="card-image">
-                        <figure class="image">
-                        <a href="{{project_resource.resource.file.url}}">
-                          <img src="{{ mediaPath }}{{ project_resource.resource.image }}">
-                        </a>
-                      </figure>
-                      <div class="card-content"><a href="{{resource.file.url}}" class="link">{{resource.title}}</a></div>
+                        <figure class="image"><img src="{{ mediaPath }}{{ article.element.hero_image }}"></figure>
+                      </div>
+                      <div class="card-content has-label">
+                        <h4 class="h4">{{article.element.hero_title}}</h4>
+                        <p class='trunc-text'>{{article.element.hero_subtitle}}</p>
+                        <a class="button is-pulled-right" href={{article.element.url}}><i class="fas fa-chevron-right"></i></a>
+                      </div>
                     </div>
-                  </div>
-                {% endfor %}
-              </div>
-            {% endwith %}
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
           {% endif %}
         </article>
       </div>
@@ -182,28 +164,25 @@
       <div class="container">
         <article class="article">
           <header>
-            <h2 class="h2">Related items</h2>
+            <h2 class="h2">Media & Downloads</h2>
           </header>
-          {% if projects %}
-            <div class="columns is-grid">
-              {% for project in projects %}
-                <div class="column is-4">
-                  <div class="card is-stretched">
-                    <div class="card-image">
-                      <figure class="image">
-                        <a href="{{project.url}}">
-                          <img src="{{ mediaPath }}{{ project.hero_image }}">
-                        </a>
-                      </figure>
+          <div class="columns is-grid">
+            {% for download in page.downloads.all %}
+                <div class="column is-3 is-loadable">
+                  <a href="{{download.file.url}}">
+                    <div class="card is-stretched">
+                      <div class="card-image">
+                        <figure class="image"><img src="{{ mediaPath }}{{ download.thumbnail }}"></figure>
+                      </div>
+                      <div class="card-content has-label">
+                        <h4 class="h4">{{download.name}}</h4>
+                        <a class="button is-pulled-right" href={{download.file.url}}><i class="fas fa-chevron-right"></i></a>
+                      </div>
                     </div>
-                    <div class="card-content has-label"><a href="{{project.url}}" class="link">{{project.hero_title}}</a>
-                      <p class="date">{{project.date_published}}</p><a class="button is-{{project.service.color}} is-pulled-right"><i class="fas fa-chevron-right"></i></a>
-                    </div>
-                  </div>
+                  </a>
                 </div>
               {% endfor %}
-            </div>
-          {% endif %}
+          </div>
         </article>
       </div>
     </section>

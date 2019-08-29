@@ -73,20 +73,16 @@ class ServicePage(Page):
 		projects = self.projectpage_set.all()[0:5]
 		return projects
 
-	def get_resources(self):
-		resources = self.resource_set.all()[0:5]
+	def get_articles(self):
+		resources = self.articlepage_set.all()[0:5]
+		print(resources)
 		return resources
-
-	def get_news(self):
-		news = self.newspage_set.all()[0:5]
-		return news
 
 	def get_context(self, request):
 		context = super(ServicePage, self).get_context(request)
 
 		context['projects'] = self.get_projects()
-		context['resources'] = self.get_resources()
-		context['news'] = self.get_news()
+		context['articles'] = self.get_articles()
 		context['parent_page'] = ServiceIndexPage.objects.ancestor_of(self).first()
 		context['subservices'] = self.get_subservices()
 		return context
