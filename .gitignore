@@ -5,8 +5,8 @@ migrations/
 .DS_Store
 *.swp
 /venv/
-/static/
-/media/
+except_wagtail/static/
+except_wagtail/media/
 .env
 env
 node_modules

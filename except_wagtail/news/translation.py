@@ -35,3 +35,9 @@ class FolderArticlePageTR(TranslationOptions):
 	fields = (
 		'hero_title',
 		)
+
+@register(File)
+class FilePageTR(TranslationOptions):
+	fields = (
+		'name',
+		)

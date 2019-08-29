@@ -19,3 +19,9 @@ class ProjectIndexPageTR(TranslationOptions):
 		'hero_subtitle',
 		'intro',
 		)
+
+@register(File)
+class FileTR(TranslationOptions):
+	fields = (
+		'name',
+		)

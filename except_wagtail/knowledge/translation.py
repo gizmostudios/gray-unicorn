@@ -7,7 +7,7 @@ class KnowledgePageTR(TranslationOptions):
 	fields = (
 		'hero_title',
 		'hero_subtitle',
-		'hero_subtitle',
+		'intro',
 		)
 
 
@@ -15,4 +15,13 @@ class KnowledgePageTR(TranslationOptions):
 class ArticlePageTR(TranslationOptions):
 	fields = (
 		'hero_title',
+		'hero_subtitle',
+		'intro',
+		'body',
+		)
+
+@register(File)
+class FileTR(TranslationOptions):
+	fields = (
+		'name',
 		)
