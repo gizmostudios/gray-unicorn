@@ -19,9 +19,13 @@
         {% if LANGUAGE_CODE == 'nl' %}
           <button class="button is-transparent lang-selection"><span>ENGLISH</span>
         {% elif LANGUAGE_CODE == 'en' %}
-          <button class="button is-transparent lang-selection"><span>DUTCH</span>
+          <button class="button is-transparent lang-selection"><span>NETHERLANDS</span>
         {% endif %}
-        </button><a class="button is-transparent">CONTACT</a>
+        {% if LANGUAGE_CODE == 'nl' %}
+          </button><a class="button is-transparent">(NL) CONTACT</a>
+        {% elif LANGUAGE_CODE == 'en' %}
+         </button><a class="button is-transparent">CONTACT</a>
+        {% endif %}      
       </div>
       <div class="is-hidden-desktop">
         <label for="main-menu-toggle" class="navbar-burger burger">

@@ -5,22 +5,10 @@
 {% load static %}
 
 {% block content %}
-  {% with mediaPath="/media/" %}
+  {% with mediaPath="/media/original_images/" %}
 
-    <section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ mediaPath }}{{ page.hero_image }})">
-      <div class="hero-body">
-        <div class="container">
-          <div>
-            {% if page.hero_title %}
-              <h1 class="h1 title">{{ page.hero_title }}</h1>
-            {% endif %}
-            {% if page.hero_subtitle %}
-              <h3 class="h3 subtitle">{{ page.hero_subtitle }}</h3>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </section>
+    {# Top Section/Header #}
+    {% include "modules/top_section.html" with page=page carousel=False %}
 
     {# Main navigation #}
     {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
@@ -42,7 +30,11 @@
         <div class="container">
           <article class="article">
             <header>
-              <h2 class="h2">Project highlights</h2>
+              {% if current_language == 'nl' %}
+                <h2 class="h2">(NL) Project highlights</h2>
+              {% elif current_language == 'en' %}
+                <h2 class="h2">Project highlights</h2>
+              {% endif %}
             </header>
           </article>
         </div>
@@ -50,11 +42,15 @@
         <div class="container has-carousel full-width" data-count="{{page.carousel_items.all|length}}">
           <article class="article carousel-inner">
             {% for item in highlights.all %}
-              <div class="carousel has-text-centered" style="background-image:url({{ mediaPath }}{{ item.hero_image }})">
+              <div class="carousel has-text-centered" style="background-image:url({{ mediaPath }}{{ item.top_images.all.0.image }})">
                 <div class="container not-full-height">
                   <h2 class="h2 is-blocked">{{ item.hero_title }}</h2>
                   <h3 class="h3 is-blocked description">{{ item.hero_subtitle }}</h3>
-                  <div class="buttons is-blocked"><a href="{{item.url}}" class="button is-next is-secondary">View project</a></div>
+                  {% if current_language == 'nl' %}
+                    <div class="buttons is-blocked"><a href="{{item.url}}" class="button is-next is-secondary">(NL) View project</a></div>
+                  {% elif current_language == 'en' %}
+                    <div class="buttons is-blocked"><a href="{{item.url}}" class="button is-next is-secondary">View project</a></div>
+                  {% endif %}
                 </div>
               </div>       
             {% endfor %}
@@ -79,7 +75,11 @@
       <div class="container">
         <article class="article">
           <header>
-            <h2 class="h2">Latest projects</h2>
+            {% if current_language == 'nl' %}
+              <h2 class="h2">(NL) Latest projects</h2>
+            {% elif current_language == 'en' %}
+              <h2 class="h2">Latest projects</h2>
+            {% endif %}
           </header>
           <div class="columns is-grid">
             {% for project in latest_project %}
@@ -87,7 +87,7 @@
               <div class="card is-stretched">
                 <div class="card-image">
                   <a href="{{project.url}}">
-                    <figure class="image"><img src="{{ mediaPath }}{{ project.hero_image }}"></figure>
+                    <figure class="image"><img src="{{ mediaPath }}{{ project.top_images.all.0.image }}"></figure>
                   </a>
                 </div>
                 <div class="card-content has-label">
@@ -108,10 +108,18 @@
       <div class="container">
         <article class="article">
           <header>
-            <h2 class="h2">Project archives</h2>
+            {% if current_language == 'nl' %}
+              <h2 class="h2">(NL) Project archives</h2>
+            {% elif current_language == 'en' %}
+              <h2 class="h2">Project archives</h2>
+            {% endif %}
           </header>
           <header class="has-text-centered">
-            <h3 class="h3">TIMELINE</h3>
+            {% if current_language == 'nl' %}
+              <h3 class="h3">(NL) TIMELINE</h3>
+            {% elif current_language == 'en' %}
+              <h3 class="h3">TIMELINE</h3>
+            {% endif %}
           </header>
           <div class="has-text-centered">
             <div class="timeline">
@@ -120,19 +128,23 @@
           </div>
           <div class="spacer is-large"></div>
           <header class="has-text-centered">
-            <h3 class="h3">FILTER</h3>
+            {% if current_language == 'nl' %}
+              <h3 class="h3">(NL) FILTER</h3>
+            {% elif current_language == 'en' %}
+              <h3 class="h3">FILTER</h3>
+            {% endif %}
           </header>
           <div class="has-text-centered">
             {% csrf_token %}
             {% for service in services %}
               <label class="button is-filter is-{{service.color}} is-active">
-                <input type="checkbox"><span>{{service.title}}</span>
+                <input type="checkbox"><span>{{service.hero_title}}</span>
               </label>
             {% endfor %}
           </div>
           <div class="spacer is-large"></div>
           <div id="projects" class="columns is-grid grid-loading">
-            {% include "projects/projects_list.html" with projects=current_projects %}
+            {% include "modules/grid_8.html" with elements=current_projects is_loadable=True %}
           </div>
           <div class='button-load-container'>
             {% include "modules/button_load.html" with not_last=not_last %}

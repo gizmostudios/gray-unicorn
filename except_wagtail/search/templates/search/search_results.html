@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load static wagtailcore_tags %}
+{% load static wagtailuserbar %}
+
 
 {% block body_class %}template-searchresults{% endblock %}
 
@@ -12,6 +14,11 @@
     <section class="section">
         <div class="container">
             <h1 class="h1">Search results</h1>
+            {% if current_language == 'nl' %}
+                <h1 class="h1">(NL) Search results</h1>
+            {% elif current_language == 'en' %}
+                <h1 class="h1">Search results</h1>
+            {% endif %}
 
             <div class="spacer is-large"></div>
 
@@ -40,15 +47,20 @@
                 </ul>
 
                 {% if search_results.has_previous %}
-                    <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}">Previous</a>
+                    <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}"><</a>
                 {% endif %}
 
                 {% if search_results.has_next %}
-                    <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}">Next</a>
+                    <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}">></a>
                 {% endif %}
             {% elif search_query %}
                 <div class="spacer"></div>
                 No results found
+                {% if current_language == 'nl' %}
+                    (NL) No results found
+                {% elif current_language == 'en' %}
+                    No results found
+                {% endif %}
             {% endif %}
         </div>
     </section>

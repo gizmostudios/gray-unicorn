@@ -1,26 +1,16 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags wagtailembeds_tags %}
+{% load static wagtailuserbar %}
+
 
 {% load static %}
 
 {% block content %}
   {% with mediaPath="/media/" %}
   
-  	<section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ mediaPath }}{{ page.hero_image }})">
-      <div class="hero-body">
-        <div class="container">
-          <div>
-            {% if page.hero_title %}
-              <h1 class="h1 title">{{ page.hero_title }}</h1>
-            {% endif %}
-            {% if page.hero_subtitle %}
-              <h3 class="h3 subtitle">{{ page.hero_subtitle }}</h3>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </section>
+  	{# Top Section/Header #}
+    {% include "modules/top_section.html" with page=page carousel=False %}
 
     {# Main navigation #}
     {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
@@ -30,7 +20,11 @@
         <div class="columns">
           <div class="column is-8">
             <header>
-              <h2 class="h2">Work with us</h2>
+              {% if current_language == 'nl' %}
+                <h2 class="h2">(NL) Work with us</h2>
+              {% elif current_language == 'en' %}
+                <h2 class="h2">Work with us</h2>
+              {% endif %}
             </header>
             {% if page.intro %}
               <p class="intro">
@@ -43,7 +37,11 @@
           </div>
           <div class="column is-4">
             <header>
-              <h2 class="h2">Open positions</h2>
+              {% if current_language == 'nl' %}
+                <h2 class="h2">(NL) Open positions</h2>
+              {% elif current_language == 'en' %}
+                <h2 class="h2">Open positions</h2>
+              {% endif %}
             </header>
             <div class="spacer"></div>
             {% if open_positions %}

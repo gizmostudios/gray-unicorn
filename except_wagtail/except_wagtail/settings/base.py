@@ -100,6 +100,7 @@ TEMPLATES = [
                 'wagtailmenus.context_processors.wagtailmenus',
                 'except_wagtail.base_variable.footer_categories',
                 'except_wagtail.base_variable.logo_link',
+                'except_wagtail.base_variable.current_language',
             ],
         },
     },

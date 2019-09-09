@@ -1,0 +1,58 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+{% load static wagtailuserbar %}
+
+
+{% load static %}
+
+{% with mediaPath="/media/" %}
+  {% for element in elements %}
+    {% if is_loadable %}
+      <div class="column is-4 in-grid is-loadable">
+    {% else %}
+      <div class="column is-4 in-grid">
+    {% endif %}
+      <div class="card is-stretched">
+        <div class="card-image">
+          {% if element.url_article %}
+            <a href="{{element.url_article}}">
+          {% else %}
+            <a href="{{element.url}}">
+          {% endif %}
+            <figure class="image"><img src="{{ mediaPath }}{{ element.hero_image }}">
+              {% if element.type_of_element == 'EV' %}
+                {% if current_language == 'nl' %}
+                  <h4 class="h4 label is-red">(NL) Event</h4>
+                {% elif current_language == 'en' %}
+                  <h4 class="h4 label is-red">Event</h4>
+                {% endif %}
+              {% elif element.type_of_element == 'OP' %}
+                {% if current_language == 'nl' %}
+                  <h4 class="h4 label is-green">(NL) People</h4>
+                {% elif current_language == 'en' %}
+                  <h4 class="h4 label is-green">People</h4>
+                {% endif %}
+              {% endif %}
+            </figure>
+          </a>
+        </div>
+        <div class="card-content has-label">
+          {% if element.url_article %}
+            <a href="{{element.url_article}}">
+          {% else %}
+            <a href="{{element.url}}">
+          {% endif %}
+            {% if element.is_long_intro %}
+              <h3 class="h3">{{element.short_intro}}...</h3>
+            {% else %}
+              <h3 class="h3">{{element.hero_title}}</h3>
+            {% endif %}
+            <p class='trunc-text'>{{element.hero_subtitle}}</p>
+            <p>{{element.date_published}}</p>
+            <a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+          </a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+{% endwith %}

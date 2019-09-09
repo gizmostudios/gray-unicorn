@@ -1,39 +1,25 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags wagtailembeds_tags %}
+{% load static wagtailuserbar %}
+
 
 {% load static %}
 {% block content %}
   {% with mediaPath="/media/" %}
-      <section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ mediaPath }}{{ parent_page.hero_image }})">
-        <div class="hero-body">
-          <div class="container">
-            <div>
-              {% if page.image %}
-                <div id="expertises" class="columns is-grid">
-                  <div class="column is-2">
-                    <figure class="image"><img src="{{ mediaPath }}{{ page.image }}"></figure>
-                  </div>
-                </div>
-                <div class="spacer"></div>
-              {% endif %}
-              {% if page.hero_title %}
-                <h1 class="h1 title">{{ page.hero_title }}</h1>
-              {% endif %}
-              {% if page.hero_subtitle %}
-                <h3 class="h3 subtitle">{{ page.hero_subtitle }}</h3>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-      </section>
+  
+
       {# Main navigation #}
       {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
-
+      <div class="spacer is-large"></div>
+      <div class="spacer"></div>
       <section class="section">
         <div class="container">
           <div class="columns">
             <div class="column is-8">
+              {% if page.hero_title %}
+                <h1 class="h1">{{page.hero_title}}</h1>
+              {% endif %}
               {% if page.introduction %}
                 <p class="intro">
                   {{page.introduction}}
@@ -73,7 +59,11 @@
           <div class="container">
             <article class="article">
               <header>
-                <h2 class="h2">Related projects</h2>
+                {% if current_language == 'nl' %}
+                  <h2 class="h2">(NL) Related projects</h2>
+                {% elif current_language == 'en' %}
+                  <h2 class="h2">Related projects</h2>
+                {% endif %}
               </header>
               <div id="latestNews" class="columns is-grid">
                 {% include "news/latest_news.html" with current_news=projects %}
@@ -87,7 +77,11 @@
           <div class="container">
             <article class="article">
               <header>
-                <h2 class="h2">Related articles</h2>
+                {% if current_language == 'nl' %}
+                  <h2 class="h2">(NL) Related articles</h2>
+                {% elif current_language == 'en' %}
+                  <h2 class="h2">Related articles</h2>
+                {% endif %}
               </header>
               <div id="latestNews" class="columns is-grid">
                 {% include "news/latest_news.html" with current_news=articles %}

@@ -48,7 +48,6 @@ function carouselAutoRotation(){
     let currentScroll = (iteration % count);
     scrollCarouselArticle($inner, currentScroll+1);
     buttons.removeClass('is-primary').addClass('is-secondary');
-    console.log(buttons.get(currentScroll).classList);
     buttons.each(function(index){
       if( index == currentScroll){
         $(this).removeClass('is-secondary').addClass('is-primary');

@@ -27,10 +27,8 @@ $(document).ready(function(){
 					link_internal_page.style.display = 'none';
 					link_external_page.style.display = 'none';
 					$('fieldset').each(function(){
-						console.log($(this)[0])
 						$(this)[0].style.marginLeft = '0px';
 					});
-					console.log(popup.getParent().find('a').width())
 					popup.style.display = 'block';
 				}else{
 					link_internal_page.style.display = 'none';

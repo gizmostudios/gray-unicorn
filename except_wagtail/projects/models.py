@@ -179,9 +179,12 @@ class ProjectPage(Page):
 
 	def is_long_intro(self):
 		long_intro = True
-		if len(self.hero_title) <= 70:
-			long_intro = False
-		return long_intro
+		try:
+			if len(self.hero_title) <= 70:
+				long_intro = False
+			return long_intro
+		except:
+			return
 
 	def thumbnail(self):
 		
@@ -251,7 +254,7 @@ class ProjectIndexPage(Page):
 
 		context['not_last'] = len(projects_all)>8
 		context['highlights'] = self.highlight_projects()[0:4]
-		context['latest_project'] = projects_all[0:5]
+		context['latest_project'] = projects_all[0:3]
 		context['current_projects'] = projects_all[0:8]
 		context['projects'] = projects_all
 		context['services'] = services

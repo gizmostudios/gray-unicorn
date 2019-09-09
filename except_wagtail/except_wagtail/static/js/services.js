@@ -4,7 +4,6 @@ const serviceColumns = $(".column-service");
 function displaySubServices(service){
 	var selectedServiceId = service.attr('id');
 	var selectedService = $("."+selectedServiceId);
-	console.log(selectedService.get(0).scrollHeight);
 	selectedService.addClass('active')
 	selectedService.css({'height':''});
 	selectedService.animate({
@@ -51,7 +50,6 @@ function serviceFadeIn(){
 		if(iteration == index){
 			$(this).css('display','none');
 			$(this).css('opacity','1');
-			console.log($(this));
 			$(this).fadeIn( 2000 );
 		}
 	});

@@ -1,26 +1,16 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags wagtailembeds_tags %}
+{% load static wagtailuserbar %}
+
 
 {% load static %}
 
 {% block content %}
   {% with mediaPath="/media/" %}
 
-    <section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ mediaPath }}{{ page.hero_image }})">
-      <div class="hero-body">
-        <div class="container">
-          <div>
-            {% if page.hero_title %}
-              <h1 class="h1 title">{{ page.hero_title }}</h1>
-            {% endif %}
-            {% if page.hero_subtitle %}
-              <h3 class="h3 subtitle">{{ page.hero_subtitle }}</h3>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </section>
+    {# Top Section/Header #}
+    {% include "modules/top_section.html" with page=page carousel=False %}
 
     {# Main navigation #}
     {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
@@ -30,10 +20,14 @@
         <article class="article">
           <div class="spacer is-large"></div>
           <header>
-            <h2 class="h2">Latest news</h2>
+            {% if current_language == 'nl' %}
+              <h2 class="h2">(NL) Latest news</h2>
+            {% elif current_language == 'en' %}
+              <h2 class="h2">Latest news</h2>
+            {% endif %}
           </header>
           <div id="news" class="columns is-grid grid-loading">
-            {% include "news/latest_news.html" with current_news=current_news %}
+            {% include "modules/grid_6.html" with elements=current_news is_loadable=True %}
           </div>
           <div class='button-load-container'>
             {% include "modules/button_load.html" with not_last=not_last %}

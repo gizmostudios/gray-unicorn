@@ -1,0 +1,28 @@
+{% with mediaPath="/media/original_images/" %}
+  {% for element in elements %}
+    {% if is_loadable %}
+      <div class="column is-3 in-grid is-loadable">
+    {% else %}
+      <div class="column is-3 in-grid">
+    {% endif %}
+        <div class="card is-stretched">
+          <div class="card-image">
+            <a href={{element.url}}>
+              <figure class="image"><img src="{{ mediaPath }}{{ element.top_images.all.0.image }}"></figure>
+            </a>
+          </div>
+          <div class="card-content">
+            <a href={{element.url}}>
+              <h4 class="h4">{{element.hero_title}}</h4>
+            </a>
+            <p class='trunc-text'>{{element.hero_subtitle}}</p>
+            <p>{{element.date_published}}</p>
+            <div class="button is-selector is-{{element.service.color}} is-pulled-left"></div>
+          </div>
+          <div class="card-footer">
+            <div class="button is-selector is-{{element.service.color}} is-pulled-left"></div><a class="button is-pulled-right" href={{element.url}}><i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+    </div>
+  {% endfor %}
+{% endwith %}

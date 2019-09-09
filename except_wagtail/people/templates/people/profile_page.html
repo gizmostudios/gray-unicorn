@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags wagtailembeds_tags %}
+{% load static wagtailuserbar %}
 
 {% load static %}
 
@@ -18,7 +19,11 @@
             <figure class="image"><img src="{{ mediaPath }}{{ person.picture }}"></figure>
             <div class="column is-10">
               {% if person.expertises %}
-                <h4 class="h4">Areas of expertise:</h4>
+                {% if current_language == 'nl' %}
+                  <h4 class="h4">(NL) Areas of expertise:</h4>
+                {% elif current_language == 'en' %}
+                  <h4 class="h4">Areas of expertise:</h4>
+                {% endif %}
                 <ul>
                   {% for expertise in person.expertises.all %}
                   <div>                    
@@ -29,7 +34,11 @@
               {% endif %}
               <div class="spacer"></div>
               {% if person.hobbies %}
-                <h4 class="h4">Enjoys:</h4>
+                {% if current_language == 'nl' %}
+                  <h4 class="h4">(NL) Enjoys:</h4>
+                {% elif current_language == 'en' %}
+                  <h4 class="h4">Enjoys:</h4>
+                {% endif %}
                 <ul>
                   {% for hobby in person.hobbies.all %}
                   <div>
@@ -39,7 +48,11 @@
                 </ul>
               {% endif %}
               <div class="spacer"></div>
-                <h4 class="h4">Contact:</h4>
+                {% if current_language == 'nl' %}
+                  <h4 class="h4">(NL) Contact:</h4>
+                {% elif current_language == 'en' %}
+                  <h4 class="h4">Contact:</h4>
+                {% endif %}
                 <ul>
                   <div>
                     {% if user.email %}
@@ -69,7 +82,11 @@
             <div class="spacer is-large"></div>
             <div class="spacer is-large"></div>
             <header>
-              <h2 class="h2">Articles</h2>
+              {% if current_language == 'nl' %}
+                <h2 class="h2">(NL) Articles</h2>
+              {% elif current_language == 'en' %}
+                <h2 class="h2">Articles</h2>
+              {% endif %}
             </header>
             {% if articles %}
               <div class="columns is-grid">
@@ -93,7 +110,11 @@
             {% endif %}
             <div class="spacer is-large"></div>
             <header>
-              <h2 class="h2">Projects</h2>
+              {% if current_language == 'nl' %}
+                <h2 class="h2">(NL) Projects</h2>
+              {% elif current_language == 'en' %}
+                <h2 class="h2">Projects</h2>
+              {% endif %}
             </header>
             {% if projects %}
               <div class="columns is-grid">

@@ -1,0 +1,82 @@
+{% load static wagtailuserbar %}
+
+<section class="section">
+  <div class="container">
+    <article class="article">
+      <header>
+        {% if current_language == 'nl' %}
+          <h2 class="h2">(NL) Related projects & articles</h2>
+        {% elif current_language == 'en' %}
+          <h2 class="h2">Related projects & articles</h2>
+        {% endif %}
+      </header>
+      {% if page.linked_projects or page.linked_articles %}
+        <div class="columns is-grid">
+          {% for project in page.linked_projects.all %}
+            <div class="column is-3 is-loadable">
+              <a href="{{project.element.url}}">
+                <div class="card is-stretched">
+                  <div class="card-image">
+                    <figure class="image"><img src="{{ mediaPath }}{{ project.element.hero_image }}"></figure>
+                  </div>
+                  <div class="card-content has-label">
+                    <h4 class="h4">{{project.element.hero_title}}</h4>
+                    <p class='trunc-text'>{{project.element.hero_subtitle}}</p>
+                    <a class="button is-pulled-right" href={{project.element.url}}><i class="fas fa-chevron-right"></i></a>
+                  </div>
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+          {% for article in page.linked_articles.all %}
+            <div class="column is-3 is-loadable">
+              <a href="{{article.element.url}}">
+                <div class="card is-stretched">
+                  <div class="card-image">
+                    <figure class="image"><img src="{{ mediaPath }}{{ article.element.hero_image }}"></figure>
+                  </div>
+                  <div class="card-content has-label">
+                    <h4 class="h4">{{article.element.hero_title}}</h4>
+                    <p class='trunc-text'>{{article.element.hero_subtitle}}</p>
+                    <a class="button is-pulled-right" href={{article.element.url}}><i class="fas fa-chevron-right"></i></a>
+                  </div>
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </article>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <article class="article">
+      <header>
+        {% if current_language == 'nl' %}
+          <h2 class="h2">(NL) Media & Downloads</h2>
+        {% elif current_language == 'en' %}
+          <h2 class="h2">Media & Downloads</h2>
+        {% endif %}
+      </header>
+      <div class="columns is-grid">
+        {% for download in page.downloads.all %}
+            <div class="column is-3 is-loadable">
+              <a href="{{download.file.url}}">
+                <div class="card is-stretched">
+                  <div class="card-image">
+                    <figure class="image"><img src="{{ mediaPath }}{{ download.thumbnail }}"></figure>
+                  </div>
+                  <div class="card-content has-label">
+                    <h4 class="h4">{{download.name}}</h4>
+                    <a class="button is-pulled-right" href={{download.file.url}}><i class="fas fa-chevron-right"></i></a>
+                  </div>
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+      </div>
+    </article>
+  </div>
+</section>
+<script type="text/javascript" src="{% static 'js/carousel_article.js' %}"></script>

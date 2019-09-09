@@ -1,3 +1,5 @@
+{% load static wagtailuserbar %}
+
 <section class="section {{service.id}} render-service">
   <div class="spacer is-large"></div>
   <div class="container">
@@ -12,7 +14,11 @@
           </div>
           <div class="spacer"></div>
         {% endfor %}
-        <div class="buttons"><a href="{{service.url}}" class="button is-next is-secondary">See more <i class="fas fa-chevron-right"></i></a></div>
+        {% if current_language == 'nl' %}
+          <div class="buttons"><a href="{{service.url}}" class="button is-next is-secondary">(NL) See more <i class="fas fa-chevron-right"></i></a></div>
+        {% elif current_language == 'en' %}
+          <div class="buttons"><a href="{{service.url}}" class="button is-next is-secondary">See more <i class="fas fa-chevron-right"></i></a></div>
+        {% endif %}
       </div>
     </div>
   </div>

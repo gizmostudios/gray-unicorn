@@ -1,26 +1,15 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags wagtailembeds_tags %}
+{% load static wagtailuserbar %}
+
 
 {% load static %}
 
 {% block content %}
   {% with mediaPath="/media/" %}
-
-    <section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ mediaPath }}{{ page.hero_image }})">
-      <div class="hero-body">
-        <div class="container">
-          <div>
-            {% if page.hero_title %}
-              <h1 class="h1 title">{{ page.hero_title }}</h1>
-            {% endif %}
-            {% if page.hero_subtitle %}
-              <h3 class="h3 subtitle">{{ page.hero_subtitle }}</h3>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </section>
+    {# Top Section/Header #}
+    {% include "modules/top_section.html" with page=page carousel=False %}
 
     {# Main navigation #}
     {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
@@ -40,7 +29,11 @@
     </section>
     <section class="section has-title">
       <div class="container">
-        <h2 class="h2">Knowledge highlights</h2>
+        {% if current_language == 'nl' %}
+          <h2 class="h2">(NL) Knowledge highlights</h2>
+        {% elif current_language == 'en' %}
+          <h2 class="h2">Knowledge highlights</h2>
+        {% endif %}
       </div>
     </section>
     {# Carousel #}
@@ -78,10 +71,14 @@
       <div class="container">
         <article class="article">
           <header>
-            <h2 class="h2">Latest articles</h2>
+            {% if current_language == 'nl' %}
+              <h2 class="h2">(NL) Latest articles</h2>
+            {% elif current_language == 'en' %}
+              <h2 class="h2">Latest articles</h2>
+            {% endif %}
           </header>
           <div class="columns is-grid">
-            {% include "news/latest_news.html" with current_news=latest_resources %}
+            {% include "modules/grid_6.html" with elements=latest_resources %}
           </div>
         </article>
       </div>
@@ -90,11 +87,19 @@
       <div class="container">
         <article class="article">
           <header>
-            <h2 class="h2">Knowledge database</h2>
+            {% if current_language == 'nl' %}
+              <h2 class="h2">(NL) Knowledge database</h2>
+            {% elif current_language == 'en' %}
+              <h2 class="h2">Knowledge database</h2>
+            {% endif %}
           </header>
           <div class="spacer is-large"></div>
           <header class="has-text-centered">
-            <h3 class="h3">FILTER</h3>
+            {% if current_language == 'nl' %}
+              <h3 class="h3">(NL) FILTER</h3>
+            {% elif current_language == 'en' %}
+              <h3 class="h3">FILTER</h3>
+            {% endif %}
           </header>
           <div class="has-text-centered">
             {% csrf_token %}
@@ -106,7 +111,7 @@
           </div>
           <div class="spacer is-large"></div>
           <div id="articles" class="columns is-grid grid-loading">
-            {% include "projects/projects_list.html" with projects=resources %}
+            {% include "modules/grid_8.html" with elements=resources is_loadable=True %}
           </div>
           <div class='button-load-container'>
             {% include "modules/button_load.html" with not_last=not_last %}
