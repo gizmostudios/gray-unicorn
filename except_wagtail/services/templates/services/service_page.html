@@ -65,8 +65,8 @@
                   <h2 class="h2">Related projects</h2>
                 {% endif %}
               </header>
-              <div id="latestNews" class="columns is-grid">
-                {% include "news/latest_news.html" with current_news=projects %}
+              <div class="columns is-grid">
+                {% include "modules/grid_8.html" with elements=projects is_loadable=False %}
               </div>
             </article>
           </div>
@@ -83,8 +83,8 @@
                   <h2 class="h2">Related articles</h2>
                 {% endif %}
               </header>
-              <div id="latestNews" class="columns is-grid">
-                {% include "news/latest_news.html" with current_news=articles %}
+              <div class="columns is-grid">
+                {% include "modules/grid_8.html" with elements=articles is_loadable=False %}
               </div>
             </article>
           </div>

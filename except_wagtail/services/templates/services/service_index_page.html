@@ -54,18 +54,15 @@
               <h2 class="h2 is-inverted">Our services</h2>
             {% endif %}
           </header>
-          <div id="expertises" class="columns is-grid">
+          <div class="columns has-gap">
             {% for expertise in page.expertises.all %}
-              <div class="column is-3">
-                <div class="card is-stretched is-expertise">
-                  <div class="card-image">
-                    <figure class="image"><img src="{{ mediaPath }}{{ expertise.image }}"></figure>
-                  </div>
-                  <div class="card-content has-label">
-                    <h3 class="h3">{{expertise.title}}</h3>
-                  </div>
-                </div>
+              <div class="column has-text-centered is-expertise">
+                <figure class="image"><img src="{{ mediaPath }}{{ expertise.image }}"></figure>
+                <h3 class="h3">{{expertise.title}}</h3>
               </div>
+            {% endfor %}
+            {% for element in missing_columns.all %}
+              <div class="column has-text-centered is-expertise"></div>
             {% endfor %}
           </div>
           <div class="buttons">

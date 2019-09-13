@@ -1,5 +1,6 @@
 from except_wagtail.models import *
 from index.models import *
+from about.models import *
 from django.utils import translation
 
 
@@ -16,3 +17,7 @@ def logo_link(request):
 def current_language(request):
 	lang = translation.get_language()
 	return {'current_language': lang}
+
+def contact_page(request):
+	contact_page = ContactPage.objects.all().first()
+	return {'contact_page': contact_page}

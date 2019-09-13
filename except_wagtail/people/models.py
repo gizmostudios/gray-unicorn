@@ -79,7 +79,7 @@ class ProfilePage(Page):
 		return projects
 
 	def get_articles(self):
-		articles = NewsPage.objects.filter(author=self.person).all()
+		articles = ArticlePage.objects.filter(author=self.person).all()
 		return articles
 
 	def get_context(self, request):

@@ -82,24 +82,7 @@
             {% endif %}
           </header>
           <div class="columns is-grid">
-            {% for project in latest_project %}
-            <div class="column is-4">
-              <div class="card is-stretched">
-                <div class="card-image">
-                  <a href="{{project.url}}">
-                    <figure class="image"><img src="{{ mediaPath }}{{ project.top_images.all.0.image }}"></figure>
-                  </a>
-                </div>
-                <div class="card-content has-label">
-                  <a href="{{project.url}}">
-                    <h3 class="h3">{{project.hero_title}}</h3>
-                    <p>{{project.date_published}}</p>
-                    <button class="button is-selector is-{{project.service.color}} is-pulled-left"></button><a class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
-                  </a>
-                </div>
-              </div>
-            </div>
-            {% endfor %}
+            {% include "modules/grid_6.html" with elements=latest_project is_loadable=False %}
           </div>
         </article>
       </div>
@@ -116,12 +99,12 @@
           </header>
           <header class="has-text-centered">
             {% if current_language == 'nl' %}
-              <h3 class="h3">(NL) TIMELINE</h3>
+              <h3 class="h3 timeline-element">(NL) TIMELINE</h3>
             {% elif current_language == 'en' %}
-              <h3 class="h3">TIMELINE</h3>
+              <h3 class="h3 timeline-element">TIMELINE</h3>
             {% endif %}
           </header>
-          <div class="has-text-centered">
+          <div class="has-text-centered timeline-element">
             <div class="timeline">
               {% include "modules/timeline.html" with years=years elements=projects %}
             </div>

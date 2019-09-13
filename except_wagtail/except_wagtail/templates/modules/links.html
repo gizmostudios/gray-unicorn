@@ -12,38 +12,8 @@
       </header>
       {% if page.linked_projects or page.linked_articles %}
         <div class="columns is-grid">
-          {% for project in page.linked_projects.all %}
-            <div class="column is-3 is-loadable">
-              <a href="{{project.element.url}}">
-                <div class="card is-stretched">
-                  <div class="card-image">
-                    <figure class="image"><img src="{{ mediaPath }}{{ project.element.hero_image }}"></figure>
-                  </div>
-                  <div class="card-content has-label">
-                    <h4 class="h4">{{project.element.hero_title}}</h4>
-                    <p class='trunc-text'>{{project.element.hero_subtitle}}</p>
-                    <a class="button is-pulled-right" href={{project.element.url}}><i class="fas fa-chevron-right"></i></a>
-                  </div>
-                </div>
-              </a>
-            </div>
-          {% endfor %}
-          {% for article in page.linked_articles.all %}
-            <div class="column is-3 is-loadable">
-              <a href="{{article.element.url}}">
-                <div class="card is-stretched">
-                  <div class="card-image">
-                    <figure class="image"><img src="{{ mediaPath }}{{ article.element.hero_image }}"></figure>
-                  </div>
-                  <div class="card-content has-label">
-                    <h4 class="h4">{{article.element.hero_title}}</h4>
-                    <p class='trunc-text'>{{article.element.hero_subtitle}}</p>
-                    <a class="button is-pulled-right" href={{article.element.url}}><i class="fas fa-chevron-right"></i></a>
-                  </div>
-                </div>
-              </a>
-            </div>
-          {% endfor %}
+          {% include "modules/grid_relation_8.html" with elements=page.linked_projects.all is_loadable=False %}
+          {% include "modules/grid_relation_8.html" with elements=page.linked_articles.all is_loadable=False %}
         </div>
       {% endif %}
     </article>
@@ -60,21 +30,7 @@
         {% endif %}
       </header>
       <div class="columns is-grid">
-        {% for download in page.downloads.all %}
-            <div class="column is-3 is-loadable">
-              <a href="{{download.file.url}}">
-                <div class="card is-stretched">
-                  <div class="card-image">
-                    <figure class="image"><img src="{{ mediaPath }}{{ download.thumbnail }}"></figure>
-                  </div>
-                  <div class="card-content has-label">
-                    <h4 class="h4">{{download.name}}</h4>
-                    <a class="button is-pulled-right" href={{download.file.url}}><i class="fas fa-chevron-right"></i></a>
-                  </div>
-                </div>
-              </a>
-            </div>
-          {% endfor %}
+          {% include "modules/downloadable.html" with downloadables=page.downloads.all %}
       </div>
     </article>
   </div>

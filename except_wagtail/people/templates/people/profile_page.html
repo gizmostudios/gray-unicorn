@@ -11,9 +11,17 @@
     {# Main navigation #}
     {% include "includes/navbar.html" with transparent=false inverted=false %}
     <div class="spacer is-large"></div>
-    <div class="spacer is-large"></div>
+    <div class="spacer is-large desktop-spacer"></div>
     <section class="section">
       <div class="container">
+        <div class="columns">
+          <div class="column is-3"></div>
+          <div class="column is-9">
+            <header>
+              <h2 class="h2">{{user.first_name}} {{user.last_name}}</h2>
+            </header>
+          </div>
+        </div>
         <div class="columns">
           <div class="column is-3">
             <figure class="image"><img src="{{ mediaPath }}{{ person.picture }}"></figure>
@@ -65,11 +73,7 @@
                 </ul>
             </div>
           </div>
-          <div class="column is-7">
-            <header>
-              <h2 class="h2">{{user.first_name}} {{user.last_name}}</h2>
-            </header>
-            <div class="spacer is-large"></div>
+          <div class="column is-9">
             {% if person.biography %}
               <p class="intro">
                 {{person.biography}}
@@ -80,7 +84,6 @@
             {% endif %}
             <div class="spacer is-large"></div>
             <div class="spacer is-large"></div>
-            <div class="spacer is-large"></div>
             <header>
               {% if current_language == 'nl' %}
                 <h2 class="h2">(NL) Articles</h2>
@@ -88,24 +91,10 @@
                 <h2 class="h2">Articles</h2>
               {% endif %}
             </header>
+            <div class="spacer"></div>
             {% if articles %}
               <div class="columns is-grid">
-                {% for article in articles %}
-                  <div class="column is-4">
-                    <div class="card is-stretched">
-                      <div class="card-image">
-                        <figure class="image">
-                          <a href="{{article.url}}">
-                            <img src="{{ mediaPath }}{{ article.hero_image }}">
-                          </a>
-                        </figure>
-                      </div>
-                      <div class="card-content has-label"><a href="{{article.url}}" class="link">{{article.hero_title}}</a>
-                        <p class="date">{{article.date_published}}</p><a class="button is-{{article.service.color}} is-pulled-right"><i class="fas fa-chevron-right"></i></a>
-                      </div>
-                    </div>
-                  </div>
-                {% endfor %}
+                {% include "modules/related_resources_profile.html" with elements=articles %}
               </div>
             {% endif %}
             <div class="spacer is-large"></div>
@@ -116,29 +105,16 @@
                 <h2 class="h2">Projects</h2>
               {% endif %}
             </header>
+            <div class="spacer"></div>
             {% if projects %}
               <div class="columns is-grid">
-                {% for project in projects %}
-                  <div class="column is-4">
-                    <div class="card is-stretched">
-                      <div class="card-image">
-                        <figure class="image">
-                          <a href="{{project.url}}">
-                            <img src="{{ mediaPath }}{{ project.hero_image }}">
-                          </a>
-                        </figure>
-                      </div>
-                      <div class="card-content has-label"><a href="{{project.url}}" class="link">{{project.hero_title}}</a>
-                        <p class="date">{{project.date_published}}</p><a class="button is-{{project.service.color}} is-pulled-right"><i class="fas fa-chevron-right"></i></a>
-                      </div>
-                    </div>
-                  </div>
-                {% endfor %}
+                {% include "modules/related_resources_profile.html" with elements=projects %}
               </div>
             {% endif %}
           </div>
         </div>
       </div>
+      <div class="spacer"></div>
 
   {% endwith %}
 {% endblock content %}

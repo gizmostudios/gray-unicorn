@@ -146,8 +146,10 @@ function hidePopup(popup){
 
 $(document).ready(function(){
   $('.popup').each(function(){
-    var offsetLeft = ($(this).parent().find('a').width()/2)+"px";
-    $(this).find('span').css('left', offsetLeft);
+    if(windowWidth >= 1087) {
+      var offsetLeft = ($(this).parent().find('a').width()/2)+"px";
+      $(this).find('span').css('left', offsetLeft);
+    }
     $(this).off().on('click', function(){
       if ($(this).find('span').hasClass("show")){
         $(this).find('span').removeClass("show");

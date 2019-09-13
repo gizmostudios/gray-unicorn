@@ -8,6 +8,8 @@
 
 {% block content %}
   {% with mediaPath="/media/" %}
+    {% with mediaPathOriginal="/media/original_images/" %}
+
     {# Top Section/Header #}
     {% include "modules/top_section.html" with page=page carousel=False %}
 
@@ -42,7 +44,7 @@
         <div class="container has-carousel full-width" data-count="{{page.carousel_items.all|length}}">
           <article class="article carousel-inner">
             {% for item in highlights %}
-              <div class="carousel has-text-centered" style="background-image:url({{ mediaPath }}{{ item.top_images.all.0.image }})">
+              <div class="carousel has-text-centered" style="background-image:url({{ mediaPathOriginal }}{{ item.top_images.all.0.image }})">
                 <div class="container not-full-height">
                   <h2 class="h2 is-blocked">{{ item.hero_title }}</h2>
                   <h3 class="h3 is-blocked description">{{ item.hero_subtitle }}</h3>
@@ -122,5 +124,6 @@
     <script type="text/javascript" src="{% static 'js/knowledge.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/carousel_article.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/loading_more.js' %}"></script>
+    {% endwith %}
   {% endwith %}
 {% endblock content %}

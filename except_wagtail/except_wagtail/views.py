@@ -41,7 +41,7 @@ def load_elements(request):
 
 	if model_type == 'news':
 		res = load_more_news(iteration, lang)
-	elif model_type == 'resources':
+	elif model_type == 'articles':
 		res = load_more_resources(iteration, body, lang)
 	else:
 		res = load_more_projects(iteration, body, lang)
@@ -84,7 +84,7 @@ def load_more_projects(iteration, body, lang):
 
 def load_more_resources(iteration, body, lang):
 	decoded_services = get_services(body)
-	resources = Resource.objects.filter(service__hero_title__in=decoded_services).all().order_by('-date_published')
+	resources = ArticlePage.objects.filter(service__hero_title__in=decoded_services).all().order_by('-date_published')
 
 	if iteration == 0:
 		min_len_resources = min(8*(iteration+1),len(resources))
@@ -94,8 +94,8 @@ def load_more_resources(iteration, body, lang):
 	else:
 		resources_live = resources[8*(iteration):]
 		not_last = False
-
-	html = render_to_string("knowledge/resource_list.html", {'resources' : resources_live, 'current_language': lang, 'is_loadable' : True})+"|"+render_to_string("modules/button_load.html", {'not_last' : not_last, 'current_language': lang})
+	print(resources_live)
+	html = render_to_string("modules/grid_8.html", {'elements' : resources_live, 'current_language': lang, 'is_loadable' : True})+"|"+render_to_string("modules/button_load.html", {'not_last' : not_last, 'current_language': lang})
 	res = {'html' : html}
 	return res
 

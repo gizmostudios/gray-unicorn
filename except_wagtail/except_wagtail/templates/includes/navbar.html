@@ -1,6 +1,11 @@
 {% load menu_tags %}
 {% load i18n %}
 {% get_current_language as LANGUAGE_CODE %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+{% load static wagtailuserbar %}
+
+{% load static %}
 
 {% if inverted == False and transparent == True %}
   <nav class="is-fixed-top is-transparent inverted" id="mainNav">
@@ -22,10 +27,10 @@
           <button class="button is-transparent lang-selection"><span>NETHERLANDS</span>
         {% endif %}
         {% if LANGUAGE_CODE == 'nl' %}
-          </button><a class="button is-transparent">(NL) CONTACT</a>
+          </button><a href="{{contact_page.url}}" class="button is-transparent">(NL) CONTACT</a>
         {% elif LANGUAGE_CODE == 'en' %}
-         </button><a class="button is-transparent">CONTACT</a>
-        {% endif %}      
+         </button><a href="{{contact_page.url}}" class="button is-transparent">CONTACT</a>
+        {% endif %}
       </div>
       <div class="is-hidden-desktop">
         <label for="main-menu-toggle" class="navbar-burger burger">

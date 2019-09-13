@@ -15,6 +15,7 @@ from knowledge.models import *
 from news.models import *
 from projects.models import *
 from services.models import *
+from about.models import *
 
 from modeltranslation.utils import build_localized_fieldname
 from django.conf import settings
@@ -121,6 +122,21 @@ class HomePage(Page):
 		highlight = ProjectPage.objects.filter(highlight=True).order_by('-date_published').all()
 		return highlight
 
+	def get_link_resources(self):
+		return KnowledgePage.objects.live().first()
+
+	def get_link_news(self):
+		return NewsIndexPage.objects.live().first()
+
+	def get_link_projects(self):
+		return ProjectIndexPage.objects.live().first()
+
+	def get_link_work_with_us(self):
+		return CareerPage.objects.live().first()
+
+	def get_event_calendar(self):
+		return EventCalendarPage.objects.live().first()
+
 	def get_context(self, request):
 		context = super(HomePage, self).get_context(request)
 
@@ -128,6 +144,11 @@ class HomePage(Page):
 		indexService = ServiceIndexPage.objects.live()[0]
 
 		context['highlight_pdf'] = self.get_highlight_resources().first()
+		context['link_resources'] = self.get_link_resources()
+		context['link_news'] = self.get_link_news()
+		context['link_projects'] = self.get_link_projects()
+		context['link_work_with_us'] = self.get_link_work_with_us()
+		context['link_calendar'] = self.get_event_calendar()
 		context['highlight_resources'] = self.get_highlight_resources().all()[1]
 		context['highlight_article'] = self.get_highlight_article().first()
 		context['highlight_event'] = self.get_highlight_event().first()

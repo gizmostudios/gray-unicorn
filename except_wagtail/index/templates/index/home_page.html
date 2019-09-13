@@ -8,6 +8,7 @@
 
 {% block content %}
   {% with mediaPath="/media/" %}
+    {% with mediaPathOriginal="/media/original_images/" %}
 
     {# Top Section/Header #}
     {% include "modules/top_section.html" with page=page carousel=False compact=False %}
@@ -145,7 +146,7 @@
             <div class="column is-4">
               <div class="card is-stretched">
                 <div class="card-image is-front">
-                  <figure class="image"><img src="{{ mediaPath }}{{ highlight_event.top_images.all.0.image }}">
+                  <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_event.top_images.all.0.image }}">
                     {% if current_language == 'nl' %}
                       <h4 class="h4 label is-red">(NL) Event</h4>
                     {% elif current_language == 'en' %}
@@ -156,11 +157,12 @@
                 <div class="card-content is-front">
                   <h3 class="h3">{{ highlight_event.hero_title }}</h3>
                   <p class='trunc-text'>{{ highlight_event.hero_subtitle }}</p>
+                  <a href="{{ highlight_event.url }}" class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
                 </div>
                 {% if current_language == 'nl' %}
-                  <div class="card-footer is-front"><a href="{{ highlight_event.url }}" class="link"><span>(NL) Register now</span><i class="fas fa-chevron-right"></i></a></div>
+                  <div class="card-footer is-front"><a href="{{ link_calendar.url }}" class="link"><span>(NL) More events</span><i class="fas fa-chevron-right"></i></a></div>
                 {% elif current_language == 'en' %}
-                  <div class="card-footer is-front"><a href="{{ highlight_event.url }}" class="link"><span>Register now</span><i class="fas fa-chevron-right"></i></a></div>
+                  <div class="card-footer is-front"><a href="{{ link_calendar.url }}" class="link"><span>More events</span><i class="fas fa-chevron-right"></i></a></div>
                 {% endif %}
               </div>
             </div>
@@ -170,7 +172,7 @@
               <div class="card is-stretched">
                 <div class="card is-stretched">
                   <div class="card-image is-front">
-                    <figure class="image"><img src="{{ mediaPath }}{{ highlight_article.top_images.all.0.image }}">
+                    <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_article.top_images.all.0.image }}">
                       {% if current_language == 'nl' %}
                         <h4 class="h4 label is-purple">(NL) News</h4>
                       {% elif current_language == 'en' %}
@@ -185,9 +187,9 @@
                   </div>
                 </div>
                 {% if current_language == 'nl' %}
-                  <div class="card-footer is-front"><a href="{{ news_index.url }}" class="link"><span>(NL) Read our news</span><i class="fas fa-chevron-right"></i></a></div>
+                  <div class="card-footer is-front"><a href="{{ link_news.url }}" class="link"><span>(NL) Read our news</span><i class="fas fa-chevron-right"></i></a></div>
                 {% elif current_language == 'en' %}
-                  <div class="card-footer is-front"><a href="{{ news_index.url }}" class="link"><span>Read our news</span><i class="fas fa-chevron-right"></i></a></div>
+                  <div class="card-footer is-front"><a href="{{ link_news.url }}" class="link"><span>Read our news</span><i class="fas fa-chevron-right"></i></a></div>
                 {% endif %}
               </div>
             </div>
@@ -195,7 +197,7 @@
               <div class="card is-stretched">
                 <div class="card is-stretched">
                   <div class="card-image is-front">
-                    <figure class="image"><img src="{{ mediaPath }}{{ highlight_projects.top_images.all.0.image }}">
+                    <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_projects.top_images.all.0.image }}">
                       {% if current_language == 'nl' %}
                         <h4 class="h4 label is-blue">(NL) Project</h4>
                       {% elif current_language == 'en' %}
@@ -210,9 +212,9 @@
                   </div>
                 </div>
                 {% if current_language == 'nl' %}
-                  <div class="card-footer is-front"><a href="{{ projects_index.url }}" class="link"><span>(NL) See more projects</span><i class="fas fa-chevron-right"></i></a></div>
+                  <div class="card-footer is-front"><a href="{{ link_projects.url }}" class="link"><span>(NL) See our projects</span><i class="fas fa-chevron-right"></i></a></div>
                 {% elif current_language == 'en' %}
-                  <div class="card-footer is-front"><a href="{{ projects_index.url }}" class="link"><span>See more projects</span><i class="fas fa-chevron-right"></i></a></div>
+                  <div class="card-footer is-front"><a href="{{ link_projects.url }}" class="link"><span>See our projects</span><i class="fas fa-chevron-right"></i></a></div>
                 {% endif %}
               </div>
             </div>
@@ -220,7 +222,7 @@
               <div class="card is-stretched">
                 <div class="card is-stretched">
                   <div class="card-image is-front">
-                    <figure class="image"><img src="{{ mediaPath }}{{ highlight_resources.top_images.all.0.image }}">
+                    <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_resources.top_images.all.0.image }}">
                       {% if current_language == 'nl' %}
                         <h4 class="h4 label is-green">(NL) Knowledge</h4>
                       {% elif current_language == 'en' %}
@@ -234,9 +236,9 @@
                   </div>
                 </div>
                 {% if current_language == 'nl' %}
-                  <div class="card-footer is-front"><a href="{{ knowledge.url }}" class="link"><span>(NL) See more resources</span><i class="fas fa-chevron-right"></i></a></div>
+                  <div class="card-footer is-front"><a href="{{ link_resources.url }}" class="link"><span>(NL) Read our articles</span><i class="fas fa-chevron-right"></i></a></div>
                 {% elif current_language == 'en' %}
-                  <div class="card-footer is-front"><a href="{{ knowledge.url }}" class="link"><span>See more resources</span><i class="fas fa-chevron-right"></i></a></div>
+                  <div class="card-footer is-front"><a href="{{ link_resources.url }}" class="link"><span>Read our articles</span><i class="fas fa-chevron-right"></i></a></div>
                 {% endif %}
               </div>
             </div>
@@ -246,7 +248,7 @@
               <div class="card is-stretched">
                 <div class="card is-stretched">
                   <div class="card-image is-front">
-                    <figure class="image"><img src="{{ mediaPath }}{{ highlight_open_position.top_images.all.0.image }}">
+                    <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_open_position.top_images.all.0.image }}">
                       {% if current_language == 'nl' %}
                         <h4 class="h4 label is-red">(NL) People</h4>
                       {% elif current_language == 'en' %}
@@ -263,9 +265,9 @@
                   </div>
                 </div>
                 {% if current_language == 'nl' %}
-                  <div class="card-footer is-front"><a href="{{ highlight_open_position.url }}" class="link"><span>(NL) Work with us</span><i class="fas fa-chevron-right"></i></a></div>
+                  <div class="card-footer is-front"><a href="{{ link_work_with_us.url }}" class="link"><span>(NL) Work with us</span><i class="fas fa-chevron-right"></i></a></div>
                 {% elif current_language == 'en' %}
-                  <div class="card-footer is-front"><a href="{{ highlight_open_position.url }}" class="link"><span>Work with us</span><i class="fas fa-chevron-right"></i></a></div>
+                  <div class="card-footer is-front"><a href="{{ link_work_with_us.url }}" class="link"><span>Work with us</span><i class="fas fa-chevron-right"></i></a></div>
                 {% endif %}
               </div>
             </div>
@@ -276,12 +278,12 @@
                     src="{{page.video_link}}">
                     </iframe> 
                 </div>
-                <div class="card-footer is-front"><a class="link"><span>{{page.video_description}}</span><i class="fas fa-chevron-right"></i></a></div>
               </div>
             </div>
           </div>
         </article>
       </div>
     </section>
+    {% endwith %}
   {% endwith %}
 {% endblock content %}

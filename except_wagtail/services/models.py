@@ -117,10 +117,15 @@ class ServiceIndexPage(Page):
 	def get_news(self):
 		return ServicePage.objects.live()
 
+	def get_expertises(self):
+		return Expertise.objects.filter(page=self).all()
+
 	def get_context(self, request):
 		context = super(ServiceIndexPage, self).get_context(request)
 
 		services = self.get_news()
+		missing_columns_number = 4-len(self.get_expertises())%4
 		context['service_list'] = services
+		context['missing_columns'] = services[0:missing_columns_number]
 
 		return context
