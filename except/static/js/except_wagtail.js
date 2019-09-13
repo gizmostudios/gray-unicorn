@@ -18,9 +18,11 @@ main_menus.forEach(menu => {
   });
   menu.addEventListener('click', event => {
     main_menus.forEach(menu => {
+      if(menu.querySelector('.sub-menu') != null){ 
         menu.querySelector('.sub-menu').classList.remove('is-selected');
-      });
-      menu.querySelector('.sub-menu').classList.add('is-selected');
+      }        
+    });
+    menu.querySelector('.sub-menu').classList.add('is-selected');
   });
 });
 stickyScrollUp.css('display','none');
@@ -92,22 +94,26 @@ carousels.forEach(carousel => {
   const $inner = carousel.querySelector('.carousel-inner');
   const count = carousel.dataset.count;
   let currentScroll = 1;
-
-  $prev.addEventListener('click', () => {
-    currentScroll--;
-    if(currentScroll < 1) {
-      currentScroll = count;
-    }
-    scrollCarousel($inner, currentScroll);
-  });
-
-  $next.addEventListener('click', () => {
-    currentScroll++;
-    if (currentScroll > count) {
-      currentScroll = 1;
-    }
-    scrollCarousel($inner, currentScroll);
-  });
+  var windowWidth = window.innerWidth;
+  if($prev != null){
+    $prev.addEventListener('click', () => {
+      currentScroll--;
+      if(currentScroll < 1) {
+        currentScroll = count;
+      }
+      scrollCarousel($inner, currentScroll);
+    });
+  }
+  
+  if($next != null){
+    $next.addEventListener('click', () => {
+      currentScroll++;
+      if (currentScroll > count) {
+        currentScroll = 1;
+      }
+      scrollCarousel($inner, currentScroll);
+    });
+  }
 })
 
 function scrollCarousel($container, target) {
@@ -124,8 +130,8 @@ anchors.forEach(anchor => {
 })
 
 
-
-$('.lang-selection').off().on('click', function(){
+$('.lang-selection').on('click', function(){
+  console.log('test')
   var url = window.location.pathname;
   $.post("/lang/selection/",
     JSON.stringify({ url: url}))
@@ -140,6 +146,10 @@ function hidePopup(popup){
 
 $(document).ready(function(){
   $('.popup').each(function(){
+    if(windowWidth >= 1087) {
+      var offsetLeft = ($(this).parent().find('a').width()/2)+"px";
+      $(this).find('span').css('left', offsetLeft);
+    }
     $(this).off().on('click', function(){
       if ($(this).find('span').hasClass("show")){
         $(this).find('span').removeClass("show");

@@ -69,7 +69,6 @@ function ajaxRequestFilter(page_selector){
 	}else{
 		page_number = 1;
 	}
-	console.log(page_number)
 	for( var j = 0; j < serviceFiltersActive.length; j++){
 		listActiveCat.push(serviceFiltersActive[j].querySelector("span").innerHTML)
 	}
