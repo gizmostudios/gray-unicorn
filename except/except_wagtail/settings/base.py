@@ -184,7 +184,7 @@ STATICFILES_FINDERS = [
 ]
 
 STATICFILES_DIRS = [
-    os.path.join(PROJECT_DIR, 'static'),
+    os.path.join(PROJECT_DIR, 'static'),'/var/www/htmk/except.eco/gray-unicorn/except'
 ]
 
 
