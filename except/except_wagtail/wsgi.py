@@ -15,7 +15,7 @@ sys.path.append('/var/www/html/except.eco')
 # adjust the Python version in the line below as needed 
 sys.path.append('/var/www/html/except.eco/gray-unicorn/env/lib/python3.5/site-packages') 
  
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "except_wagtail.settings") 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "except.settings") 
  
 try: 
     application = get_wsgi_application() 
