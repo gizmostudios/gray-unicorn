@@ -10,3 +10,5 @@ except_wagtail/media/
 .env
 env
 node_modules
+Image-ExifTool-11.11
+.Image-ExifTool-11.11
