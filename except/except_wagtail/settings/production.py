@@ -3,7 +3,7 @@ import os
 
 DEBUG = False
 
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = '*d7hN$@<GsVb`y3}|QN"vn5~e2`b5='
 
 try:
     from .local import *
