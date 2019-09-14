@@ -46,11 +46,17 @@ class Quote(Orderable):
 @register_snippet
 class Partner(Orderable):
     company = models.CharField(max_length=255, null=True, blank=True)
-    image = models.ImageField(null=True, blank=True)
-
+    image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    
     panels = [
         FieldPanel('company'),
-        FieldPanel('image'),
+        ImageChooserPanel('image'),
     ]
 
     def __str__(self):

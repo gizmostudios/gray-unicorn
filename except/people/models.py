@@ -39,7 +39,13 @@ class People(ClusterableModel):
 	date_joined = models.DateField("Date joined", blank=True, null=True)
 	biography = models.TextField(blank=True)
 	introduction = StreamField(BaseStreamBlock(), verbose_name="Page body", blank=True)
-	picture = models.ImageField(null=True, blank=True)
+	picture = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 	job_title = models.CharField(max_length=255, null=True, blank=True)
 	phone = models.CharField(max_length=255, null=True, blank=True)
 
@@ -47,7 +53,7 @@ class People(ClusterableModel):
 		FieldPanel('user'),
 		FieldPanel('education_title'),
 		FieldPanel('date_joined'),
-		FieldPanel('picture'),
+		ImageChooserPanel('picture'),
 		FieldPanel('job_title'),
 		FieldPanel('phone'),
 		InlinePanel('expertises', label="Areas of expertise"),

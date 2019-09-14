@@ -20,13 +20,19 @@ from news.blocks import BaseStreamBlock
 	
 
 class Expertise(Orderable):
-	image = models.ImageField(null=True, blank=True)
+	image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 	title = models.CharField(max_length=255, null=True, blank=True)
 	page = ParentalKey('ServiceIndexPage', related_name='expertises')
 
 	panels = [
 		FieldPanel('title'),
-		FieldPanel('image'),
+		ImageChooserPanel('image'),
 	]
 
 class SubServicePage(Page):
@@ -47,7 +53,13 @@ class ServicePage(Page):
 	hero_title = models.CharField(max_length=100)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
 	color = models.CharField(max_length=100, blank=True, null=True)
-	image = models.ImageField(null=True, blank=True)
+	image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 	introduction = models.TextField(null=True, blank=True)
 
 	def __str__(self):
@@ -61,7 +73,7 @@ class ServicePage(Page):
 		FieldPanel('hero_title'),
 		FieldPanel('hero_subtitle'),
 		FieldPanel('color'),
-		FieldPanel('image'),
+		ImageChooserPanel('image'),
 		FieldPanel('introduction')
 	]
 
@@ -100,7 +112,13 @@ class ServiceIndexPage(Page):
 	navbar_inverted = models.BooleanField('Colorful navigation bar', blank=True, null=True)
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
-	expertise_background = models.ImageField(null=True, blank=True)
+	expertise_background = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
 
 
@@ -110,7 +128,7 @@ class ServiceIndexPage(Page):
 		FieldPanel('hero_image'),
 		FieldPanel('hero_title'),
 		FieldPanel('hero_subtitle'),
-		FieldPanel('expertise_background'),
+		ImageChooserPanel('expertise_background'),
 		InlinePanel('expertises', label="Expertises"),
 	]
 
