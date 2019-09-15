@@ -27,7 +27,7 @@ class CarouselImage(Orderable):
     page = ParentalKey('ContactPage', related_name='carousel_images')
 
     panels = [
-        ImageChooserPanel('image'),
+         ImageChooserPanel('image'),
     ]
 
 @register_snippet

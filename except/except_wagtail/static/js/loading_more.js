@@ -102,6 +102,7 @@ serviceFilters.each(function() {
 		if(lock == 0){
 			updateFilterDisplay($(this));
 			var type = document.querySelector('.grid-loading').id;
+			console.log(type);
 			loadElements(type,0,true);
 			lock=1;
 		}
