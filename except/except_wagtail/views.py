@@ -17,7 +17,7 @@ from services.models import *
 
 @csrf_exempt
 def lang_selection(request):
-	body = simplejson.loads(request.content.decode('utf-8').body)
+	body = simplejson.loads(request.body.decode('utf-8'))
 	url = body["url"]
 	if translation.get_language() == 'en':
 		user_language = 'nl'
@@ -32,7 +32,7 @@ def lang_selection(request):
 
 @csrf_exempt
 def load_elements(request):
-	body = simplejson.loads(request.content.decode('utf-8').body)
+	body = simplejson.loads(request.body.decode('utf-8'))
 	model_type = body['dataType']
 	iteration = body["iteration"]
 	lang = translation.get_language()
