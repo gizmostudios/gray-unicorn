@@ -69,6 +69,7 @@ function loadElements(dataType,iteration,filter_update){
 		for( var j = 0; j < serviceFiltersActive.length; j++){
 			listActiveCat.push(serviceFiltersActive[j].querySelector("span").innerHTML)
 		}
+		console.log(listActiveCat);
 	}
 	$.post("/ajax/load_elements/",
 	JSON.stringify({
@@ -102,7 +103,6 @@ serviceFilters.each(function() {
 		if(lock == 0){
 			updateFilterDisplay($(this));
 			var type = document.querySelector('.grid-loading').id;
-			console.log(type);
 			loadElements(type,0,true);
 			lock=1;
 		}
