@@ -25,7 +25,7 @@
             {% endif %}
           </header>
           {% if page.introduction_image %}
-            <div class="introduction-index" style="background-image: url({{ carouselimagedata.url }})" class="background-{{carousel_image.scaling}}">
+            <div class="introduction-index" style="background-image: url({{ mediaPath }}{{ page.introduction_image }})">
             </div>
           {% endif %}
           {% if page.introduction_text %}
