@@ -9,9 +9,9 @@ $(document).ready(function(){
 		link_internal_page.style.display = 'none';
 		link_external_page.style.display = 'none';
 		popup.style.display = 'none';
-		console.log(options)
 
 		options.each(function(){
+			console.log($(this));
 			$(this).off().on('click', function(){
 				var option_value = parseInt($(this)[0].value);
 				console.log(option_value);
