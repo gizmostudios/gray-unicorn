@@ -307,7 +307,7 @@ article .carousel .carousel-inner article {
   scroll-snap-align: center;
 }
 .carousel .carousel-inner article.background-fill {
-  background-position: top center;
+  background-position: center;
   background-size: cover;
 }
 .carousel .carousel-inner article.background-fit {
