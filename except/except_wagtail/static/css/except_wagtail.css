@@ -239,6 +239,7 @@ p:not(.is-blocked) + .buttons,
   position: relative;
   flex: auto;
   padding: 1rem;
+  padding-bottom: 5em;
 }
 .card .card-content.has-label {
   padding-bottom: 2.5rem;
@@ -266,7 +267,7 @@ p:not(.is-blocked) + .buttons,
   position: relative;
 }
 .carousel.is-fullheight {
-  height: calc(100vh - 180px);
+  height: calc(100vh - 150px);
 }
 article .carousel {
   height: 40vh;
@@ -584,7 +585,7 @@ body {
   position: relative;
 }
 .section.is-fullheight .article {
-  min-height: calc(100vh - 180px);
+  min-height: calc(100vh - 150px);
 }
 
 .article {
@@ -794,10 +795,6 @@ span + i {
 
 p + p {
   margin: 2em 0;
-}
-
-.card p + p{
-  margin-bottom: 5em;
 }
 
 h4 + ul {
