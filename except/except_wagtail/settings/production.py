@@ -15,7 +15,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 
-MEDIA_ROOT = '/var/www/html/except.eco/gray-unicorn/except/media/'
+MEDIA_ROOT = '/var/www/html/except.eco/gray-unicorn/except/media'
 
 ADMINS = [('Alexandre', 'alexandre@except.nl')]
 LOGGING = {
