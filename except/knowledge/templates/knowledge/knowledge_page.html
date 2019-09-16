@@ -41,6 +41,14 @@
     {# Carousel #}
     {% if highlights %}
       <section class="section has-carousel">
+        <div class="container">
+          {% if current_language == 'nl' %}
+            <h2 class="h2">(NL) Knowledge highlights</h2>
+          {% elif current_language == 'en' %}
+            <h2 class="h2">Knowledge highlights</h2>
+          {% endif %}
+        </div>
+        <div class="spacer"></div>
         <div class="container has-carousel full-width" data-count="{{page.carousel_items.all|length}}">
           <article class="article carousel-inner">
             {% for item in highlights %}
