@@ -1003,7 +1003,7 @@ a.anchor {
 }
 
 .has-carousel article .carousel{
-  height: calc(100vh - 400px);
+  height: 80vh ;
 }
 
 .has-carousel article .carousel.is-carousel-block{
