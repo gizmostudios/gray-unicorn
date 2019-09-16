@@ -3,7 +3,7 @@
 		{% for el in elements %}
 			{% if el.date_published.year == year %}
 				<a href="{{el.url}}">
-					<span class="project is-{{el.service.color}}" style="--position: {{ el.timeline_position }}%"></span>
+					<span title="{{el.title}}" class="project is-{{el.service.color}}" style="--position: {{ el.timeline_position }}%"></span>
 				</a>
 			{% endif %}
 		{% endfor %}
