@@ -34,8 +34,18 @@ html{
   z-index:10;
 }
 
+.cover-background{
+  position:absolute;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left:0;
+  opacity: 0.3;
+  background-color: rgb(0,0,0);
+}
+
 .has-cover .container{
-  z-index:12;
+  z-index:13;
 }
 .has-cover .h2{
   color:white;
@@ -577,6 +587,7 @@ body {
 }
 .section.is-fullheight {
   padding: 5em 0;
+  position: relative;
 }
 .section.is-fullheight .article {
   min-height: calc(100vh - 180px);
