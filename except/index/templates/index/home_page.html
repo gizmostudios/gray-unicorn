@@ -16,7 +16,6 @@
     {# Main navigation #}
     {% include "includes/navbar.html" with inverted=page.navbar_inverted transparent=page.navbar_transparent%}
     <a class="anchor" id="first_anchor"></a>
-    <div class="spacer"></div>
     <section class="section is-fullheight">
       <div class="container">
         <article class="article">
@@ -26,7 +25,8 @@
             {% endif %}
           </header>
           {% if page.introduction_image %}
-            <img src="{{ mediaPath }}{{ page.introduction_image }}">
+            <div class="introduction-index" style="background-image: url({{ carouselimagedata.url }})" class="background-{{carousel_image.scaling}}">
+            </div>
           {% endif %}
           {% if page.introduction_text %}
             <p class="intro">{{page.introduction_text}}</p>

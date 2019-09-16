@@ -1396,6 +1396,16 @@ label .fas {
   padding: 1rem;
 }
 
+.introduction-index{
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
+.is-fullheight .introduction-index{
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
 @media screen and (max-width: 1087px) {
   nav,
 nav.navbar {
