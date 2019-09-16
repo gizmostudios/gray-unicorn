@@ -11,8 +11,7 @@ $(document).ready(function(){
 		popup.style.display = 'none';
 
 		options.each(function(){
-			console.log($(this));
-			$(this).off().on('click', function(){
+			$(this).on('click', function(){
 				var option_value = parseInt($(this)[0].value);
 				console.log(option_value);
 				if(option_value == 1){
