@@ -1003,9 +1003,7 @@ a.anchor {
 }
 
 .has-carousel article .carousel{
-  max-height: 1200px;
-  height:60vw;
-
+  height: calc(100vh - 400px);
 }
 
 .has-carousel article .carousel.is-carousel-block{
@@ -1203,10 +1201,7 @@ label .fas {
 }
 
 .not-full-height{
-  position: absolute;
-  left: 10%;
   padding-bottom: 2rem;
-  width: auto;
   display: inline-block;
 }
 
@@ -1415,6 +1410,10 @@ label .fas {
   margin-bottom: 2em;
 }
 
+.caption-carousel{
+  padding-left: 0;
+}
+
 @media screen and (max-width: 1087px) {
   nav,
 nav.navbar {
@@ -1620,8 +1619,9 @@ nav.navbar .navbar-menu .navbar-item .dropdown ul > li a {
     padding-bottom: 0;
     padding-left: 0;
     padding-right: 2em;
-    width: auto;
     display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
   }
   .in-grid{
     padding-left: 0;

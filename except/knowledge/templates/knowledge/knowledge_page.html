@@ -46,9 +46,13 @@
             {% for item in highlights %}
               <div class="carousel has-text-centered" style="background-image:url({{ mediaPathOriginal }}{{ item.top_images.all.0.image }})">
                 <div class="container not-full-height">
-                  <h2 class="h2 is-blocked">{{ item.hero_title }}</h2>
-                  <h3 class="h3 is-blocked description">{{ item.hero_subtitle }}</h3>
-                  <div class="buttons is-blocked"><a href="{{item.url}}" class="button is-next is-secondary">See more</a></div>
+                  <div class="columns caption-carousel">
+                    <div class="colmn is-6 caption-carousel">
+                      <h2 class="h2 is-blocked">{{ item.hero_title }}</h2>
+                      <h3 class="h3 is-blocked description">{{ item.hero_subtitle }}</h3>
+                      <div class="buttons is-blocked"><a href="{{item.url}}" class="button is-next is-secondary">See more</a></div>
+                    </div>
+                  </div>
                 </div>
               </div>       
             {% endfor %}
