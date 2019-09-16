@@ -1397,6 +1397,8 @@ label .fas {
 }
 
 .introduction-index{
+  width: 960px;
+  height: 60vh;
   background-repeat: no-repeat;
   background-size: auto;
 }
