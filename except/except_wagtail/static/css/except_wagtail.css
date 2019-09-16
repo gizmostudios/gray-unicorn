@@ -1012,6 +1012,10 @@ a.anchor {
 
 }
 
+.section.has-title + .section.has-carousels{
+  margin-top: 0;
+}
+
 .carousel.has-text-centered{
   width: 100%;
   position:relative;
