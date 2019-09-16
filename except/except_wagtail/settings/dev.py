@@ -11,6 +11,8 @@ ALLOWED_HOSTS = ['*']
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+MEDIA_ROOT = '/var/www/html/except.eco/gray-unicorn/except/media/'
+
 
 try:
     from .local import *
