@@ -59,7 +59,7 @@ window.addEventListener('scroll', function () {
       $hero.style.opacity = 1 - (0.9 * 1);
     
       $nav.style.transform = `translate(0, -${0.9 * 30}px)`;
-      $logo.style.transform = `scale(${1 - 0.9 / 5})`;
+      $logo.style.transform = `scale(${1 - 0.9 / 2})`;
       return;
     } else {
       $nav.classList.remove('opaque');
@@ -70,7 +70,7 @@ window.addEventListener('scroll', function () {
     $hero.style.opacity = 1 - (diff * 1);
     
     $nav.style.transform = `translate(0, -${diff * 30}px)`;
-    $logo.style.transform = `scale(${1 - diff / 5})`;
+    $logo.style.transform = `scale(${1 - diff / 2})`;
   }
 })
 
@@ -79,8 +79,11 @@ if($hero == null){
     if(windowWidth <= 1087) {
       return;
     }
+    $nav.classList.add('opaque');
+    $('.navbar-menu').find('.fa-chevron-up').removeClass('fa-chevron-up').addClass('fa-chevron-down');
     $nav.style.transform = `translate(0, -${0.9 * 30}px)`;
-    $logo.style.transform = `scale(${1 - 0.9 / 5})`;
+    $logo.style.transform = `scale(${1 - 0.9 / 2})`;
+    $('.scroll-up').css('display','block');
   });
 }
 
