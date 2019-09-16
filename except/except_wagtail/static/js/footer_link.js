@@ -1,5 +1,4 @@
 $(document).ready(function(){
-	console.log(window.location.pathname.indexOf("footerlink") >= 0)
 	if(window.location.pathname.indexOf("footerlink") >= 0){
 		const selection = $('#id_type_link');
 		const options = selection.find('option');
@@ -10,7 +9,7 @@ $(document).ready(function(){
 		link_internal_page.style.display = 'none';
 		link_external_page.style.display = 'none';
 		popup.style.display = 'none';
-
+		console.log(options)
 
 		options.each(function(){
 			$(this).off().on('click', function(){
