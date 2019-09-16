@@ -307,12 +307,12 @@ article .carousel .carousel-inner article {
   scroll-snap-align: center;
 }
 .carousel .carousel-inner article.background-fill {
-  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.2);
+  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.4);
   background-position: center;
   background-size: cover;
 }
 .carousel .carousel-inner article.background-fit {
-  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.2);
+  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.4);
   background-image: rgba(0,0,0,0.3);
   background-size: contain;
 }
@@ -794,6 +794,10 @@ span + i {
 
 p + p {
   margin: 2em 0;
+}
+
+.card p + p{
+  margin-bottom: 5em;
 }
 
 h4 + ul {
