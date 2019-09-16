@@ -64,7 +64,7 @@ section.is-fullheight.has-cover{
 .is-sticky {
   position: -webkit-sticky;
   position: sticky;
-  top: 100px;
+  top: 60px;
 }
 
 .scroll-up{
@@ -627,7 +627,7 @@ ul > li:not(:last-child) {
 }
 
 .logo {
-  height: 160px;
+  height: 120px;
   width: 240px;
   transform-origin: left center;
   fill: #6B2A7E;
@@ -942,7 +942,7 @@ nav.navbar .navbar-item .dropdown ul > li a i {
 
 nav.navbar.navbar-menu {
   background: #E5E6E7;
-  height: 64px;
+  height: 50px;
 }
 nav.navbar.navbar-menu .navbar-item {
   font-family: "Aller";
