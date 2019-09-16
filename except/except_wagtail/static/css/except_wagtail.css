@@ -579,7 +579,7 @@ body {
   padding: 5em 0;
 }
 .section.is-fullheight .article {
-  min-height: calc(100vh - 320px);
+  min-height: calc(100vh - 180px);
 }
 
 .article {

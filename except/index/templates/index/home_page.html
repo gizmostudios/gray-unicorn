@@ -57,7 +57,7 @@
             {% endif %}
             {% if page.carousel_description %}
               <div class="caption">
-                <h3 class="h3">{{page.carousel_description}}</h3>
+                <h4 class="h4">{{page.carousel_description}}</h4>
                 <div class="buttons">
                   {% for link_button in page.carousel_links.all %}
                     <a href='{{link_button.link.url}}' class="button is-next is-secondary">{{link_button.link_description}} <i class="fas fa-chevron-right"></i></a>
