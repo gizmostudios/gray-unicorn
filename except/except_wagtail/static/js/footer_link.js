@@ -15,6 +15,7 @@ $(document).ready(function(){
 		options.each(function(){
 			$(this).off().on('click', function(){
 				var option_value = parseInt($(this)[0].value);
+				console.log(option_value);
 				if(option_value == 1){
 					link_internal_page.style.display = 'block';
 					link_external_page.style.display = 'none';
