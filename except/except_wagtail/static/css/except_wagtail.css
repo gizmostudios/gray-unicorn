@@ -1400,7 +1400,7 @@ label .fas {
   width: 960px;
   height: 60vh;
   background-repeat: no-repeat;
-  background-size: auto;
+  background-size: cover;
 }
 
 .is-fullheight .introduction-index{
