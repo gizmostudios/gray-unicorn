@@ -181,7 +181,7 @@
                   <div class="card-content is-front">
                     <h3 class="h3">{{ highlight_article.hero_title }}</h3>
                     <p class='trunc-text'>{{ highlight_event.hero_subtitle }}</p>
-                    <p class='date'>{{ highlight_article.date_published }}</p><a href="{{ highlight_article.url }}" class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                    <p class='date'>{{ highlight_article.date_published|date:"M d, Y" }}</p><a href="{{ highlight_article.url }}" class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
                   </div>
                 </div>
                 {% if current_language == 'nl' %}
@@ -206,7 +206,7 @@
                   <div class="card-content is-front">
                     <h3 class="h3">{{ highlight_projects.hero_title }}</h3>
                     <p class='trunc-text'>{{ highlight_event.hero_subtitle }}</p>
-                    <p class='date'>{{ highlight_projects.date_published }}</p><a href="{{ highlight_projects.url }}" class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                    <p class='date'>{{ highlight_projects.date_published|date:"M d, Y" }}</p><a href="{{ highlight_projects.url }}" class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
                   </div>
                 </div>
                 {% if current_language == 'nl' %}
@@ -230,7 +230,7 @@
                   </div>
                   <div class="card-content is-front">
                     <h3 class="h3">{{ highlight_resources.hero_title }}</h3>
-                    <p class='date'>{{ highlight_resources.date_published }}</p><a href="{{ highlight_resources.file.url }}" class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                    <p class='date'>{{ highlight_resources.date_published|date:"M d, Y" }}</p><a href="{{ highlight_resources.file.url }}" class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
                   </div>
                 </div>
                 {% if current_language == 'nl' %}
@@ -258,7 +258,7 @@
                     <h3 class="h3">{{ highlight_open_position.hero_title }}</h3>
                     <div>
                       <p class='trunc-text'>{{ highlight_open_position.hero_subtitle }}</p>
-                      <p class='date'>{{ highlight_open_position.date_published }}</p><a href="{{ highlight_open_position.url }}" class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                      <p class='date'>{{ highlight_open_position.date_published|date:"M d, Y" }}</p><a href="{{ highlight_open_position.url }}" class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
                     </div>
                   </div>
                 </div>
