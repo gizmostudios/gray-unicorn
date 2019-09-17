@@ -745,6 +745,10 @@ a {
   color: #231F20;
 }
 
+.rich-text a {
+  color: #6B2A7E;
+}
+
 p {
   max-width: 960px;
 }
