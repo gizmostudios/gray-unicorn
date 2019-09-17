@@ -496,7 +496,7 @@ article .carousel .carousel-inner article {
 .hero {
   background-position: center;
   background-size: cover;
-  min-height: calc(100vh - 120px);
+  min-height: calc(100vh - 64px);
   background-color: #E5E6E7;
   position: relative;
 }
@@ -514,9 +514,7 @@ article .carousel .carousel-inner article {
   font-weight: bold;
   max-width: 50%;
 }
-.hero.is-compact {
-  min-height: 700px;
-}
+
 .hero.is-compact .title {
   max-width: none;
 }
