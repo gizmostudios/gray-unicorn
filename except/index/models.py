@@ -39,6 +39,20 @@ class CarouselImage(Orderable):
 		FieldPanel('scaling'),
 	]
 
+class TopImage(Orderable):
+	image = models.ForeignKey(
+		'wagtailimages.Image',
+		null=True,
+		blank=True,
+		on_delete=models.SET_NULL,
+		related_name='+'
+	)
+	page = ParentalKey('HomePage', related_name='top_images')
+
+	panels = [
+		ImageChooserPanel('image'),
+	]
+
 class CarouselItem(Orderable):
 	link = models.ForeignKey(
 		'wagtailcore.Page',
@@ -56,7 +70,6 @@ class CarouselItem(Orderable):
 
 class HomePage(Page):
 	subpage_types = ['about.AboutPage','services.ServiceIndexPage','knowledge.KnowledgePage','projects.ProjectIndexPage']
-	hero_image = models.ImageField(null=True, blank=True)
 	navbar_inverted = models.BooleanField(null=True, blank=True)
 	navbar_transparent = models.BooleanField(null=True, blank=True)
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
@@ -85,7 +98,7 @@ class HomePage(Page):
 		MultiFieldPanel([
             FieldPanel('title'),
         ], heading='Title'),
-		FieldPanel('hero_image'),
+		InlinePanel('top_images', label='Top section carousel images'),
 		MultiFieldPanel([FieldPanel('hero_title')], heading='Top section title'),
 		MultiFieldPanel([FieldPanel('hero_subtitle')], heading='Top section subtitle'),
 		FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
