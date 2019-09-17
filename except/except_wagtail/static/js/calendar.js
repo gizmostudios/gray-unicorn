@@ -29,6 +29,14 @@ $.ajaxSetup({
     }
 });
 
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = today.getFullYear();
+
+today = yyyy + '-' + mm + '-' + dd;
+console.log(today);
+
 document.addEventListener('DOMContentLoaded', function() {
   $.post("/ajax/load_calendar/")
     .done(function(data){
@@ -41,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
           center: 'title',
           right: 'dayGridMonth,dayGridWeek,dayGridDay'
         },
-        defaultDate: '2019-08-12',
+        defaultDate: today,
         navLinks: true, // can click day/week names to navigate views
         editable: true,
         eventLimit: true, // allow "more" link when too many events
