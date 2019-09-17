@@ -16,9 +16,9 @@
               <div class="dropdown sub-menu">
                 <ul>
                   {% if current_language == 'nl' %}
-                    <li><a href="{{item.href}}"><span>(NL) {{item.text}} Overview</span><i class="fas fa-chevron-right"></i></a></li>
+                    <li><a href="{{item.href}}"><span>(NL) {{item.text}}</span><i class="fas fa-chevron-right"></i></a></li>
                   {% elif current_language == 'en' %}
-                    <li><a href="{{item.href}}"><span>{{item.text}} Overview</span><i class="fas fa-chevron-right"></i></a></li>
+                    <li><a href="{{item.href}}"><span>{{item.text}}</span><i class="fas fa-chevron-right"></i></a></li>
                   {% endif %}
                   {% sub_menu template=sub_menu_template menuitem_or_page=item %}
                 </ul>
