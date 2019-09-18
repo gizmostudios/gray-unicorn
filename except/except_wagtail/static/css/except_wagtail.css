@@ -377,6 +377,7 @@ article .carousel .carousel-inner article {
   flex-direction: column;
   display: flex;
   text-align: center;
+  flex-wrap: wrap;
 }
 .image.portrait img {
   display: block;
@@ -1415,6 +1416,8 @@ label .fas {
 .caption-carousel{
   padding-left: 0;
 }
+
+
 
 @media screen and (max-width: 1087px) {
   nav,
