@@ -1243,11 +1243,12 @@ label .fas {
 }
 
 figure.image.portrait{
-  display: table;
+  display: table-cell;
+  text-align:center;
 }
 
 figure.image.portrait img {
-    display: block;
+    display: table-cell;
     width: 100%;
 }
 figure.image.portrait figcaption {
