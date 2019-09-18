@@ -1251,6 +1251,7 @@ figure.image.portrait img {
     display: table-cell;
 }
 figure.image.portrait figcaption {
+    display: table-caption;
     caption-side: bottom;
     overflow-wrap: normal;
 }
