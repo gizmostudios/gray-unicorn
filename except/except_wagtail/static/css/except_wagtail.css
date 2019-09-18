@@ -1252,21 +1252,7 @@ figure.image.portrait img {
 }
 figure.image.portrait figcaption {
     caption-side: bottom;
-}
-
-.card-people{
-  width: min-content;
-}
-
-.people-description{
-  text-align:center;
-  width:100%;
-  margin-top: 0;
-}
-
-p.people-description{
-  margin-top:0;
-  margin-bottom:1em;
+    overflow-wrap: normal;
 }
 
 @media only screen and (max-width: 1087px) {
