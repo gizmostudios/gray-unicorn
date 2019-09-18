@@ -30,10 +30,12 @@
         {% endif %}
         <div class="grid">
           {% for people in people_list %}
-            <a href="{{people.url}}">
+            <a class="card-people" href="{{people.url}}">
               <figure class="image portrait"><img src="{{ mediaPath }}{{ people.person.picture }}">
               </figure>
-              <h3 class="h3 people-description">{{people.person.user.first_name}} {{people.person.user.last_name}}</h3><p class="people-description">{{people.person.job_title}}</p>
+              <div class="people-footer">
+                <h3 class="h3 people-description">{{people.person.user.first_name}} {{people.person.user.last_name}}</h3><p class="people-description">{{people.person.job_title}}</p>
+              </div>
             </a>
           {% endfor %}
         </div>
