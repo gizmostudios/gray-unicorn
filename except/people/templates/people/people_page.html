@@ -32,9 +32,7 @@
           {% for people in people_list %}
             <a href="{{people.url}}">
               <figure class="image portrait"><img src="{{ mediaPath }}{{ people.person.picture }}">
-                <figcaption>
-                  <h3 class="h3">{{people.person.user.first_name}} {{people.person.user.last_name}}</h3><span>{{people.person.job_title}}</span>
-                </figcaption>
+              <h3 class="h3">{{people.person.user.first_name}} {{people.person.user.last_name}}</h3><span>{{people.person.job_title}}</span>
               </figure>
             </a>
           {% endfor %}
