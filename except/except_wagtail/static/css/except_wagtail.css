@@ -1254,6 +1254,17 @@ figure.image.portrait figcaption {
     caption-side: bottom;
 }
 
+.people-description{
+  text-align:center;
+  width:100%;
+  margin-top: 0;
+}
+
+p.people-description{
+  margin-top:0;
+  margin-bottom:1em;
+}
+
 @media only screen and (max-width: 1087px) {
   .is-4 .card > div.card-content.is-front p+p{
     margin-bottom: calc(57px + 2em)
