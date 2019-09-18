@@ -35,7 +35,6 @@ class Quote(Orderable):
     company = models.CharField(max_length=255, null=True, blank=True)
     caption = RichTextField(blank=True)
     name = models.CharField(max_length=255, null=True, blank=True)
-    page = ParentalKey('AboutPage', related_name='quotes')
 
     panels = [
         FieldPanel('company'),
