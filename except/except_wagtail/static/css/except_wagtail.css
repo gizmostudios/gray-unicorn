@@ -1727,4 +1727,10 @@ nav.navbar .navbar-menu .navbar-item .dropdown ul > li a {
   .is-fullheight .introduction-index{
     margin:0;
   }
+  .has-cover article .caption{
+  margin-bottom: 1em;
+  color:white;
+  width:100%;
+}
+
 }
