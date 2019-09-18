@@ -1242,18 +1242,8 @@ label .fas {
   position: relative;
 }
 
-figure.image.portrait{
-  display: table-cell;
-  text-align:center;
-}
-
-figure.image.portrait img {
-    display: table-cell;
-}
 figure.image.portrait figcaption {
-    display: table-caption;
-    caption-side: bottom;
-    overflow-wrap: normal;
+  max-width: 260px;
 }
 
 @media only screen and (max-width: 1087px) {
