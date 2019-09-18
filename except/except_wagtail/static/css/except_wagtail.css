@@ -1242,6 +1242,19 @@ label .fas {
   position: relative;
 }
 
+figure.image.portrait{
+  display: table;
+}
+
+figure.image.portrait img {
+    display: block;
+    width: 100%;
+}
+figure.image.portrait figcaption {
+    display: table-caption;
+    caption-side: bottom;
+}
+
 @media only screen and (max-width: 1087px) {
   .is-4 .card > div.card-content.is-front p+p{
     margin-bottom: calc(57px + 2em)
