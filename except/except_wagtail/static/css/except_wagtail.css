@@ -1430,6 +1430,10 @@ p + .rich-text{
   margin-top: 2em;
 }
 
+.rich-text + blockquote{
+  margin-top: 2em;
+}
+
 
 @media screen and (max-width: 1087px) {
   nav,
