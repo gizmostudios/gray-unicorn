@@ -46,6 +46,15 @@ window.addEventListener('scroll', function () {
         if( window.scrollY < $hero.clientHeight/2){
           $('#bottom-navbar')[0].scrollIntoView( true );
         }
+        else if( window.scrollY < $hero.clientHeight*(3/2)){
+          $('#carousel-section')[0].scrollIntoView( true );
+        }
+        else if( window.scrollY < $hero.clientHeight*(5/2)){
+          $('#services-section')[0].scrollIntoView( true );
+        }
+        else if( window.scrollY < $hero.clientHeight*(3/2)){
+          $('#highlight-section')[0].scrollIntoView( true );
+        }
      } else {
      }
      lastScrollTop = st;
