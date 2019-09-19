@@ -353,10 +353,16 @@ article .carousel .carousel-inner article {
 }
 .grid {
   display: flex;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
   align-items: space-between;
   justify-content: space-between;
 }
+
+.grid::after{
+  content:"";
+  flex:auto;
+}
+
 .grid .image {
   flex: auto;
   margin: 1em;
