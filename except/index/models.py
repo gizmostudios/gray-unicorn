@@ -40,12 +40,6 @@ class CarouselImage(Orderable):
 		FieldPanel('scaling'),
 	]
 
-	def save(self, *args, **kwargs):
-       instance = super(Photo, self).save(*args, **kwargs)
-       image = Image.open(instance.photo.path)
-       image.save(instance.photo.path,quality=80,optimize=True)
-       return instance
-
 class TopImage(Orderable):
 	image = models.ForeignKey(
 		'wagtailimages.Image',
