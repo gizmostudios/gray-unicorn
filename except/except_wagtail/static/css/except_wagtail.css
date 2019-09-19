@@ -1330,6 +1330,8 @@ figure.image.portrait figcaption {
   position: absolute;
   bottom: 0;
   right: 0;
+  border: solid 1px rgba(165, 167, 170, 0.5);
+  border-width: 1px 0 0 1px;
 }
 
 .is-4.in-grid .card-image{
