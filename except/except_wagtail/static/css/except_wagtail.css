@@ -358,11 +358,6 @@ article .carousel .carousel-inner article {
   justify-content: space-between;
 }
 
-.grid::after{
-  content:"";
-  flex:auto;
-}
-
 .grid .image {
   flex: auto;
   margin: 1em;
