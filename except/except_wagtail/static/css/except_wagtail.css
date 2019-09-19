@@ -134,6 +134,10 @@ section.is-fullheight.has-cover{
   height: 4em;
 }
 
+.spacer.title-spacer{
+  height: 1.8rem;
+}
+
 .is-fullwidth {
   width: 100%;
 }

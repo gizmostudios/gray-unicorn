@@ -11,7 +11,6 @@
     {# Main navigation #}
     {% include "includes/navbar.html" with transparent=false inverted=false %}
     <div class="spacer is-large"></div>
-    <div class="spacer is-large desktop-spacer"></div>
     <section class="section is-mobile">
       <div class="container">
         <div class="columns">
@@ -170,6 +169,7 @@
             </div>
           </div>
           <div class="column is-9">
+            <div class="spacer title-spacer"></div>
             <header>
                 <h2 class="h2">{{user.first_name}} {{user.last_name}}</h2>
             </header>
