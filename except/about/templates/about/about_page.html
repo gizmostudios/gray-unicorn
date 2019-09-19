@@ -47,9 +47,7 @@
           {% endif %}
         </header>
         {% if page.collaboration_introduction %}
-            <p>
-              {{page.collaboration_introduction |richtext}}
-            </p>
+          {{page.collaboration_introduction |richtext}}
         {% endif %}
         <div class="grid">
           {% for partner in partners %}
