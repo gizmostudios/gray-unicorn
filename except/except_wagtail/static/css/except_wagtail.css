@@ -415,7 +415,8 @@ article .carousel .carousel-inner article {
 }
 
 .footer {
-  padding: 5em 0;
+  padding: 2em 0;
+  padding-bottom: 1em;
   margin-bottom: 1em;
   background: rgba(35, 31, 32, 0.7);
 }
