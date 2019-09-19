@@ -40,7 +40,12 @@ window.addEventListener('scroll', function () {
     if(windowWidth <= 1087) {
       return;
     }
-
+    var scaling = 0.5;
+    if(window.innerHeight > 1000){
+      scaling = 0.2;
+      $logo.style.height = '200px';
+      navbar.style.top = '140px'
+    }
     var st = $(this).scrollTop();
      if (st > lastScrollTop){
         if( window.scrollY < $hero.clientHeight/2){
@@ -68,7 +73,7 @@ window.addEventListener('scroll', function () {
       $hero.style.opacity = 1 - (0.9 * 1);
     
       $nav.style.transform = `translate(0, -${0.9 * 30}px)`;
-      $logo.style.transform = `scale(${1 - 0.9 / 2})`;
+      $logo.style.transform = `scale(${1 - 0.9 * scaling})`;
       return;
     } else {
       $nav.classList.remove('opaque');
@@ -79,7 +84,7 @@ window.addEventListener('scroll', function () {
     $hero.style.opacity = 1 - (diff * 1);
     
     $nav.style.transform = `translate(0, -${diff * 30}px)`;
-    $logo.style.transform = `scale(${1 - diff / 2})`;
+    $logo.style.transform = `scale(${1 - diff * scaling})`;
   }
 })
 
