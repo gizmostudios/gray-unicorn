@@ -45,14 +45,20 @@ window.addEventListener('scroll', function () {
      if (st > lastScrollTop){
         if( window.scrollY < $hero.clientHeight/2){
           $('#bottom-navbar')[0].scrollIntoView( true );
+          console.log(window.scrollY);
+          console.log($hero.clientHeight*(3/2)+50);
         }
         else if( window.scrollY < $hero.clientHeight*(3/2)+50){
           $('#carousel-section')[0].scrollIntoView( true );
+          console.log(window.scrollY);
+          console.log($hero.clientHeight*(5/2)+50);
         }
         else if( window.scrollY < $hero.clientHeight*(5/2)+50){
           $('#services-section')[0].scrollIntoView( true );
+          console.log(window.scrollY);
+          console.log($hero.clientHeight*(7/2)+50);
         }
-        else if( window.scrollY < $hero.clientHeight*(3/2)+50){
+        else if( window.scrollY < $hero.clientHeight*(7/2)+50){
           $('#highlight-section')[0].scrollIntoView( true );
         }
      } else {
