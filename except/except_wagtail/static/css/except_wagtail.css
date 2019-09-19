@@ -1456,6 +1456,10 @@ p + .rich-text{
   display: none;
 }
 
+header + .intro{
+  margin-top: 2em;
+}
+
 @media screen and (max-width: 1087px) {
   nav,
 nav.navbar {
