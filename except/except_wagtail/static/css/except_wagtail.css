@@ -271,7 +271,7 @@ p:not(.is-blocked) + .buttons,
   position: relative;
 }
 .carousel.is-fullheight {
-  height: calc(100vh - 100px);
+  height: calc(100vh - 150px);
 }
 article .carousel {
   height: 40vh;
@@ -590,7 +590,7 @@ body {
   position: relative;
 }
 .section.is-fullheight .article {
-  min-height: calc(100vh - 100px);
+  min-height: calc(100vh - 150px);
 }
 
 .article {
