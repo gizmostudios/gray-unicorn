@@ -806,6 +806,10 @@ p + p {
   margin: 2em 0;
 }
 
+p + p.date{
+  margin-top: 1em;
+}
+
 h4 + ul {
   margin-top: 1em;
 }
