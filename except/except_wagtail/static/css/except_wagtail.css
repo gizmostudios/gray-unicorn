@@ -1442,6 +1442,9 @@ p + .rich-text{
   margin-left: 2em;
 }
 
+.rich-text p + p{
+  margin-bottom: 0;
+}
 
 @media screen and (max-width: 1087px) {
   nav,
