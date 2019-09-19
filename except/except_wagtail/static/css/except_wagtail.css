@@ -1229,8 +1229,8 @@ label .fas {
 }
 
 .rich-text ul{
-  list-style-type: circle;
-  list-style-position: inside;
+  list-style-image: url(../images/icons/bullet.png);
+  list-style-position: outside;
 }
 
 .carousel.has-text-centered.is-quote{
