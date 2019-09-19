@@ -590,7 +590,7 @@ body {
   position: relative;
 }
 .section.is-fullheight .article {
-  min-height: calc(100vh - 150px);
+  height: calc(100vh - 150px);
 }
 
 .article {
