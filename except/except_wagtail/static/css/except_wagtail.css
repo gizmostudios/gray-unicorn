@@ -708,10 +708,6 @@ ul > li:not(:last-child) {
   top: -1.8rem;
 }
 
-.h4 {
-  text-transform: uppercase;
-}
-
 .subtitle,
 .date {
   text-transform: uppercase;
