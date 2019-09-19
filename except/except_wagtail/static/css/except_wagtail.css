@@ -1426,6 +1426,9 @@ figure.image.portrait figcaption {
   padding-left: 0;
 }
 
+p + .rich-text{
+  margin-top: 2em;
+}
 
 
 @media screen and (max-width: 1087px) {
