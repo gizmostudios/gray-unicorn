@@ -251,7 +251,7 @@ p:not(.is-blocked) + .buttons,
 }
 .card .card-content .button.is-pulled-right {
   position: absolute;
-  background: none;
+  background: rgba(255,255,255,1);
   border: solid 1px rgba(165, 167, 170, 0.5);
   border-width: 1px 0 0 1px;
   right: 0;
