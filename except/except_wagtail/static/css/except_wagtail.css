@@ -1448,6 +1448,10 @@ p + .rich-text{
   margin-top: 1em;
 }
 
+.section.is-mobile{
+  display: none;
+}
+
 @media screen and (max-width: 1087px) {
   nav,
 nav.navbar {
@@ -1743,9 +1747,11 @@ nav.navbar .navbar-menu .navbar-item .dropdown ul > li a {
     margin:0;
   }
   .has-cover article .caption{
-  margin-bottom: 1em;
-  color:white;
-  width:100%;
-}
-
+    margin-bottom: 1em;
+    color:white;
+    width:100%;
+  }
+  .section.is-desktop{
+    display: none;
+  }
 }

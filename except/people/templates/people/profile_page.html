@@ -12,7 +12,7 @@
     {% include "includes/navbar.html" with transparent=false inverted=false %}
     <div class="spacer is-large"></div>
     <div class="spacer is-large desktop-spacer"></div>
-    <section class="section">
+    <section class="section is-mobile">
       <div class="container">
         <div class="columns">
           <div class="column is-3"></div>
@@ -115,6 +115,105 @@
         </div>
       </div>
       <div class="spacer"></div>
-
+  </section>
+  <section class="section is-desktop">
+    <div class="container">
+        <div class="columns">
+          <div class="column is-3">
+            <figure class="image"><img src="{{ mediaPath }}{{ person.picture }}"></figure>
+            <div class="column is-10">
+              <header>
+                <h2 class="h2">{{user.first_name}} {{user.last_name}}</h2>
+              </header>
+              {% if person.expertises %}
+                {% if current_language == 'nl' %}
+                  <h4 class="h4">(NL) Areas of expertise:</h4>
+                {% elif current_language == 'en' %}
+                  <h4 class="h4">Areas of expertise:</h4>
+                {% endif %}
+                <ul>
+                  {% for expertise in person.expertises.all %}
+                  <div>                    
+                    <li class="profile-item"><i class="fas fa-chevron-right"></i> {{expertise.competency}}</li>
+                  </div>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+              <div class="spacer"></div>
+              {% if person.hobbies %}
+                {% if current_language == 'nl' %}
+                  <h4 class="h4">(NL) Enjoys:</h4>
+                {% elif current_language == 'en' %}
+                  <h4 class="h4">Enjoys:</h4>
+                {% endif %}
+                <ul>
+                  {% for hobby in person.hobbies.all %}
+                  <div>
+                    <li class="profile-item"><i class="fas fa-chevron-right"></i> {{hobby.activity}}</li>
+                  </div>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+              <div class="spacer"></div>
+                {% if current_language == 'nl' %}
+                  <h4 class="h4">(NL) Contact:</h4>
+                {% elif current_language == 'en' %}
+                  <h4 class="h4">Contact:</h4>
+                {% endif %}
+                <ul>
+                  <div>
+                    {% if user.email %}
+                      <li class="profile-item"><i class="fas fa-envelope"></i><a href="mailto:{{user.email}}">  {{user.email}}</a></li>
+                    {% endif %}
+                    {% if person.phone %}
+                      <li class="profile-item"><i class="fas fa-phone"></i> {{person.phone}}</li>
+                    {% endif %}
+                  </div>
+                </ul>
+            </div>
+          </div>
+          <div class="column is-9">
+            {% if person.biography %}
+              <p class="intro">
+                {{person.biography}}
+              </p>
+            {% endif %}
+            {% if person.introduction %}
+              {{ person.introduction }}
+            {% endif %}
+            <div class="spacer is-large"></div>
+            <div class="spacer is-large"></div>
+            <header>
+              {% if current_language == 'nl' %}
+                <h2 class="h2">(NL) Articles</h2>
+              {% elif current_language == 'en' %}
+                <h2 class="h2">Articles</h2>
+              {% endif %}
+            </header>
+            <div class="spacer"></div>
+            {% if articles %}
+              <div class="columns is-grid">
+                {% include "modules/related_resources_profile.html" with elements=articles %}
+              </div>
+            {% endif %}
+            <div class="spacer is-large"></div>
+            <header>
+              {% if current_language == 'nl' %}
+                <h2 class="h2">(NL) Projects</h2>
+              {% elif current_language == 'en' %}
+                <h2 class="h2">Projects</h2>
+              {% endif %}
+            </header>
+            <div class="spacer"></div>
+            {% if projects %}
+              <div class="columns is-grid">
+                {% include "modules/related_resources_profile.html" with elements=projects %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="spacer"></div>
+  </section>
   {% endwith %}
 {% endblock content %}
