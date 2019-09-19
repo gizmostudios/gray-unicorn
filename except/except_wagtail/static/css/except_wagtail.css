@@ -150,6 +150,11 @@ section.is-fullheight.has-cover{
   font-family: "AllerBold";
   src: url("../fonts/Aller_Bd.ttf") format("truetype");
 }
+@font-face {
+  font-family: "AllerDisplay";
+  src: url("../fonts/AllerDisplay.ttf") format("truetype");
+}
+
 .button {
   font-size: 16px;
   font-family: "Aller";
@@ -700,7 +705,7 @@ ol > li:not(:last-child) {
 .h3,
 .h4 {
   position: relative;
-  font-family: "AllerBold";
+  font-family: "AllerDisplay";
 }
 
 .h1 {
@@ -815,7 +820,7 @@ h4 + ul {
 }
 
 a.link {
-  font-family: "AllerBold";
+  font-family: "AllerDisplay";
 }
 a.link.is-next:after {
   content: " >";
