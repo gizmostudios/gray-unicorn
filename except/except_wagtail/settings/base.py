@@ -194,6 +194,7 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+WAGTAILIMAGES_JPEG_QUALITY=90
 
 # Wagtail settings
 

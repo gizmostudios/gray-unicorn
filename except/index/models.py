@@ -19,6 +19,7 @@ from about.models import *
 
 from modeltranslation.utils import build_localized_fieldname
 from django.conf import settings
+from PIL import Image
 
 
 class CarouselImage(Orderable):
@@ -38,6 +39,12 @@ class CarouselImage(Orderable):
 		ImageChooserPanel('image'),
 		FieldPanel('scaling'),
 	]
+
+	def save(self, *args, **kwargs):
+       instance = super(Photo, self).save(*args, **kwargs)
+       image = Image.open(instance.photo.path)
+       image.save(instance.photo.path,quality=80,optimize=True)
+       return instance
 
 class TopImage(Orderable):
 	image = models.ForeignKey(
