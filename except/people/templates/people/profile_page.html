@@ -122,9 +122,6 @@
           <div class="column is-3">
             <figure class="image"><img src="{{ mediaPath }}{{ person.picture }}"></figure>
             <div class="column is-10">
-              <header>
-                <h2 class="h2">{{user.first_name}} {{user.last_name}}</h2>
-              </header>
               {% if person.expertises %}
                 {% if current_language == 'nl' %}
                   <h4 class="h4">(NL) Areas of expertise:</h4>
@@ -173,6 +170,9 @@
             </div>
           </div>
           <div class="column is-9">
+            <header>
+                <h2 class="h2">{{user.first_name}} {{user.last_name}}</h2>
+            </header>
             {% if person.biography %}
               <p class="intro">
                 {{person.biography}}
