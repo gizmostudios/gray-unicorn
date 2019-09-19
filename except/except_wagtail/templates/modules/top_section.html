@@ -24,7 +24,7 @@
 		<div class="carousel top-section cover" data-count="{{page.top_images.all|length}}">
 	        <div class="carousel-inner">
 	          	{% for carousel_image in page.top_images.all %}
-	            	{% image carousel_image.image width-1600 as carouselimagedata %}
+	            	{% image carousel_image.image width-1700 as carouselimagedata %}
 	            	<article style="background-image: url({{ carouselimagedata.url }})" class="background-fill">
 	            	</article>
 	          	{% endfor %}
