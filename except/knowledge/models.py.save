@@ -52,7 +52,7 @@ class File(models.Model):
 	def thumbnail(self):
 		
 		dir_path = os.path.dirname(os.path.realpath(__file__))
-		par_dir = os.path.abspath(os.path.join(dir_path, os.pardir))
+	par_dir = os.path.abspath(os.path.join(dir_path, os.pardir))
 		if self.path_to_thumbnail is None:
 			cache_path = par_dir+'/media/'
 			pdf_or_odt_to_preview_path = par_dir+self.file.url
