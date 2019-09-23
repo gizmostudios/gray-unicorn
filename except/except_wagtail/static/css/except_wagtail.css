@@ -1,8 +1,74 @@
 @charset "UTF-8";
 
+/* Main CSS Elements Below */
+
 html{
   scroll-behavior: smooth;
 }
+body.except {
+    font-family: 'aller_lightregular';
+    color: black;
+    font-size: 1.3rem;
+    line-height: 1.6em
+}
+p {
+  max-width: 960px;
+  font-size: 1.3rem;
+  line-height: 1.6em
+}
+.except p {
+    font-family: 'aller_lightregular';
+    font-weight: normal;
+}
+p.intro {
+}
+p.description {
+  padding: 1em 2em;
+}
+
+.header + p {
+  margin-top: 1em;
+}
+.h1,
+.h2,
+.h3,
+.h4 {
+  position: relative;
+  font-family: "allerbold_sc";
+  text-transform: uppercase;
+}
+.h1 {
+  font-size: 68pt;
+  line-height: 0.95em;
+
+}
+.h2 {
+  font-size: 37pt;
+  line-height: 1.4em;
+}
+.h3 {
+  font-size: 23pt;
+}
+.h4 {
+  font-size: 18pt;
+}
+.h1:before,
+.h2:before {
+  content: "";
+  border-top: solid 8px #231F20;
+  width: 180px;
+  position: absolute;
+  left: 0;
+  top: -0.4rem;
+}
+a {
+  color: #231F20;
+}
+.rich-text a {
+  color: #6B2A7E;
+}
+
+ /* Specific CSS Elements Below */
 .debug, .no-flex {
   border: solid 1px #f00;
   background: rgba(255, 0, 0, 0.2);
@@ -135,24 +201,16 @@ section.is-fullheight.has-cover{
 }
 
 .spacer.title-spacer{
-  height: 1.8rem;
+  height: 0.3rem;
 }
 
 .is-fullwidth {
   width: 100%;
 }
 
-@font-face {
-  font-family: "Aller";
-  src: url("../fonts/Aller_Lt.ttf") format("truetype");
-}
-@font-face {
-  font-family: "AllerBold";
-  src: url("../fonts/Aller_Bd.ttf") format("truetype");
-}
 .button {
-  font-size: 16px;
-  font-family: "Aller";
+  font-size: 17px;
+  font-family: "aller_lightregular_sc";
   text-transform: uppercase;
   border-radius: 0;
   border: none;
@@ -202,7 +260,7 @@ p:not(.is-blocked) + .button,
 p:not(.is-blocked) + .buttons,
 .button + p,
 .buttons + p {
-  margin-top: 1em;
+  margin-top: 1.8em;
 }
 
 .button + .button {
@@ -221,6 +279,18 @@ p:not(.is-blocked) + .buttons,
 .card {
   background: rgba(165, 167, 170, 0.1);
   box-shadow: none;
+}
+.card h3{
+font-size: 22px;
+line-height: 1.2em;
+}
+.card h4{
+font-size: 18px;
+line-height: 1.2em;
+}
+.card p{
+font-size: 18px;
+line-height: 1.2em;
 }
 .card.is-stretched {
   height: 100%;
@@ -263,7 +333,7 @@ p:not(.is-blocked) + .buttons,
 }
 .card .card-footer {
   margin-top: auto;
-  padding: 1em;
+  padding: .7em;
   background: rgba(165, 167, 170, 0.25);
 }
 
@@ -273,6 +343,11 @@ p:not(.is-blocked) + .buttons,
 .carousel.is-fullheight {
   height: calc(100vh - 100px);
 }
+article {
+    padding-top:50px;
+    padding-bottom:90px;
+}
+
 article .carousel {
   height: 40vh;
 }
@@ -312,12 +387,12 @@ article .carousel .carousel-inner article {
   scroll-snap-align: center;
 }
 .carousel .carousel-inner article.background-fill {
-  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.4);
+  box-shadow: inset 0 -400px 400px -400px rgba(0,0,0,0.8);
   background-position: center;
   background-size: cover;
 }
 .carousel .carousel-inner article.background-fit {
-  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.4);
+  box-shadow: inset 0 -400px 400px -400px rgba(0,0,0,0.8);
   background-image: rgba(0,0,0,0.3);
   background-size: contain;
 }
@@ -350,11 +425,6 @@ article .carousel .carousel-inner article {
   right: 0;
 }
 
-@media only screen and (max-width: 1087px) {
-  .carousel .container {
-    margin-left: 0;
-  }
-}
 .grid {
   display: flex;
   flex-flow: row wrap;
@@ -446,11 +516,6 @@ article .carousel .carousel-inner article {
   color: rgba(255, 255, 255, 0.5);
 }
 
-@media only screen and (max-width: 1087px) {
-  .footer .h2:before {
-    width: 100%;
-  }
-}
 .input + i {
   margin-left: -1.6em;
   position: relative;
@@ -519,7 +584,7 @@ article .carousel .carousel-inner article {
   color: #231F20;
   display: inline-block;
   font-weight: bold;
-  max-width: 50%;
+  max-width: 70%;
 }
 
 .hero.is-compact .title {
@@ -564,11 +629,6 @@ article .carousel .carousel-inner article {
   z-index: 1;
 }
 
-@media only screen and (max-width: 1087px) {
-  .hero .title {
-    max-width: none;
-  }
-}
 body {
   margin-bottom: 1em;
 }
@@ -620,19 +680,6 @@ article + article {
   margin-top: 2em;
 }
 
-@media only screen and (max-width: 1087px) {
-  .container {
-    padding-left: 2em;
-    padding-right: 2em;
-  }
-  .has-cover .container {
-    margin-left: 2em;
-    margin-right: 2em;
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-}
 ul > li:not(:last-child) {
   margin-bottom: 1em;
 }
@@ -695,32 +742,12 @@ ol > li:not(:last-child) {
   left: var(--position);
 }
 
-.h1,
-.h2,
-.h3,
-.h4 {
-  position: relative;
-  font-family: "AllerBold";
-}
 
-.h1 {
-  text-transform: uppercase;
-}
-
-.h1:before,
-.h2:before {
-  content: "";
-  border-top: solid 8px #231F20;
-  width: 180px;
-  position: absolute;
-  left: 0;
-  top: -1.8rem;
-}
 
 .subtitle,
 .date {
   text-transform: uppercase;
-  font-family: "Aller";
+  font-family: "allerregular_sc";
 }
 .subtitle:before,
 .date:before {
@@ -728,47 +755,11 @@ ol > li:not(:last-child) {
 }
 
 .subline {
-  font-family: "Aller";
+  font-family: "aller";
   display: block;
 }
 
-.h1 {
-  font-size: 38pt;
-}
 
-.h2 {
-  font-size: 22pt;
-}
-
-.h3 {
-  font-size: 18pt;
-}
-
-.h4 {
-  font-size: 13pt;
-}
-
-a {
-  color: #231F20;
-}
-
-.rich-text a {
-  color: #6B2A7E;
-}
-
-p {
-  max-width: 960px;
-}
-p.intro {
-  font-weight: 700;
-}
-p.description {
-  padding: 1em 2em;
-}
-
-.header + p {
-  margin-top: 1em;
-}
 
 .is-inverted {
   color: #ffffff;
@@ -815,18 +806,18 @@ h4 + ul {
 }
 
 a.link {
-  font-family: "AllerBold";
+  font-family: "aller_lightregular_sc";
+  text-transform: uppercase;
+  font-size: 20px;
+  line-height: 1.3em;
+}
+a.link .fas{
+  font-size: 15px;
 }
 a.link.is-next:after {
   content: " >";
   display: inline-block;
   margin-left: 0.5em;
-}
-
-@media only screen and (min-width: 1087px) {
-  .is-oneliner {
-    white-space: nowrap;
-  }
 }
 nav {
   background: #ffffff;
@@ -847,8 +838,9 @@ nav.inverted .logo {
 nav.inverted .buttons .button {
   transition: color 0.5s ease-in-out;
   color: #ffffff;
-  font-weight: 700;
-  text-shadow: 0 1px 2px rgba(35, 31, 32, 0.5);
+ font-weight: normal;
+  text-rendering: optimizeLegibility;
+/*  text-shadow: 0 1px 2px rgba(35, 31, 32, 0.5); */
 }
 nav.opaque {
   background: white;
@@ -859,7 +851,8 @@ nav.opaque .logo {
 nav.opaque .buttons .button {
   color: #6B2A7E;
   text-shadow: none;
-  font-weight: 500;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
 }
 nav.opaque ~ nav.navbar .dropdown {
   bottom: auto;
@@ -872,7 +865,6 @@ nav.is-compact {
   padding-bottom: 1em;
 }
 nav.is-compact .container {
-  padding: 0;
 }
 nav.is-compact .logo {
   height: 60px;
@@ -908,6 +900,7 @@ nav.navbar .navbar-search .input {
   border: none;
   border-radius: 10em;
   box-shadow: none;
+  width: 220px;
 }
 nav.navbar .navbar-search .fa-search {
   position: absolute;
@@ -964,13 +957,16 @@ nav.navbar.navbar-menu {
   height: 50px;
 }
 nav.navbar.navbar-menu .navbar-item {
-  font-family: "Aller";
-  font-size: 16px;
+  font-family: "aller_lightregular_sc";
+  font-size: 21px;
   padding: 0 1rem;
   margin: 0;
   border: solid transparent;
   border-width: 4px 0px;
   text-transform: uppercase;
+}
+nav.navbar.navbar-menu .navbar-item .fas{
+  font-size: 18px;
 }
 nav.navbar.navbar-menu .navbar-item.is-active:not(.is-selected) {
   border-bottom-color: #231F20;
@@ -1254,12 +1250,6 @@ label .fas {
 
 figure.image.portrait figcaption {
   max-width: 260px;
-}
-
-@media only screen and (max-width: 1087px) {
-  .is-4 .card > div.card-content.is-front p+p{
-    margin-bottom: calc(57px + 2em)
-  }
 }
 
 .has-carousel article .carousel.is-carousel-block.is-contact{
@@ -1768,5 +1758,46 @@ nav.navbar .navbar-menu .navbar-item .dropdown ul > li a {
   }
   .section.is-mobile{
     display: block;
+  }
+}
+
+
+/* Responsive section, Only Media Queries below */
+
+
+@media only screen and (max-width: 1087px) {
+.body .h2 {
+    color: Red;
+}
+
+.carousel .container {
+    margin-left: 0;
+}
+.footer .h2:before {
+    width: 100%;
+}
+.hero .title {
+    max-width: none;
+}
+.container {
+    padding-left: 2em;
+    padding-right: 2em;
+  }
+
+.has-cover .container {
+    margin-left: 2em;
+    margin-right: 2em;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+.is-4 .card > div.card-content.is-front p+p{
+    margin-bottom: calc(57px + 2em)
+  }
+}
+
+@media only screen and (min-width: 1087px) {
+  .is-oneliner {
+    white-space: nowrap;
   }
 }
