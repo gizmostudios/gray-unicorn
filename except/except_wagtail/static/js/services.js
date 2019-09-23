@@ -1,6 +1,8 @@
 const serviceSelectors = $(".service");
 const serviceColumns = $(".column-service");
 
+//Function to display information for services when clicked
+
 function displaySubServices(service){
 	var selectedServiceId = service.attr('id');
 	var selectedService = $("."+selectedServiceId);
@@ -15,6 +17,8 @@ function displaySubServices(service){
 		}
 	);
 }
+
+// Function to manage status of services displayed
 
 serviceSelectors.each(function(){
 	$(this).off().on('click', function(){
@@ -44,6 +48,8 @@ serviceSelectors.each(function(){
 
 var popService;
 var iteration = 0;
+
+// Animation when the page is loading for services
 
 function serviceFadeIn(){
 	serviceColumns.each(function(index) {

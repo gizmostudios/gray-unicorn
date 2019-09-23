@@ -29,6 +29,8 @@ $.ajaxSetup({
     }
 });
 
+// Function to update filter status
+
 function updateFilterDisplay(serviceFilter){
     const serviceFiltersActive = $(".is-filter.is-active");
     if(serviceFiltersActive.length == serviceFilters.length){
@@ -49,6 +51,8 @@ function updateFilterDisplay(serviceFilter){
     }
 }
 
+// Function to reset and calculate iteration of loading
+
 function loadMore(){
 	var type = document.querySelector('.grid-loading').id;
 	var articles = document.querySelectorAll('.is-loadable');
@@ -61,6 +65,8 @@ function loadMore(){
 	}
 	loadElements(type,iteration,false);
 }
+
+// Function to load elements
 
 function loadElements(dataType,iteration,filter_update){
 	var listActiveCat = [];
@@ -92,9 +98,12 @@ function loadElements(dataType,iteration,filter_update){
 	})
 }
 
+
 $('.load-more').off().on('click', function(){
 	loadMore();
 });
+
+// Update elements and filters when clicking on filters
 
 const serviceFilters = $(".is-filter");
 var lock = 0;

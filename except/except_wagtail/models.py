@@ -21,6 +21,8 @@ from services.models import ServicePage as Service
 
 from modelcluster.fields import ParentalManyToManyField
 
+# Type of footer link (Media, Quick links...)
+
 @register_snippet
 class FooterCategory(models.Model):
 	name = models.CharField(max_length=100)
@@ -39,6 +41,8 @@ class FooterCategory(models.Model):
 		FieldPanel('name'),
 	]
 
+# Type of link (Internal page, External page, html)
+
 @register_snippet
 class LinkType(models.Model):
 	name = models.CharField(max_length=100)
@@ -56,6 +60,8 @@ class LinkType(models.Model):
 	panels = [        
 		FieldPanel('name'),
 	]
+
+# Footer link
 
 @register_snippet
 class FooterLink(models.Model):
@@ -96,6 +102,8 @@ class FooterLink(models.Model):
 		FieldPanel('link'),
 		StreamFieldPanel('popup_html',classname='full'),
 	]
+
+# Event for the calendar connected if possible to an article of Event type
 
 @register_snippet
 class Event(models.Model):

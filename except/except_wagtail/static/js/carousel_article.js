@@ -2,6 +2,8 @@ const carousel_article = $('.container.has-carousel');
 const carousel_top = $('.carousel.top-section')
 var iteration = 1;
 
+// Function to manage sliding when clicking on buttons below the carousel
+
 carousel_article.each(function() {
 
   	const $inner = $(this).find('.carousel-inner');
@@ -31,6 +33,9 @@ carousel_article.each(function() {
 	});*/
 })
 
+
+// Function to scroll to the next slide
+
 function scrollCarouselArticle($container, target) {
 	var width = $container.css('width').replace(/[^-\d\.]/g, '');
 	$container[0].scroll({
@@ -39,6 +44,8 @@ function scrollCarouselArticle($container, target) {
 	    left: width * (target - 1)
 	})
 }
+
+// Function to auto-scroll and update buttons status
 
 function carouselAutoRotation(){
   carousel_article.each(function() {
@@ -63,6 +70,8 @@ function carouselAutoRotation(){
   });
   iteration += 1;
 };
+
+// Function to set timer of auto slide every 8 seconds
 
 $(document).ready(function(){
   setInterval(carouselAutoRotation,8000);

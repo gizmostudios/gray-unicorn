@@ -1,3 +1,5 @@
+// Cookie handling
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -29,9 +31,12 @@ $.ajaxSetup({
     }
 });
 
+
+//Generates a calendar for mapping all events focus on today's date
+
 var today = new Date();
 var dd = String(today.getDate()).padStart(2, '0');
-var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var mm = String(today.getMonth() + 1).padStart(2, '0');
 var yyyy = today.getFullYear();
 
 today = yyyy + '-' + mm + '-' + dd;
@@ -49,9 +54,9 @@ document.addEventListener('DOMContentLoaded', function() {
           right: 'dayGridMonth,dayGridWeek,dayGridDay'
         },
         defaultDate: today,
-        navLinks: true, // can click day/week names to navigate views
+        navLinks: true,
         editable: true,
-        eventLimit: true, // allow "more" link when too many events
+        eventLimit: true,
         events: data,
       });
       calendar.render();

@@ -8,6 +8,7 @@ const navbar = document.querySelector('.navbar');
 const stickyScrollUp = $('.scroll-up');
 const main_menus = document.querySelectorAll('.main-menu');
 
+// Function to manage navbar buttons to display the sun-menu correctly
 
 main_menus.forEach(menu => {
   menu.addEventListener('mouseover', event => {
@@ -25,6 +26,10 @@ main_menus.forEach(menu => {
     menu.querySelector('.sub-menu').classList.add('is-selected');
   });
 });
+
+//This part is managing the transformation of the top bar (Logo + contact & language selection) when scrolling and auto scrolling for the front page and top section
+
+
 stickyScrollUp.css('display','none');
 let windowWidth = window.innerWidth;
 stickyScrollUp.css('top',window.innerHeight-$('button')[0].scrollHeight+'px');
@@ -88,6 +93,8 @@ window.addEventListener('scroll', function () {
   }
 })
 
+// This part changes the direction of arrow in the navbar when scrolling
+
 if($hero == null){
   $(document).ready(function(){
     if(windowWidth <= 1087) {
@@ -104,6 +111,8 @@ if($hero == null){
 window.addEventListener('resize', function () {
   windowWidth = window.innerWidth;
 })
+
+// Function managing the behavior of the carousel in the front page
 
 carousels.forEach(carousel => {
   const $prev = carousel.querySelector('.button-prev');
@@ -147,6 +156,8 @@ anchors.forEach(anchor => {
 })
 
 
+// Function to manage language changes
+
 $('.lang-selection').on('click', function(){
   console.log('test')
   var url = window.location.pathname;
@@ -156,6 +167,9 @@ $('.lang-selection').on('click', function(){
       window.location.reload();
     })
 })
+
+
+// Function to manage the behavior of the pop-up for newsletter subscription
 
 function hidePopup(popup){
   popup.removeClass("transition");
@@ -177,6 +191,8 @@ $(document).ready(function(){
       }
     });
   });
+
+  // Manage display of sub-menu of the navbar
 
   $('.sub-menu').each(function(){
     $(this).off().on('click',function(){

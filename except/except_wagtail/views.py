@@ -15,6 +15,8 @@ from news.models import *
 from except_wagtail.models import *
 from services.models import *
 
+# Language selection
+
 @csrf_exempt
 def lang_selection(request):
 	body = simplejson.loads(request.body.decode('utf-8'))
@@ -29,6 +31,8 @@ def lang_selection(request):
 	mimetype = 'application/json'
 	res = {'html' : html}
 	return HttpResponse( simplejson.dumps(res), mimetype)
+
+# Load elements when there is a "Load more" buttons
 
 @csrf_exempt
 def load_elements(request):
@@ -49,6 +53,8 @@ def load_elements(request):
 	mimetype = 'application/json'
 	return HttpResponse( simplejson.dumps(res), mimetype)
 
+# Load function for news
+
 def load_more_news(iteration, lang):
 	news = sorted(
     		chain(NewsPage.objects.live(), NewspaperArticlePage.objects.live()),
@@ -67,6 +73,8 @@ def load_more_news(iteration, lang):
 	res = {'html' : html}
 	return res
 
+# Load function for projects
+
 def load_more_projects(iteration, body, lang):
 	decoded_services = get_services(body)
 	projects = ProjectPage.objects.live().filter(service__title__in=decoded_services).all().order_by('-date_published')
@@ -81,6 +89,8 @@ def load_more_projects(iteration, body, lang):
 	html = render_to_string("modules/grid_8.html", {'elements' : projects_live, 'current_language': lang, 'is_loadable' : True})+"|"+render_to_string("modules/button_load.html", {'not_last' : not_last, 'current_language': lang})
 	res = {'html' : html}
 	return res
+
+# Load function for article in knowledge section
 
 def load_more_resources(iteration, body, lang):
 	decoded_services = get_services(body)
@@ -99,6 +109,8 @@ def load_more_resources(iteration, body, lang):
 	res = {'html' : html}
 	return res
 
+# Retrieve services filtered
+
 def get_services(body):
 	services = body["services"]
 	decoded_services = []
@@ -111,6 +123,8 @@ def get_services(body):
 			decoded_services.append(unescape(service_name))
 
 	return decoded_services
+
+# Load calendar
 
 @csrf_exempt
 def load_calendar(request):
