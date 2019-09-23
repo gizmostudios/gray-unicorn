@@ -17,7 +17,8 @@ from django.forms.widgets import Select
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from news.blocks import BaseStreamBlock
-	
+
+# Skills of our team (Research & Analysis, Design...)
 
 class Expertise(Orderable):
 	image = models.ForeignKey(
@@ -35,6 +36,8 @@ class Expertise(Orderable):
 		ImageChooserPanel('image'),
 	]
 
+# Specific area with services we offer
+
 class SubServicePage(Page):
 	parent_page_types = ['ServicePage']
 	subpage_types = []
@@ -48,6 +51,8 @@ class SubServicePage(Page):
 		FieldPanel('description', classname="full"),
 		StreamFieldPanel('body'),
 	]
+
+# Should be working area this is our domains of intervention
 
 class ServicePage(Page):
 	hero_title = models.CharField(max_length=100)
