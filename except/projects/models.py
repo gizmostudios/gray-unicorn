@@ -21,6 +21,8 @@ from services.models import ServicePage as Service
 from knowledge.models import *
 from about.models import *
 
+# Images for carousels in hero section
+
 class TopImage(Orderable):
 	image = models.ForeignKey(
 		'wagtailimages.Image',
@@ -34,6 +36,8 @@ class TopImage(Orderable):
 	panels = [
 		ImageChooserPanel('image'),
 	]
+
+# Uploaded file to go in Media & Download section of news
 
 class File(models.Model):
 	name = models.CharField(max_length=255, null=True, blank=True)
@@ -67,6 +71,8 @@ class File(models.Model):
 		FieldPanel('file'),
 	]
 
+# People within Except participating to the project
+
 class TeamMember(Orderable):   
 	page = ParentalKey('ProjectPage', related_name='team_members')
 
@@ -80,6 +86,8 @@ class TeamMember(Orderable):
 		page = self.member.profilepage_set.first()
 		return page
 
+# Clients and companies collaborating with Except on the project
+
 class ProjectPartner(Orderable):   
 	page = ParentalKey('ProjectPage', related_name='project_partners')
 
@@ -88,6 +96,8 @@ class ProjectPartner(Orderable):
 	panels = [
 		FieldPanel('partner'),
 	]
+
+# External member from partners or freelancer working on the project
 
 class ExternalMember(Orderable):
 	page = ParentalKey('ProjectPage', related_name='external_members')
@@ -104,6 +114,8 @@ class ExternalMember(Orderable):
 		FieldPanel('job_title'),
 	]
 
+# Connection with related articles
+
 class LinkedArticle(Orderable):
 	page = ParentalKey('ProjectPage', related_name='linked_articles')
 
@@ -112,6 +124,8 @@ class LinkedArticle(Orderable):
 	panels = [
 		FieldPanel('element'),
 	]
+
+# Connection with related projects
 
 class LinkedProject(Orderable):
 	page = ParentalKey('ProjectPage', related_name='linked_projects')

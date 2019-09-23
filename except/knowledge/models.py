@@ -24,6 +24,8 @@ from services.models import ServicePage as Service
 
 from modelcluster.fields import ParentalManyToManyField
 
+# Images for carousels in hero section
+
 class TopImage(Orderable):
 	image = models.ForeignKey(
 		'wagtailimages.Image',
@@ -37,6 +39,8 @@ class TopImage(Orderable):
 	panels = [
 		ImageChooserPanel('image'),
 	]
+
+# Uploaded file to go in Media & Download section of news
 
 class File(models.Model):
 	name = models.CharField(max_length=255, null=True, blank=True)
@@ -70,6 +74,8 @@ class File(models.Model):
 		FieldPanel('file'),
 	]
 
+# Connection with related articles
+
 class ConnectedArticle(Orderable):
 	page = ParentalKey('ArticlePage', related_name='linked_articles')
 
@@ -78,6 +84,8 @@ class ConnectedArticle(Orderable):
 	panels = [
 		FieldPanel('element'),
 	]
+
+# Connection with related projects
 
 class ConnectedProject(Orderable):
 	page = ParentalKey('ArticlePage', related_name='linked_projects')
@@ -165,6 +173,7 @@ class ArticlePage(Page):
 		else:		
 			return self.path_to_thumbnail
 
+# Index page for articles
 
 class KnowledgePage(Page):
 	parent_page_types = ['index.HomePage']

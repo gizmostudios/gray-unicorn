@@ -13,6 +13,8 @@
     {# Main navigation #}
     {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
 
+    {# Introduction of the team #}
+
     <section class="section">
       <article class="container">
         {% if page.description_title %}
@@ -28,6 +30,9 @@
         {% if page.description %}
           <p>{{ page.description }}</p>
         {% endif %}
+
+        {# grid of profile of all people in the team #}
+
         <div class="grid">
           {% for people in people_list %}
             <a href="{{people.url}}">

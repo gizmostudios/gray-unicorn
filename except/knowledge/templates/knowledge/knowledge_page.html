@@ -16,6 +16,8 @@
     {# Main navigation #}
     {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
 
+    {# Introduction on our articles #}
+
     <section class="section">
       <div class="container">
         <article class="article">
@@ -29,7 +31,9 @@
         </article>
       </div>
     </section>
+
     {# Carousel #}
+
     {% if highlights %}
       <section class="section has-carousel">
         <div class="container">
@@ -72,6 +76,9 @@
         </div>
       </section>
     {% endif %}
+
+    {# 6 latest articles #}
+
     <section class="section">
       <div class="container">
         <article class="article">
@@ -88,6 +95,9 @@
         </article>
       </div>
     </section>
+
+    {# List of all our articles with filter possibilities #}
+    
     <section class="section">
       <div class="container">
         <article class="article">

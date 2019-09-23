@@ -16,6 +16,8 @@ from news.blocks import BaseStreamBlock
 from projects.models import *
 from news.models import *
 
+# Skills and Expertise of people
+
 class Expertise(Orderable):
 	parent = ParentalKey('People', related_name='expertises')
 	competency = models.CharField(max_length=255, null=True, blank=True)
@@ -24,6 +26,8 @@ class Expertise(Orderable):
 		FieldPanel('competency'),
 	]
 
+# Hobbies & liked activities of people
+
 class Hobby(Orderable):
 	parent = ParentalKey('People', related_name='hobbies')
 	activity = models.CharField(max_length=255, null=True, blank=True)
@@ -31,6 +35,8 @@ class Hobby(Orderable):
 	panels = [
 		FieldPanel('activity'),
 	]
+
+# Full profile of an user register in snippet to manage visibility on the website
 
 @register_snippet
 class People(ClusterableModel):
@@ -68,6 +74,8 @@ class People(ClusterableModel):
 	def __str__(self):
 		return self.user.first_name +" "+ self.user.last_name
 
+# Page related to a people models one page per person
+
 class ProfilePage(Page):
 
 	subpage_types = []
@@ -100,6 +108,7 @@ class ProfilePage(Page):
 		print(context)
 		return context
 
+# Page introducing the team and listing all people in the company
 
 class PeoplePage(Page):
 	parent_page_types = ['about.AboutPage']
