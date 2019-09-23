@@ -21,6 +21,7 @@ from modeltranslation.utils import build_localized_fieldname
 from django.conf import settings
 from PIL import Image
 
+# Images for carousel
 
 class CarouselImage(Orderable):
 	image = models.ForeignKey(
@@ -40,6 +41,8 @@ class CarouselImage(Orderable):
 		FieldPanel('scaling'),
 	]
 
+# Images for carousel in hero section
+
 class TopImage(Orderable):
 	image = models.ForeignKey(
 		'wagtailimages.Image',
@@ -53,6 +56,8 @@ class TopImage(Orderable):
 	panels = [
 		ImageChooserPanel('image'),
 	]
+
+# Link for the carousel in the page (Fixed compare to the images)
 
 class CarouselItem(Orderable):
 	link = models.ForeignKey(
