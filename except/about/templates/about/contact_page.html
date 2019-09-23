@@ -16,11 +16,17 @@
     <section class="section">
       <div class="container">
         <div class="columns">
+
+          {# Contact information and link to access our office #}
+
           <div class="column is-6">
             {% if page.body %}
               {{ page.body }}
             {% endif %}
           </div>
+
+          {# Carousel of pictures (will be replaced by google maps) #}
+
           <div class="column is-6">
             <section class="section has-carousel">
               <div class="container has-carousel full-width" data-count="{{page.carousel_items.all|length}}">
@@ -46,9 +52,12 @@
               </div>
             </section>
           </div>
+          
         </div>
       </div>
     </section>
+
     <script type="text/javascript" src="{% static 'js/carousel_article.js' %}"></script>
+
   {% endwith %}
 {% endblock content %}

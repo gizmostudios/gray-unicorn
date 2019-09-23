@@ -7,54 +7,63 @@
 {% load static %}
 
 {% block content %}
-  {% with mediaPath="/media/original_images/" %}
-  	
-    {# Top Section/Header #}
-    {% include "modules/top_section.html" with page=page carousel=False %}
+	{% with mediaPath="/media/original_images/" %}
+		
+		{# Top Section/Header #}
+		{% include "modules/top_section.html" with page=page carousel=False %}
 
-    {# Main navigation #}
-    {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
+		{# Main navigation #}
+		{% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
 
-    <section class="section">
-      <div class="container">
-        <div class="columns">
-          <div class="column is-8">
-          	{% if page.except_introduction %}
-            <p class="intro">
-              {{page.except_introduction}}
-            </p>
-            {% endif %}
-            {% if page.team_introduction %}
-            {{page.team_introduction |richtext}}
-            {% endif %}
-            {% if page.quote %}
-              <blockquote class="blockquote">
-                {{ page.quote.caption |richtext}}
-              </blockquote>
-              <h4 class="h4">{{ page.quote.name }}</h4><span class="subline">{{ page.quote.company }}</span>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="section">
-      <article class="container">
-        <header class="header">
-          {% if current_language == 'nl' %}
-            <h2 class="h2">(NL) Partners &amp; Clients</h2>
-          {% elif current_language == 'en' %}
-            <h2 class="h2">Partners &amp; Clients</h2>
-          {% endif %}
-        </header>
-        {% if page.collaboration_introduction %}
-          {{page.collaboration_introduction |richtext}}
-        {% endif %}
-        <div class="grid">
-          {% for partner in partners %}
-            <figure class="image"><img src="{{ mediaPath }}{{ partner.image }}"></figure>
-          {% endfor %} 
-        </div>
-      </article>
-    </section>
-  {% endwith %}
+		{# Team & company presentation #}
+
+		<section class="section">
+			<div class="container">
+				<div class="columns">
+					<div class="column is-8">
+						{% if page.except_introduction %}
+						<p class="intro">
+							{{page.except_introduction}}
+						</p>
+						{% endif %}
+						{% if page.team_introduction %}
+						{{page.team_introduction |richtext}}
+						{% endif %}
+
+						{# One quote from a client #}
+
+						{% if page.quote %}
+							<blockquote class="blockquote">
+								{{ page.quote.caption |richtext}}
+							</blockquote>
+							<h4 class="h4">{{ page.quote.name }}</h4><span class="subline">{{ page.quote.company }}</span>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		{# Partner section #}
+
+		<section class="section">
+			<article class="container">
+				<header class="header">
+					{% if current_language == 'nl' %}
+						<h2 class="h2">(NL) Partners &amp; Clients</h2>
+					{% elif current_language == 'en' %}
+						<h2 class="h2">Partners &amp; Clients</h2>
+					{% endif %}
+				</header>
+				{% if page.collaboration_introduction %}
+					{{page.collaboration_introduction |richtext}}
+				{% endif %}
+				<div class="grid">
+					{% for partner in partners %}
+						<figure class="image"><img src="{{ mediaPath }}{{ partner.image }}"></figure>
+					{% endfor %} 
+				</div>
+			</article>
+		</section>
+		
+	{% endwith %}
 {% endblock content %}

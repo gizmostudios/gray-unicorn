@@ -15,6 +15,7 @@ from django.forms.widgets import Select
 from news.blocks import BaseStreamBlock
 from news.models import *
 
+# Image for the carousel in contact page
 
 class CarouselImage(Orderable):
     image = models.ForeignKey(
@@ -30,6 +31,8 @@ class CarouselImage(Orderable):
          ImageChooserPanel('image'),
     ]
 
+# Quotes stored in snippets for easier management
+
 @register_snippet
 class Quote(Orderable):
     company = models.CharField(max_length=255, null=True, blank=True)
@@ -41,6 +44,8 @@ class Quote(Orderable):
         FieldPanel('name'),
         FieldPanel('caption', classname="full")
     ]
+
+# Partners (clients) of Except stored in snippets for easier management
 
 @register_snippet
 class Partner(Orderable):
@@ -61,10 +66,14 @@ class Partner(Orderable):
     def __str__(self):
         return self.company
 
+# Placeholder page for event calendar
+
 class EventCalendarPage(Page):
     parent_page_types = ['about.AboutPage']
 
     content_panels = Page.content_panels
+
+# Page for the work with us section
 
 class CareerPage(Page):
     parent_page_types = ['about.AboutPage']
@@ -119,7 +128,6 @@ class ContactPage(Page):
     ]
 
 
-    
 class AboutPage(Page):
     parent_page_types = ['index.HomePage']
     subpage_types = ['people.PeoplePage','news.NewsIndexPage', 'about.CareerPage', 'about.ContactPage', 'about.EventCalendarPage']
