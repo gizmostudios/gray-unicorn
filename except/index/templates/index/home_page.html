@@ -144,15 +144,13 @@
             <div class="column is-4">
               <div class="card is-stretched">
                 <div class="card-image is-front">
-                  <a href="{{ highlight_event.url }}">
-                    <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_event.top_images.all.0.image }}">
-                      {% if current_language == 'nl' %}
-                        <h4 class="h4 label is-red">(NL) Event</h4>
-                      {% elif current_language == 'en' %}
-                        <h4 class="h4 label is-red">Event</h4>
-                      {% endif %}
-                    </figure>
-                  </a>
+                  <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_event.top_images.all.0.image }}">
+                    {% if current_language == 'nl' %}
+                      <h4 class="h4 label is-red">(NL) Event</h4>
+                    {% elif current_language == 'en' %}
+                      <h4 class="h4 label is-red">Event</h4>
+                    {% endif %}
+                  </figure>
                 </div>
                 <div class="card-content is-front">
                   <h3 class="h3">{{ highlight_event.hero_title }}</h3>
@@ -172,15 +170,13 @@
               <div class="card is-stretched">
                 <div class="card is-stretched">
                   <div class="card-image is-front">
-                    <a href="{{ link_news.url }}">
-                      <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_article.top_images.all.0.image }}">
-                        {% if current_language == 'nl' %}
-                          <h4 class="h4 label is-purple">(NL) News</h4>
-                        {% elif current_language == 'en' %}
-                          <h4 class="h4 label is-purple">News</h4>
-                        {% endif %}
-                      </figure>
-                    </a>
+                    <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_article.top_images.all.0.image }}">
+                      {% if current_language == 'nl' %}
+                        <h4 class="h4 label is-purple">(NL) News</h4>
+                      {% elif current_language == 'en' %}
+                        <h4 class="h4 label is-purple">News</h4>
+                      {% endif %}
+                    </figure>
                   </div>
                   <div class="card-content is-front">
                     <h3 class="h3">{{ highlight_article.hero_title }}</h3>
@@ -199,15 +195,13 @@
               <div class="card is-stretched">
                 <div class="card is-stretched">
                   <div class="card-image is-front">
-                    <a href="{{ link_projects.url }}">
-                      <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_projects.top_images.all.0.image }}">
-                        {% if current_language == 'nl' %}
-                          <h4 class="h4 label is-blue">(NL) Project</h4>
-                        {% elif current_language == 'en' %}
-                          <h4 class="h4 label is-blue">Project</h4>
-                        {% endif %}
-                      </figure>
-                    </a>
+                    <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_projects.top_images.all.0.image }}">
+                      {% if current_language == 'nl' %}
+                        <h4 class="h4 label is-blue">(NL) Project</h4>
+                      {% elif current_language == 'en' %}
+                        <h4 class="h4 label is-blue">Project</h4>
+                      {% endif %}
+                    </figure>
                   </div>
                   <div class="card-content is-front">
                     <h3 class="h3">{{ highlight_projects.hero_title }}</h3>
@@ -226,15 +220,13 @@
               <div class="card is-stretched">
                 <div class="card is-stretched">
                   <div class="card-image is-front">
-                    <a href="{{ link_projects.url }}">
-                      <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_resources.top_images.all.0.image }}">
-                        {% if current_language == 'nl' %}
-                          <h4 class="h4 label is-green">(NL) Knowledge</h4>
-                        {% elif current_language == 'en' %}
-                          <h4 class="h4 label is-green">Knowledge</h4>
-                        {% endif %}
-                      </figure>
-                    </a>
+                    <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_resources.top_images.all.0.image }}">
+                      {% if current_language == 'nl' %}
+                        <h4 class="h4 label is-green">(NL) Knowledge</h4>
+                      {% elif current_language == 'en' %}
+                        <h4 class="h4 label is-green">Knowledge</h4>
+                      {% endif %}
+                    </figure>
                   </div>
                   <div class="card-content is-front">
                     <h3 class="h3">{{ highlight_resources.hero_title }}</h3>
