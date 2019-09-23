@@ -25,6 +25,8 @@ from knowledge.models import *
 from itertools import chain
 from operator import attrgetter
 
+# Images for carousels in hero section
+
 class TopImage(Orderable):
 	image = models.ForeignKey(
 		'wagtailimages.Image',
@@ -38,6 +40,8 @@ class TopImage(Orderable):
 	panels = [
 		ImageChooserPanel('image'),
 	]
+
+# Uploaded file to go in Media & Download section of news
 
 class File(models.Model):
 	name = models.CharField(max_length=255, null=True, blank=True)
@@ -71,6 +75,8 @@ class File(models.Model):
 		FieldPanel('file'),
 	]
 
+# Connection with related news
+
 class RelatedArticle(Orderable):
 	page = ParentalKey('NewsPage', related_name='linked_articles')
 
@@ -80,6 +86,8 @@ class RelatedArticle(Orderable):
 		FieldPanel('element'),
 	]
 
+# Connection with related projects
+
 class RelatedProject(Orderable):
 	page = ParentalKey('NewsPage', related_name='linked_projects')
 
@@ -88,6 +96,8 @@ class RelatedProject(Orderable):
 	panels = [
 		FieldPanel('element'),
 	]
+
+# Piece of news written by Except
 
 class NewsPage(Page):
 
@@ -174,6 +184,7 @@ class NewsPage(Page):
 			return self.path_to_thumbnail
 
 
+# Link to a newspaper article talking about Except
 
 class NewspaperArticlePage(Page):
 	hero_image = models.ImageField(null=True, blank=True)
@@ -254,6 +265,7 @@ class NewsIndexPage(Page):
 
 		return context
 
+# Empty page for structure in Wagtail
 
 class FolderNewspaperPage(Page):
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
@@ -263,6 +275,8 @@ class FolderNewspaperPage(Page):
 	content_panels = Page.content_panels + [
 		FieldPanel('hero_title'),
 	]
+
+# Empty page for structure in Wagtail
 
 class FolderArticlePage(Page):
 	hero_title = models.CharField(max_length=255, null=True, blank=True)

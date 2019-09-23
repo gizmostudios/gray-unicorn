@@ -58,6 +58,10 @@ class ParagraphBlock(StructBlock):
 		template="blocks/paragraph_block.html"
 
 class CarouselBlock(StructBlock):
+    """
+    Custom `StructBlock` for utilizing images with associated caption and
+    attribution data within a carousel
+    """
 
     image_list = ListBlock(ImageBlock)
 
