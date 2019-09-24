@@ -79,13 +79,13 @@ window.addEventListener('scroll', function (e) {
         if( window.scrollY < $hero.clientHeight/2 && scrollLock == 0){
           $('html, body').animate({ scrollTop: $('#bottom-navbar').position().top }, { duration: 500, start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
         }
-        else if( window.scrollY > $hero.clientHeight+50 && window.scrollY < $hero.clientHeight*(3/2)){
+        else if( window.scrollY > $hero.clientHeight+50 && window.scrollY < $hero.clientHeight*(3/2) && scrollLock == 0){
           $('html, body').animate({ scrollTop: $('#carousel-section').position().top }, { duration: 500, start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
         }
-        else if( window.scrollY > $hero.clientHeight*2+200 && window.scrollY < $hero.clientHeight*(5/2)){
+        else if( window.scrollY > $hero.clientHeight*2+200 && window.scrollY < $hero.clientHeight*(5/2) && scrollLock == 0){
           $('html, body').animate({ scrollTop: $('#services-section').position().top }, { duration: 500, start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
         }
-        else if( window.scrollY > $hero.clientHeight*3+100 && window.scrollY < $hero.clientHeight*(7/2)){
+        else if( window.scrollY > $hero.clientHeight*3+100 && window.scrollY < $hero.clientHeight*(7/2) && scrollLock == 0){
           $('html, body').animate({ scrollTop: $('#highlight-section').position().top }, { duration: 500, start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
         }
      } else {
