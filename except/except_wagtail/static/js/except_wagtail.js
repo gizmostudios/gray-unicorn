@@ -76,7 +76,7 @@ window.addEventListener('scroll', function () {
     }
     var st = $(this).scrollTop();
      if (st > lastScrollTop){
-        if( window.scrollY < $hero.clientHeight/2 && scrollLock = 0){
+        if( window.scrollY < $hero.clientHeight/2 && scrollLock == 0){
           $("html, body").animate({scrollTop: $('#bottom-navbar').position().top}, 200,function(){ scrollLock = 0;});
           scrollLock = 1
           console.log("scroll animation over");
