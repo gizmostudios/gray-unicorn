@@ -77,7 +77,7 @@ window.addEventListener('scroll', function () {
      if (st > lastScrollTop){
         if( window.scrollY < $hero.clientHeight/2){
           $('html, body').velocity({ scrollTop: $('#bottom-navbar').position().top }, { duration: 500, easing: "spring", complete: function(){ console.log(window.scrollY); } });
-          console.log('test')
+          console.log($('#bottom-navbar').position().top)
         }
         else if( window.scrollY > $hero.clientHeight+50 && window.scrollY < $hero.clientHeight*(3/2)){
           $('#carousel-section')[0].scrollIntoView( true );
