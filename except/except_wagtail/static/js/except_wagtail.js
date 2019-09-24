@@ -77,19 +77,15 @@ window.addEventListener('scroll', function (e) {
     var st = $(this).scrollTop();
      if (st > lastScrollTop){
         if( window.scrollY < $hero.clientHeight/2 && scrollLock == 0){
-          e.preventDefault();
           $('html, body').animate({ scrollTop: $('#bottom-navbar').position().top }, { duration: 500, start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
         }
         else if( window.scrollY > $hero.clientHeight+50 && window.scrollY < $hero.clientHeight*(3/2)){
-          e.preventDefault();
           $('html, body').animate({ scrollTop: $('#carousel-section').position().top }, { duration: 500, start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
         }
         else if( window.scrollY > $hero.clientHeight*2+200 && window.scrollY < $hero.clientHeight*(5/2)){
-          e.preventDefault();
           $('html, body').animate({ scrollTop: $('#services-section').position().top }, { duration: 500, start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
         }
         else if( window.scrollY > $hero.clientHeight*3+100 && window.scrollY < $hero.clientHeight*(7/2)){
-          e.preventDefault();
           $('html, body').animate({ scrollTop: $('#highlight-section').position().top }, { duration: 500, start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
         }
      } else {
