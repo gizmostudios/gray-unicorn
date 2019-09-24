@@ -77,7 +77,7 @@ window.addEventListener('scroll', function () {
     var st = $(this).scrollTop();
      if (st > lastScrollTop){
         if( window.scrollY < $hero.clientHeight/2 && scrollLock == 0){
-          $('html, body').animate({ scrollTop: $('#bottom-navbar').position().top }, { duration: 500, start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0; } });
+          $('html, body').animate({ scrollTop: $('#bottom-navbar').position().top }, { duration: 500, start: function(){ scrollLock = 1; console.log(scrollLock); }, complete: function(){ scrollLock = 0; console.log(scrollLock); } });
           console.log($('#bottom-navbar').position().top)
         }
         else if( window.scrollY > $hero.clientHeight+50 && window.scrollY < $hero.clientHeight*(3/2)){
