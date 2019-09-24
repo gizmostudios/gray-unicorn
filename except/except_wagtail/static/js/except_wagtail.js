@@ -62,7 +62,7 @@ var scrollLock = 0;
 
 
 let stickyNav = false;
-window.addEventListener('scroll', function () {
+window.addEventListener('scroll', function (e) {
   if($hero != null){
     // Cancel on mobile
     if(windowWidth <= 1087) {
@@ -77,6 +77,7 @@ window.addEventListener('scroll', function () {
     var st = $(this).scrollTop();
      if (st > lastScrollTop){
         if( window.scrollY < $hero.clientHeight/2 && scrollLock == 0){
+          e.preventDefault();
           $('html, body').animate({ scrollTop: $('#bottom-navbar').position().top }, { duration: 500, start: function(){ scrollLock = 1; console.log(scrollLock); }, complete: function(){ scrollLock = 0; console.log(scrollLock); } });
           console.log($('#bottom-navbar').position().top)
         }
