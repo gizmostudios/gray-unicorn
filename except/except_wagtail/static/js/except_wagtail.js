@@ -77,9 +77,9 @@ window.addEventListener('scroll', function () {
     var st = $(this).scrollTop();
      if (st > lastScrollTop){
         if( window.scrollY < $hero.clientHeight/2 && scrollLock == 0){
-          $("html, body").animate({scrollTop: $('#bottom-navbar').position().top}, 200,function(){ scrollLock = 0;});
+          $("html, body").animate({scrollTop: $('#bottom-navbar').position().top}, 2000,function(){ scrollLock = 0;});
           scrollLock = 1
-          console.log("scroll animation over");
+          console.log(scrollLock);
         }
         else if( window.scrollY > $hero.clientHeight+50 && window.scrollY < $hero.clientHeight*(3/2)){
           $('#carousel-section')[0].scrollIntoView( true );
