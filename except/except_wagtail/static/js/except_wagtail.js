@@ -77,6 +77,7 @@ window.addEventListener('scroll', function () {
      if (st > lastScrollTop){
         if( window.scrollY < $hero.clientHeight/2){
           $("html, body").animate({scrollTop: $('#bottom-navbar').position().top}, 200)
+          console.log("scroll animation over")
         }
         else if( window.scrollY > $hero.clientHeight+50 && window.scrollY < $hero.clientHeight*(3/2)){
           $('#carousel-section')[0].scrollIntoView( true );
