@@ -76,7 +76,7 @@ window.addEventListener('scroll', function () {
     var st = $(this).scrollTop();
      if (st > lastScrollTop){
         if( window.scrollY < $hero.clientHeight/2){
-          $('html, body').velocity({ scrollTop: $('#bottom-navbar').position().top }, { duration: 500, easing: "spring" });
+          $('html, body').velocity({ scrollTop: $('#bottom-navbar').position().top }, { duration: 500, easing: "spring", complete: function(){ console.log(window.scrollY); } });
           console.log('test')
         }
         else if( window.scrollY > $hero.clientHeight+50 && window.scrollY < $hero.clientHeight*(3/2)){
