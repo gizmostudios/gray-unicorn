@@ -82,10 +82,10 @@ window.addEventListener('scroll', function (e) {
           console.log($('#bottom-navbar').position().top)
         }
         else if( window.scrollY > $hero.clientHeight+50 && window.scrollY < $hero.clientHeight*(3/2)){
-          $('#carousel-section')[0].scrollIntoView( true );
+          $('#carousel-section')[0].scrollIntoView( true, {behavior: "smooth"} );
         }
         else if( window.scrollY > $hero.clientHeight*2+200 && window.scrollY < $hero.clientHeight*(5/2)){
-          $('#services-section')[0].scrollIntoView( true );
+          $('#services-section')[0].scrollIntoView( true, {behavior: "smooth"} );
         }
         else if( window.scrollY > $hero.clientHeight*3+100 && window.scrollY < $hero.clientHeight*(7/2)){
           $('#highlight-section')[0].scrollIntoView( true, {behavior: "smooth"} );
