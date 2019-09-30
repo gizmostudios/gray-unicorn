@@ -575,7 +575,7 @@ article .carousel .carousel-inner article {
   min-height: calc(100vh - 64px);
   background-color: #E5E6E7;
   position: relative;
-  background: linear-gradient(rgba(0,0,0,0.3) 10%, transparent)
+  background: linear-gradient(rgba(0,0,0,0.7) 10%, transparent)
 }
 .hero .hero-body {
   display: flex;
