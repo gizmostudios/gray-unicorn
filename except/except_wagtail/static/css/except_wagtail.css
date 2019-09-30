@@ -390,11 +390,13 @@ article .carousel .carousel-inner article {
   box-shadow: inset 0 -400px 400px -400px rgba(0,0,0,0.8);
   background-position: center;
   background-size: cover;
+  background: linear-gradient(rgba(0,0,0,0.7) 10%, transparent);
 }
 .carousel .carousel-inner article.background-fit {
   box-shadow: inset 0 -400px 400px -400px rgba(0,0,0,0.8);
   background-image: rgba(0,0,0,0.3);
   background-size: contain;
+  background: linear-gradient(rgba(0,0,0,0.7) 10%, transparent);
 }
 
 .carousel .carousel-inner article header, .carousel .carousel-inner article p {
@@ -575,7 +577,6 @@ article .carousel .carousel-inner article {
   min-height: calc(100vh - 64px);
   background-color: #E5E6E7;
   position: relative;
-  background: linear-gradient(rgba(0,0,0,0.7) 10%, transparent)
 }
 .hero .hero-body {
   display: flex;
