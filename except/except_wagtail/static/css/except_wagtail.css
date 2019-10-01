@@ -390,13 +390,21 @@ article .carousel .carousel-inner article {
   box-shadow: inset 0 -400px 400px -400px rgba(0,0,0,0.8);
   background-position: center;
   background-size: cover;
-/*  background: linear-gradient(rgba(0,0,0,0.7) 10%, transparent);*/
 }
 .carousel .carousel-inner article.background-fit {
   box-shadow: inset 0 -400px 400px -400px rgba(0,0,0,0.8);
   background-image: rgba(0,0,0,0.3);
   background-size: contain;
-/*  background: linear-gradient(rgba(0,0,0,0.7) 10%, transparent);*/
+}
+
+.background-dark-cover {
+  position: absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0,0,0,0.3) 5%, 15%, transparent 100%), linear-gradient(to top, rgba(0,0,0,0.3) 10%, 30%, transparent 100%);
+  z-index: 12;
 }
 
 .carousel .carousel-inner article header, .carousel .carousel-inner article p {
@@ -583,7 +591,7 @@ article .carousel .carousel-inner article {
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  z-index: 12;
+  z-index: 13;
 }
 .hero .title {
   text-transform: uppercase;
@@ -1407,7 +1415,7 @@ figure.image.portrait figcaption {
 }
 
 .hero-body{
-  z-index: 12;
+  z-index: 13;
 }
 
 .card .card-content.has-label.no-image{
