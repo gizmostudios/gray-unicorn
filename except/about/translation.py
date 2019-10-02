@@ -32,3 +32,10 @@ class ContactPageTR(TranslationOptions):
 class EventCalendarPageTR(TranslationOptions):
 	fields = (
 		)
+
+@register(Resource)
+class EventCalendarPageTR(TranslationOptions):
+	fields = (
+		'name',
+		'description',
+		)

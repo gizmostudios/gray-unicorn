@@ -387,13 +387,13 @@ article .carousel .carousel-inner article {
   scroll-snap-align: center;
 }
 .carousel .carousel-inner article.background-fill {
-  box-shadow: inset 0 -400px 400px -400px rgba(0,0,0,0.8);
-  background-position: center;
+/*  box-shadow: inset 0 -400px 400px -400px rgba(0,0,0,0.8);
+*/  background-position: center;
   background-size: cover;
 }
 .carousel .carousel-inner article.background-fit {
-  box-shadow: inset 0 -400px 400px -400px rgba(0,0,0,0.8);
-  background-image: rgba(0,0,0,0.3);
+/*  box-shadow: inset 0 -400px 400px -400px rgba(0,0,0,0.8);
+*/  background-image: rgba(0,0,0,0.3);
   background-size: contain;
 }
 
@@ -403,8 +403,15 @@ article .carousel .carousel-inner article {
   left:0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(rgba(0,0,0,0.7) 5%, 15%, transparent 100%), linear-gradient(to top, rgba(0,0,0,0.3) 10%, 30%, transparent 100%);
   z-index: 12;
+}
+
+.background-dark-cover.top-section{
+    background: linear-gradient(rgba(0,0,0,0.5) 120px, 15%, transparent 100%), linear-gradient(to top, rgba(0,0,0,0.3) 10%, 30%, transparent 100%);
+}
+
+.background-dark-cover.carousel-index{
+    background: linear-gradient(rgba(0,0,0,0.3) calc(50px + 12% + 1.4em), 25%, transparent 100%), linear-gradient(to top, rgba(0,0,0,0.3) 15%, 45%, transparent 100%);
 }
 
 .carousel .carousel-inner article header, .carousel .carousel-inner article p {
