@@ -130,7 +130,7 @@ class ContactPage(Page):
 
 class AboutPage(Page):
     parent_page_types = ['index.HomePage']
-    subpage_types = ['people.PeoplePage','news.NewsIndexPage', 'about.CareerPage', 'about.ContactPage', 'about.EventCalendarPage']
+    subpage_types = ['people.PeoplePage','news.NewsIndexPage', 'about.CareerPage', 'about.ContactPage', 'about.EventCalendarPage','about.DownloadsPage']
     
     hero_image = models.ImageField(null=True, blank=True)
     hero_title = models.CharField(max_length=255, null=True, blank=True)
@@ -199,3 +199,25 @@ class Resource(models.Model):
         FieldPanel('file'),
     ]
 
+class DownloadsPage(Page):
+    parent_page_types = ['about.AboutPage']
+    hero_image = models.ImageField(null=True, blank=True)
+    hero_title = models.CharField(max_length=255, null=True, blank=True)
+    hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
+    navbar_transparent = models.BooleanField('Transparency of the navigation bar', blank=True, null=True)
+    navbar_inverted = models.BooleanField('Colorful navigation bar', blank=True, null=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
+        FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
+        FieldPanel('hero_image'),
+        FieldPanel('hero_title'),
+        FieldPanel('hero_subtitle'),
+    ]
+
+    def get_context(self, request):
+        context = super(DownloadsPage, self).get_context(request)
+
+        resources = Resource.objects.order_by('name').all()
+        context['resources'] = resources 
+        return context

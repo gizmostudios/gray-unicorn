@@ -39,3 +39,10 @@ class EventCalendarPageTR(TranslationOptions):
 		'name',
 		'description',
 		)
+
+@register(DownloadsPage)
+class DownloadsPageTR(TranslationOptions):
+	fields = (
+		'hero_title',
+		'hero_subtitle',
+		)
