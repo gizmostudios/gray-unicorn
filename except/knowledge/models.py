@@ -15,6 +15,8 @@ from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, PageChooserPane
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
 
+from wagtail.core.fields import RichTextField
+
 from django.forms.widgets import Select
 
 from wagtail.core import blocks
@@ -106,7 +108,7 @@ class ArticlePage(Page):
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
 	date_published = models.DateField("Date article published", blank=True, null=True)
-	intro = models.TextField(blank=True)
+	intro = RichTextField(blank=True, null=True)
 
 	path_to_thumbnail = models.CharField(max_length=255, null=True, blank=True) 
 

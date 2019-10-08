@@ -12,7 +12,7 @@ import sys
 from django.core.wsgi import get_wsgi_application
 
 
-sys.path.append('/var/www/html/except.eco/gray-unicorn/except')
+sys.path.append('/var/www/except.eco/gray-unicorn/except')
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "except_wagtail.settings.production")
 
 application = get_wsgi_application()

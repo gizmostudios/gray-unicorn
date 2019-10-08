@@ -84,6 +84,10 @@ class BaseStreamBlock(StreamBlock):
         help_text='Insert an embed URL e.g https://www.youtube.com/embed/SGJFWirQ3ks',
         icon="fa-s15",
         template="blocks/embed_block.html")
+    html_block = RawHTMLBlock(
+        icon="fa-paragraph",
+        template="blocks/html_block.html",
+        required=False)
    
 
 # StreamBlocks

@@ -1,6 +1,7 @@
 import time
 from django.db import models
 from django import forms
+
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from datetime import datetime
@@ -21,9 +22,8 @@ from news.blocks import FooterStreamBlock
 from services.models import ServicePage as Service
 from projects.models import *
 
-settings.configure()
-
-file = open("../database_dumps/separated_tables/test_migrate.sql","r")
+import os
+import django
 
 print("-- Reading file --")
 

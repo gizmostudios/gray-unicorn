@@ -21,7 +21,7 @@
 					<div class="column is-8">
 						{% if page.intro %}
 							<p class="intro">
-								{{page.intro}}  
+								{{page.intro |richtext}}  
 							</p>
 						{% endif %}
 						{% if page.body %}

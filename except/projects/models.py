@@ -12,6 +12,8 @@ from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, PageChooserPane
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
 
+from wagtail.core.fields import RichTextField
+
 from django.forms.widgets import Select
 
 from wagtail.core import blocks
@@ -147,7 +149,7 @@ class ProjectPage(Page):
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
 	date_published = models.DateField("Date article published", blank=False, null=False)
 	summary = models.CharField('Summary (1 or 2 sentences max', max_length=255, null=True, blank=True)
-	intro = models.TextField(blank=True)
+	intro = RichTextField(blank=True, null=True)
 	navbar_transparent = models.BooleanField('Transparency of the navigation bar', blank=True, null=True)
 	navbar_inverted = models.BooleanField('Colorful navigation bar', blank=True, null=True)
 	body = StreamField(BaseStreamBlock(), verbose_name="Page body", blank=True)
@@ -215,17 +217,6 @@ class ProjectPage(Page):
 			return self.thumbnail
 		else:		
 			return self.path_to_thumbnail
-
-	def get_context(self, request):
-		context = super(ProjectPage, self).get_context(request)
-
-		resources = ArticlePage.objects.all().filter(service__id=self.service.id).order_by('-date_published')[0:3]
-		projects = ProjectPage.objects.live().filter(service__id=self.service.id).exclude(id=self.id).order_by('-date_published')[0:3]
-
-
-		context["related_resources"] = resources
-
-		return context
 
 
 class ProjectIndexPage(Page):
