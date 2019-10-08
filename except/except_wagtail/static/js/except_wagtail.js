@@ -7,6 +7,7 @@ const anchors = document.querySelectorAll('.anchor');
 const navbar = document.querySelector('.navbar');
 const stickyScrollUp = $('.scroll-up');
 const main_menus = document.querySelectorAll('.main-menu');
+const cover = document.querySelector('.background-dark-cover');
 
 // Function to manage navbar buttons to display the sun-menu correctly
 
@@ -37,7 +38,8 @@ var scrollLock = 0;
 
 if(window.innerHeight > 1000){
   $logo.style.height = '200px';
-  navbar.style.top = '140px'
+  navbar.style.top = '140px';
+  cover.style.background = 'linear-gradient(rgba(0,0,0,0.7) 100px, 500px, transparent 100%), linear-gradient(to top, rgba(0,0,0,0.3) 10%, 30%, transparent 100%)';
 }
 
 
