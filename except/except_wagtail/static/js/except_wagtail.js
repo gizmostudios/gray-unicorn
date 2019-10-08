@@ -36,7 +36,6 @@ var lastScrollTop = 0;
 var scrollLock = 0;
 
 if(window.innerHeight > 1000){
-  scaling = 0.2;
   $logo.style.height = '200px';
   navbar.style.top = '140px'
 }
@@ -50,7 +49,9 @@ window.addEventListener('scroll', function (e) {
       return;
     }
     var scaling = 0.5;
-    
+    if(window.innerHeight > 1000){
+      scaling = 0.2;
+    }
     var st = $(this).scrollTop();
      if (st > lastScrollTop){
         if( window.scrollY < $hero.clientHeight/2 && scrollLock == 0){
