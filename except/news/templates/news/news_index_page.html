@@ -15,6 +15,7 @@
     {# Main navigation #}
     {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
 
+
     <section class="section">
       <div class="container">
         <article class="article">
@@ -26,15 +27,48 @@
               <h2 class="h2">Latest news</h2>
             {% endif %}
           </header>
-          <div id="news" class="columns is-grid grid-loading">
-            {% include "modules/grid_6.html" with elements=current_news is_loadable=True %}
+          <header class="has-text-centered">
+            {% if current_language == 'nl' %}
+              <h3 class="h3">(NL) FILTERS</h3>
+            {% elif current_language == 'en' %}
+              <h3 class="h3">FILTERS</h3>
+            {% endif %}
+          </header>
+          <div class="spacer"></div>
+          <div class="has-text-centered">
+           <div class="button search-news">
+              {% if current_language == 'nl' %}
+                <input class="input input-news" name="query" placeholder="(NL) Search news"/>
+              {% elif current_language == 'en' %}
+                <input class="input input-news" name="query" placeholder="Search news"/>
+              {% endif %}
+              <i class="fas fa-search"></i>
+            </div>
+            <div class="button filter-type">
+              <select class="control-field type-field form-control">
+                <option value="" selected="">All</option>
+                <option value="AR">Articles</option>
+                <option value="OP">Open Positions</option>
+                <option value="EV">Events</option>
+              </select>
+            </div>
+            <div class="button filter-url">
+              <select class="control-field url-field form-control">
+                <option value="all" selected="">All</option>
+                <option value="">Except's news</option>
+                <option value="url">Newspaper Article</option>
+              </select>
+            </div>
           </div>
-          <div class='button-load-container'>
-            {% include "modules/button_load.html" with not_last=not_last %}
+          <div class="spacer is-large"></div>
+          <div id="news" class="columns is-grid grid-loading">
+            {% include "modules/grid_6.html" with elements=news is_loadable=True %}
           </div>
         </article>
       </div>
     </section>
     <script type="text/javascript" src="{% static 'js/loading_more.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/vendor/muuri.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/news_filter.js' %}"></script>
   {% endwith %}
 {% endblock content %}

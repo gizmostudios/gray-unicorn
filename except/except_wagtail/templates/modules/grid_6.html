@@ -8,18 +8,19 @@
 {% with mediaPath="/media/original_images/" %}
   {% for element in elements %}
     {% if is_loadable %}
-      <div class="column is-4 in-grid is-loadable">
+      <div class="column is-4 in-grid is-loadable" data-title="{{element.hero_title}}" data-type="{{element.type_of_news}}" data-url="{{element.url_article}}">
     {% else %}
       <div class="column is-4 in-grid">
     {% endif %}
-      <div class="card is-stretched">
+      <div class="card is-stretched item">
         <div class="card-image">
           {% if element.url_article %}
             <a href="{{element.url_article}}">
+              <figure class="image"><img src="/media/{{ element.hero_image }}">
           {% else %}
             <a href="{{element.url}}">
+              <figure class="image"><img src="{{ mediaPath }}{{ element.top_images.all.0.image }}">
           {% endif %}
-            <figure class="image"><img src="{{ mediaPath }}{{ element.top_images.all.0.image }}">
               {% if element.type_of_news == 'EV' %}
                 {% if current_language == 'nl' %}
                   <h4 class="h4 label is-red">(NL) Event</h4>
