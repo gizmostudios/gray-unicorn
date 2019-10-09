@@ -34,6 +34,11 @@ class Command(BaseCommand):
 	
 	def handle(self, *args, **options):
 
+		ProjectPage.objects.all().delete()
+		NewsPage.objects.all().delete()
+		ArticlePage.objects.all().delete()
+
+
 		file = open("../database_dumps/separated_tables/test_migrate.sql","r")
 
 		print("-- Reading file")
@@ -211,3 +216,5 @@ class Command(BaseCommand):
 					news_folder_page.add_child(instance=new_article_page)
 					new_article_page.save_revision().publish()
 			print("---- Extraction finished")
+
+
