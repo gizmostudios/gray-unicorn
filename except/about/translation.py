@@ -32,3 +32,17 @@ class ContactPageTR(TranslationOptions):
 class EventCalendarPageTR(TranslationOptions):
 	fields = (
 		)
+
+@register(Resource)
+class EventCalendarPageTR(TranslationOptions):
+	fields = (
+		'name',
+		'description',
+		)
+
+@register(DownloadsPage)
+class DownloadsPageTR(TranslationOptions):
+	fields = (
+		'hero_title',
+		'hero_subtitle',
+		)

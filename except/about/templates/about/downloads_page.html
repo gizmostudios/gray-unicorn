@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+{% load static wagtailuserbar %}
+
+
+{% load static %}
+
+{% block content %}
+  {% with mediaPath="/media/original_images/" %}
+
+    {# Top Section/Header #}
+    {% include "modules/top_section.html" with page=page carousel=False %}
+
+    {# Main navigation #}
+    {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
+
+    <section class="section">
+      <div class="container">
+        <article class="article">
+          <div class="spacer is-large"></div>
+          <header>
+            {% if current_language == 'nl' %}
+              <h2 class="h2">(NL) Resources & downloads</h2>
+            {% elif current_language == 'en' %}
+              <h2 class="h2">Resources & downloads</h2>
+            {% endif %}
+          </header>
+          <div id="news" class="columns is-grid grid-loading">
+            {% include "modules/downloadable.html" with downloadables=resources %}
+          </div>
+        </article>
+      </div>
+    </section>
+    <script type="text/javascript" src="{% static 'js/loading_more.js' %}"></script>
+  {% endwith %}
+{% endblock content %}

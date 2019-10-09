@@ -130,7 +130,7 @@ class ContactPage(Page):
 
 class AboutPage(Page):
     parent_page_types = ['index.HomePage']
-    subpage_types = ['people.PeoplePage','news.NewsIndexPage', 'about.CareerPage', 'about.ContactPage', 'about.EventCalendarPage']
+    subpage_types = ['people.PeoplePage','news.NewsIndexPage', 'about.CareerPage', 'about.ContactPage', 'about.EventCalendarPage','about.DownloadsPage']
     
     hero_image = models.ImageField(null=True, blank=True)
     hero_title = models.CharField(max_length=255, null=True, blank=True)
@@ -164,4 +164,60 @@ class AboutPage(Page):
 
         context['partners'] = Partner.objects.all()
 
+        return context
+
+@register_snippet
+class Resource(models.Model):
+    name = models.CharField(max_length=255, null=True, blank=True)
+    description = models.CharField(max_length=255, null=True, blank=True)
+    file = models.FileField(null=True, blank=True)
+    path_to_thumbnail = models.CharField(max_length=255, null=True, blank=True)
+
+    def extension(self):
+        name, extension = os.path.splitext(self.file.name)
+        return extension
+
+    def thumbnail(self):
+        
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        par_dir = os.path.abspath(os.path.join(dir_path, os.pardir))
+        if self.path_to_thumbnail is None:
+            cache_path = par_dir+'/media/'
+            pdf_or_odt_to_preview_path = par_dir+self.file.url
+            manager = PreviewManager(cache_path, create_folder= True)
+            path_to_preview_image = manager.get_jpeg_preview(pdf_or_odt_to_preview_path)
+            path, file = path_to_preview_image.split('/media/')
+            self.thumbnail = file
+            print(self.thumbnail)
+            return self.thumbnail
+        else:       
+            return self.path_to_thumbnail
+
+    panels = [
+        FieldPanel('name'),
+        FieldPanel('description'),
+        FieldPanel('file'),
+    ]
+
+class DownloadsPage(Page):
+    parent_page_types = ['about.AboutPage']
+    hero_image = models.ImageField(null=True, blank=True)
+    hero_title = models.CharField(max_length=255, null=True, blank=True)
+    hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
+    navbar_transparent = models.BooleanField('Transparency of the navigation bar', blank=True, null=True)
+    navbar_inverted = models.BooleanField('Colorful navigation bar', blank=True, null=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
+        FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
+        FieldPanel('hero_image'),
+        FieldPanel('hero_title'),
+        FieldPanel('hero_subtitle'),
+    ]
+
+    def get_context(self, request):
+        context = super(DownloadsPage, self).get_context(request)
+
+        resources = Resource.objects.order_by('name').all()
+        context['resources'] = resources 
         return context
