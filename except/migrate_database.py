@@ -81,8 +81,7 @@ if file.mode == "r":
 			print("Entry data:")
 			print(entry)
 
-		if entry_type == "Project" and entry_status == "p" and idx == 0:
-			print(idx)
+		if entry_type == "Project" and entry_status == "p":
 			project_folder_page = ProjectIndexPage.objects.live().first()
 			if int(entry_priority) < 2:
 				new_project_page = ProjectPage(title_en = entry_title_en,
@@ -109,4 +108,18 @@ if file.mode == "r":
 					body_nl = entry_body_nl,
 					highlight = False)
 			project_folder_page.add_child(instance=new_project_page)
-			new_project_page.save_revision().publish() 
+			new_project_page.save_revision().publish()
+		elif entry_type == "Article" and entry_status == "p":
+			project_folder_page = KnowledgePage.objects.live().first()
+			if int(entry_priority) < 2:
+				new_article_page = ArticlePage(title_en = entry_title_en,
+					title_nl = entry_title_nl,
+					hero_title_en = entry_title_en,
+					hero_title_nl = entry_title_nl,
+					hero_subtitle_en = entry_subtitle_en,
+					hero_subtitle_nl = entry_subtitle_nl,
+					intro_en = entry_intro_en,
+					intro_nl = entry_intro_nl,
+					body_en = entry_body_en,
+					body_nl = entry_body_nl,
+					highlight = True)
