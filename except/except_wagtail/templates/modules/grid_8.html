@@ -1,7 +1,7 @@
 {% with mediaPath="/media/original_images/" %}
   {% for element in elements %}
     {% if is_loadable %}
-      <div class="column is-3 in-grid is-loadable">
+      <div class="column is-3 in-grid is-loadable" data-title="{{element.hero_title}}" data-service="{{element.service}}">
     {% else %}
       <div class="column is-3 in-grid">
     {% endif %}

@@ -1,4 +1,3 @@
-/* This files is a test of the Muuri library and a new of filter and load information in the news section */
 document.addEventListener('DOMContentLoaded', function () {
 	var searchElement = document.querySelector('.input-news');
 	var typeFilter = document.querySelector('.type-field');
@@ -34,12 +33,8 @@ document.addEventListener('DOMContentLoaded', function () {
     	searchElementValue = searchElement.value.toLowerCase();
 		typeFilterValue = typeFilter.value;
 		urlFilterValue = urlFilter.value;
-		console.log(searchElementValue);
-		console.log(typeFilterValue);
-		console.log(urlFilterValue);
 		grid.filter(function (item) {
 			var elem = item.getElement();
-			console.log(elem);
 			var isSearchmatch = !searchElementValue ? true : (elem.getAttribute('data-title') || '').toLowerCase().indexOf(searchElementValue) > -1;
 			var isTypeMatch = !typeFilterValue ? true : (elem.getAttribute('data-type') || '') === typeFilterValue;
 			if(typeFilterValue == "AR"){

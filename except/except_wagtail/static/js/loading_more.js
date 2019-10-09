@@ -1,36 +1,3 @@
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-var csrftoken = getCookie('csrftoken');
-
-
-
-function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
-$.ajaxSetup({
-    beforeSend: function(xhr, settings) {
-        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        }
-    }
-});
-
-// Function to update filter status
-
 function updateFilterDisplay(serviceFilter){
     const serviceFiltersActive = $(".is-filter.is-active");
     if(serviceFiltersActive.length == serviceFilters.length){
@@ -51,73 +18,77 @@ function updateFilterDisplay(serviceFilter){
     }
 }
 
-// Function to reset and calculate iteration of loading
+document.addEventListener('DOMContentLoaded', function () {
+	var searchElement = document.querySelector('.input-news');
+	var searchElementValue = searchElement.value.toLowerCase();
 
-function loadMore(){
-	var type = document.querySelector('.grid-loading').id;
-	var articles = document.querySelectorAll('.is-loadable');
-	var iteration = 0;
-	if(type != "news"){
-		iteration = Math.ceil(articles.length / 8);
-	}
-	else{
-		iteration = Math.ceil(articles.length / 6);
-	}
-	loadElements(type,iteration,false);
-}
+	// Reset field values.
+    searchElement.value = '';
 
-// Function to load elements
+	var grid = new Muuri('.grid-loading', {
+		items: '.in-grid',
+		layout: {
+			fillGaps: true,
+		}});
 
-function loadElements(dataType,iteration,filter_update){
-	var listActiveCat = [];
-	if(dataType != "news"){
-		const serviceFiltersActive = $(".is-filter.is-active");
-		for( var j = 0; j < serviceFiltersActive.length; j++){
-			listActiveCat.push(serviceFiltersActive[j].querySelector("span").innerHTML)
-		}
-		console.log(listActiveCat);
+	function updateFilterDisplay(serviceFilter){
+	    const serviceFiltersActive = $(".is-filter.is-active");
+	    if(serviceFiltersActive.length == serviceFilters.length){
+	        serviceFilters.removeClass("is-active").addClass("is-inactive");
+	        serviceFilter.removeClass("is-inactive").addClass("is-active");
+	    }
+	    else if(serviceFilter.hasClass("is-active")){
+	        serviceFilter.removeClass("is-active").addClass("is-inactive");
+	        serviceFilters.removeClass("is-inactive").addClass("is-active");
+	    }
+	    else{
+	        serviceFilters.removeClass("is-active").addClass("is-inactive");
+	        serviceFilter.removeClass("is-inactive").addClass("is-active");
+	    }
+	    const serviceFiltersActiveUpdated = $(".is-filter.is-active");
+	    if (serviceFiltersActiveUpdated.length == 0){
+	        serviceFilters.removeClass("is-inactive").addClass("is-active");
+	    }
 	}
-	$.post("/ajax/load_elements/",
-	JSON.stringify({
-		services: listActiveCat,
-		dataType: dataType,
-		iteration: iteration }))
-	.done(function(data){
-		var splithtml = data.html.split('|')
-		var section = document.querySelector("#"+dataType);
-		if(filter_update){
-			section.innerHTML = splithtml[0];
-		}else{
-			section.innerHTML += splithtml[0];
-		}
-		var button = document.querySelector('.button-load-container');
-		button.innerHTML = splithtml[1];
-		$('.load-more').off().on('click', function(){
-			loadMore();
+
+	// Search field binding.
+    searchElement.addEventListener('keyup', function () {
+      var newSearch = searchElement.value.toLowerCase();
+      if (searchElementValue !== newSearch) {
+        searchElementValue = newSearch;
+        filter();
+      }
+    });
+    const serviceFilters = $(".is-filter");
+	var lock = 0;
+	serviceFilters.each(function() {
+		$(this).off().on('click', function(){
+			if(lock == 0){
+				updateFilterDisplay($(this));
+				filter();
+				lock=1;
+			}
+			else{
+				lock=0;
+			};
+			
 		});
-	})
-}
-
-
-$('.load-more').off().on('click', function(){
-	loadMore();
-});
-
-// Update elements and filters when clicking on filters
-
-const serviceFilters = $(".is-filter");
-var lock = 0;
-serviceFilters.each(function() {
-	$(this).off().on('click', function(){
-		if(lock == 0){
-			updateFilterDisplay($(this));
-			var type = document.querySelector('.grid-loading').id;
-			loadElements(type,0,true);
-			lock=1;
-		}
-		else{
-			lock=0;
-		};
-		
 	});
+
+    function filter(){
+    	searchElementValue = searchElement.value.toLowerCase();
+
+		grid.filter(function (item) {
+			var elem = item.getElement();
+			var isSearchmatch = !searchElementValue ? true : (elem.getAttribute('data-title') || '').toLowerCase().indexOf(searchElementValue) > -1;
+			var isServicematch = false;
+			serviceFilters.each(function() {
+				if ($(this).hasClass("is-active") && isServicematch == false){
+					isServicematch = ($(this).find('span')[0].innerHTML.replace('&amp;','&') == elem.getAttribute('data-service'));
+					console.log($(this).find('span')[0].innerHTML.replace('&amp;','&'))
+				};
+			});
+			return isSearchmatch && isServicematch;
+		});
+    };
 });
