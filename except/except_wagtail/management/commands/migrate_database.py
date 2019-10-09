@@ -174,4 +174,40 @@ class Command(BaseCommand):
 							highlight = False)
 					articles_folder_page.add_child(instance=new_article_page)
 					new_article_page.save_revision().publish()
+				elif entry_type=="NewsItem" and entry_status == "p":
+					news_folder_page = FolderArticlePage.objects.live().first()
+					if int(entry_priority) < 2:
+						new_article_page = NewsPage(title_en = entry_title_en,
+							title_nl = entry_title_nl,
+							hero_title_en = entry_title_en,
+							hero_title_nl = entry_title_nl,
+							hero_subtitle_en = entry_subtitle_en,
+							hero_subtitle_nl = entry_subtitle_nl,
+							type_of_news = "AR",
+							navbar_transparent=True,
+							navbar_inverted=False,
+							intro_en = entry_intro_en,
+							intro_nl = entry_intro_nl,
+							body_en = raw_json_en,
+							body_nl = raw_json_nl,
+							date_published=entry_published,
+							highlight = True)
+					else:
+						new_article_page = NewsPage(title_en = entry_title_en,
+							title_nl = entry_title_nl,
+							hero_title_en = entry_title_en,
+							hero_title_nl = entry_title_nl,
+							hero_subtitle_en = entry_subtitle_en,
+							hero_subtitle_nl = entry_subtitle_nl,
+							type_of_news = "AR",
+							navbar_transparent=True,
+							navbar_inverted=False,
+							intro_en = entry_intro_en,
+							intro_nl = entry_intro_nl,
+							body_en = raw_json_en,
+							body_nl = raw_json_nl,
+							date_published=entry_published,
+							highlight = False)
+					news_folder_page.add_child(instance=new_article_page)
+					new_article_page.save_revision().publish()
 			print("---- Extraction finished")
