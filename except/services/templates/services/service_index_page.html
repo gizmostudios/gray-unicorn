@@ -15,33 +15,41 @@
     {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
 
     <a class="anchor" id="first_anchor"></a>
-    <div class="spacer"></div>
     <section class="section">
       <div class="container">
-        <article class="article">
-          <header class="header">
-            {% if current_language == 'nl' %}
-              <h2 class="h2">(NL) Our working areas</h2>
-            {% elif current_language == 'en' %}
-              <h2 class="h2">Our working areas</h2>
+        <div class="columns">
+          <div class="column is-6">
+            <header class="header">
+              {% if current_language == 'nl' %}
+                <h2 class="h2">(NL) Our working areas</h2>
+              {% elif current_language == 'en' %}
+                <h2 class="h2">Our working areas</h2>
+              {% endif %}
+            </header>
+            {% if page.service_introduction %}
+              <p class="intro">
+                {{page.service_introduction}}
+              </p>
             {% endif %}
-          </header>
-          <div class="columns has-gap">
+            <div class="spacer"></div>
             {% for service in service_list %}
-              <div class="column has-text-centered column-service">
-                <a id="{{service.id}}" class="service">
-                  <figure class="image"><img src="{{ mediaPath }}{{ service.image }}"></figure>
-                  <h3 class="h3">{{service.hero_title}}</h3>
-                </a>
+              <div class="service">
+                <a class="service-link" href="{{service.url}}"><i class="fas fa-chevron-right"></i> <span>{{service.hero_title}}</span></a>
               </div>
             {% endfor %}
           </div>
-        </article>
-        <article class="article">
-          {% for service in service_list %}
-            {% include "services/render_subservice.html" with subservices=service.get_subservices %}
-          {% endfor %}
-        </article>
+          <div class="column is-6">
+            {% for service in service_list %}
+              <div class="service-image" id="{{service.hero_title}}">
+                <div class="service-cover"  style="background-image: url({{ mediaPath }}{{ service.image }})"></div>
+                <div class="caption">
+                  <h4 class="h4">{{service.hero_title}}</h4>
+                  <p>{{service.summary}}</p>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
       </div>
     </section>
     <section class="section is-fullheight" style="background-image: url({{ mediaPath }}{{ page.expertise_background }})">

@@ -23,6 +23,7 @@ class ServiceIndexPageTR(TranslationOptions):
 	fields = (
 		'hero_title',
 		'hero_subtitle',
+		'service_introduction',
 		)
 
 @register(Expertise)

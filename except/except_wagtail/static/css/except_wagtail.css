@@ -1509,6 +1509,58 @@ header + .intro{
   height: 100%;
 }
 
+.is-6 .service{
+  width: 100%;
+  margin: 0.5em 0;
+}
+
+a.service-link.active{
+  background-color: rgb(229, 230, 231);
+}
+
+a.service-link{
+  display: inline-block;
+  padding: 0.5em 0;
+  width: 100%;
+}
+
+.service-link span{
+  border-bottom: 1px solid black;
+}
+
+.service-link.active span{
+  border-bottom: 1px solid rgb(0,0,0,0.5);
+}
+
+.service-image{
+  width: 100%;
+  height: 100%;
+  display: none;
+  position: relative;
+}
+
+.service-image .caption{
+  max-width: 50%;
+  max-height: 50%;
+  position: absolute;
+  left:0;
+  bottom: 0;
+  color: white;
+  padding: 1em;
+  background-color: rgb(0,0,0,0.5);
+}
+
+.service-image .service-cover{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
 @media screen and (max-width: 1087px) {
   nav,
 nav.navbar {

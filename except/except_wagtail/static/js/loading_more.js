@@ -1,23 +1,3 @@
-function updateFilterDisplay(serviceFilter){
-    const serviceFiltersActive = $(".is-filter.is-active");
-    if(serviceFiltersActive.length == serviceFilters.length){
-        serviceFilters.removeClass("is-active").addClass("is-inactive");
-        serviceFilter.removeClass("is-inactive").addClass("is-active");
-    }
-    else if(serviceFilter.hasClass("is-active")){
-        serviceFilter.removeClass("is-active").addClass("is-inactive");
-        serviceFilters.removeClass("is-inactive").addClass("is-active");
-    }
-    else{
-        serviceFilters.removeClass("is-active").addClass("is-inactive");
-        serviceFilter.removeClass("is-inactive").addClass("is-active");
-    }
-    const serviceFiltersActiveUpdated = $(".is-filter.is-active");
-    if (serviceFiltersActiveUpdated.length == 0){
-        serviceFilters.removeClass("is-inactive").addClass("is-active");
-    }
-}
-
 document.addEventListener('DOMContentLoaded', function () {
 	var searchElement = document.querySelector('.input-news');
 	var searchElementValue = searchElement.value.toLowerCase();
