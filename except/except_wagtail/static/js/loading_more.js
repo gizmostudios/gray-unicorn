@@ -85,7 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
 			serviceFilters.each(function() {
 				if ($(this).hasClass("is-active") && isServicematch == false){
 					isServicematch = ($(this).find('span')[0].innerHTML.replace('&amp;','&') == elem.getAttribute('data-service'));
-					console.log($(this).find('span')[0].innerHTML.replace('&amp;','&'))
 				};
 			});
 			return isSearchmatch && isServicematch;

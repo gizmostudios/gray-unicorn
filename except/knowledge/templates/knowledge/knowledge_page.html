@@ -123,6 +123,14 @@
                 <input type="checkbox"><span>{{service.title}}</span>
               </label>
             {% endfor %}
+            <div class="button search-news" style="margin-top: 1.4em;">
+              {% if current_language == 'nl' %}
+                <input class="input input-news" name="query" placeholder="(NL) Search news"/>
+              {% elif current_language == 'en' %}
+                <input class="input input-news" name="query" placeholder="Search news"/>
+              {% endif %}
+              <i class="fas fa-search"></i>
+            </div>
           </div>
           <div class="spacer is-large"></div>
           <div id="articles" class="columns is-grid grid-loading">
@@ -134,8 +142,8 @@
         </article>
       </div>
     </section>
-    <script type="text/javascript" src="{% static 'js/knowledge.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/carousel_article.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/vendor/muuri.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/loading_more.js' %}"></script>
     {% endwith %}
   {% endwith %}
