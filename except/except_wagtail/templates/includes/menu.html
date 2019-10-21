@@ -12,7 +12,7 @@
         	{% if item.has_children_in_menu %}
         		<div class="navbar-item main-menu">
         			<input class="for-dropdown is-hidden" type="checkbox" id="{{item.text}}"/>
-        			<a><label for="{{item.text}}">{{item.text}}<i class="fas fa-chevron-up"></i></label></a>
+        			<a><label for="{{item.text}}"><a href="{{item.href}}" class="navbar-dropdown-selection">{{item.text}}</a><i class="fas fa-chevron-up"></i></label></a>
               <div class="dropdown sub-menu">
                 <ul>
                   {% if current_language == 'nl' %}

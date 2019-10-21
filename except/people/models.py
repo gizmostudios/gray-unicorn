@@ -136,8 +136,11 @@ class PeoplePage(Page):
 
 	def get_context(self, request):
 		context = super(PeoplePage, self).get_context(request)
-
+		
+		people = self.get_people()
+		missing_columns_number = 3-len(self.get_people())%3
 		context['people_list'] = self.get_people()
+		context['missing_columns'] = people[0:missing_columns_number]
 		return context
 
 	def get_people(self):

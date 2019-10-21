@@ -43,6 +43,11 @@
               </figure>
             </a>
           {% endfor %}
+          {% for element in missing_columns.all %}
+            <a>
+              <figure class="image portrait missing-column"></figure>
+            </a>
+          {% endfor %}
         </div>
       </article>
     </section>

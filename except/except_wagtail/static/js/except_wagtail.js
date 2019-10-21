@@ -39,11 +39,14 @@ var scrollLock = 0;
 if(window.innerHeight > 1000){
   $logo.style.height = '200px';
   navbar.style.top = '140px';
-  cover.style.background = 'linear-gradient(rgba(0,0,0,0.7) 100px, 500px, transparent 100%), linear-gradient(to top, rgba(0,0,0,0.3) 10%, 30%, transparent 100%)';
+  if(cover){
+      cover.style.background = 'linear-gradient(rgba(0,0,0,0.7) 100px, 500px, transparent 100%), linear-gradient(to top, rgba(0,0,0,0.3) 10%, 30%, transparent 100%)';
+  }
 }
 
 
 let stickyNav = false;
+
 window.addEventListener('scroll', function (e) {
   if($hero != null){
     // Cancel on mobile
@@ -59,23 +62,44 @@ window.addEventListener('scroll', function (e) {
         if( window.scrollY < $hero.clientHeight/2 && scrollLock == 0){
           $('html, body').animate({ scrollTop: $('#bottom-navbar').position().top }, { duration: 1000, easing:"swing", start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
         }
-        else if( window.scrollY > $hero.clientHeight+50 && window.scrollY < $hero.clientHeight*(3/2) && scrollLock == 0){
+        else if( window.scrollY > $('#bottom-navbar').position().top+50 && window.scrollY < $('#carousel-section').position().top && scrollLock == 0){
           if($('#carousel-section').position()){
             $('html, body').animate({ scrollTop: $('#carousel-section').position().top }, { duration: 1000, easing:"swing", start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
           }
         }
-        else if( window.scrollY > $hero.clientHeight*2+200 && window.scrollY < $hero.clientHeight*(5/2) && scrollLock == 0){
+        else if( window.scrollY > $('#carousel-section').position().top+50 && window.scrollY < $('#services-section').position().top && scrollLock == 0){
           if($('#services-section').position()){
             $('html, body').animate({ scrollTop: $('#services-section').position().top }, { duration: 1000, easing:"swing", start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
           }
         }
-        else if( window.scrollY > $hero.clientHeight*3+100 && window.scrollY < $hero.clientHeight*(7/2) && scrollLock == 0){
+        else if( window.scrollY > $('#services-section').position().top+50 && window.scrollY < $('#highlight-section').position().top && scrollLock == 0){
           if($('#highlight-section').position()){
             $('html, body').animate({ scrollTop: $('#highlight-section').position().top }, { duration: 1000, easing:"swing", start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
           }
         }
      }
+     else if (st < lastScrollTop){
+        if( window.scrollY < $('#bottom-navbar').position().top-50 && window.scrollY > $('#top-scroll').position().top && scrollLock == 0){
+          $('html, body').animate({ scrollTop: $('#top-scroll').position().top }, { duration: 1000, easing:"swing", start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
+        }
+        else if( window.scrollY < $('#carousel-section').position().top-50 && window.scrollY > $('#bottom-navbar').position().top && scrollLock == 0){
+          if($('#carousel-section').position()){
+            $('html, body').animate({ scrollTop: $('#bottom-navbar').position().top }, { duration: 1000, easing:"swing", start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
+          }
+        }
+        else if( window.scrollY < $('#services-section').position().top-50 && window.scrollY > $('#carousel-section').position().top && scrollLock == 0){
+          if($('#services-section').position()){
+            $('html, body').animate({ scrollTop: $('#carousel-section').position().top }, { duration: 1000, easing:"swing", start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
+          }
+        }
+        else if(window.scrollY < $('#highlight-section').position().top-50 && window.scrollY > $('#services-section').position().top && scrollLock == 0){
+          if($('#highlight-section').position()){
+            $('html, body').animate({ scrollTop: $('#services-section').position().top }, { duration: 1000, easing:"swing", start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
+          }
+        }
+     }
      lastScrollTop = st;
+
 
     let diff = window.scrollY / $hero.clientHeight;
 
@@ -157,11 +181,6 @@ function scrollCarousel($container, target) {
     left: windowWidth * (target - 1)
   })
 }
-anchors.forEach(anchor => {
-  if (anchor != null){
-    anchor.style.top = -($nav.scrollHeight*0.7)+'px';
-  }
-})
 
 
 // Function to manage language changes
@@ -223,4 +242,29 @@ $(document).ready(function(){
       });
     });
   });
+
+  var scaling = 0.5;
+  if(window.innerHeight > 1000){
+    scaling = 0.2;
+  }
+
+  if($hero == null){
+    $nav.style.transform = `translate(0, -${0.9 * 30}px)`;
+    $logo.style.transform = `scale(${1 - 0.9 * scaling})`;
+  }
+
+  var paddingVal = $nav.clientHeight - 0.9 * 30;
+
+  $('section.is-fullheight').each(function(){
+    $(this).css('padding-top', paddingVal+"px");
+    $(this).css('padding-bottom', paddingVal+"px");
+    $(this).find('.article').css('max-height', (window.innerHeight - paddingVal)+"px");
+  });
+  $('.carousel.is-fullheight.cover').each(function(){
+    $(this).css('top', paddingVal+"px");
+    $(this).css('max-height', (window.innerHeight - paddingVal)+"px");
+  })
+  $('.home-link-section').each(function(){
+    $(this).css('padding-top', paddingVal+"px");
+  })
 });
