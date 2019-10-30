@@ -25,6 +25,7 @@ from wagtail.images.blocks import ImageChooserBlock
 from news.blocks import FooterStreamBlock
 from services.models import ServicePage as Service
 from projects.models import *
+from knowledge.models import *
 from datetime import datetime
 
 import json
@@ -35,6 +36,13 @@ class Command(BaseCommand):
 	def handle(self, *args, **options):
 
 		file = open("../database_dumps/separated_tables/test_migrate.sql","r")
+
+		print("-- Cleaning models")
+
+		ProjectPage.objects.all().delete()
+		ArticlePage.objects.all().delete()
+		NewsPage.objects.all().delete()
+
 
 		print("-- Reading file")
 
@@ -66,7 +74,7 @@ class Command(BaseCommand):
 				if idx == 0:
 					entry = entry[1:]
 				if idx == len_entries-1:
-					print('------ Progress: {0} extracted items'.format(str(idx+1)))
+					print('------ Finished: {0} extracted items'.format(str(idx+1)))
 					entry = entry[:-2]
 
 				entry_items = process_entry(entry)
@@ -94,8 +102,6 @@ class Command(BaseCommand):
 						print(item)
 					print(entry_items[38].replace('\'',''))
 					return
-
-				id_relation_table[idx]=entry_id
 
 				try:
 					test = int(entry_id)
@@ -139,6 +145,7 @@ class Command(BaseCommand):
 							highlight = False)
 					project_folder_page.add_child(instance=new_project_page)
 					new_project_page.save_revision().publish()
+					id_relation_table[entry_id]=new_project_page.id
 
 				elif entry_type == "Article" and entry_status == "p":
 					articles_folder_page = KnowledgePage.objects.live().first()
@@ -174,6 +181,7 @@ class Command(BaseCommand):
 							highlight = False)
 					articles_folder_page.add_child(instance=new_article_page)
 					new_article_page.save_revision().publish()
+					id_relation_table[entry_id]=new_article_page.id
 				elif entry_type=="NewsItem" and entry_status == "p":
 					news_folder_page = FolderArticlePage.objects.live().first()
 					if int(entry_priority) < 2:
@@ -210,4 +218,138 @@ class Command(BaseCommand):
 							highlight = False)
 					news_folder_page.add_child(instance=new_article_page)
 					new_article_page.save_revision().publish()
-			print("---- Extraction finished")
+					id_relation_table[entry_id]=new_article_page.id
+		print("---- Extraction finished")
+		print("-- Reading file")
+		print("---- Building asset connections")
+
+		file = open("../database_dumps/separated_tables/test_article_to_article.sql","r")
+		if file.mode == "r":
+			content = file.readlines()
+			print("---- Extracting assets")
+			connectionList = content[0].split("),(")
+			for idx, connection in enumerate(connectionList):
+				print('------ Progress: {0} extracted article to article connections'.format(str(idx+1)), end="\r")
+				if idx == len(connectionList)-1:
+					print('------ Finished: {0} extracted article to article connections'.format(str(idx+1)))
+				elements = connection.split(",")
+				from_article_old_id = elements[1].replace("(","")
+				to_article_old_id = elements[2].replace(")","")
+				try:
+					from_article_new_id = id_relation_table.get(from_article_old_id)
+					to_article_news_id = id_relation_table.get(to_article_old_id)
+				except:
+					continue
+				if(from_article_new_id != None and to_article_news_id != None):
+					from_article = ArticlePage.objects.get(pk=from_article_new_id)
+					to_article = ArticlePage.objects.get(pk=to_article_news_id)
+					new_connection = ConnectedArticle(page_id = from_article_new_id, element = to_article)
+					new_connection.save()
+					from_article.linked_articles.add(new_connection)
+					new_connection = ConnectedArticle(page_id = to_article_news_id, element = from_article)
+					new_connection.save()
+					to_article.linked_articles.add(new_connection)
+
+		file = open("../database_dumps/separated_tables/test_article_to_project.sql","r")
+		if file.mode == "r":
+			content = file.readlines()
+			print("---- Extracting assets")
+			connectionList = content[0].split("),(")
+			for idx, connection in enumerate(connectionList):
+				print('------ Progress: {0} extracted article to project connection'.format(str(idx+1)), end="\r")
+				if idx == len(connectionList)-1:
+					print('------ Finished: {0} extracted article to project connection'.format(str(idx+1)))
+				elements = connection.split(",")
+				from_project_old_id = elements[1].replace("(","")
+				to_article_old_id = elements[2].replace(")","")
+				try:
+					from_project_new_id = id_relation_table.get(from_project_old_id)
+					to_article_new_id = id_relation_table.get(to_article_old_id)
+				except:
+					continue
+				if(from_project_new_id != None and to_article_new_id != None):
+					from_project = ProjectPage.objects.get(pk=from_project_new_id)
+					to_article = ArticlePage.objects.get(pk=to_article_new_id)
+					new_connection = ConnectedProject(page_id = to_article_new_id, element = from_project)
+					new_connection.save()
+					to_article.linked_projects.add(new_connection)
+					new_connection = LinkedArticle(page_id = from_project_new_id, element = to_article)
+					new_connection.save()
+					from_project.linked_articles.add(new_connection)
+
+			file = open("../database_dumps/separated_tables/test_project_to_project.sql","r")
+			if file.mode == "r":
+				content = file.readlines()
+				print("---- Extracting assets")
+				connectionList = content[0].split("),(")
+				for idx, connection in enumerate(connectionList):
+					print('------ Progress: {0} extracted project to project connection'.format(str(idx+1)), end="\r")
+					if idx == len(connectionList)-1:
+						print('------ Finished: {0} extracted project to project connection'.format(str(idx+1)))
+					elements = connection.split(",")
+					from_project_old_id = elements[1].replace("(","")
+					to_project_old_id = elements[2].replace(")","")
+					try:
+						from_project_new_id = id_relation_table.get(from_project_old_id)
+						to_project_new_id = id_relation_table.get(to_project_old_id)
+					except:
+						continue
+					if(from_project_new_id != None and to_project_new_id != None):
+						from_project = ProjectPage.objects.get(pk=from_project_new_id)
+						to_project = ProjectPage.objects.get(pk=to_project_new_id)
+						new_connection = LinkedProject(page_id = to_project_new_id, element = from_project)
+						new_connection.save()
+						to_project.linked_projects.add(new_connection)
+						new_connection = LinkedProject(page_id = from_project_new_id, element = to_project)
+						new_connection.save()
+						from_project.linked_projects.add(new_connection)
+
+			file = open("../database_dumps/separated_tables/test_news_to_news.sql","r")
+			if file.mode == "r":
+				content = file.readlines()
+				print("---- Extracting assets")
+				connectionList = content[0].split("),(")
+				for idx, connection in enumerate(connectionList):
+					print('------ Progress: {0} extracted news to news connection'.format(str(idx+1)), end="\r")
+					if idx == len(connectionList)-1:
+						print('------ Finished: {0} extracted news to news connection'.format(str(idx+1)))
+					elements = connection.split(",")
+					from_news_old_id = elements[1].replace("(","")
+					to_news_old_id = elements[2].replace(")","")
+					try:
+						from_news_new_id = id_relation_table.get(from_news_old_id)
+						to_news_new_id = id_relation_table.get(to_news_old_id)
+					except:
+						continue
+					if(from_news_new_id != None and to_news_new_id != None):
+						from_news = NewsPage.objects.get(pk=from_news_new_id)
+						to_news = NewsPage.objects.get(pk=to_news_new_id)
+						new_connection = RelatedArticle(page_id = to_news_new_id, element = from_news)
+						new_connection.save()
+						to_news.linked_articles.add(new_connection)
+
+			file = open("../database_dumps/separated_tables/test_news_to_project.sql","r")
+			if file.mode == "r":
+				content = file.readlines()
+				print("---- Extracting assets")
+				connectionList = content[0].split("),(")
+				for idx, connection in enumerate(connectionList):
+					print('------ Progress: {0} extracted news to article connection'.format(str(idx+1)), end="\r")
+					if idx == len(connectionList)-1:
+						print('------ Finished: {0} extracted news to article connection'.format(str(idx+1)))
+					elements = connection.split(",")
+					from_project_old_id = elements[1].replace("(","")
+					to_news_old_id = elements[2].replace(")","")
+					try:
+						from_project_new_id = id_relation_table.get(from_project_old_id)
+						to_news_new_id = id_relation_table.get(to_news_old_id)
+					except:
+						continue
+					if(from_project_new_id != None and to_news_new_id != None):
+						from_project= ProjectPage.objects.get(pk=from_project_new_id)
+						to_news = NewsPage.objects.get(pk=to_news_new_id)
+						new_connection = RelatedProject(page_id = to_news_new_id, element = from_project)
+						new_connection.save()
+						to_news.linked_projects.add(new_connection)
+
+		print("---- Connection building finished")

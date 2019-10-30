@@ -1,0 +1,27 @@
+/* Main fonts use on the website */
+
+@font-face {
+	font-family: "aller";
+	src: url("../fonts/Aller_Lt.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "aller_lightregular";
+	src: url("../fonts/Aller_Rg.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "allerbold_sc";
+	src: url("../fonts/Aller_Bd.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "aller_lightregular_sc";
+	src: url("../fonts/Aller_Lt.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "allerregular_sc";
+	src: url("../fonts/Aller_Rg.ttf") format("truetype");
+}
+allerregular_sc

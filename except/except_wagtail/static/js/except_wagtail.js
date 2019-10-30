@@ -59,6 +59,7 @@ window.addEventListener('scroll', function (e) {
     }
     var st = $(this).scrollTop();
      if (st > lastScrollTop){
+      try{
         if( window.scrollY < $hero.clientHeight/2 && scrollLock == 0){
           $('html, body').animate({ scrollTop: $('#bottom-navbar').position().top }, { duration: 1000, easing:"swing", start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
         }
@@ -77,8 +78,11 @@ window.addEventListener('scroll', function (e) {
             $('html, body').animate({ scrollTop: $('#highlight-section').position().top }, { duration: 1000, easing:"swing", start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
           }
         }
+      }
+      catch(err){}
      }
      else if (st < lastScrollTop){
+      try{
         if( window.scrollY < $('#bottom-navbar').position().top-50 && window.scrollY > $('#top-scroll').position().top && scrollLock == 0){
           $('html, body').animate({ scrollTop: $('#top-scroll').position().top }, { duration: 1000, easing:"swing", start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
         }
@@ -97,6 +101,8 @@ window.addEventListener('scroll', function (e) {
             $('html, body').animate({ scrollTop: $('#services-section').position().top }, { duration: 1000, easing:"swing", start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
           }
         }
+      }
+      catch(err){}
      }
      lastScrollTop = st;
 
@@ -117,7 +123,7 @@ window.addEventListener('scroll', function (e) {
       $('.navbar-menu').find('.fa-chevron-down').removeClass('fa-chevron-down').addClass('fa-chevron-up');
       $('.scroll-up').css('display','none');
     }
-
+    console.log(diff)
     $hero.style.opacity = 1 - (diff * 1);
     
     $nav.style.transform = `translate(0, -${diff * 30}px)`;
