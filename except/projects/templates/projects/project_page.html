@@ -10,7 +10,32 @@
   {% with mediaPath="/media/original_images/" %}
 
     {# Top Section/Header #}
-    {% include "modules/top_section.html" with page=page carousel=True %}
+
+    {% if top_images.all %}
+      {% include "modules/top_section.html" with page=page carousel=True %}
+    {% else %}
+      {% with mediaOldPath="http://media.except.nl/media/" %}
+        {% if compact == False %}
+          <section class="hero is-inverted is-darkened" style="background-image: url({{ mediaOldPath }}{{ page.hero_old_image }})">
+        {% else %}
+          <section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ mediaOldPath }}{{ page.hero_old_image }})">
+        {% endif %}
+          <div class='background-dark-cover'></div>
+          <div class="hero-body">
+            <div class="container">
+              <div>
+              {% if page.hero_title %}
+                  <h1 class="h1 title">{{ page.hero_title }}</h1>
+              {% endif %}
+              {% if page.hero_subtitle %}
+                  <h3 class="h3 subtitle">{{ page.hero_subtitle }}</h3>
+              {% endif %}
+              </div>
+            </div>
+          </div>
+        </section>
+      {% endwith %}
+    {% endif %}
 
     {# Main navigation #}
     {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}

@@ -37,14 +37,11 @@ class Command(BaseCommand):
 
 		file = open("../database_dumps/separated_tables/test_migrate.sql","r")
 
-		print("-- Cleaning models")
+		print("1 - Cleaning models")
 
 		ProjectPage.objects.all().delete()
 		ArticlePage.objects.all().delete()
 		NewsPage.objects.all().delete()
-
-
-		print("-- Reading file")
 
 		def process_entry(entry):
 
@@ -62,19 +59,42 @@ class Command(BaseCommand):
 					list_items.append(item)
 			return list_items
 
+		def process_images():
+
+			print("2 - Extracting images")
+
+			image_file = open("../database_dumps/separated_tables/asset_image.sql","r")
+			list_images={}
+
+			if image_file.mode == 'r':
+				image_content = image_file.readlines()[0].split("),(")
+
+				for idx, image in enumerate(image_content):
+					print('-- Progress: {0} extracted images'.format(str(idx+1)), end="\r")
+					if idx == len(image_content)-1:
+						print('-- Finished: {0} extracted images'.format(str(idx+1)))
+
+					image_asset_id = image.split(',')[1]
+					image_asset_path = image.split(',\'')[2].split('\'')[0]
+					list_images.setdefault(image_asset_id, []).append(image_asset_path)
+
+				return list_images
+
+
 		if file.mode == "r":
 			content = file.readlines()
-			print("---- Extracting assets")
+			images = process_images()
+			print("3 - Extracting assets")
 			entries = content[0].split("),(")
 			id_relation_table={}
 			len_entries = len(entries)
 			for idx, entry in enumerate(entries):
-				print('------ Progress: {0} extracted items'.format(str(idx+1)), end="\r")
+				print('-- Progress: {0} extracted assets'.format(str(idx+1)), end="\r")
 
 				if idx == 0:
 					entry = entry[1:]
 				if idx == len_entries-1:
-					print('------ Finished: {0} extracted items'.format(str(idx+1)))
+					print('-- Finished: {0} extracted assets'.format(str(idx+1)))
 					entry = entry[:-2]
 
 				entry_items = process_entry(entry)
@@ -89,7 +109,7 @@ class Command(BaseCommand):
 				entry_subtitle_nl = entry_items[9].replace('\'','')
 				entry_intro_en = entry_items[11].replace('\'','').replace('\\r\\n','')
 				entry_intro_nl = entry_items[12].replace('\'','').replace('\\r\\n','')
-				entry_body_en = entry_items[14].replace('\'','').replace('\\r\\n','').replace('<h2>','<h3 class="h3">')
+				entry_body_en = entry_items[14].replace('\\','').replace('rn','').replace('<h2>','<h3 class="h3">')
 				raw_json_en = json.dumps([{'type': 'html_block', 'value': entry_body_en}])
 				entry_body_nl = entry_items[15].replace('\'','').replace('\\r\\n','')
 				raw_json_nl = json.dumps([{'type': 'html_block', 'value': entry_body_nl}])
@@ -111,11 +131,17 @@ class Command(BaseCommand):
 					print("Entry data:")
 					print(entry)
 
+				if images.get(entry_id):
+					entry_image = images.get(entry_id)[0]
+				else:
+					entry_image = ""
+
 				if entry_type == "Project" and entry_status == "p":
 					project_folder_page = ProjectIndexPage.objects.live().first()
 					if int(entry_priority) < 2:
 						new_project_page = ProjectPage(title_en = entry_title_en,
 							title_nl = entry_title_nl,
+							hero_old_image = entry_image,
 							hero_title_en = entry_title_en,
 							hero_title_nl = entry_title_nl,
 							hero_subtitle_en = entry_subtitle_en,
@@ -131,6 +157,7 @@ class Command(BaseCommand):
 					else:
 						new_project_page = ProjectPage(title_en = entry_title_en,
 							title_nl = entry_title_nl,
+							hero_old_image = entry_image,
 							hero_title_en = entry_title_en,
 							hero_title_nl = entry_title_nl,
 							hero_subtitle_en = entry_subtitle_en,
@@ -152,6 +179,7 @@ class Command(BaseCommand):
 					if int(entry_priority) < 2:
 						new_article_page = ArticlePage(title_en = entry_title_en,
 							title_nl = entry_title_nl,
+							hero_old_image = entry_image,
 							hero_title_en = entry_title_en,
 							hero_title_nl = entry_title_nl,
 							hero_subtitle_en = entry_subtitle_en,
@@ -167,6 +195,7 @@ class Command(BaseCommand):
 					else:
 						new_article_page = ArticlePage(title_en = entry_title_en,
 							title_nl = entry_title_nl,
+							hero_old_image = entry_image,
 							hero_title_en = entry_title_en,
 							hero_title_nl = entry_title_nl,
 							hero_subtitle_en = entry_subtitle_en,
@@ -187,6 +216,7 @@ class Command(BaseCommand):
 					if int(entry_priority) < 2:
 						new_article_page = NewsPage(title_en = entry_title_en,
 							title_nl = entry_title_nl,
+							hero_old_image = entry_image,
 							hero_title_en = entry_title_en,
 							hero_title_nl = entry_title_nl,
 							hero_subtitle_en = entry_subtitle_en,
@@ -203,6 +233,7 @@ class Command(BaseCommand):
 					else:
 						new_article_page = NewsPage(title_en = entry_title_en,
 							title_nl = entry_title_nl,
+							hero_old_image = entry_image,
 							hero_title_en = entry_title_en,
 							hero_title_nl = entry_title_nl,
 							hero_subtitle_en = entry_subtitle_en,
@@ -219,19 +250,20 @@ class Command(BaseCommand):
 					news_folder_page.add_child(instance=new_article_page)
 					new_article_page.save_revision().publish()
 					id_relation_table[entry_id]=new_article_page.id
-		print("---- Extraction finished")
-		print("-- Reading file")
-		print("---- Building asset connections")
+				elif entry_type=="UserProfile" and entry_status == "p":
+					print(entry_id)
+					print(entry_title_en)
+
+		print("3 - Building asset connections")
 
 		file = open("../database_dumps/separated_tables/test_article_to_article.sql","r")
 		if file.mode == "r":
 			content = file.readlines()
-			print("---- Extracting assets")
 			connectionList = content[0].split("),(")
 			for idx, connection in enumerate(connectionList):
-				print('------ Progress: {0} extracted article to article connections'.format(str(idx+1)), end="\r")
+				print('-- Progress: {0} extracted article to article connections'.format(str(idx+1)), end="\r")
 				if idx == len(connectionList)-1:
-					print('------ Finished: {0} extracted article to article connections'.format(str(idx+1)))
+					print('-- Finished: {0} extracted article to article connections'.format(str(idx+1)))
 				elements = connection.split(",")
 				from_article_old_id = elements[1].replace("(","")
 				to_article_old_id = elements[2].replace(")","")
@@ -246,19 +278,15 @@ class Command(BaseCommand):
 					new_connection = ConnectedArticle(page_id = from_article_new_id, element = to_article)
 					new_connection.save()
 					from_article.linked_articles.add(new_connection)
-					new_connection = ConnectedArticle(page_id = to_article_news_id, element = from_article)
-					new_connection.save()
-					to_article.linked_articles.add(new_connection)
 
 		file = open("../database_dumps/separated_tables/test_article_to_project.sql","r")
 		if file.mode == "r":
 			content = file.readlines()
-			print("---- Extracting assets")
 			connectionList = content[0].split("),(")
 			for idx, connection in enumerate(connectionList):
-				print('------ Progress: {0} extracted article to project connection'.format(str(idx+1)), end="\r")
+				print('-- Progress: {0} extracted article to project connection'.format(str(idx+1)), end="\r")
 				if idx == len(connectionList)-1:
-					print('------ Finished: {0} extracted article to project connection'.format(str(idx+1)))
+					print('-- Finished: {0} extracted article to project connection'.format(str(idx+1)))
 				elements = connection.split(",")
 				from_project_old_id = elements[1].replace("(","")
 				to_article_old_id = elements[2].replace(")","")
@@ -280,12 +308,11 @@ class Command(BaseCommand):
 			file = open("../database_dumps/separated_tables/test_project_to_project.sql","r")
 			if file.mode == "r":
 				content = file.readlines()
-				print("---- Extracting assets")
 				connectionList = content[0].split("),(")
 				for idx, connection in enumerate(connectionList):
-					print('------ Progress: {0} extracted project to project connection'.format(str(idx+1)), end="\r")
+					print('-- Progress: {0} extracted project to project connection'.format(str(idx+1)), end="\r")
 					if idx == len(connectionList)-1:
-						print('------ Finished: {0} extracted project to project connection'.format(str(idx+1)))
+						print('-- Finished: {0} extracted project to project connection'.format(str(idx+1)))
 					elements = connection.split(",")
 					from_project_old_id = elements[1].replace("(","")
 					to_project_old_id = elements[2].replace(")","")
@@ -300,19 +327,15 @@ class Command(BaseCommand):
 						new_connection = LinkedProject(page_id = to_project_new_id, element = from_project)
 						new_connection.save()
 						to_project.linked_projects.add(new_connection)
-						new_connection = LinkedProject(page_id = from_project_new_id, element = to_project)
-						new_connection.save()
-						from_project.linked_projects.add(new_connection)
 
 			file = open("../database_dumps/separated_tables/test_news_to_news.sql","r")
 			if file.mode == "r":
 				content = file.readlines()
-				print("---- Extracting assets")
 				connectionList = content[0].split("),(")
 				for idx, connection in enumerate(connectionList):
-					print('------ Progress: {0} extracted news to news connection'.format(str(idx+1)), end="\r")
+					print('-- Progress: {0} extracted news to news connection'.format(str(idx+1)), end="\r")
 					if idx == len(connectionList)-1:
-						print('------ Finished: {0} extracted news to news connection'.format(str(idx+1)))
+						print('-- Finished: {0} extracted news to news connection'.format(str(idx+1)))
 					elements = connection.split(",")
 					from_news_old_id = elements[1].replace("(","")
 					to_news_old_id = elements[2].replace(")","")
@@ -331,12 +354,11 @@ class Command(BaseCommand):
 			file = open("../database_dumps/separated_tables/test_news_to_project.sql","r")
 			if file.mode == "r":
 				content = file.readlines()
-				print("---- Extracting assets")
 				connectionList = content[0].split("),(")
 				for idx, connection in enumerate(connectionList):
-					print('------ Progress: {0} extracted news to article connection'.format(str(idx+1)), end="\r")
+					print('-- Progress: {0} extracted news to article connection'.format(str(idx+1)), end="\r")
 					if idx == len(connectionList)-1:
-						print('------ Finished: {0} extracted news to article connection'.format(str(idx+1)))
+						print('-- Finished: {0} extracted news to article connection'.format(str(idx+1)))
 					elements = connection.split(",")
 					from_project_old_id = elements[1].replace("(","")
 					to_news_old_id = elements[2].replace(")","")
@@ -352,4 +374,4 @@ class Command(BaseCommand):
 						new_connection.save()
 						to_news.linked_projects.add(new_connection)
 
-		print("---- Connection building finished")
+		print("FINISH - Migration successful")

@@ -102,6 +102,7 @@ class ArticlePage(Page):
 
 	parent_page_types = ['KnowledgePage']
 	subpage_types = []
+	hero_old_image = models.ImageField(null=True, blank=True)
 
 
 	highlight = models.BooleanField(blank=True, null=True)

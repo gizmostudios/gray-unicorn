@@ -123,7 +123,6 @@ window.addEventListener('scroll', function (e) {
       $('.navbar-menu').find('.fa-chevron-down').removeClass('fa-chevron-down').addClass('fa-chevron-up');
       $('.scroll-up').css('display','none');
     }
-    console.log(diff)
     $hero.style.opacity = 1 - (diff * 1);
     
     $nav.style.transform = `translate(0, -${diff * 30}px)`;
@@ -192,7 +191,6 @@ function scrollCarousel($container, target) {
 // Function to manage language changes
 
 $('.lang-selection').on('click', function(){
-  console.log('test')
   var url = window.location.pathname;
   $.post("/lang/selection/",
     JSON.stringify({ url: url}))
@@ -260,7 +258,7 @@ $(document).ready(function(){
   }
 
   var paddingVal = $nav.clientHeight - 0.9 * 30;
-
+  $('section').eq(1).css('padding-top', paddingVal*1.2+"px");
   $('section.is-fullheight').each(function(){
     $(this).css('padding-top', paddingVal+"px");
     $(this).css('padding-bottom', paddingVal+"px");

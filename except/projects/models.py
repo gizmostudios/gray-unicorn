@@ -144,6 +144,8 @@ class ProjectPage(Page):
 	parent_page_types = ['ProjectIndexPage']
 	subpage_types = []
 
+	hero_old_image = models.ImageField(null=True, blank=True)
+
 	highlight = models.BooleanField(blank=True, null=True)
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)

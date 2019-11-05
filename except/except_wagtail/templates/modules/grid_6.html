@@ -19,7 +19,11 @@
               <figure class="image"><img src="/media/{{ element.hero_image }}">
           {% else %}
             <a href="{{element.url}}">
-              <figure class="image"><img src="{{ mediaPath }}{{ element.top_images.all.0.image }}">
+              {% if element.top_images.all %}
+                <figure class="image"><img src="{{ mediaPath }}{{ element.top_images.all.0.image }}">
+              {% else %}
+                <figure class="image"><img src="http://media.except.nl/media/{{ element.hero_old_image }}">
+              {% endif %}
           {% endif %}
               {% if element.type_of_news == 'EV' %}
                 {% if current_language == 'nl' %}

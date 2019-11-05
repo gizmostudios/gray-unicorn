@@ -108,6 +108,8 @@ class NewsPage(Page):
 	EVENT = 'EV'
 	OPEN_POSITION = 'OP'
 
+	hero_old_image = models.ImageField(null=True, blank=True)
+
 	highlight = models.BooleanField(blank=True, null=True)
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
