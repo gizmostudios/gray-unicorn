@@ -95,6 +95,15 @@ a.navbar-dropdown-selection + i{
   top: 0;
 }
 
+.cover-purple{
+  background-color: rgb(108,32,126);
+  color: white;
+}
+
+.cover-purple .h2:before{
+  border-color: white;
+}
+
 .has-cover .h2:before{
   border-color: white;
 }
@@ -106,6 +115,45 @@ a.navbar-dropdown-selection + i{
 .has-cover .container{
   z-index:13;
 }
+
+.container.front-container .columns{
+  height:100%;
+}
+
+.section.is-fullheight.cover-purple, .section.home-link-section{
+  padding:0;
+  margin-bottom: 4em;
+}
+
+.section.is-fullheight .article{
+  padding: 0;
+}
+
+.section.is-fullheight .column{
+  position: relative;
+}
+
+.front-content{
+  position: absolute;
+}
+
+.front-service:hover img{
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.4), 0 12px 40px 0 rgba(0, 0, 0, 0.38);
+}
+
+.front-service:hover span{
+  border-bottom: 2px solid rgb(0,0,0,0.5);
+}
+
+.front-service{
+  line-height: 2em;
+}
+
+.section.is-fullheight figure + h3{
+  margin-top: 2em;
+}
+
+
 .has-cover .h2{
   color:white;
   margin-top: 10%;
@@ -123,11 +171,6 @@ a.navbar-dropdown-selection + i{
 
 .has-cover .carousel .button.is-secondary{
   z-index:10000;
-}
-
-section.is-fullheight.has-cover{
-  position:relative;
-  padding:0;
 }
 
 .is-sticky {
@@ -615,6 +658,12 @@ article .carousel .carousel-inner article {
   justify-content: flex-end;
   z-index: 13;
 }
+.hero-body .container{
+  margin: 0;
+  width: 100%;
+  padding-left: calc(15vw - 1.5rem);
+}
+
 .hero .title {
   text-transform: uppercase;
   color: #231F20;
@@ -682,11 +731,9 @@ body {
   padding-bottom: 1em;
 }
 .section.is-fullheight {
-  padding: 5em 0;
+  margin-bottom: 4em;
+  padding: 0;
   position: relative;
-}
-.section.is-fullheight .article {
-  height: calc(100vh - 100px);
 }
 
 .article {
@@ -1567,6 +1614,18 @@ a.service-link{
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+}
+
+@media screen and (min-width:1472px) {
+ .container {
+  max-width:100%;
+  width:auto;
+  padding-left: 15vw;
+  padding-right: 15vw;
+ }
+ .buttons.is-stretched{
+  right:15vw;
+ }
 }
 
 @media screen and (max-width: 1087px) {

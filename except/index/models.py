@@ -81,22 +81,16 @@ class HomePage(Page):
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
 	introduction_title = models.CharField(max_length=255, null=True, blank=True)
-	introduction_image = models.ForeignKey(
+	introduction_text = models.TextField(blank=True)
+	carousel_title = models.CharField(max_length=255, null=True, blank=True)
+	carousel_description = models.TextField(blank=True)
+	carousel_image = models.ForeignKey(
 		'wagtailimages.Image',
 		null=True,
 		blank=True,
 		on_delete=models.SET_NULL,
 		related_name='+'
 	)
-	introduction_text = models.TextField(blank=True)
-	carousel_title = models.CharField(max_length=255, null=True, blank=True)
-	carousel_description = models.TextField(blank=True)
-	introduction_link = models.ForeignKey(
-		'wagtailcore.Page',
-		null=True,
-		blank=True,
-		on_delete=models.SET_NULL,
-		related_name='+')
 	video_link = models.CharField(max_length=1000, null=True, blank=True)
 	video_description = models.TextField(blank=True)
 
@@ -110,11 +104,10 @@ class HomePage(Page):
 		FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
 		FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
 		MultiFieldPanel([FieldPanel('introduction_title', classname="full")], heading='Introduction Title'),
-		ImageChooserPanel('introduction_image'),
 		MultiFieldPanel([FieldPanel('introduction_text', classname="full")], heading='Introduction Text'),
-		PageChooserPanel('introduction_link'),
 		MultiFieldPanel([FieldPanel('carousel_title', classname="full")], heading='Carousel Section Title'),
 		MultiFieldPanel([FieldPanel('carousel_description', classname="full")], heading='Carousel Section Description'),
+		ImageChooserPanel('carousel_image'),
 		InlinePanel('carousel_links', label="Carousel Section Links"),
 		InlinePanel('carousel_images', label="Carousel Images"),
 		FieldPanel('video_link'),

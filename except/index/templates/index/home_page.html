@@ -22,26 +22,28 @@
     <section class="section is-fullheight">
       <div class="container">
         <article class="article">
-          <header>
-            {% if page.introduction_title %}
-              <h2 class="h2">{{page.introduction_title}}</h2>
-            {% endif %}
-          </header>
-          {% if page.introduction_image %}
-            <div class="introduction-index" style="background-image: url({{ mediaPath }}{{ page.introduction_image }})">
+          <div class="columns">
+            <div class="column is-8">
+              <div class="front-content">
+                <header>
+                  {% if page.introduction_title %}
+                    <h2 class="h2">{{page.introduction_title}}</h2>
+                  {% endif %}
+                </header>
+                {% if page.introduction_text %}
+                  <p class="intro">{{page.introduction_text}}</p>
+                {% endif %}
+                <div class="buttons">
+                  {% if page.introduction_link %}
+                    {% if current_language == 'nl' %}
+                      <div class="container"><a href='{{page.introduction_link.url}}' class="button is-next is-secondary">(NL) More about us</a></div>
+                    {% elif current_language == 'en' %}
+                      <div class="container"><a href='{{page.introduction_link.url}}' class="button is-next is-secondary">More about us</a></div>
+                    {% endif %}
+                  {% endif %}
+                </div>
+              </div>
             </div>
-          {% endif %}
-          {% if page.introduction_text %}
-            <p class="intro">{{page.introduction_text}}</p>
-          {% endif %}
-          <div class="buttons">
-            {% if page.introduction_link %}
-              {% if current_language == 'nl' %}
-                <div class="container"><a href='{{page.introduction_link.url}}' class="button is-next is-secondary">(NL) More about us</a></div>
-              {% elif current_language == 'en' %}
-                <div class="container"><a href='{{page.introduction_link.url}}' class="button is-next is-secondary">More about us</a></div>
-              {% endif %}
-            {% endif %}
           </div>
         </article>
       </div>
@@ -52,44 +54,33 @@
     <a class="anchor" id="carousel-section"></a>
     {# Carousel #}
     {% if page.carousel_images %}
-      <section class="section is-fullheight has-cover">
-        <div class="container">
+      <section class="section is-fullheight cover-purple">
+        <div class="container front-container">
           <article class="article">
-            {% if page.carousel_title %}
-              <header>
-                <h2 class="h2">{{page.carousel_title}}</h2>
-              </header>
-            {% endif %}
-            {% if page.carousel_description %}
-              <div class="caption">
-                <hp class="intro">{{page.carousel_description}}</p>
-                <div class="buttons">
-                  {% for link_button in page.carousel_links.all %}
-                    <a href='{{link_button.link.url}}' class="button is-next is-secondary">{{link_button.link_description}} <i class="fas fa-chevron-right"></i></a>
-                  {% endfor %}
+            <div class="columns">
+              <div class="column is-6" style="background-image: url({{ mediaPath }}{{ page.carousel_image }}); background-size: cover; background-position: center;">
+              </div>
+              <div class="column is-6">
+                <div class="front-content">
+                  {% if page.carousel_title %}
+                    <header>
+                      <h2 class="h2">{{page.carousel_title}}</h2>
+                    </header>
+                  {% endif %}
+                  {% if page.carousel_description %}
+                    <div>
+                      <p class="intro">{{page.carousel_description}}</p>
+                      <div class="buttons">
+                        {% for link_button in page.carousel_links.all %}
+                          <a href='{{link_button.link.url}}' class="button is-next is-secondary">{{link_button.link_description}} <i class="fas fa-chevron-right"></i></a>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  {% endif %}
                 </div>
               </div>
-            {% endif %}
+            </div>
           </article>
-        </div>
-
-        <div class="carousel is-fullheight cover" data-count="{{page.carousel_images.all|length}}">
-          <div class='background-dark-cover-carousel'></div>
-          <div class="carousel-inner">
-            {% for carousel_image in page.carousel_images.all %}
-
-              {% image carousel_image.image width-1600 as carouselimagedata %}
-              <article style="background-image: url({{ carouselimagedata.url }})" class="background-{{carousel_image.scaling}}">
-              </article>
-            {% endfor %}
-          </div>
-
-          <div class="button is-secondary button-prev">
-            <i class="fas fa-chevron-left"></i>
-          </div>
-          <div class="button is-secondary button-next">
-            <i class="fas fa-chevron-right"></i>
-          </div>
         </div>
       </section>
     {% endif %}
@@ -109,18 +100,13 @@
           </header>
           <div class="columns has-gap">
             {% for service in services %}
-              <div class="column has-text-centered">
-                <figure class="image"><img src="{{ mediaPath }}{{ service.image }}"></figure>
-                <h3 class="h3">{{service.hero_title}}</h3>
+              <div class="column has-text-centered front-service">
+                <a href="{{service.url}}">
+                  <figure class="image"><img src="{{ mediaPath }}{{ service.image }}" style="border-radius: 50%;"></figure>
+                  <h3 class="h3"><span>{{service.hero_title}}</span></h3>
+                </a>
               </div>
             {% endfor %}
-          </div>
-          <div class="buttons">
-            {% if current_language == 'nl' %}
-              <div class="container"><a href='{{indexService.url}}' class="button is-next is-secondary">(NL) View our services</a></div>
-            {% elif current_language == 'en' %}
-              <div class="container"><a href='{{indexService.url}}' class="button is-next is-secondary">View our services</a></div>
-            {% endif %}
           </div>
         </article>
       </div>

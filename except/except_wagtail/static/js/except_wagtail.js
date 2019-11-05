@@ -258,17 +258,25 @@ $(document).ready(function(){
   }
 
   var paddingVal = $nav.clientHeight - 0.9 * 30;
-  $('section').eq(1).css('padding-top', paddingVal*1.2+"px");
-  $('section.is-fullheight').each(function(){
-    $(this).css('padding-top', paddingVal+"px");
-    $(this).css('padding-bottom', paddingVal+"px");
-    $(this).find('.article').css('max-height', (window.innerHeight - paddingVal)+"px");
+
+  $('.anchor').eq(1).css('top', -paddingVal+"px");
+
+  $('.anchor').each(function(){
+    $(this).css('top', -paddingVal+"px");
   });
-  $('.carousel.is-fullheight.cover').each(function(){
-    $(this).css('top', paddingVal+"px");
-    $(this).css('max-height', (window.innerHeight - paddingVal)+"px");
-  })
-  $('.home-link-section').each(function(){
-    $(this).css('padding-top', paddingVal+"px");
-  })
+
+  $('.section.is-fullheight').each(function(){
+    $(this).css('height', (window.innerHeight * 0.5)+"px");
+    $(this).css('min-height', "25vw");
+    var sectionHeight = parseInt($(this).css('height').replace('px',''));
+    var paddingHeight = parseInt($(this).css('padding-top').replace('px',''));
+    console.log(sectionHeight);
+    console.log(paddingHeight);
+    $(this).find('.article').css('height', sectionHeight-paddingHeight*2+"px")
+    var articleHeight = parseInt($(this).find('article').css('height').replace('px',''));
+    if($(this).find('.front-content').length != 0){
+      var contentHeight = parseInt($(this).find('.front-content').css('height').replace('px',''));
+      $(this).find('.front-content').css('top', (articleHeight - contentHeight)/2+"px");
+    };
+  });
 });
