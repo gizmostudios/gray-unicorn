@@ -21,6 +21,8 @@ p {
     font-weight: normal;
 }
 p.intro {
+  font-weight: bold;
+  margin-top: 2em;
 }
 p.description {
   padding: 1em 2em;
@@ -133,6 +135,10 @@ a.navbar-dropdown-selection + i{
   position: relative;
 }
 
+.section.is-fullheight.working-areas{
+  padding-top: 1em;
+}
+
 .front-content{
   position: absolute;
 }
@@ -147,6 +153,18 @@ a.navbar-dropdown-selection + i{
 
 .front-service{
   line-height: 2em;
+}
+
+.front-service figure{
+  height:70%;
+}
+
+.front-service figure img{
+  height:100%;
+}
+
+.front-service h3{
+  height:20%;
 }
 
 .section.is-fullheight figure + h3{
@@ -672,6 +690,10 @@ article .carousel .carousel-inner article {
   max-width: 70%;
 }
 
+.hero.is-compact{
+  min-height: 50vh;
+}
+
 .hero.is-compact .title {
   max-width: none;
 }
@@ -719,7 +741,9 @@ body {
 }
 
 .section {
-  padding: 4em 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 2em;
   background-position: center;
   background-size: cover;
 }
@@ -753,6 +777,11 @@ body {
 
 .column.has-text-centered {
   flex-direction: column;
+}
+
+.working-areas .is-grid .column{
+  max-height: auto;
+  padding: 0 2em;
 }
 
 .columns.has-gap > .column:not(:last-child) {
@@ -1099,6 +1128,10 @@ a.anchor {
   height: 70vh ;
 }
 
+.has-carousel.carousel-service article .carousel{
+  height: 50vh ;
+}
+
 .has-carousel article .carousel.is-carousel-block{
   max-height: 1200px;
   height:35vw;
@@ -1118,6 +1151,11 @@ a.anchor {
   padding-bottom: em;
   scroll-snap-align: center;
 }
+
+.carousel-service .carousel.has-text-centered{
+  width:60%;
+}
+
 .caption-carousel-article{
   position: absolute;
   bottom: 0;
@@ -1126,6 +1164,7 @@ a.anchor {
   max-width:50%;
   text-align: left;
 }
+
 .has-carousel .carousel-inner{
   height:100%;
   flex-direction: initial;
@@ -1135,6 +1174,20 @@ a.anchor {
   flex-wrap: nowrap;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
+  padding: 0;
+}
+
+.carousel-service .container.has-carousel{
+  padding: 0;
+}
+
+.section.carousel-service{
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.has-carousel.carousel-service .carousel-inner{
+  width:100%;
 }
 
 .is-blocked.description{

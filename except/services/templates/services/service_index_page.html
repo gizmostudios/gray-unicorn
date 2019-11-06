@@ -7,7 +7,7 @@
 {% load static %}
 
 {% block content %}
-  {% with mediaPath="/media/original_images/" %}
+  {% with mediaPath="/media/" %}
     {# Top Section/Header #}
     {% include "modules/top_section.html" with page=page carousel=False %}
 
@@ -41,7 +41,7 @@
           <div class="column is-6">
             {% for service in service_list %}
               <div class="service-image" id="{{service.hero_title}}">
-                <div class="service-cover"  style="background-image: url({{ mediaPath }}{{ service.image }})"></div>
+                <div class="service-cover"  style="background-image: url({{ mediaPath }}{{ service.image.file }})"></div>
                 <div class="caption">
                   <h4 class="h4">{{service.hero_title}}</h4>
                   <p>{{service.summary}}</p>
@@ -50,32 +50,6 @@
             {% endfor %}
           </div>
         </div>
-      </div>
-    </section>
-    <section class="section is-fullheight" style="background-image: url({{ mediaPath }}{{ page.expertise_background }})">
-      <div class="container">
-        <article class="article">
-          <header class="header">
-            {% if current_language == 'nl' %}
-              <h2 class="h2 is-inverted">(NL) Our services</h2>
-            {% elif current_language == 'en' %}
-              <h2 class="h2 is-inverted">Our services</h2>
-            {% endif %}
-          </header>
-          <div class="columns has-gap">
-            {% for expertise in page.expertises.all %}
-              <div class="column has-text-centered is-expertise">
-                <figure class="image"><img src="{{ mediaPath }}{{ expertise.image }}"></figure>
-                <h3 class="h3">{{expertise.title}}</h3>
-              </div>
-            {% endfor %}
-            {% for element in missing_columns.all %}
-              <div class="column has-text-centered is-expertise"></div>
-            {% endfor %}
-          </div>
-          <div class="buttons">
-          </div>
-        </article>
       </div>
     </section>
     <script type="text/javascript" src="{% static 'js/services.js' %}"></script>

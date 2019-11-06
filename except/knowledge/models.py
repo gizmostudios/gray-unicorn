@@ -22,7 +22,7 @@ from django.forms.widgets import Select
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from news.blocks import BaseStreamBlock
-from services.models import ServicePage as Service
+from services.models import WorkingAreaPage as Service
 
 from modelcluster.fields import ParentalManyToManyField
 

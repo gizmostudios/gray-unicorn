@@ -7,7 +7,7 @@
 {% load static %}
 
 {% block content %}
-  {% with mediaPath="/media/original_images/" %}
+  {% with mediaPath="/media/" %}
     {% with mediaPathOriginal="/media/original_images/" %}
 
     {# Top Section/Header #}
@@ -88,7 +88,7 @@
     {# Working areas #}
     
     <a class="anchor" id="services-section"></a>
-    <section class="section is-fullheight">
+    <section class="section is-fullheight working-areas">
       <div class="container">
         <article class="article">
           <header>
@@ -102,7 +102,7 @@
             {% for service in services %}
               <div class="column has-text-centered front-service">
                 <a href="{{service.url}}">
-                  <figure class="image"><img src="{{ mediaPath }}{{ service.image }}" style="border-radius: 50%;"></figure>
+                  <figure class="image"><img src="{{ mediaPath }}{{ service.hero_image.file }}" style="border-radius: 50%; background-size:contain;"></figure>
                   <h3 class="h3"><span>{{service.hero_title}}</span></h3>
                 </a>
               </div>

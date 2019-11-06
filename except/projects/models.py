@@ -19,7 +19,7 @@ from django.forms.widgets import Select
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from news.blocks import BaseStreamBlock
-from services.models import ServicePage as Service
+from services.models import WorkingAreaPage
 from knowledge.models import *
 from about.models import *
 
@@ -157,7 +157,7 @@ class ProjectPage(Page):
 	body = StreamField(BaseStreamBlock(), verbose_name="Page body", blank=True)
 	author = models.ForeignKey('people.People',on_delete=models.SET_NULL,null=True,blank=True,)
 	service = models.ForeignKey(
-		Service,
+		WorkingAreaPage,
 		on_delete=models.SET_NULL,
 		null=True,
 		blank=True,
@@ -257,7 +257,7 @@ class ProjectIndexPage(Page):
 		last_year = projects_all.first().date_published.year
 		first_year = projects_all.last().date_published.year
 
-		services = Service.objects.live()
+		services = WorkingAreaPage.objects.live()
 
 		context['not_last'] = len(projects_all)>8
 		context['highlights'] = self.highlight_projects()[0:4]

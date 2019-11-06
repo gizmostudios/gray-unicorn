@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+{% load static wagtailuserbar %}
+
+
+{% load static %}
+{% block content %}
+  {% with mediaPath="/media/" %}
+    {# Top Section/Header #}
+    {% include "modules/top_section.html" with page=page carousel=False %}
+
+    {# Main navigation #}
+    {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
+      <section class="section">
+        <div class="container">
+          <div class="columns">
+            <div class="column is-8">
+              {% if page.hero_title %}
+                <h2 class="h2">{{page.hero_title}}</h2>
+              {% endif %}
+              {% if page.introduction %}
+                <p class="intro">
+                  {{page.introduction}}
+                </p>
+              {% endif %}
+              {% if page.body %}
+                <p>
+                  {{page.body}}
+                </p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {# Carousel #}
+
+    {% if projects.all %}
+      <section class="section has-carousel carousel-service">
+        <div class="container has-carousel full-width" data-count="{{page.carousel_items.all|length}}">
+          <article class="article carousel-inner">
+            {% for item in projects.all %}
+              <div class="carousel has-text-centered" style="background-image:url({{ mediaPath }}{{ item.top_images.all.0.image }})">
+                <div class="container not-full-height">
+                  <div class="columns caption-carousel">
+                    <div class="colmn is-6 caption-carousel">
+                      <h2 class="h2 is-blocked">{{ item.hero_title }}</h2>
+                      <p class="intro is-blocked description">{{ item.hero_subtitle }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>       
+            {% endfor %}
+          </article>
+        </div>
+      </section>
+    {% endif %}
+
+    {% if subservices.all %}
+      <section class="section working-areas">
+        <div class="container">
+          <article class="article">
+            <header>
+              {% if current_language == 'nl' %}
+                <h2 class="h2">(NL) Services</h2>
+              {% elif current_language == 'en' %}
+                <h2 class="h2">Services</h2>
+              {% endif %}
+            </header>
+            <div class="columns is-grid">
+              {% for service in subservices %}
+                <div class="column is-3 in-grid has-text-centered front-service">
+                  <figure class="image"><img src="{{ mediaPath }}{{ service.hero_image.file }}" style="border-radius: 50%; background-size:contain;"></figure>
+                  <h4 class="h4"><span>{{service.hero_title}}</span></h4>
+                </div>
+              {% endfor %}
+            </div>
+          </article>
+        </div>
+      </section>
+    {% endif %}
+
+  {% endwith %}
+{% endblock content %}

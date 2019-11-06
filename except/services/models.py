@@ -18,47 +18,33 @@ from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from news.blocks import BaseStreamBlock
 
-# Skills of our team (Research & Analysis, Design...)
+# Specific area with services we offer
 
-class Expertise(Orderable):
-	image = models.ForeignKey(
+class ServicePage(Page):
+	parent_page_types = ['WorkingAreaPage']
+	subpage_types = []
+
+	hero_title = models.CharField(max_length=100)
+	hero_image = models.ForeignKey(
 		'wagtailimages.Image',
 		null=True,
 		blank=True,
 		on_delete=models.SET_NULL,
 		related_name='+'
 	)
-	title = models.CharField(max_length=255, null=True, blank=True)
-	page = ParentalKey('ServiceIndexPage', related_name='expertises')
-
-	panels = [
-		FieldPanel('title'),
-		ImageChooserPanel('image'),
-	]
-
-# Specific area with services we offer
-
-class SubServicePage(Page):
-	parent_page_types = ['ServicePage']
-	subpage_types = []
-
-	hero_title = models.CharField(max_length=100)
-	description = models.TextField(blank=True)
-	body = StreamField(BaseStreamBlock(), verbose_name="Page body", blank=True)
 
 	content_panels = Page.content_panels + [
 		FieldPanel('hero_title'),
-		FieldPanel('description', classname="full"),
-		StreamFieldPanel('body'),
+		ImageChooserPanel('hero_image'),
 	]
 
 # Should be working area this is our domains of intervention
 
-class ServicePage(Page):
+class WorkingAreaPage(Page):
 	hero_title = models.CharField(max_length=100)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
 	color = models.CharField(max_length=100, blank=True, null=True)
-	image = models.ForeignKey(
+	hero_image = models.ForeignKey(
 		'wagtailimages.Image',
 		null=True,
 		blank=True,
@@ -67,6 +53,7 @@ class ServicePage(Page):
 	)
 	summary = models.CharField(max_length=100, blank=True, null=True)
 	introduction = models.TextField(null=True, blank=True)
+	body = models.TextField(null=True, blank=True)
 
 	def __str__(self):
 		return self.hero_title
@@ -80,12 +67,13 @@ class ServicePage(Page):
 		FieldPanel('hero_subtitle'),
 		FieldPanel('color'),
 		FieldPanel('summary'),
-		ImageChooserPanel('image'),
-		FieldPanel('introduction')
+		ImageChooserPanel('hero_image'),
+		FieldPanel('introduction'),
+		FieldPanel('body')
 	]
 
 	def get_subservices(self):
-		subservices = SubServicePage.objects.descendant_of(self)
+		subservices = ServicePage.objects.descendant_of(self)
 		return subservices
 
 	def get_projects(self):
@@ -98,7 +86,7 @@ class ServicePage(Page):
 		return resources
 
 	def get_context(self, request):
-		context = super(ServicePage, self).get_context(request)
+		context = super(WorkingAreaPage, self).get_context(request)
 
 		context['projects'] = self.get_projects()
 		context['articles'] = self.get_articles()
@@ -107,12 +95,12 @@ class ServicePage(Page):
 		return context
 
 	parent_page_types = ['ServiceIndexPage']
-	subpage_types = ['SubServicePage']
+	subpage_types = ['ServicePage']
 
 
 class ServiceIndexPage(Page):
 
-	subpage_types = ['ServicePage']
+	subpage_types = ['WorkingAreaPage']
 	parent_page_types = ['index.HomePage']
 	hero_image = models.ImageField(null=True, blank=True)
 	navbar_transparent = models.BooleanField('Transparency of the navigation bar', blank=True, null=True)
@@ -120,13 +108,6 @@ class ServiceIndexPage(Page):
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
 	service_introduction = models.TextField(blank=True)
-	expertise_background = models.ForeignKey(
-		'wagtailimages.Image',
-		null=True,
-		blank=True,
-		on_delete=models.SET_NULL,
-		related_name='+'
-	)
 
 
 
@@ -137,22 +118,16 @@ class ServiceIndexPage(Page):
 		FieldPanel('hero_title'),
 		FieldPanel('hero_subtitle'),
 		FieldPanel('service_introduction'),
-		ImageChooserPanel('expertise_background'),
-		InlinePanel('expertises', label="Expertises"),
 	]
 
 	def get_news(self):
-		return ServicePage.objects.live()
+		return WorkingAreaPage.objects.live()
 
-	def get_expertises(self):
-		return Expertise.objects.filter(page=self).all()
 
 	def get_context(self, request):
 		context = super(ServiceIndexPage, self).get_context(request)
 
 		services = self.get_news()
-		missing_columns_number = 4-len(self.get_expertises())%4
 		context['service_list'] = services
-		context['missing_columns'] = services[0:missing_columns_number]
 
 		return context

@@ -259,11 +259,11 @@ $(document).ready(function(){
 
   var paddingVal = $nav.clientHeight - 0.9 * 30;
 
-  $('.anchor').eq(1).css('top', -paddingVal+"px");
-
   $('.anchor').each(function(){
     $(this).css('top', -paddingVal+"px");
   });
+
+  $('.anchor').eq(1).css('top', -paddingVal+18+"px");
 
   $('.section.is-fullheight').each(function(){
     $(this).css('height', (window.innerHeight * 0.5)+"px");

@@ -7,14 +7,14 @@
 
 {% load static %}
 
-{% if inverted == False and transparent == True %}
-  <nav class="is-fixed-top is-transparent inverted" id="mainNav">
-{% elif inverted == False and transparent == False %}
+{% if inverted == False and transparent == False %}
+  <nav class="is-fixed-top" id="mainNav">
+{% elif inverted == True and transparent == False %}
   <nav class="is-fixed-top inverted" id="mainNav">
-{% elif inverted == True and transparent == True %}
+{% elif inverted == False and transparent == True %}
   <nav class="is-fixed-top is-transparent " id="mainNav">
 {% else %}
-  <nav class="is-fixed-top" id="mainNav">
+  <nav class="is-fixed-top is-transparent inverted" id="mainNav">
 {% endif %}
   <div id='navbar' class="container">
     {% include "./logo.html" %}

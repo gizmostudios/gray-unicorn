@@ -153,7 +153,7 @@ class HomePage(Page):
 	def get_context(self, request):
 		context = super(HomePage, self).get_context(request)
 
-		services = ServicePage.objects.live()
+		services = WorkingAreaPage.objects.live()
 		indexService = ServiceIndexPage.objects.live()[0]
 
 		context['highlight_pdf'] = self.get_highlight_resources().first()
