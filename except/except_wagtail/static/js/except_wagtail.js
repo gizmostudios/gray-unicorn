@@ -267,11 +267,9 @@ $(document).ready(function(){
 
   $('.section.is-fullheight').each(function(){
     $(this).css('height', (window.innerHeight * 0.5)+"px");
-    $(this).css('min-height', "25vw");
+    $(this).css('min-height', "500px");
     var sectionHeight = parseInt($(this).css('height').replace('px',''));
     var paddingHeight = parseInt($(this).css('padding-top').replace('px',''));
-    console.log(sectionHeight);
-    console.log(paddingHeight);
     $(this).find('.article').css('height', sectionHeight-paddingHeight*2+"px")
     var articleHeight = parseInt($(this).find('article').css('height').replace('px',''));
     if($(this).find('.front-content').length != 0){

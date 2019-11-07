@@ -143,6 +143,18 @@ a.navbar-dropdown-selection + i{
   position: absolute;
 }
 
+.front-content header{
+  margin-top: 2em;
+}
+
+.working-areas .columns{
+  height: calc(100% - 2.6em);
+}
+
+.working-areas .columns .column{
+  height: 100%;
+}
+
 .front-service:hover img{
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.4), 0 12px 40px 0 rgba(0, 0, 0, 0.38);
 }
@@ -153,18 +165,21 @@ a.navbar-dropdown-selection + i{
 
 .front-service{
   line-height: 2em;
+  position:relative;
 }
 
-.front-service figure{
-  height:70%;
+.working-areas header{
+  margin-top: 2em;
+}
+
+.front-service h3{
+  position: absolute;
+  bottom: 0;
+  width: 100%
 }
 
 .front-service figure img{
   height:100%;
-}
-
-.front-service h3{
-  height:20%;
 }
 
 .section.is-fullheight figure + h3{
