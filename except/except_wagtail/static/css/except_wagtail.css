@@ -139,7 +139,7 @@ a.navbar-dropdown-selection + i{
 .section.is-fullheight.working-areas{
   padding: 0;
   margin: 2vh 0;
-  height: 70vh;
+  height: 65vh;
   max-height: 50vw;
 }
 
@@ -160,7 +160,7 @@ a.navbar-dropdown-selection + i{
 }
 
 .working-areas .article header + .columns{
-  margin-top: 13vh;
+  margin-top: 7vh;
 }
 
 .front-service:hover img{
