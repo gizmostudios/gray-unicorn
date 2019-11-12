@@ -20,7 +20,7 @@
 
     <a class="anchor" id="first_anchor"></a>
     <section class="section is-fullheight">
-      <div class="container">
+      <div class="container front-container">
         <article class="article">
           <div class="columns">
             <div class="column is-8">
@@ -58,7 +58,10 @@
         <div class="container front-container">
           <article class="article">
             <div class="columns">
-              <div class="column is-6" style="background-image: url({{ mediaPath }}{{ page.carousel_image }}); background-size: cover; background-position: center;">
+              <div class="column is-6">
+                <div class="front-content">
+                  <figure class="image"><img src="{{ mediaPath }}{{ page.carousel_image }}" style="background-size: cover; background-position: center;"></figure>
+                </div>
               </div>
               <div class="column is-6">
                 <div class="front-content">
@@ -126,11 +129,11 @@
               <h2 class="h2">Latest news</h2>
             {% endif %}
           </header>
-          <div class="columns">
+          <div class="columns is-latest-news">
             <div class="column is-8 is-front">
               <div class="card is-stretched">
                 <div class="card-image">
-                  <figure class="image"><img src="{{ mediaPath }}{{ highlight_pdf.top_images.all.0.image }}"></figure>
+                  <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_pdf.top_images.all.0.image }}"></figure>
                 </div>
                 <div class="card-footer is-front"><a href="{{ highlight_pdf.url }}" class="link"><span>{{highlight_pdf.hero_title}}</span><i class="fas fa-chevron-right"></i></a></div>
               </div>
@@ -159,24 +162,22 @@
               </div>
             </div>
           </div>
-          <div class="columns">
+          <div class="columns is-latest-news">
             <div class="column is-4">
               <div class="card is-stretched">
-                <div class="card is-stretched">
-                  <div class="card-image is-front">
-                    <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_article.top_images.all.0.image }}">
-                      {% if current_language == 'nl' %}
-                        <h4 class="h4 label is-purple">(NL) News</h4>
-                      {% elif current_language == 'en' %}
-                        <h4 class="h4 label is-purple">News</h4>
-                      {% endif %}
-                    </figure>
-                  </div>
-                  <div class="card-content is-front">
-                    <h3 class="h3">{{ highlight_article.hero_title }}</h3>
-                    <p>{{ highlight_event.hero_subtitle }}</p>
-                    <p class='date'>{{ highlight_article.date_published|date:"M d, Y" }}</p><a href="{{ highlight_article.url }}" class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
-                  </div>
+                <div class="card-image is-front">
+                  <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_article.top_images.all.0.image }}">
+                    {% if current_language == 'nl' %}
+                      <h4 class="h4 label is-purple">(NL) News</h4>
+                    {% elif current_language == 'en' %}
+                      <h4 class="h4 label is-purple">News</h4>
+                    {% endif %}
+                  </figure>
+                </div>
+                <div class="card-content is-front">
+                  <h3 class="h3">{{ highlight_article.hero_title }}</h3>
+                  <p>{{ highlight_event.hero_subtitle }}</p>
+                  <p class='date'>{{ highlight_article.date_published|date:"M d, Y" }}</p><a href="{{ highlight_article.url }}" class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
                 </div>
                 {% if current_language == 'nl' %}
                   <div class="card-footer is-front"><a href="{{ link_news.url }}" class="link"><span>(NL) Read our news</span><i class="fas fa-chevron-right"></i></a></div>
@@ -187,21 +188,19 @@
             </div>
             <div class="column is-4">
               <div class="card is-stretched">
-                <div class="card is-stretched">
-                  <div class="card-image is-front">
-                    <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_projects.top_images.all.0.image }}">
-                      {% if current_language == 'nl' %}
-                        <h4 class="h4 label is-blue">(NL) Project</h4>
-                      {% elif current_language == 'en' %}
-                        <h4 class="h4 label is-blue">Project</h4>
-                      {% endif %}
-                    </figure>
-                  </div>
-                  <div class="card-content is-front">
-                    <h3 class="h3">{{ highlight_projects.hero_title }}</h3>
-                    <p>{{ highlight_event.hero_subtitle }}</p>
-                    <p class='date'>{{ highlight_projects.date_published|date:"M d, Y" }}</p><a href="{{ highlight_projects.url }}" class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
-                  </div>
+                <div class="card-image is-front">
+                  <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_projects.top_images.all.0.image }}">
+                    {% if current_language == 'nl' %}
+                      <h4 class="h4 label is-blue">(NL) Project</h4>
+                    {% elif current_language == 'en' %}
+                      <h4 class="h4 label is-blue">Project</h4>
+                    {% endif %}
+                  </figure>
+                </div>
+                <div class="card-content is-front">
+                  <h3 class="h3">{{ highlight_projects.hero_title }}</h3>
+                  <p>{{ highlight_event.hero_subtitle }}</p>
+                  <p class='date'>{{ highlight_projects.date_published|date:"M d, Y" }}</p><a href="{{ highlight_projects.url }}" class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
                 </div>
                 {% if current_language == 'nl' %}
                   <div class="card-footer is-front"><a href="{{ link_projects.url }}" class="link"><span>(NL) See our projects</span><i class="fas fa-chevron-right"></i></a></div>
@@ -212,21 +211,19 @@
             </div>
             <div class="column is-4">
               <div class="card is-stretched">
-                <div class="card is-stretched">
-                  <div class="card-image is-front">
-                    <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_resources.top_images.all.0.image }}">
-                      {% if current_language == 'nl' %}
-                        <h4 class="h4 label is-green">(NL) Knowledge</h4>
-                      {% elif current_language == 'en' %}
-                        <h4 class="h4 label is-green">Knowledge</h4>
-                      {% endif %}
-                    </figure>
-                  </div>
-                  <div class="card-content is-front">
-                    <h3 class="h3">{{ highlight_resources.hero_title }}</h3>
-                    <p>{{ highlight_resources.hero_subtitle }}</p>
-                    <p class='date'>{{ highlight_resources.date_published|date:"M d, Y" }}</p><a href="{{ highlight_resources.file.url }}" class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
-                  </div>
+                <div class="card-image is-front">
+                  <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_resources.top_images.all.0.image }}">
+                    {% if current_language == 'nl' %}
+                      <h4 class="h4 label is-green">(NL) Knowledge</h4>
+                    {% elif current_language == 'en' %}
+                      <h4 class="h4 label is-green">Knowledge</h4>
+                    {% endif %}
+                  </figure>
+                </div>
+                <div class="card-content is-front">
+                  <h3 class="h3">{{ highlight_resources.hero_title }}</h3>
+                  <p>{{ highlight_resources.hero_subtitle }}</p>
+                  <p class='date'>{{ highlight_resources.date_published|date:"M d, Y" }}</p><a href="{{ highlight_resources.file.url }}" class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
                 </div>
                 {% if current_language == 'nl' %}
                   <div class="card-footer is-front"><a href="{{ link_resources.url }}" class="link"><span>(NL) Read our articles</span><i class="fas fa-chevron-right"></i></a></div>
@@ -236,25 +233,23 @@
               </div>
             </div>
           </div>
-          <div class="columns">
+          <div class="columns is-latest-news">
             <div class="column is-4">
               <div class="card is-stretched">
-                <div class="card is-stretched">
-                  <div class="card-image is-front">
-                    <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_open_position.top_images.all.0.image }}">
-                      {% if current_language == 'nl' %}
-                        <h4 class="h4 label is-red">(NL) People</h4>
-                      {% elif current_language == 'en' %}
-                        <h4 class="h4 label is-red">People</h4>
-                      {% endif %}
-                    </figure>
-                  </div>
-                  <div class="card-content is-front">
-                    <h3 class="h3">{{ highlight_open_position.hero_title }}</h3>
-                    <div>
-                      <p>{{ highlight_open_position.hero_subtitle }}</p>
-                      <p class='date'>{{ highlight_open_position.date_published|date:"M d, Y" }}</p><a href="{{ highlight_open_position.url }}" class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
-                    </div>
+                <div class="card-image is-front">
+                  <figure class="image"><img src="{{ mediaPathOriginal }}{{ highlight_open_position.top_images.all.0.image }}">
+                    {% if current_language == 'nl' %}
+                      <h4 class="h4 label is-red">(NL) People</h4>
+                    {% elif current_language == 'en' %}
+                      <h4 class="h4 label is-red">People</h4>
+                    {% endif %}
+                  </figure>
+                </div>
+                <div class="card-content is-front">
+                  <h3 class="h3">{{ highlight_open_position.hero_title }}</h3>
+                  <div>
+                    <p>{{ highlight_open_position.hero_subtitle }}</p>
+                    <p class='date'>{{ highlight_open_position.date_published|date:"M d, Y" }}</p><a href="{{ highlight_open_position.url }}" class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
                   </div>
                 </div>
                 {% if current_language == 'nl' %}

@@ -12,25 +12,41 @@
 
     {# Main navigation #}
     {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
-      <section class="section">
-        <div class="container">
-          <div class="columns">
-            <div class="column is-8">
-              {% if page.hero_title %}
-                <h2 class="h2">{{page.hero_title}}</h2>
-              {% endif %}
-              {% if page.introduction %}
-                <p class="intro">
-                  {{page.introduction}}
-                </p>
-              {% endif %}
-              {% if page.body %}
-                <p>
-                  {{page.body}}
-                </p>
-              {% endif %}
+      <a class="anchor" id="first_anchor"></a>
+      <section class="section is-fullheight">
+        <div class="container front-container">
+          <article class="article">
+            <div class="columns">
+              <div class="column is-8">
+                <div class="front-content">
+                  <header>
+                    {% if page.hero_title %}
+                      <h2 class="h2">{{page.hero_title}}</h2>
+                    {% endif %}
+                  </header>
+                  {% if page.introduction %}
+                    <p class="intro">
+                      {{page.introduction}}
+                    </p>
+                  {% endif %}
+                  {% if page.body %}
+                    <p>
+                      {{page.body}}
+                    </p>
+                  {% endif %}
+                  <div class="buttons">
+                    {% if page.introduction_link %}
+                      {% if current_language == 'nl' %}
+                        <div class="container"><a href='{{page.introduction_link.url}}' class="button is-next is-secondary">(NL) More about us</a></div>
+                      {% elif current_language == 'en' %}
+                        <div class="container"><a href='{{page.introduction_link.url}}' class="button is-next is-secondary">More about us</a></div>
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+          </article>
         </div>
       </section>
 
@@ -71,7 +87,8 @@
             <div class="columns is-grid">
               {% for service in subservices %}
                 <div class="column is-3 in-grid has-text-centered front-service">
-                  <figure class="image"><img src="{{ mediaPath }}{{ service.hero_image.file }}" style="border-radius: 50%; background-size:contain;"></figure>
+                  {% image service.hero_image fill-600x600 as service_image%}
+                  <figure class="image"><img src="{{ service_image.url }}" style="border-radius: 50%; background-size:cover;"></figure>
                   <h4 class="h4"><span>{{service.hero_title}}</span></h4>
                 </div>
               {% endfor %}

@@ -46,7 +46,7 @@ p.description {
 }
 .h2 {
   font-size: 37pt;
-  line-height: 1.4em;
+  line-height: 1em;
 }
 .h3 {
   font-size: 23pt;
@@ -61,7 +61,7 @@ p.description {
   width: 180px;
   position: absolute;
   left: 0;
-  top: -0.5rem;
+  top: -0.9rem;
 }
 a {
   color: #231F20;
@@ -119,12 +119,13 @@ a.navbar-dropdown-selection + i{
 }
 
 .container.front-container .columns{
-  height:100%;
+  height:50vh;
+  min-height: 550px;
 }
 
 .section.is-fullheight.cover-purple, .section.home-link-section{
+  margin: 0;
   padding:0;
-  margin-bottom: 4em;
 }
 
 .section.is-fullheight .article{
@@ -136,7 +137,10 @@ a.navbar-dropdown-selection + i{
 }
 
 .section.is-fullheight.working-areas{
-  padding-top: 1em;
+  padding: 0;
+  margin: 2vh 0;
+  height: 70vh;
+  max-height: 50vw;
 }
 
 .front-content{
@@ -153,6 +157,10 @@ a.navbar-dropdown-selection + i{
 
 .working-areas .columns .column{
   height: 100%;
+}
+
+.working-areas .article header + .columns{
+  margin-top: 13vh;
 }
 
 .front-service:hover img{
@@ -172,18 +180,12 @@ a.navbar-dropdown-selection + i{
   margin-top: 2em;
 }
 
-.front-service h3{
-  position: absolute;
-  bottom: 0;
-  width: 100%
-}
-
 .front-service figure img{
   height:100%;
 }
 
 .section.is-fullheight figure + h3{
-  margin-top: 2em;
+  margin-top: 0.5em;
 }
 
 
@@ -376,6 +378,38 @@ line-height: 1.2em;
   display: flex;
   flex-direction: column;
 }
+
+.columns.is-latest-news{
+  max-height: 750px;
+}
+
+.is-latest-news .is-8 .card-image{
+  height: 90%;
+}
+
+.is-latest-news .is-8 figure.image{
+  height: 100%;
+}
+
+.is-latest-news .is-4 .card.is-stretched{
+  height:100%;
+}
+
+.is-latest-news .is-4 .card-image{
+  height:62%;
+}
+
+.is-latest-news .is-4 .card-content{
+  height:30%;
+  min-height: 200px;
+}
+
+.is-latest-news .is-4 .card-footer{
+  height:8%;
+  min-height: 55px;
+}
+
+
 .card .card-image {
   flex: auto;
   display: flex;
@@ -770,9 +804,11 @@ body {
   padding-bottom: 1em;
 }
 .section.is-fullheight {
-  margin-bottom: 4em;
+  margin: 0;
   padding: 0;
   position: relative;
+  height: 50vh;
+  min-height: 550px;
 }
 
 .article {
@@ -782,7 +818,7 @@ body {
 }
 .article header + .columns,
 .article header + .content {
-  margin-top: 1em;
+  margin-top: 2em;
 }
 
 .columns.is-grid {
@@ -794,9 +830,19 @@ body {
   flex-direction: column;
 }
 
+.working-areas .article header + .columns.is-grid{
+  margin-top: 2vh;
+}
+
 .working-areas .is-grid .column{
-  max-height: auto;
-  padding: 0 2em;
+  max-height: none;
+  padding: 2em;
+  height: auto;
+}
+
+.working-areas .is-grid .column figure{
+  width: 70%;
+  margin-left: 15%;
 }
 
 .columns.has-gap > .column:not(:last-child) {

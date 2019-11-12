@@ -47,6 +47,11 @@ if(window.innerHeight > 1000){
 
 let stickyNav = false;
 
+var topScroll = .9
+if($hero.classList.contains('is-compact')){
+  topScroll = .45
+}
+
 window.addEventListener('scroll', function (e) {
   if($hero != null){
     // Cancel on mobile
@@ -109,14 +114,14 @@ window.addEventListener('scroll', function (e) {
 
     let diff = window.scrollY / $hero.clientHeight;
 
-    if (diff > .9) {
+    if (diff > topScroll) {
       $nav.classList.add('opaque');
       $('.navbar-menu').find('.fa-chevron-up').removeClass('fa-chevron-up').addClass('fa-chevron-down');
       $('.scroll-up').css('display','block');
-      $hero.style.opacity = 1 - (0.9 * 1);
+      $hero.style.opacity = 1 - (topScroll * 1);
     
-      $nav.style.transform = `translate(0, -${0.9 * 30}px)`;
-      $logo.style.transform = `scale(${1 - 0.9 * scaling})`;
+      $nav.style.transform = `translate(0, -${topScroll * 30}px)`;
+      $logo.style.transform = `scale(${1 - topScroll * scaling})`;
       return;
     } else {
       $nav.classList.remove('opaque');
@@ -139,8 +144,8 @@ if($hero == null){
     }
     $nav.classList.add('opaque');
     $('.navbar-menu').find('.fa-chevron-up').removeClass('fa-chevron-up').addClass('fa-chevron-down');
-    $nav.style.transform = `translate(0, -${0.9 * 30}px)`;
-    $logo.style.transform = `scale(${1 - 0.9 / 2})`;
+    $nav.style.transform = `translate(0, -${topScroll * 30}px)`;
+    $logo.style.transform = `scale(${1 - topScroll / 2})`;
     $('.scroll-up').css('display','block');
   });
 }
@@ -223,6 +228,14 @@ $(document).ready(function(){
     });
   });
 
+  resizing();
+});
+
+$(window).resize(function(){
+  resizing();
+});
+
+function resizing(){
   // Manage display of sub-menu of the navbar
 
   $('.sub-menu').each(function(){
@@ -257,7 +270,7 @@ $(document).ready(function(){
     $logo.style.transform = `scale(${1 - 0.9 * scaling})`;
   }
 
-  var paddingVal = $nav.clientHeight - 0.9 * 30;
+  var paddingVal = parseInt($('.navbar').css('height').replace('px','')) + parseInt($('.navbar').css('top').replace('px',''));
 
   $('.anchor').each(function(){
     $(this).css('top', -paddingVal+"px");
@@ -266,15 +279,15 @@ $(document).ready(function(){
   $('.anchor').eq(1).css('top', -paddingVal+18+"px");
 
   $('.section.is-fullheight').each(function(){
-    $(this).css('height', (window.innerHeight * 0.5)+"px");
-    $(this).css('min-height', "500px");
     var sectionHeight = parseInt($(this).css('height').replace('px',''));
     var paddingHeight = parseInt($(this).css('padding-top').replace('px',''));
-    $(this).find('.article').css('height', sectionHeight-paddingHeight*2+"px")
+    $(this).find('.article').css('height', sectionHeight-paddingHeight*2+"px");
     var articleHeight = parseInt($(this).find('article').css('height').replace('px',''));
     if($(this).find('.front-content').length != 0){
-      var contentHeight = parseInt($(this).find('.front-content').css('height').replace('px',''));
-      $(this).find('.front-content').css('top', (articleHeight - contentHeight)/2+"px");
+      $(this).find('.front-content').each(function(){
+        var contentHeight = parseInt($(this).css('height').replace('px',''));
+        $(this).css('top', (articleHeight - contentHeight)/2+"px");
+      })
     };
   });
-});
+};
