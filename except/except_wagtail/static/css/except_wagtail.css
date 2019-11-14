@@ -725,11 +725,7 @@ article .carousel .carousel-inner article {
   justify-content: flex-end;
   z-index: 13;
 }
-.hero-body .container{
-  margin: 0;
-  width: 100%;
-  padding-left: calc(15vw - 1.5rem);
-}
+
 
 .hero .title {
   text-transform: uppercase;
@@ -1815,6 +1811,11 @@ a.service-link{
   padding-left: 15%;
   padding-right: 15%;
  }
+ .hero-body .container{
+    margin: 0;
+    width: 100%;
+    padding-left: calc(15vw - 1.5rem);
+  }
  .buttons.is-stretched{
   right:15vw;
  }
