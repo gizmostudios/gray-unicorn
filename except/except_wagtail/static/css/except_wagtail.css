@@ -582,7 +582,10 @@ article .carousel .carousel-inner article {
 
 .image {
   position: relative;
+  overflow: hidden;
+  height: auto;
 }
+
 .image img {
   display: inline-block;
 }
@@ -687,6 +690,7 @@ article .carousel .carousel-inner article {
   left: 0;
   top: 0;
   z-index: 1;
+  transition: all 200ms;
 }
 .is-filter:after {
   content: "";
@@ -847,13 +851,17 @@ body {
 .hover-description{
   background: rgb(108,32,126);
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   opacity: 0;
   transform: translateY(100%);
-  transition: transform 500ms ease-in-out, opacity ease-in-out;
+  transition: transform 300ms ease-out, opacity ease-out;
+}
+
+.hover-description.asset{
+  height: calc(100% - 9px);
 }
 
 .hover-description p{
@@ -865,6 +873,15 @@ body {
   color: white;
 }
 
+.hover-description p.date{
+  top: auto;
+  transform: none;
+  bottom: 0;
+  right: 0;
+  margin: 0;
+  padding: 0.75em;
+}
+
 .is-grid .front-service .image{
   overflow: hidden;
 }
@@ -872,7 +889,6 @@ body {
 .column:hover .hover-description{
   opacity: 1;
   transform: translateY(0);
-  transition-delay: 500ms;
 }
 
 article + article {
@@ -930,7 +946,13 @@ ol > li:not(:last-child) {
 .timeline .year {
   flex: 1;
   position: relative;
+  transition: all 300ms;
 }
+
+.timeline .year:hover{
+  flex: 2;
+}
+
 .timeline .year:not(:last-child) {
   border-right: inherit;
 }
@@ -940,9 +962,14 @@ ol > li:not(:last-child) {
   width: 5px;
   height: 100%;
   left: var(--position);
+  transition: all 300ms;
+  bottom: 0;
 }
 
-
+.timeline .year .project:hover{
+  width: 10px;
+  height: 150%;
+}
 
 .subtitle,
 .date {
@@ -1488,10 +1515,6 @@ label .fas {
   opacity: 0;
 }
 
-.is-grid .column{
-  max-height:550px;
-}
-
 .column-service:hover, .column-service:active{
   -webkit-box-shadow: 5px 5px 5px 5px rgba(150,150,150,1);
   -moz-box-shadow: 5px 5px 5px 5px rgba(150,150,150,1);
@@ -1544,6 +1567,9 @@ figure.image.portrait figcaption {
   margin-top: 0;
 }
 
+.is-3.in-grid figure + h4{
+  margin-top: 1em;
+}
 
 .is-3.in-grid .card-image{
   height: 60%
@@ -1728,8 +1754,12 @@ header + .intro{
   display: block;
   position: absolute;
   z-index: 1;
-  height: 500px;
 }
+
+.columns.is-grid.grid-loading.muuri{
+  height: auto;
+}
+
 .item.muuri-item-dragging {
   z-index: 3;
 }

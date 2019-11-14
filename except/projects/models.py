@@ -204,6 +204,12 @@ class ProjectPage(Page):
 		except:
 			return
 
+	def image_version(self):
+		if len(self.top_images) == 0:
+			return "http://media.except.nl/media/"+hero_old_image.url
+		else:
+			return self.top_images[0]
+
 	def thumbnail(self):
 		
 		dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -230,6 +236,7 @@ class ProjectIndexPage(Page):
 	navbar_inverted = models.BooleanField('Colorful navigation bar', blank=True, null=True)
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
+	description_title = models.CharField(max_length=255, null=True, blank=True)
 	intro = models.TextField(blank=True)
 
 
@@ -239,6 +246,7 @@ class ProjectIndexPage(Page):
 		FieldPanel('hero_image'),
 		FieldPanel('hero_title'),
 		FieldPanel('hero_subtitle'),
+		FieldPanel('description_title'),
 		FieldPanel('intro'),
 	]
 

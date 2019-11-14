@@ -1,32 +1,25 @@
-{% with mediaPath="/media/original_images/" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+{% load static wagtailuserbar %}
+
+{% with mediaPath="/media/" %}
   {% for element in elements %}
-    {% if is_loadable %}
-      <div class="column is-3 in-grid is-loadable" data-title="{{element.hero_title}}" data-service="{{element.service}}">
-    {% else %}
-      <div class="column is-3 in-grid">
-    {% endif %}
-        <div class="card is-stretched">
-          <div class="card-image">
-            <a href={{element.url}}>
-              {% if element.top_images.all %}
-                <figure class="image"><img src="{{ mediaPath }}{{ element.top_images.all.0.image }}"></figure>
-              {% else %}
-                <figure class="image"><img src="http://media.except.nl/media/{{ element.hero_old_image }}"></figure>
-              {% endif %}
-            </a>
-          </div>
-          <div class="card-content">
-            <a href={{element.url}}>
-              <h4 class="h4">{{element.hero_title}}</h4>
-            </a>
-            <p>{{element.hero_subtitle}}</p>
-            <p>{{element.date_published|date:"M d, Y"}}</p>
-            <div class="button is-selector is-{{element.service.color}} is-pulled-left"></div>
-          </div>
-          <div class="card-footer">
-            <div class="button is-selector is-{{element.service.color}} is-pulled-left"></div><a class="button is-pulled-right" href={{element.url}}><i class="fas fa-chevron-right"></i></a>
-          </div>
-        </div>
-    </div>
+    
+      {% if is_loadable %}
+        <div class="column is-3 in-grid is-loadable" data-title="{{element.hero_title}}" data-service="{{element.service}}">
+      {% else %}
+        <div class="column is-3 in-grid">
+      {% endif %}
+        <a href="{{element.url}}">
+          {% if element.top_images.all %}
+            {% image element.top_images.all.0.image fill-600x600 as project_image %}
+          {% else %}
+            {% image "http://media.except.nl/media/"|add:element.hero_old_image fill-600x600 as project_image %}
+          {% endif %}
+          {% image element.top_images.all.0.image fill-600x400 as project_image%}
+          <figure class="image"><img src="{{ project_image.url }}" style="background-size:cover;"><div class="hover-description asset"><p>{{element.hero_subtitle}}</p><p class="date">{{element.date_published|date:"M Y"}}</p></div></figure>
+          <h4 class="h4 has-text-centered"><span>{{element.hero_title}}</span></h4>
+        </a>
+      </div>
   {% endfor %}
 {% endwith %}

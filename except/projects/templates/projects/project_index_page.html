@@ -12,11 +12,16 @@
 
     {# Main navigation #}
     {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
-
+    <div class="spacer is-large"></div>
     <section class="section">
       <div class="container">
         <div class="columns">
           <div class="column is-8">
+            <header>
+              {% if page.description_title %}
+                <h2 class="h2">{{page.description_title}}</h2>
+              {% endif %}
+            </header>
             {% if page.intro %}
               <p class="intro">
                 {{page.intro}}
@@ -28,88 +33,10 @@
 
     {# Carousel #}
 
-    {% if highlights.all %}
-      <section class="section has-carousel">
-        <div class="container">
-          <article class="article">
-            <header>
-              {% if current_language == 'nl' %}
-                <h2 class="h2">(NL) Project highlights</h2>
-              {% elif current_language == 'en' %}
-                <h2 class="h2">Project highlights</h2>
-              {% endif %}
-            </header>
-          </article>
-        </div>
-        <div class="spacer"></div>
-        <div class="container has-carousel full-width" data-count="{{page.carousel_items.all|length}}">
-          <article class="article carousel-inner">
-            {% for item in highlights.all %}
-              <div class="carousel has-text-centered" style="background-image:url({{ mediaPath }}{{ item.top_images.all.0.image }})">
-                <div class="container not-full-height">
-                  <div class="columns caption-carousel">
-                    <div class="colmn is-6 caption-carousel">
-                      <h2 class="h2 is-blocked">{{ item.hero_title }}</h2>
-                      <p class="intro is-blocked description">{{ item.hero_subtitle }}</p>
-                      {% if current_language == 'nl' %}
-                        <div class="buttons is-blocked"><a href="{{item.url}}" class="button is-next is-secondary">(NL) View project</a></div>
-                      {% elif current_language == 'en' %}
-                        <div class="buttons is-blocked"><a href="{{item.url}}" class="button is-next is-secondary">View project</a></div>
-                      {% endif %}
-                    </div>
-                  </div>
-                </div>
-              </div>       
-            {% endfor %}
-          </article>
-        </div>
-      </section>
-
-      <section class="section has-selectors">
-        <div class="container flex-centered">
-          <div class="buttons">
-            {% for item in highlights.all %}
-              {% if item == highlights.0 %}
-                <button class="button is-selector is-primary is-carousel"></button>
-              {% else %}
-                <button class="button is-selector is-secondary is-carousel"></button>
-              {% endif %}
-            {% endfor %}
-          </div>
-        </div>
-      </section>
-    {% endif %}
-
-    {# 6 latest projects #}
-
-    <section class="section">
-      <div class="container">
-        <article class="article">
-          <header>
-            {% if current_language == 'nl' %}
-              <h2 class="h2">(NL) Latest projects</h2>
-            {% elif current_language == 'en' %}
-              <h2 class="h2">Latest projects</h2>
-            {% endif %}
-          </header>
-          <div class="columns is-grid">
-            {% include "modules/grid_6.html" with elements=latest_project is_loadable=False %}
-          </div>
-        </article>
-      </div>
-    </section>
-
     {# List of all projects with timeline and category filter #}
     <section class="section">
       <div class="container">
         <article class="article">
-          <header>
-            {% if current_language == 'nl' %}
-              <h2 class="h2">(NL) Project archives</h2>
-            {% elif current_language == 'en' %}
-              <h2 class="h2">Project archives</h2>
-            {% endif %}
-          </header>
           <header class="has-text-centered">
             {% if current_language == 'nl' %}
               <h3 class="h3 timeline-element">(NL) TIMELINE</h3>
@@ -117,6 +44,7 @@
               <h3 class="h3 timeline-element">TIMELINE</h3>
             {% endif %}
           </header>
+          <div class="spacer"></div>
           <div class="has-text-centered timeline-element">
             <div class="timeline">
               {% include "modules/timeline.html" with years=years elements=projects %}
@@ -130,6 +58,7 @@
               <h3 class="h3">FILTER</h3>
             {% endif %}
           </header>
+          <div class="spacer"></div>
           <div class="has-text-centered">
             {% for service in services %}
               <label class="button is-filter is-{{service.color}} is-active">
@@ -138,9 +67,9 @@
             {% endfor %}
             <div class="button search-news" style="margin-top: 1.4em;">
               {% if current_language == 'nl' %}
-                <input class="input input-news" name="query" placeholder="(NL) Search news"/>
+                <input class="input input-news" name="query" placeholder="(NL) Search projects"/>
               {% elif current_language == 'en' %}
-                <input class="input input-news" name="query" placeholder="Search news"/>
+                <input class="input input-news" name="query" placeholder="Search projects"/>
               {% endif %}
               <i class="fas fa-search"></i>
             </div>
