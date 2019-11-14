@@ -118,10 +118,10 @@ window.addEventListener('scroll', function (e) {
       $nav.classList.add('opaque');
       $('.navbar-menu').find('.fa-chevron-up').removeClass('fa-chevron-up').addClass('fa-chevron-down');
       $('.scroll-up').css('display','block');
-      $hero.style.opacity = 1 - (topScroll * 1);
+      $hero.style.opacity = 1 - (.9 * 1);
     
-      $nav.style.transform = `translate(0, -${topScroll * 30}px)`;
-      $logo.style.transform = `scale(${1 - topScroll * scaling})`;
+      $nav.style.transform = `translate(0, -${.9 * 30}px)`;
+      $logo.style.transform = `scale(${1 - .9 * scaling})`;
       return;
     } else {
       $nav.classList.remove('opaque');
@@ -275,8 +275,6 @@ function resizing(){
   $('.anchor').each(function(){
     $(this).css('top', -paddingVal+"px");
   });
-
-  $('.anchor').eq(1).css('top', -paddingVal+18+"px");
 
   $('.section.is-fullheight').each(function(){
     var sectionHeight = parseInt($(this).css('height').replace('px',''));

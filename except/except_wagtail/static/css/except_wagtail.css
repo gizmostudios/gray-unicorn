@@ -845,8 +845,43 @@ body {
   margin-left: 15%;
 }
 
+.is-grid .front-service:hover img{
+  box-shadow: none;
+}
+
 .columns.has-gap > .column:not(:last-child) {
   margin-right: 4em;
+}
+
+.hover-description{
+  background: rgb(108,32,126);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: transform 500ms ease-in-out, opacity ease-in-out;
+}
+
+.hover-description p{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 2em;
+  text-align: left;
+  color: white;
+}
+
+.front-service .image{
+  overflow: hidden;
+}
+
+.column:hover .hover-description{
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 500ms;
 }
 
 article + article {
@@ -1196,7 +1231,6 @@ a.anchor {
 .has-carousel article .carousel.is-carousel-block{
   max-height: 1200px;
   height:35vw;
-
 }
 
 .carousel.has-text-centered{
@@ -1213,8 +1247,12 @@ a.anchor {
   scroll-snap-align: center;
 }
 
+.section.carousel-service{
+  padding:0;
+}
+
 .carousel-service .carousel.has-text-centered{
-  width:60%;
+  width:70vw;
 }
 
 .caption-carousel-article{
@@ -1225,6 +1263,7 @@ a.anchor {
   max-width:50%;
   text-align: left;
 }
+
 
 .has-carousel .carousel-inner{
   height:100%;
@@ -1238,17 +1277,54 @@ a.anchor {
   padding: 0;
 }
 
-.carousel-service .container.has-carousel{
-  padding: 0;
-}
-
-.section.carousel-service{
-  padding-right: 0;
-  padding-left: 0;
-}
-
 .has-carousel.carousel-service .carousel-inner{
-  width:100%;
+  width: auto;
+  margin-left: -15vw;
+  transform: translate(-1000px,0px);
+  index
+}
+
+.carousel-service-prev{
+  position:absolute;
+  top: 0;
+  left:0;
+  width: 15vw;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+}
+
+.carousel-service-next{
+  position:absolute;
+  top: 0;
+  right:0;
+  width: 15vw;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+}
+
+.carousel-service-next:hover, .carousel-service-prev:hover{
+  background: rgba(0,0,0,0.9);
+}
+
+.carousel-service-prev .fa-chevron-left, .carousel-service-next .fa-chevron-right{
+  position: absolute;
+  top: calc(50% - 3vh);
+  right: 50%;
+}
+
+.carousel-service-prev:hover .fa-chevron-left, .carousel-service-next:hover .fa-chevron-right{
+  position: absolute;
+  top: calc(50% - 3.5vh);
+  right: 50%;
+}
+
+.carousel-service-prev .fa-chevron-left::before, .carousel-service-next .fa-chevron-right::before{
+  color:white;
+  font-size:6vh;
+}
+
+.carousel-service-prev:hover .fa-chevron-left::before, .carousel-service-next:hover .fa-chevron-right::before{
+  font-size:7vh;
 }
 
 .is-blocked.description{
@@ -1734,8 +1810,8 @@ a.service-link{
  .container {
   max-width:100%;
   width:auto;
-  padding-left: 15vw;
-  padding-right: 15vw;
+  padding-left: 15%;
+  padding-right: 15%;
  }
  .buttons.is-stretched{
   right:15vw;

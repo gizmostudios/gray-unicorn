@@ -32,10 +32,12 @@ class ServicePage(Page):
 		on_delete=models.SET_NULL,
 		related_name='+'
 	)
+	description = models.TextField(null=True, blank=True)
 
 	content_panels = Page.content_panels + [
 		FieldPanel('hero_title'),
 		ImageChooserPanel('hero_image'),
+		FieldPanel('description'),
 	]
 
 # Should be working area this is our domains of intervention
@@ -89,6 +91,8 @@ class WorkingAreaPage(Page):
 		context = super(WorkingAreaPage, self).get_context(request)
 
 		context['projects'] = self.get_projects()
+		context['last_project'] = self.get_projects()[len(self.get_projects())-1]
+		context['previous_last_project'] = self.get_projects()[len(self.get_projects())-2]
 		context['articles'] = self.get_articles()
 		context['parent_page'] = ServiceIndexPage.objects.ancestor_of(self).first()
 		context['subservices'] = self.get_subservices()

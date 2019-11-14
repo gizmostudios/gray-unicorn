@@ -15,6 +15,7 @@ class WorkingAreaPageTR(TranslationOptions):
 class ServicePageTR(TranslationOptions):
 	fields = (
 		'hero_title',
+		'description',
 		)
 
 @register(ServiceIndexPage)
