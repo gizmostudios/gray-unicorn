@@ -35,9 +35,9 @@
 {% else %}
 	{% with mediaPath="/media/" %}
 		{% if compact == False %}
-			<section class="hero is-inverted is-darkened" style="background-image: url({{ mediaPath }}{{ page.hero_image.file }})">
+			<section class="hero is-inverted is-darkened" style="background-image: url({{ mediaPath }}{{ page.hero_image.url }})">
 		{% else %}
-			<section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ mediaPath }}{{ page.hero_image.file }})">
+			<section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ mediaPath }}{{ page.hero_image.url }})">
 		{% endif %}
 			<div class='background-dark-cover'></div>
 	      	<div class="hero-body">
