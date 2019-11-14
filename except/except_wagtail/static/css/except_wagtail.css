@@ -1568,7 +1568,7 @@ figure.image.portrait figcaption {
 }
 
 .is-3.in-grid figure + h4{
-  margin-top: 1em;
+  margin-top: .5em;
 }
 
 .is-3.in-grid .card-image{
