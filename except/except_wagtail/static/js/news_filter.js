@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', function () {
       field.value = field.querySelectorAll('option')[0].value;
     });
 
+    var grid = $('.is-grid.muuri');
+
+    grid.css('height',grid.find('.column').eq(0).css('height'))
+
 	var grid = new Muuri('.grid-loading', {
 		items: '.in-grid',
 		layout: {
