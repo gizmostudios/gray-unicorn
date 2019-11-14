@@ -1758,7 +1758,6 @@ header + .intro{
 
 .columns.is-grid.grid-loading.muuri{
   height: auto;
-  min-height: 600px;
 }
 
 .item.muuri-item-dragging {
