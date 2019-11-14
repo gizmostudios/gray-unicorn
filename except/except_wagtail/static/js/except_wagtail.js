@@ -68,21 +68,6 @@ window.addEventListener('scroll', function (e) {
         if( window.scrollY < $hero.clientHeight/2 && scrollLock == 0){
           $('html, body').animate({ scrollTop: $('#bottom-navbar').position().top }, { duration: 1000, easing:"swing", start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
         }
-        else if( window.scrollY > $('#bottom-navbar').position().top+50 && window.scrollY < $('#carousel-section').position().top && scrollLock == 0){
-          if($('#carousel-section').position()){
-            $('html, body').animate({ scrollTop: $('#carousel-section').position().top }, { duration: 1000, easing:"swing", start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
-          }
-        }
-        else if( window.scrollY > $('#carousel-section').position().top+50 && window.scrollY < $('#services-section').position().top && scrollLock == 0){
-          if($('#services-section').position()){
-            $('html, body').animate({ scrollTop: $('#services-section').position().top }, { duration: 1000, easing:"swing", start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
-          }
-        }
-        else if( window.scrollY > $('#services-section').position().top+50 && window.scrollY < $('#highlight-section').position().top && scrollLock == 0){
-          if($('#highlight-section').position()){
-            $('html, body').animate({ scrollTop: $('#highlight-section').position().top }, { duration: 1000, easing:"swing", start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
-          }
-        }
       }
       catch(err){}
      }
@@ -90,21 +75,6 @@ window.addEventListener('scroll', function (e) {
       try{
         if( window.scrollY < $('#bottom-navbar').position().top-50 && window.scrollY > $('#top-scroll').position().top && scrollLock == 0){
           $('html, body').animate({ scrollTop: $('#top-scroll').position().top }, { duration: 1000, easing:"swing", start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
-        }
-        else if( window.scrollY < $('#carousel-section').position().top-50 && window.scrollY > $('#bottom-navbar').position().top && scrollLock == 0){
-          if($('#carousel-section').position()){
-            $('html, body').animate({ scrollTop: $('#bottom-navbar').position().top }, { duration: 1000, easing:"swing", start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
-          }
-        }
-        else if( window.scrollY < $('#services-section').position().top-50 && window.scrollY > $('#carousel-section').position().top && scrollLock == 0){
-          if($('#services-section').position()){
-            $('html, body').animate({ scrollTop: $('#carousel-section').position().top }, { duration: 1000, easing:"swing", start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
-          }
-        }
-        else if(window.scrollY < $('#highlight-section').position().top-50 && window.scrollY > $('#services-section').position().top && scrollLock == 0){
-          if($('#highlight-section').position()){
-            $('html, body').animate({ scrollTop: $('#services-section').position().top }, { duration: 1000, easing:"swing", start: function(){ scrollLock = 1; }, complete: function(){ scrollLock = 0;} });
-          }
         }
       }
       catch(err){}
