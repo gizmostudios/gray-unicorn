@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+$(document).ready(function(){
 	var searchElement = document.querySelector('.input-news');
 	var searchElementValue = searchElement.value.toLowerCase();
 
@@ -72,11 +72,4 @@ document.addEventListener('DOMContentLoaded', function () {
 			return isSearchmatch && isServicematch;
 		});
     };
-});
-
-window.addEventListener('load', function(){
-	var grid = $('.is-grid.muuri');
-
-    grid.css('height',grid.find('.column').eq(0).css('height'));
-    console.log(grid.css('height'));
 });
