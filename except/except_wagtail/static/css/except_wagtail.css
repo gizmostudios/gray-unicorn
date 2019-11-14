@@ -1806,13 +1806,14 @@ a.service-link{
   background-size: cover;
 }
 
-@media screen and (min-width:1472px) {
- .container {
+.container.service-carousel {
   max-width:100%;
   width:auto;
   padding-left: 15%;
   padding-right: 15%;
  }
+
+@media screen and (min-width:1472px) {
  .buttons.is-stretched{
   right:15vw;
  }
