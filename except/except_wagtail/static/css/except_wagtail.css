@@ -840,11 +840,6 @@ body {
   height: auto;
 }
 
-.working-areas .is-grid .column figure{
-  width: 70%;
-  margin-left: 15%;
-}
-
 .is-grid .front-service:hover img{
   box-shadow: none;
 }
