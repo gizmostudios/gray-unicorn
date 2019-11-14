@@ -5,9 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	// Reset field values.
     searchElement.value = '';
 
-    var grid = $('.is-grid.muuri');
-
-    grid.css('height',grid.find('.column').eq(0).css('height'));
+    
 
 	var grid = new Muuri('.grid-loading', {
 		items: '.in-grid',
@@ -74,4 +72,11 @@ document.addEventListener('DOMContentLoaded', function () {
 			return isSearchmatch && isServicematch;
 		});
     };
+});
+
+window.addEventListener('load', function(){
+	var grid = $('.is-grid.muuri');
+
+    grid.css('height',grid.find('.column').eq(0).css('height'));
+    console.log(grid.css('height'));
 });
