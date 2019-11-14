@@ -1809,6 +1809,12 @@ a.service-link{
  }
 
 @media screen and (min-width:1472px) {
+.container {
+  max-width:100%;
+  width:auto;
+  padding-left: 15%;
+  padding-right: 15%;
+ }
  .buttons.is-stretched{
   right:15vw;
  }
