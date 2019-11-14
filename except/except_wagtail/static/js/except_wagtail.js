@@ -208,18 +208,6 @@ $(window).resize(function(){
 function resizing(){
   // Manage display of sub-menu of the navbar
 
-  $('.sub-menu').each(function(){
-    $(this).off().on('click',function(){
-      var dropdown = $(this).closest('.navbar-item').find('.dropdown')
-      if(dropdown.css('display') == 'flex'){
-        $('.dropdown').css('display','none');
-      }else{
-        $('.dropdown').css('display','none');
-        dropdown.css('display','flex');
-      }
-    });
-  });
-
   $('.scroll-full-height').each(function(){
     $(this).off().on('click',function(){
       window.scrollBy({

@@ -857,7 +857,7 @@ body {
   height: 100%;
   opacity: 0;
   transform: translateY(100%);
-  transition: transform 300ms ease-out, opacity ease-out;
+  transition: transform 500ms ease-out, opacity ease-out;
 }
 
 .hover-description.asset{
@@ -1567,61 +1567,12 @@ figure.image.portrait figcaption {
   margin-top: 0;
 }
 
+.is-3.in-grid{
+  width: calc(25% - 1px);
+}
+
 .is-3.in-grid figure + h4{
   margin-top: .5em;
-}
-
-.is-3.in-grid .card-image{
-  height: 60%
-}
-
-.is-3.in-grid.is-download .card-image{
-  height: 70%
-}
-
-.is-3.in-grid.is-download .card-content{
-  height: 30%
-}
-
-.is-3.in-grid .card-image figure, .is-3.in-grid .card-image img, .is-3.in-grid .card-image a{
-  height: 100%
-}
-
-.is-3.in-grid .card-content{
-  height: 40%
-}
-
-.is-3.in-grid .card-content p + p{
-  margin: 1em 0;
-}
-
-.is-3.in-grid .card-content .is-pulled-left{
-  display: none;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-
-.is-3.in-grid .card-footer{
-  position: relative;
-  border-top: 0;
-  height: 10%;
-  flex:auto;
-  background: #f6f6f6;
-}
-
-.is-3.in-grid .card-footer .is-pulled-left{
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-
-.is-3.in-grid .card-footer .is-pulled-right{
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  border: solid 1px rgba(165, 167, 170, 0.5);
-  border-width: 1px 0 0 1px;
 }
 
 .is-4.in-grid .card-image{

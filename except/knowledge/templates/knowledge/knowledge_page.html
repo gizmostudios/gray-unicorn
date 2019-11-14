@@ -1,113 +1,42 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags wagtailembeds_tags %}
-{% load static wagtailuserbar %}
-
 
 {% load static %}
 
 {% block content %}
   {% with mediaPath="/media/original_images/" %}
-    {% with mediaPathOriginal="/media/original_images/" %}
 
     {# Top Section/Header #}
     {% include "modules/top_section.html" with page=page carousel=False %}
 
     {# Main navigation #}
     {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
-
-    {# Introduction on our articles #}
-
+    <div class="spacer is-large"></div>
     <section class="section">
       <div class="container">
-        <article class="article">
-          <div class="columns">
-            <div class="column is-8">
+        <div class="columns">
+          <div class="column is-8">
+            <header>
+              {% if page.description_title %}
+                <h2 class="h2">{{page.description_title}}</h2>
+              {% endif %}
+            </header>
+            {% if page.intro %}
               <p class="intro">
                 {{page.intro}}
               </p>
-            </div>
+            {% endif %}
           </div>
-        </article>
       </div>
     </section>
 
     {# Carousel #}
 
-    {% if highlights %}
-      <section class="section has-carousel">
-        <div class="container">
-          {% if current_language == 'nl' %}
-            <h2 class="h2">(NL) Knowledge highlights</h2>
-          {% elif current_language == 'en' %}
-            <h2 class="h2">Knowledge highlights</h2>
-          {% endif %}
-        </div>
-        <div class="spacer"></div>
-        <div class="container has-carousel full-width" data-count="{{page.carousel_items.all|length}}">
-          <article class="article carousel-inner">
-            {% for item in highlights %}
-              <div class="carousel has-text-centered" style="background-image:url({{ mediaPathOriginal }}{{ item.top_images.all.0.image }})">
-                <div class="container not-full-height">
-                  <div class="columns caption-carousel">
-                    <div class="colmn is-6 caption-carousel">
-                      <h2 class="h2 is-blocked">{{ item.hero_title }}</h2>
-                      <p class="intro is-blocked description">{{ item.hero_subtitle }}</p>
-                      <div class="buttons is-blocked"><a href="{{item.url}}" class="button is-next is-secondary">See more</a></div>
-                    </div>
-                  </div>
-                </div>
-              </div>       
-            {% endfor %}
-          </article>
-        </div>
-      </section>
-      <section class="section has-selectors">
-        <div class="container flex-centered">
-          <div class="buttons">
-            {% for item in highlights %}
-              {% if item == highlights.0 %}
-                <button class="button is-selector is-primary is-carousel"></button>
-              {% else %}
-                <button class="button is-selector is-secondary is-carousel"></button>
-              {% endif %}
-            {% endfor %}
-          </div>
-        </div>
-      </section>
-    {% endif %}
-
-    {# 6 latest articles #}
-
+    {# List of all projects with timeline and category filter #}
     <section class="section">
       <div class="container">
         <article class="article">
-          <header>
-            {% if current_language == 'nl' %}
-              <h2 class="h2">(NL) Latest articles</h2>
-            {% elif current_language == 'en' %}
-              <h2 class="h2">Latest articles</h2>
-            {% endif %}
-          </header>
-          <div class="columns is-grid">
-            {% include "modules/grid_6.html" with elements=latest_resources %}
-          </div>
-        </article>
-      </div>
-    </section>
-
-    {# List of all our articles with filter possibilities #}
-    
-    <section class="section">
-      <div class="container">
-        <article class="article">
-          <header>
-            {% if current_language == 'nl' %}
-              <h2 class="h2">(NL) Knowledge database</h2>
-            {% elif current_language == 'en' %}
-              <h2 class="h2">Knowledge database</h2>
-            {% endif %}
-          </header>
           <div class="spacer is-large"></div>
           <header class="has-text-centered">
             {% if current_language == 'nl' %}
@@ -116,24 +45,24 @@
               <h3 class="h3">FILTER</h3>
             {% endif %}
           </header>
+          <div class="spacer"></div>
           <div class="has-text-centered">
-            {% csrf_token %}
             {% for service in services %}
               <label class="button is-filter is-{{service.color}} is-active">
-                <input type="checkbox"><span>{{service.title}}</span>
+                <input type="checkbox"><span>{{service.hero_title}}</span>
               </label>
             {% endfor %}
             <div class="button search-news" style="margin-top: 1.4em;">
               {% if current_language == 'nl' %}
-                <input class="input input-news" name="query" placeholder="(NL) Search news"/>
+                <input class="input input-news" name="query" placeholder="(NL) Search projects"/>
               {% elif current_language == 'en' %}
-                <input class="input input-news" name="query" placeholder="Search news"/>
+                <input class="input input-news" name="query" placeholder="Search projects"/>
               {% endif %}
               <i class="fas fa-search"></i>
             </div>
           </div>
           <div class="spacer is-large"></div>
-          <div id="articles" class="columns is-grid grid-loading">
+          <div id="projects" class="columns is-grid grid-loading">
             {% include "modules/grid_8.html" with elements=resources is_loadable=True %}
           </div>
           <div class='button-load-container'>
@@ -145,6 +74,5 @@
     <script type="text/javascript" src="{% static 'js/carousel_article.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/vendor/muuri.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/loading_more.js' %}"></script>
-    {% endwith %}
   {% endwith %}
 {% endblock content %}

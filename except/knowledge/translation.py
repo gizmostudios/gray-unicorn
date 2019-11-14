@@ -7,6 +7,7 @@ class KnowledgePageTR(TranslationOptions):
 	fields = (
 		'hero_title',
 		'hero_subtitle',
+		'description_title',
 		'intro',
 		)
 

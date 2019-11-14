@@ -187,6 +187,7 @@ class KnowledgePage(Page):
 	navbar_transparent = models.BooleanField(null=True, blank=True)
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
+	description_title = models.CharField(max_length=255, null=True, blank=True)
 	intro = models.TextField(blank=True)
 
 	content_panels = Page.content_panels + [
@@ -195,6 +196,7 @@ class KnowledgePage(Page):
 		FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
 		FieldPanel('hero_title'),
 		FieldPanel('hero_subtitle'),
+		FieldPanel('description_title'),
 		FieldPanel('intro', classname="full"),
 	]
 	
