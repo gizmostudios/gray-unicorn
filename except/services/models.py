@@ -8,7 +8,7 @@ from modelcluster.fields import ParentalKey
 
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, Orderable
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, PageChooserPanel, StreamFieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, PageChooserPanel, StreamFieldPanel, MultiFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
 
@@ -24,15 +24,15 @@ class ServicePage(Page):
 	parent_page_types = ['WorkingAreaPage']
 	subpage_types = []
 
-	hero_title = models.CharField(max_length=100)
+	hero_title = models.CharField(max_length=100, null=True, blank=False)
 	hero_image = models.ForeignKey(
 		'wagtailimages.Image',
 		null=True,
-		blank=True,
+		blank=False,
 		on_delete=models.SET_NULL,
 		related_name='+'
 	)
-	description = models.TextField(null=True, blank=True)
+	description = models.TextField(null=True, blank=False)
 
 	content_panels = Page.content_panels + [
 		FieldPanel('hero_title'),
@@ -43,19 +43,19 @@ class ServicePage(Page):
 # Should be working area this is our domains of intervention
 
 class WorkingAreaPage(Page):
-	hero_title = models.CharField(max_length=100)
+	hero_title = models.CharField(max_length=100, null=True, blank=False)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
-	color = models.CharField(max_length=100, blank=True, null=True)
+	color = models.CharField(max_length=100, blank=False, null=True)
 	hero_image = models.ForeignKey(
 		'wagtailimages.Image',
 		null=True,
-		blank=True,
+		blank=False,
 		on_delete=models.SET_NULL,
 		related_name='+'
 	)
-	summary = models.CharField(max_length=100, blank=True, null=True)
-	introduction = models.TextField(null=True, blank=True)
-	body = models.TextField(null=True, blank=True)
+	summary = models.CharField(max_length=100, blank=False, null=True, verbose_name='Summary (1 or 2 sentences max)')
+	introduction = models.TextField(null=True, blank=False, verbose_name="Introduction")
+	body = models.TextField(null=True, verbose_name="Service details", blank=False)
 
 	def __str__(self):
 		return self.hero_title
@@ -64,14 +64,32 @@ class WorkingAreaPage(Page):
 		verbose_name_plural = "Services"
 
 
-	content_panels = Page.content_panels + [
-		FieldPanel('hero_title'),
-		FieldPanel('hero_subtitle'),
-		FieldPanel('color'),
-		FieldPanel('summary'),
-		ImageChooserPanel('hero_image'),
-		FieldPanel('introduction'),
-		FieldPanel('body')
+	content_panels = [
+		MultiFieldPanel([
+            FieldPanel('title'),
+        ], heading='Title'),
+		MultiFieldPanel([
+				FieldPanel('hero_title'),
+				FieldPanel('hero_subtitle'),
+				ImageChooserPanel('hero_image'),
+			],
+			heading='Top section',
+			classname="collapsible"
+		),
+		MultiFieldPanel([
+				FieldPanel('color'),
+			],
+			heading='Meta data',
+			classname="collapsible"
+		),
+		MultiFieldPanel([
+				FieldPanel('summary'),
+				FieldPanel('introduction'),
+				FieldPanel('body'),
+			],
+			heading='Service information',
+			classname="collapsible"
+		),
 	]
 
 	def get_subservices(self):
@@ -106,21 +124,31 @@ class ServiceIndexPage(Page):
 
 	subpage_types = ['WorkingAreaPage']
 	parent_page_types = ['index.HomePage']
-	hero_image = models.ImageField(null=True, blank=True)
-	navbar_transparent = models.BooleanField('Transparency of the navigation bar', blank=True, null=True)
-	navbar_inverted = models.BooleanField('Colorful navigation bar', blank=True, null=True)
-	hero_title = models.CharField(max_length=255, null=True, blank=True)
+	hero_image = models.ForeignKey(
+		'wagtailimages.Image',
+		null=True,
+		blank=False,
+		on_delete=models.SET_NULL,
+		related_name='+'
+	)
+	hero_title = models.CharField(max_length=255, null=True, blank=False)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
-	service_introduction = models.TextField(blank=True)
+	service_introduction = models.TextField(blank=False)
 
 
 
-	content_panels = Page.content_panels + [
-		FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
-		FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
-		FieldPanel('hero_image'),
-		FieldPanel('hero_title'),
-		FieldPanel('hero_subtitle'),
+	[
+		MultiFieldPanel([
+            FieldPanel('title'),
+        ], heading='Title'),
+		MultiFieldPanel([
+				FieldPanel('hero_title'),
+				FieldPanel('hero_subtitle'),
+				ImageChooserPanel('hero_image'),
+			],
+			heading='Top section',
+			classname="collapsible"
+		),
 		FieldPanel('service_introduction'),
 	]
 

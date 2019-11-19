@@ -4,7 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 import os 
 
-from datetime import datetime
+from datetime import datetime, date
 from preview_generator.manager import PreviewManager
 
 from modelcluster.fields import ParentalKey
@@ -31,7 +31,7 @@ class TopImage(Orderable):
 	image = models.ForeignKey(
 		'wagtailimages.Image',
 		null=True,
-		blank=True,
+		blank=False,
 		on_delete=models.SET_NULL,
 		related_name='+'
 	)
@@ -80,7 +80,7 @@ class File(models.Model):
 class RelatedArticle(Orderable):
 	page = ParentalKey('NewsPage', related_name='linked_articles')
 
-	element = models.ForeignKey('news.NewsPage', on_delete=models.SET_NULL, null=True, blank=True,)
+	element = models.ForeignKey('news.NewsPage', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Article")
 
 	panels = [
 		FieldPanel('element'),
@@ -91,7 +91,7 @@ class RelatedArticle(Orderable):
 class RelatedProject(Orderable):
 	page = ParentalKey('NewsPage', related_name='linked_projects')
 
-	element = models.ForeignKey('projects.ProjectPage', on_delete=models.SET_NULL, null=True, blank=True,)
+	element = models.ForeignKey('projects.ProjectPage', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Project")
 
 	panels = [
 		FieldPanel('element'),
@@ -111,10 +111,10 @@ class NewsPage(Page):
 	hero_old_image = models.ImageField(null=True, blank=True)
 
 	highlight = models.BooleanField(blank=True, null=True)
-	hero_title = models.CharField(max_length=255, null=True, blank=True)
+	hero_title = models.CharField(max_length=255, null=True, blank=False)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
-	date_published = models.DateField("Date article published", blank=True, null=True)
-	intro = models.TextField(blank=True)
+	date_published = models.DateField("Date of publication", blank=False, null=False, default=date.today)
+	intro = models.TextField(blank=False, verbose_name="Introduction text")
 
 	path_to_thumbnail = models.CharField(max_length=255, null=True, blank=True) 
 
@@ -127,30 +127,47 @@ class NewsPage(Page):
 		max_length=2,
 		choices=list_of_type,
 		default=ARTICLE,
+		verbose_name="Type of news (Article, Event, Position)"
 	)
-	navbar_transparent = models.BooleanField('Transparency of the navigation bar', blank=True, null=True)
-	navbar_inverted = models.BooleanField('Colorful navigation bar', blank=True, null=True)
-	body = StreamField(BaseStreamBlock(), verbose_name="Page body", blank=True)
-	author = models.ForeignKey('people.People',on_delete=models.SET_NULL,null=True,blank=True,)
+	body = StreamField(BaseStreamBlock(), verbose_name="Article body", blank=False)
+	author = models.ForeignKey('people.People',on_delete=models.SET_NULL,null=True,blank=False,)
 	
-
-
-
-	content_panels = Page.content_panels + [
-		FieldPanel('highlight', widget=forms.CheckboxInput),
-		FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
-		FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
-		InlinePanel('top_images', label='Top section carousel images'),
-		FieldPanel('hero_title'),
-		FieldPanel('hero_subtitle'),
-		FieldPanel('type_of_news'),
-		FieldPanel('intro', classname="full"),
-		StreamFieldPanel('body'),
-		FieldPanel('date_published'),
-		FieldPanel('author'),
-		InlinePanel('linked_articles', max_num=2, label='Related articles'),
-		InlinePanel('linked_projects', max_num=2, label='Related projects'),
-		InlinePanel('downloads', label='Files to downloads'),
+	content_panels = [
+		MultiFieldPanel([
+            FieldPanel('title'),
+        ], heading='Title'),
+		MultiFieldPanel([
+				FieldPanel('hero_title'),
+				FieldPanel('hero_subtitle'),
+				InlinePanel('top_images', label='Top section carousel images'),
+			],
+			heading='Top section',
+			classname="collapsible"
+		),
+		MultiFieldPanel([
+				FieldPanel('highlight', widget=forms.CheckboxInput),
+				FieldPanel('type_of_news'),
+				FieldPanel('date_published'),
+				FieldPanel('author'),
+			],
+			heading='Meta data',
+			classname="collapsible collapsed"
+		),
+		MultiFieldPanel([
+				FieldPanel('intro', classname="full"),
+				StreamFieldPanel('body'),
+			],
+			heading='Article contain',
+			classname="collapsible collapsed"
+		),
+		MultiFieldPanel([
+				InlinePanel('linked_articles', max_num=2, label='Related articles'),
+				InlinePanel('linked_projects', max_num=2, label='Related projects'),
+				InlinePanel('downloads', label='Files to downloads'),
+			],
+			heading='Related assets',
+			classname="collapsible collapsed"
+		),
 	]
 
 	def timeline_position(self):
@@ -189,18 +206,32 @@ class NewsPage(Page):
 # Link to a newspaper article talking about Except
 
 class NewspaperArticlePage(Page):
-	hero_image = models.ImageField(null=True, blank=True)
-	hero_title = models.CharField(max_length=255, null=True, blank=True)
+	hero_image = models.ForeignKey(
+		'wagtailimages.Image',
+		null=True,
+		blank=False,
+		on_delete=models.SET_NULL,
+		related_name='+',
+		verbose_name="Image"
+	)
+	hero_title = models.CharField(max_length=255, null=True, blank=False)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
-	date_published = models.DateField("Date article published", blank=True, null=True)
-	url_article = models.CharField(max_length=500, null=True, blank=True)
-	path_to_thumbnail = models.CharField(max_length=255, null=True, blank=True)
+	date_published = models.DateField("Date of publication", blank=False, null=False, default=date.today)
+	url_article = models.CharField(max_length=500, null=True, blank=False, verbose_name="Link to the article")
 
 
-	content_panels = Page.content_panels + [
-		FieldPanel('hero_image'),
-		FieldPanel('hero_title'),
-		FieldPanel('hero_subtitle'),
+	content_panels = [
+		MultiFieldPanel([
+            FieldPanel('title'),
+        ], heading='Title'),
+		MultiFieldPanel([
+				FieldPanel('hero_title'),
+				FieldPanel('hero_subtitle'),
+				ImageChooserPanel('hero_image'),
+			],
+			heading='Top section',
+			classname="collapsible"
+		),
 		FieldPanel('date_published'),
 		FieldPanel('url_article'),
 	]
@@ -217,38 +248,34 @@ class NewspaperArticlePage(Page):
 	parent_page_types = ['FolderNewspaperPage']
 	subpage_types = []
 
-	def thumbnail(self):
-		
-		dir_path = os.path.dirname(os.path.realpath(__file__))
-		par_dir = os.path.abspath(os.path.join(dir_path, os.pardir))
-		if self.path_to_thumbnail is None:
-			cache_path = par_dir+'/media/'
-			pdf_or_odt_to_preview_path = par_dir+self.hero_image.url
-			manager = PreviewManager(cache_path, create_folder= True)
-			path_to_preview_image = manager.get_jpeg_preview(pdf_or_odt_to_preview_path, height=270,width=431)
-			path, file = path_to_preview_image.split('/media/')
-			self.thumbnail = file
-			print(self.thumbnail)
-			return self.thumbnail
-		else:		
-			return self.path_to_thumbnail
-
 class NewsIndexPage(Page):
 
 	subpage_types = ['FolderNewspaperPage','FolderArticlePage']
 	parent_page_types = ['about.aboutPage']
-	hero_image = models.ImageField(null=True, blank=True)
-	navbar_transparent = models.BooleanField('Transparency of the navigation bar', blank=True, null=True)
-	navbar_inverted = models.BooleanField('Colorful navigation bar', blank=True, null=True)
+
+	hero_image = models.ForeignKey(
+		'wagtailimages.Image',
+		null=True,
+		blank=False,
+		on_delete=models.SET_NULL,
+		related_name='+',
+		verbose_name="Image"
+	)
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
 
-	content_panels = Page.content_panels + [
-		FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
-		FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
-		FieldPanel('hero_image'),
-		FieldPanel('hero_title'),
-		FieldPanel('hero_subtitle')
+	content_panels = [
+		MultiFieldPanel([
+            FieldPanel('title'),
+        ], heading='Title'),
+		MultiFieldPanel([
+				FieldPanel('hero_title'),
+				FieldPanel('hero_subtitle'),
+				ImageChooserPanel('hero_image'),
+			],
+			heading='Top section',
+			classname="collapsible"
+		),
 	]
 
 	def get_news(self):

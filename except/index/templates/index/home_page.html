@@ -33,15 +33,6 @@
                 {% if page.introduction_text %}
                   <p class="intro">{{page.introduction_text}}</p>
                 {% endif %}
-                <div class="buttons">
-                  {% if page.introduction_link %}
-                    {% if current_language == 'nl' %}
-                      <div class="container"><a href='{{page.introduction_link.url}}' class="button is-next is-secondary">(NL) More about us</a></div>
-                    {% elif current_language == 'en' %}
-                      <div class="container"><a href='{{page.introduction_link.url}}' class="button is-next is-secondary">More about us</a></div>
-                    {% endif %}
-                  {% endif %}
-                </div>
               </div>
             </div>
           </div>
@@ -53,7 +44,6 @@
 
     <a class="anchor" id="carousel-section"></a>
     {# Carousel #}
-    {% if page.carousel_images %}
       <section class="section is-fullheight cover-purple">
         <div class="container front-container">
           <article class="article">
@@ -86,7 +76,6 @@
           </article>
         </div>
       </section>
-    {% endif %}
 
     {# Working areas #}
     

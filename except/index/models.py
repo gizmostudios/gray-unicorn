@@ -21,26 +21,6 @@ from modeltranslation.utils import build_localized_fieldname
 from django.conf import settings
 from PIL import Image
 
-# Images for carousel
-
-class CarouselImage(Orderable):
-	image = models.ForeignKey(
-		'wagtailimages.Image',
-		null=True,
-		blank=True,
-		on_delete=models.SET_NULL,
-		related_name='+'
-	)
-	page = ParentalKey('HomePage', related_name='carousel_images')
-	scaling = models.CharField(max_length=15, default='fit', choices=(
-		('fit', 'fit'), ('fill', 'fill')
-	))
-
-	panels = [
-		ImageChooserPanel('image'),
-		FieldPanel('scaling'),
-	]
-
 # Images for carousel in hero section
 
 class TopImage(Orderable):
@@ -49,7 +29,7 @@ class TopImage(Orderable):
 		null=True,
 		blank=True,
 		on_delete=models.SET_NULL,
-		related_name='+'
+		related_name='+',
 	)
 	page = ParentalKey('HomePage', related_name='top_images')
 
@@ -57,61 +37,60 @@ class TopImage(Orderable):
 		ImageChooserPanel('image'),
 	]
 
-# Link for the carousel in the page (Fixed compare to the images)
-
-class CarouselItem(Orderable):
-	link = models.ForeignKey(
-		'wagtailcore.Page',
-		null=True,
-		blank=True,
-		on_delete=models.SET_NULL,
-		related_name='+')
-	page = ParentalKey('HomePage', related_name='carousel_links')
-	link_description = models.CharField(max_length=255, null=True, blank=True)
-
-	panels = [
-		PageChooserPanel('link'),
-		MultiFieldPanel([FieldPanel('link_description', classname="full")], heading='Link button text'),
-	]
-
 class HomePage(Page):
 	subpage_types = ['about.AboutPage','services.ServiceIndexPage','knowledge.KnowledgePage','projects.ProjectIndexPage']
-	navbar_inverted = models.BooleanField(null=True, blank=True)
-	navbar_transparent = models.BooleanField(null=True, blank=True)
+
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
-	introduction_title = models.CharField(max_length=255, null=True, blank=True)
-	introduction_text = models.TextField(blank=True)
-	carousel_title = models.CharField(max_length=255, null=True, blank=True)
-	carousel_description = models.TextField(blank=True)
+	introduction_title = models.CharField(max_length=255, null=True, blank=True, verbose_name="Title")
+	introduction_text = models.TextField(blank=True, verbose_name="Text")
+	carousel_title = models.CharField(max_length=255, null=True, blank=True, verbose_name="Title")
+	carousel_description = models.TextField(blank=True, verbose_name="Text")
 	carousel_image = models.ForeignKey(
 		'wagtailimages.Image',
 		null=True,
 		blank=True,
 		on_delete=models.SET_NULL,
-		related_name='+'
+		related_name='+',
+		verbose_name="Image"
 	)
-	video_link = models.CharField(max_length=1000, null=True, blank=True)
-	video_description = models.TextField(blank=True)
+	video_link = models.CharField(max_length=1000, null=True, blank=True, verbose_name="link to the video (in latest news section)")
+	video_description = models.TextField(blank=True, verbose_name="Description of the video (in latest news section)")
 
 	content_panels = [
 		MultiFieldPanel([
             FieldPanel('title'),
         ], heading='Title'),
-		InlinePanel('top_images', label='Top section carousel images'),
-		MultiFieldPanel([FieldPanel('hero_title')], heading='Top section title'),
-		MultiFieldPanel([FieldPanel('hero_subtitle')], heading='Top section subtitle'),
-		FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
-		FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
-		MultiFieldPanel([FieldPanel('introduction_title', classname="full")], heading='Introduction Title'),
-		MultiFieldPanel([FieldPanel('introduction_text', classname="full")], heading='Introduction Text'),
-		MultiFieldPanel([FieldPanel('carousel_title', classname="full")], heading='Carousel Section Title'),
-		MultiFieldPanel([FieldPanel('carousel_description', classname="full")], heading='Carousel Section Description'),
-		ImageChooserPanel('carousel_image'),
-		InlinePanel('carousel_links', label="Carousel Section Links"),
-		InlinePanel('carousel_images', label="Carousel Images"),
-		FieldPanel('video_link'),
-		FieldPanel('video_description'),
+		MultiFieldPanel([
+				FieldPanel('hero_title'),
+				FieldPanel('hero_subtitle'),
+				InlinePanel('top_images', label='Top section carousel images'),
+			],
+			heading='Top section',
+			classname="collapsible"
+		),
+		MultiFieldPanel([
+				FieldPanel('introduction_title', classname="full"),
+				FieldPanel('introduction_text', classname="full"),
+			],
+			heading='First section',
+			classname="collapsible collapsed"
+		),
+		MultiFieldPanel([
+				FieldPanel('carousel_title', classname="full"),
+				FieldPanel('carousel_description', classname="full"),
+				ImageChooserPanel('carousel_image'),
+			],
+			heading='Second section',
+			classname="collapsible collapsed"
+		),
+		MultiFieldPanel([
+				FieldPanel('video_link'),
+				FieldPanel('video_description'),
+			],
+			heading='Link & Resource in Latest News',
+			classname="collapsible collapsed"
+		),
 	]
 
 

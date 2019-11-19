@@ -1,5 +1,6 @@
 from django.db import models
 from django import forms
+from datetime import date
 
 from modelcluster.fields import ParentalKey
 
@@ -31,35 +32,23 @@ class CarouselImage(Orderable):
          ImageChooserPanel('image'),
     ]
 
-# Quotes stored in snippets for easier management
-
-@register_snippet
-class Quote(Orderable):
-    company = models.CharField(max_length=255, null=True, blank=True)
-    caption = RichTextField(blank=True)
-    name = models.CharField(max_length=255, null=True, blank=True)
-
-    panels = [
-        FieldPanel('company'),
-        FieldPanel('name'),
-        FieldPanel('caption', classname="full")
-    ]
-
 # Partners (clients) of Except stored in snippets for easier management
 
 @register_snippet
 class Partner(Orderable):
-    company = models.CharField(max_length=255, null=True, blank=True)
+    company_name = models.CharField(max_length=255, blank=False, default="Placeholder", verbose_name="Name of the company")
     image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
+        verbose_name="Logo of the company"
     )
+
     
     panels = [
-        FieldPanel('company'),
+        FieldPanel('company_name'),
         ImageChooserPanel('image'),
     ]
 
@@ -70,11 +59,11 @@ class Partner(Orderable):
 
 @register_snippet
 class Resource(Orderable):
-    name = models.CharField(max_length=255, null=True, blank=True)
-    file = models.FileField(null=True, blank=True)
-    description = models.CharField(max_length=255, null=True, blank=True)
+    name = models.CharField(max_length=255, blank=False, default="Placeholder", verbose_name="Name of resource")
+    file = models.FileField(null=True, verbose_name="File")
+    description = models.CharField(max_length=255, null=True, blank=True, verbose_name="Description")
     path_to_thumbnail = models.CharField(max_length=255, null=True, blank=True)
-    date_published = models.DateField("Date article published", blank=True, null=True)
+    date_published = models.DateField("Date article published", blank=True, default=date.today)
 
     def extension(self):
         name, extension = os.path.splitext(self.file.name)
@@ -97,9 +86,13 @@ class Resource(Orderable):
             return self.path_to_thumbnail
 
     panels = [
-        FieldPanel('name'),
-        FieldPanel('file'),
-        FieldPanel('description'),
+        MultiFieldPanel([
+            FieldPanel('name'),
+            FieldPanel('file'),
+        ], heading='Resource'),
+        MultiFieldPanel([
+            FieldPanel('name'),
+        ], heading='Short description of the resource'),
         FieldPanel('date_published'),
     ]
 
@@ -115,13 +108,15 @@ class EventCalendarPage(Page):
 class ResourcesPage(Page):
     parent_page_types = ['about.AboutPage']
 
-    hero_title = models.CharField(max_length=255, null=True, blank=True)
+    hero_title = models.CharField(max_length=255, blank=False, default="Placeholder")
     hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
     
 
     content_panels = Page.content_panels + [
-        FieldPanel('hero_title'),
-        FieldPanel('hero_subtitle'),       
+        MultiFieldPanel([
+            FieldPanel('hero_title'),
+            FieldPanel('hero_subtitle'),
+        ], heading='Top section'),      
     ]
 
     def get_context(self, request):
@@ -135,21 +130,27 @@ class ResourcesPage(Page):
 class CareerPage(Page):
     parent_page_types = ['about.AboutPage']
 
-    hero_image = models.ImageField(null=True, blank=True)
-    hero_title = models.CharField(max_length=255, null=True, blank=True)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    hero_title = models.CharField(max_length=255, blank=False, default="Placeholder")
     hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
-    navbar_transparent = models.BooleanField('Transparency of the navigation bar', blank=True, null=True)
-    navbar_inverted = models.BooleanField('Colorful navigation bar', blank=True, null=True)
 
     body = StreamField(BaseStreamBlock(), verbose_name="Page body", blank=True)
 
     content_panels = Page.content_panels + [
-        FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
-        FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
-        FieldPanel('hero_image'),
-        FieldPanel('hero_title'),
-        FieldPanel('hero_subtitle'),
-        StreamFieldPanel('body'),
+        MultiFieldPanel([
+            FieldPanel('hero_title'),
+            FieldPanel('hero_subtitle'),
+            ImageChooserPanel('hero_image'),
+        ], heading='Top section'),
+        MultiFieldPanel([
+            StreamFieldPanel('body'),
+        ], heading='Page body'),
     ]
 
     def get_open_positions(self):
@@ -165,23 +166,29 @@ class CareerPage(Page):
 class ContactPage(Page):
     parent_page_types = ['about.AboutPage']
 
-    hero_image = models.ImageField(null=True, blank=True)
-    hero_title = models.CharField(max_length=255, null=True, blank=True)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    hero_title = models.CharField(max_length=255, blank=False, default="Placeholder")
     hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
-    navbar_transparent = models.BooleanField('Transparency of the navigation bar', blank=True, null=True)
-    navbar_inverted = models.BooleanField('Colorful navigation bar', blank=True, null=True)
     
 
     body = StreamField(BaseStreamBlock(), verbose_name="Page body", blank=True)
 
     content_panels = Page.content_panels + [
-        FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
-        FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
-        FieldPanel('hero_image'),
-        FieldPanel('hero_title'),
-        FieldPanel('hero_subtitle'),
-        StreamFieldPanel('body'),
-        InlinePanel('carousel_images', label="Carousel Images"),
+        MultiFieldPanel([
+            FieldPanel('hero_title'),
+            FieldPanel('hero_subtitle'),
+            ImageChooserPanel('hero_image'),
+        ], heading='Top section'),
+        MultiFieldPanel([
+            StreamFieldPanel('body'),
+            InlinePanel('carousel_images', label="Carousel of images"),
+        ], heading='Page body'),
     ]
 
 
@@ -189,20 +196,55 @@ class AboutPage(Page):
     parent_page_types = ['index.HomePage']
     subpage_types = ['people.PeoplePage','news.NewsIndexPage', 'about.CareerPage', 'about.ContactPage', 'about.EventCalendarPage','about.ResourcesPage']
     
-    hero_image = models.ImageField(null=True, blank=True)
-    hero_title = models.CharField(max_length=255, null=True, blank=True)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    hero_title = models.CharField(max_length=255, blank=False, default="Placeholder")
     hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
-    navbar_transparent = models.BooleanField('Transparency of the navigation bar', blank=True, null=True)
-    navbar_inverted = models.BooleanField('Colorful navigation bar', blank=True, null=True)
-    body = StreamField(BaseStreamBlock(), verbose_name="Page body", blank=True)
+    about_title = models.CharField(max_length=255, blank=False, default="To be defined", verbose_name="Title")
+    about_text = StreamField(BaseStreamBlock(), verbose_name="Text", blank=True)
+    vision_title = models.CharField(max_length=255, blank=False, default="To be defined", verbose_name="Title")
+    vision_text = StreamField(BaseStreamBlock(), verbose_name="Text", blank=True)
+    vision_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name="Image"
+    )
 
-    content_panels = Page.content_panels + [
-        FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
-        FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
-        FieldPanel('hero_image'),
-        FieldPanel('hero_title'),
-        FieldPanel('hero_subtitle'),
-        StreamFieldPanel('body'),
+    content_panels = [
+        MultiFieldPanel([
+            FieldPanel('title'),
+        ], heading='Title'),
+        MultiFieldPanel([
+                FieldPanel('hero_title'),
+                FieldPanel('hero_subtitle'),
+                ImageChooserPanel('hero_image'),
+            ],
+            heading='Top section',
+            classname="collapsible"
+        ),
+        MultiFieldPanel([
+                FieldPanel('about_title', classname="full"),
+                FieldPanel('about_text', classname="full"),
+            ],
+            heading='First section',
+            classname="collapsible collapsed"
+        ),
+        MultiFieldPanel([
+                FieldPanel('vision_title', classname="full"),
+                FieldPanel('vision_text', classname="full"),
+                ImageChooserPanel('vision_image'),
+            ],
+            heading='Second section',
+            classname="collapsible collapsed"
+        ),
     ]
 
     def get_context(self, request):

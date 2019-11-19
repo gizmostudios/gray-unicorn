@@ -24,13 +24,6 @@ carousel_article.each(function() {
   			$(this).removeClass('is-secondary').addClass('is-primary');
   		});
   	});
- 	/*$prev.addEventListener('click', () => {
-		currentScroll--;
-	    if(currentScroll < 1) {
-	      	currentScroll = count;
-		}
-		scrollCarousel($inner, currentScroll);
-	});*/
 })
 
 

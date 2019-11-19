@@ -13,9 +13,3 @@ class HomePageTR(TranslationOptions):
 		'carousel_description',
 		'video_description',
 		)
-
-@register(CarouselItem)
-class CarouselItemR(TranslationOptions):
-	fields = (
-		'link_description',
-		)

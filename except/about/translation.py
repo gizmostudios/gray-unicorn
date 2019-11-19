@@ -7,7 +7,10 @@ class AboutPageTR(TranslationOptions):
 	fields = (
 		'hero_title',
 		'hero_subtitle',
-		'body',
+		'about_title',
+		'about_text',
+		'vision_title',
+		'vision_text',
 		)
 
 @register(CareerPage)
@@ -32,7 +35,7 @@ class EventCalendarPageTR(TranslationOptions):
 		)
 
 @register(Resource)
-class EventCalendarPageTR(TranslationOptions):
+class ResourceTR(TranslationOptions):
 	fields = (
 		'name',
 		'description',

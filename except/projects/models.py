@@ -2,7 +2,7 @@ from django.db import models
 from django import forms
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from datetime import datetime
+from datetime import datetime, date
 
 from modelcluster.fields import ParentalKey
 
@@ -29,7 +29,7 @@ class TopImage(Orderable):
 	image = models.ForeignKey(
 		'wagtailimages.Image',
 		null=True,
-		blank=True,
+		blank=False,
 		on_delete=models.SET_NULL,
 		related_name='+'
 	)
@@ -104,10 +104,10 @@ class ProjectPartner(Orderable):
 class ExternalMember(Orderable):
 	page = ParentalKey('ProjectPage', related_name='external_members')
 
-	first_name = models.CharField(max_length=255, null=True, blank=True)
-	last_name = models.CharField(max_length=255, null=True, blank=True)
-	company = models.CharField(max_length=255, null=True, blank=True)
-	job_title = models.CharField(max_length=255, null=True, blank=True)
+	first_name = models.CharField(max_length=255, null=True, blank=True, verbose_name="First name")
+	last_name = models.CharField(max_length=255, null=True, blank=True, verbose_name="Last name")
+	company = models.CharField(max_length=255, null=True, blank=True, verbose_name="Company")
+	job_title = models.CharField(max_length=255, null=True, blank=True, verbose_name="Job title")
 
 	panels = [
 		FieldPanel('first_name'),
@@ -121,7 +121,7 @@ class ExternalMember(Orderable):
 class LinkedArticle(Orderable):
 	page = ParentalKey('ProjectPage', related_name='linked_articles')
 
-	element = models.ForeignKey('knowledge.ArticlePage', on_delete=models.SET_NULL, null=True, blank=True,)
+	element = models.ForeignKey('knowledge.ArticlePage', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Article")
 
 	panels = [
 		FieldPanel('element'),
@@ -132,7 +132,7 @@ class LinkedArticle(Orderable):
 class LinkedProject(Orderable):
 	page = ParentalKey('ProjectPage', related_name='linked_projects')
 
-	element = models.ForeignKey('projects.ProjectPage', on_delete=models.SET_NULL, null=True, blank=True,)
+	element = models.ForeignKey('projects.ProjectPage', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Project")
 
 	panels = [
 		FieldPanel('element'),
@@ -147,42 +147,66 @@ class ProjectPage(Page):
 	hero_old_image = models.ImageField(null=True, blank=True)
 
 	highlight = models.BooleanField(blank=True, null=True)
-	hero_title = models.CharField(max_length=255, null=True, blank=True)
+	hero_title = models.CharField(max_length=255, null=True, blank=False)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
-	date_published = models.DateField("Date article published", blank=False, null=False)
-	summary = models.CharField('Summary (1 or 2 sentences max', max_length=255, null=True, blank=True)
-	intro = RichTextField(blank=True, null=True)
-	navbar_transparent = models.BooleanField('Transparency of the navigation bar', blank=True, null=True)
-	navbar_inverted = models.BooleanField('Colorful navigation bar', blank=True, null=True)
-	body = StreamField(BaseStreamBlock(), verbose_name="Page body", blank=True)
+	date_published = models.DateField("Date of publication", blank=False, null=False, default=date.today)
+	summary = models.CharField('Summary (1 or 2 sentences max)', max_length=255, null=True, blank=True)
+	intro = RichTextField(blank=True, null=True, verbose_name="Introduction")
+	body = StreamField(BaseStreamBlock(), verbose_name="Article body", blank=True)
 	author = models.ForeignKey('people.People',on_delete=models.SET_NULL,null=True,blank=True,)
 	service = models.ForeignKey(
 		WorkingAreaPage,
 		on_delete=models.SET_NULL,
 		null=True,
 		blank=True,
+		verbose_name="Working area"
 	)
-	path_to_thumbnail = models.CharField(max_length=255, null=True, blank=True)
 
-	content_panels = Page.content_panels + [
-		FieldPanel('highlight', widget=forms.CheckboxInput),
-		FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
-		FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
-		FieldPanel('service'),
-		InlinePanel('top_images', label='Top section carousel images'),
-		FieldPanel('hero_title'),
-		FieldPanel('hero_subtitle'),
-		FieldPanel('date_published'),
-		FieldPanel('author'),
-		InlinePanel('team_members', label="Team members"),
-		InlinePanel('external_members', label="External members"),
-		InlinePanel('project_partners', label="Partners of the project"),
-		FieldPanel('intro', classname="full"),
-		FieldPanel('summary'),
-		StreamFieldPanel('body'),
-		InlinePanel('linked_articles', max_num=2, label="Articles linked to the project"),
-		InlinePanel('linked_projects', max_num=2, label="Projects linked to the project"),
-		InlinePanel('downloads', label='Files to downloads'),
+	content_panels = [
+		MultiFieldPanel([
+            FieldPanel('title'),
+        ], heading='Title'),
+		MultiFieldPanel([
+				FieldPanel('hero_title'),
+				FieldPanel('hero_subtitle'),
+				InlinePanel('top_images', label='Top section carousel images'),
+			],
+			heading='Top section',
+			classname="collapsible"
+		),
+		MultiFieldPanel([
+				FieldPanel('highlight', widget=forms.CheckboxInput),
+				FieldPanel('service'),
+				FieldPanel('date_published'),
+				FieldPanel('author'),
+			],
+			heading='Meta data',
+			classname="collapsible collapsed"
+		),
+		MultiFieldPanel([
+				InlinePanel('team_members', label="Team members"),
+				InlinePanel('external_members', label="External members"),
+				InlinePanel('project_partners', label="Partners of the project"),
+			],
+			heading='Participants',
+			classname="collapsible collapsed"
+		),
+		MultiFieldPanel([
+				FieldPanel('summary'),
+				FieldPanel('intro', classname="full"),
+				StreamFieldPanel('body'),
+			],
+			heading='Article contain',
+			classname="collapsible collapsed"
+		),
+		MultiFieldPanel([
+				InlinePanel('linked_articles', max_num=2, label='Related articles'),
+				InlinePanel('linked_projects', max_num=2, label='Related projects'),
+				InlinePanel('downloads', label='Files to downloads'),
+			],
+			heading='Related assets',
+			classname="collapsible collapsed"
+		),
 	]
 
 	def timeline_position(self):
@@ -210,44 +234,42 @@ class ProjectPage(Page):
 		else:
 			return self.top_images[0]
 
-	def thumbnail(self):
-		
-		dir_path = os.path.dirname(os.path.realpath(__file__))
-		par_dir = os.path.abspath(os.path.join(dir_path, os.pardir))
-		if self.path_to_thumbnail is None:
-			cache_path = par_dir+'/media/'
-			pdf_or_odt_to_preview_path = par_dir+self.hero_image.url
-			manager = PreviewManager(cache_path, create_folder= True)
-			path_to_preview_image = manager.get_jpeg_preview(pdf_or_odt_to_preview_path, height=270,width=431)
-			path, file = path_to_preview_image.split('/media/')
-			self.thumbnail = file
-			print(self.thumbnail)
-			return self.thumbnail
-		else:		
-			return self.path_to_thumbnail
-
 
 class ProjectIndexPage(Page):
 
 	subpage_types = ['ProjectPage']
 	parent_page_types = ['index.HomePage']
-	hero_image = models.ImageField(null=True, blank=True)
-	navbar_transparent = models.BooleanField('Transparency of the navigation bar', blank=True, null=True)
-	navbar_inverted = models.BooleanField('Colorful navigation bar', blank=True, null=True)
+	hero_image = models.ForeignKey(
+		'wagtailimages.Image',
+		null=True,
+		blank=True,
+		on_delete=models.SET_NULL,
+		related_name='+',
+	)
 	hero_title = models.CharField(max_length=255, null=True, blank=True)
 	hero_subtitle = models.CharField(max_length=255, null=True, blank=True)
-	description_title = models.CharField(max_length=255, null=True, blank=True)
-	intro = models.TextField(blank=True)
+	description_title = models.CharField(max_length=255, null=True, blank=True, verbose_name="Title")
+	intro = models.TextField(blank=True, verbose_name="text")
 
-
-	content_panels = Page.content_panels + [
-		FieldPanel('navbar_transparent', widget=forms.CheckboxInput),
-		FieldPanel('navbar_inverted', widget=forms.CheckboxInput),
-		FieldPanel('hero_image'),
-		FieldPanel('hero_title'),
-		FieldPanel('hero_subtitle'),
-		FieldPanel('description_title'),
-		FieldPanel('intro'),
+	content_panels = [
+		MultiFieldPanel([
+            FieldPanel('title'),
+        ], heading='Title'),
+		MultiFieldPanel([
+				FieldPanel('hero_title'),
+				FieldPanel('hero_subtitle'),
+				ImageChooserPanel('hero_image'),
+			],
+			heading='Top section',
+			classname="collapsible"
+		),
+		MultiFieldPanel([
+				FieldPanel('description_title'),
+				FieldPanel('intro', classname="full"),
+			],
+			heading='Articles description',
+			classname="collapsible"
+		),
 	]
 
 	def get_projects(self):

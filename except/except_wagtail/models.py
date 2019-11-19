@@ -109,7 +109,7 @@ class FooterLink(models.Model):
 class Event(models.Model):
 	name = models.CharField(max_length=100)
 	date_start = models.DateField("Starting date", null=True, blank=True,)
-	date_end = models.DateField("Ending date (leave it blank if one day event", null=True, blank=True,)
+	date_end = models.DateField("Ending date (leave it blank if one day event)", null=True, blank=True,)
 	article = models.ForeignKey('news.NewsPage', limit_choices_to = {'type_of_news': 'EV'}, on_delete=models.SET_NULL, null=True, blank=True,)
 
 	class Meta:

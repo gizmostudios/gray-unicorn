@@ -12,8 +12,12 @@
       </header>
       {% if page.linked_projects or page.linked_articles %}
         <div class="columns is-grid">
-          {% include "modules/grid_relation_8.html" with elements=page.linked_projects.all is_loadable=False %}
-          {% include "modules/grid_relation_8.html" with elements=page.linked_articles.all is_loadable=False %}
+          {% if page.linked_projects.all %}
+            {% include "modules/grid_relation_8.html" with elements=page.linked_projects.all is_loadable=False %}
+          {% endif %}
+          {% if page.linked_articles.all %}
+            {% include "modules/grid_relation_8.html" with elements=page.linked_articles.all is_loadable=False %}
+          {% endif %}
         </div>
       {% endif %}
     </article>
@@ -30,7 +34,9 @@
         {% endif %}
       </header>
       <div class="columns is-grid">
+        {% if page.downloads.all %}
           {% include "modules/downloadable.html" with downloadables=page.downloads.all %}
+        {% endif %}
       </div>
     </article>
   </div>

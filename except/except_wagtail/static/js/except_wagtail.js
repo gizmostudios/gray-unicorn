@@ -5,7 +5,6 @@ const carousels = document.querySelectorAll('.carousel');
 const navRadios = document.getElementsByName('main-menu');
 const anchors = document.querySelectorAll('.anchor');
 const navbar = document.querySelector('.navbar');
-const stickyScrollUp = $('.scroll-up');
 const main_menus = document.querySelectorAll('.main-menu');
 const cover = document.querySelector('.background-dark-cover');
 
@@ -28,10 +27,7 @@ main_menus.forEach(menu => {
   });
 });
 
-stickyScrollUp.css('display','none');
 let windowWidth = window.innerWidth;
-stickyScrollUp.css('top',window.innerHeight-$('button')[0].scrollHeight+'px');
-stickyScrollUp.css('left','100px');
 
 var lastScrollTop = 0;
 var scrollLock = 0;
@@ -238,12 +234,5 @@ function resizing(){
     var sectionHeight = parseInt($(this).css('height').replace('px',''));
     var paddingHeight = parseInt($(this).css('padding-top').replace('px',''));
     $(this).find('.article').css('height', sectionHeight-paddingHeight*2+"px");
-    var articleHeight = parseInt($(this).find('article').css('height').replace('px',''));
-    if($(this).find('.front-content').length != 0){
-      $(this).find('.front-content').each(function(){
-        var contentHeight = parseInt($(this).css('height').replace('px',''));
-        $(this).css('top', (articleHeight - contentHeight)/2+"px");
-      })
-    };
   });
 };
