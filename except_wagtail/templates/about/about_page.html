@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load wagtailimages_tags %}
+{% load wagtailsettings_tags %}
+{% load wagtail_modeltranslation %}
+{% load wagtailcore_tags %}
+
+{% get_settings use_default_site=True %}
+
+{% block content %}
+  {% include "_modules/hero.html" with page=page halved=True %}
+  {% include "_includes/navbar.html" with transparent=True inverted=True %}
+
+  {% include "_includes/section_intro.html" with page=page %}
+
+    <section class="section section-padding bg-purple">
+      <div class="container">
+        <div class="quotes-glide" style="margin-bottom: -3rem;">
+          <div class="glide__track" data-glide-el="track">
+            <ul class="glide__slides">
+              {% for quote in page.quotes.all %}
+                <li class="glide__slide">
+                  <div class="quote">
+                    <blockquote class="blockquote font-24 is-white">
+                      {{ quote.text|linebreaks|richtext }}
+                    </blockquote>
+                    <footer>
+                      <p class="blockquote-name">{{ quote.author }}</p>
+                      <p class="blockquote-name">{{ quote.position }}</p>
+                    </footer>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    {% if page.video %}
+    <section class="section section-padding" style="margin-bottom: -10rem;">
+      <div class="container">
+        <div class="video-container">
+          {{ page.video|safe }}
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+    <section class="section section-padding no-overflow">
+      <div class="container">
+        <div class="columns is-multiline">
+          <div class="column is-12">
+            <h2 class="h2 mt-3">{{ page.fourth_section_title }}</h2>
+          </div>
+          <div class="column is-4 mt-2">
+            {% image page.fourth_section_image width-650 %}
+          </div>
+          <div class="column is-full-tablet is-8-desktop mt-2 with-left-pad">
+            {{ page.fourth_section_text|linebreaks }}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-padding no-overflow bg-purple">
+      <div class="container">
+        <div class="columns is-multiline">
+          <div class="column is-12">
+            <h2 class="h2">{{ page.fifth_section_title }}</h2>
+          </div>
+          <div class="column is-12">
+            {% image page.fifth_section_image fill-1200x500 %}
+          </div>
+          <div class="column is-8 font-24">
+            {{ page.fifth_section_text|linebreaks }}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-padding no-overflow" style="margin-bottom: -10rem;">
+      <div class="container">
+        <div class="columns is-multiline">
+          <div class="column is-12">
+            <h2 class="h2">{{ page.sixth_section_title }}</h2>
+          </div>
+          <div class="column is-4 mt-2">
+            {% image page.sixth_section_image width-650 %}
+          </div>
+          <div class="column is-full-tablet is-8-desktop mt-2 with-left-pad">
+            {{ page.sixth_section_text|linebreaks }}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-padding">
+      <div class="container">
+        <div class="columns is-multiline">
+          <div class="column is-12">
+            <h2 class="h2">{{ page.seventh_section_title }}</h2>
+          </div>
+          <div class="column is-12">
+            {{ page.seventh_section_text|linebreaks }}
+          </div>
+          {% for partner in partners %}
+            <div class="column is-6-tablet is-4-desktop is-flex-centered-both mt-2 mb-2">
+              <div class="about-partner">
+                {% image partner.image max-220x190 %}
+              </div>
+            </div>
+          {% endfor %} 
+        </div>
+      </div>
+    </section>
+  </article>
+{% endblock content %}
+
+{% block open_graph %}
+  {% include '_includes/og_article.html' with page=page settings=settings %}
+{% endblock %}
+
+{% block ld_json %}
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{% slugurl_trans 'homepage' %}",
+        "name": "{% trans 'Home' %}"
+    }
+    }, {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{{ page.url }}",
+        "name": "{{ page.title }}"
+      }
+    }]
+  }
+</script>
+<script type="application/ld+json">
+  {% include '_includes/ld_article.html' with page=page settings=settings %}
+</script>
+{% endblock %}

@@ -1,0 +1,65 @@
+.glide__track {
+  ul,
+  ul > li {
+    margin: 0;
+  }
+  .glide__slide {
+    h3 {
+      margin-bottom: 7px;
+      margin-left: 1rem;
+      margin-top: 2px;
+
+      &:before {
+        border: unset;
+      }
+      a,
+      i {
+        border-color: #FFF;
+        color: #FFF;
+      }
+      i {
+        margin-right: .5rem;
+      }
+    }
+  }
+}
+.article-glide {
+  position: relative;
+  .glide__arrows {
+    .glide__arrow {
+      background: linear-gradient(to top, rgba(0, 0, 0, .7), rgba(0, 0, 0, .2));
+      border: unset;
+      border-radius: 0;
+      font-size: 3rem;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      width: 200px;
+    }
+    .glide__arrow--left {
+      left: 0;
+    }
+    .glide__arrow--right {
+      right: 0;
+    }
+  }
+}
+.services-carousel .glide__track .glide__slide {
+  background-color: #000;
+}
+@media screen and (max-width: 650px) {
+  .article-glide {
+    .glide__arrows {
+      display: none;
+    }
+  }
+}
+@media screen and (min-width: 651px) and (max-width: 950px) {
+  .article-glide {
+    .glide__arrows {
+      .glide__arrow {
+        width: 100px;
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{% load wagtailimages_tags %}
+{% for element in posts %}
+  <div class="column {% if three_in_row %}is-4{% else %}is-6-tablet is-3-desktop{% endif %}">
+    <a class="no-underline" href="{{ element.url }}">
+      <figure class="card-overlay">
+        {% if element.thumbnail %}
+          {% image element.thumbnail fill-600x400 %}
+        {% elif element.hero_image %}
+          {% image element.hero_image fill-600x400 %}
+        {% else %}
+          {% image element.hero_images.all.0.image fill-600x400 %}
+        {% endif %}
+        {% if not subheading %}
+          <div class="overlay">
+            <p>{{ element.hero_subtitle }}</p>
+            <p class="date">{{ element.date_published|date:"M Y" }}</p>
+          </div>
+        {% endif %}
+      </figure>
+    </a>
+    <h4 class="h4 no-border-top mt-05">
+      <a href="{{ element.url }}"{% if subheading %} class="font-24"{% endif %}>
+        {{ element.hero_title }}
+      </a>
+    </h4>
+    {% if subheading %}
+      <p>{{ element.hero_subtitle }}</p>
+    {% endif %}
+  </div>
+{% endfor %}

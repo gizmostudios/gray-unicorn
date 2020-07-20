@@ -1,0 +1,35 @@
+.intro-section {
+  padding: 5rem 0;
+}
+.middle-section {
+  padding: 5rem 0;
+  &-text {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+  }
+}
+.working-areas {
+  margin-bottom: 7rem;
+  .headings {
+    font-size: 1.4rem;
+  }
+}
+.highlighted-projects {
+  max-width: 100%;
+  padding: 0;
+}
+.homepage-services {
+  .column {
+    padding: 4rem;
+  }
+  h3 {
+    border-top: 1px solid #FFF;
+    margin-top: 2rem;
+    padding-top: 2rem;
+  }
+  .homepage-service img {
+    border-radius: 50%;
+  }
+}

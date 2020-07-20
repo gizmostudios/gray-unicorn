@@ -1,0 +1,27 @@
+{% load i18n %}
+{% load wagtailimages_tags %}
+<div class=" project-container">
+  <div class="columns">
+    <div class="column is-5">
+      <a href="{{ page.url }}" class="no-underline">
+        {% if page.thumbnail %}
+          {% image page.thumbnail fill-600x400 %}
+        {% elif page.hero_image %}
+          {% image page.hero_image fill-600x400 %}
+        {% else %}
+          {% image page.hero_images.all.0.image fill-600x400 %}
+        {% endif %}
+      </a>
+    </div>
+    <div class="column is-7 project-short-desc">
+      <h3 class="h3 no-border-top mt-2">{{ page.hero_title }}</h3>
+      <p>{{ page.intro|truncatechars_html:300 }}</p>
+      <div class="mb-2">
+        <a href="{{ page.url }}">
+          <i class="fas fa-chevron-right"></i>
+          {% trans 'Read more' %}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

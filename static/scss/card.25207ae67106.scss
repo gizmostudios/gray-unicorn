@@ -1,0 +1,224 @@
+.card {
+  background: rgba(165, 167, 170, .1);
+  box-shadow: none;
+}
+.card h3{
+  font-size: 22px;
+  line-height: 1.2em;
+}
+.card h4{
+  font-size: 18px;
+  line-height: 1.2em;
+}
+.card-content > p {
+  margin-top: .5rem;
+}
+.card p{
+  font-size: 18px;
+  line-height: 1.2em;
+}
+.card.is-stretched {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.is-latest-news .is-8 .card-image{
+  height: 90%;
+}
+.is-latest-news .is-8 figure.image{
+  height: 100%;
+}
+.is-latest-news .is-4 .card.is-stretched{
+  height: 100%;
+}
+.is-latest-news .is-4 .card-image{
+  height: 62%;
+}
+.is-latest-news .is-4 .card-content{
+  height: 30%;
+  min-height: 200px;
+}
+.is-latest-news .is-4 .card-footer{
+  height: 8%;
+  min-height: 55px;
+}
+.columns.is-latest-news{
+  max-height: 750px;
+}
+.card .card-image {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+}
+.card .card-image figure {
+  flex: auto;
+}
+.card .card-video {
+  //height: 100%;
+  object-fit: cover;
+}
+.card .card-video-button {
+  align-items: center;
+  color: rgba(255, 255, 255, .75);
+  display: flex;
+  font-size: 6rem;
+  height: 100%;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+
+  & i {
+    transition: opacity .3s;
+  }
+  &.video-control-visible i {
+    opacity: 1;
+  }
+  &:not(.video-control-visible) i {
+    opacity: 0;
+  }
+  &:not(.video-control-visible):hover i {
+    opacity: 1;
+  }
+}
+.card .card-image figure img {
+  height: 100%;
+  object-fit: cover;
+}
+.card .card-content {
+  flex: auto;
+  padding: 1rem;
+  padding-bottom: 6rem;
+  position: relative;
+}
+.card .card-content.has-label {
+  padding-bottom: 2.5rem;
+}
+.card .card-content .button.is-pulled-left {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+}
+.card .card-content .button.is-pulled-right {
+  bottom: 0;
+  position: absolute;
+  right: 0;
+}
+.card .card-footer {
+  background: rgba(165, 167, 170, .25);
+  margin-top: auto;
+  padding: .7em;
+  text-transform: uppercase;
+}
+.is-expertise .card-content .h3{
+  font-size: 2.6em;
+}
+.card .card-content.has-label.open-pos{
+  padding-bottom: 1rem;
+}
+.is-4.in-grid .card-image figure,
+.is-4.in-grid .card-image img,
+.is-4.in-grid .card-image a{
+  height: 100%;
+}
+.is-4.in-grid .card-content{
+  height: 40%;
+}
+.is-4.in-grid .card-content p + p{
+  margin: 1em 0;
+}
+.is-4.in-grid .card-content .is-pulled-left{
+  bottom: 0;
+  display: none;
+  left: 0;
+  position: absolute;
+}
+.is-4.in-grid .card-footer{
+  background: #F6F6F6;
+  border-top: 0;
+  flex: auto;
+  height: 10%;
+  position: relative;
+}
+.is-4.in-grid .card-footer .is-pulled-left{
+  bottom: 0;
+  left: 0;
+  position: absolute;
+}
+.is-4.in-grid .card-footer .is-pulled-right{
+  border: solid 1px rgba(165, 167, 170, .5);
+  border-width: 1px 0 0 1px;
+  bottom: 0;
+  position: absolute;
+  right: 0;
+}
+.card-content.is-front{
+  height: 40%;
+}
+.card-image.is-front figure{
+  height: 100%;
+}
+.card .card-content.has-label.no-image{
+  padding: 1rem;
+}
+.card {
+  background: rgba(165, 167, 170, .1);
+  box-shadow: unset;
+
+  .card-content.is-additional {
+    padding-bottom: 3rem;
+  }
+}
+.card {
+  .image .label {
+    bottom: 0;
+    color: #FFFFFF;
+    left: 0;
+    padding: .5em 1em;
+    position: absolute;
+    text-transform: uppercase;
+  }
+}
+.card-overlay {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+
+  .overlay {
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    height: 0;
+    justify-content: center;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    transition: all .5s;
+    & > .date {
+      bottom: .5rem;
+      font-size: .85rem;
+      font-weight: 700;
+      position: absolute;
+      right: 1rem;
+    }
+    & > p:not(.date) {
+      padding: 2rem;
+    }
+  }
+  &:hover .overlay,
+  .overlay:hover {
+    background: $except-purple;
+    color: #FFF;
+    height: 100%;
+  }
+  & > img {
+    display: block;
+    width: 100%;
+  }
+}
+figure {
+  & .is-rounded {
+    padding: 2rem;
+  }
+}

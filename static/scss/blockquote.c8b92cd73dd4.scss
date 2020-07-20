@@ -1,0 +1,55 @@
+.blockquote {
+  color: $except-purple;
+  font-size: 2rem;
+  font-style: italic;
+  line-height: 2.5rem;
+  margin: 0 auto;
+  position: relative;
+  width: 75%;
+
+  &:before,
+  &:after {
+    color: $except-purple;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 3em;
+    position: absolute;
+  }
+  &:before {
+    content: "“";
+    left: -4rem;
+    top: .5rem;
+  }
+  &:after {
+    bottom: -5rem;
+    content: "”";
+    right: .5rem;
+  }
+  &.is-white:before,
+  &.is-white:after {
+    color: #FFF;
+  }
+  &-name {
+    font-style: italic;
+    margin: 0 auto;
+    padding-right: 15%;
+    width: 75%;
+  }
+}
+.block-block_quote {
+  margin: 5rem 0;
+}
+.block-image_block {
+  margin: 3rem 0;
+}
+.quote {
+  footer {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    p {
+      margin: unset;
+      padding-right: 0;
+      width: 50%;
+    }
+  }
+}

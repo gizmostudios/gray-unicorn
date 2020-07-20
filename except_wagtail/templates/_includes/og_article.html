@@ -1,0 +1,23 @@
+{% load wagtailimages_tags %}
+<meta property="og:title" content="{{ page.title }}" />
+<meta property="og:description" content="{{ page.description }}" />
+{% if LANGUAGE_CODE == 'en' %}
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="nl_NL" />
+{% elif LANGUAGE_CODE == 'nl' %}
+  <meta property="og:locale" content="nl_NL" />
+  <meta property="og:locale:alternate" content="en_US" />
+{% endif %}
+<meta property="og:type" content="article" />
+<meta property="og:url" content="{{ page.get_site.root_url }}{{ page.url }}" />
+{% if page.hero_video_poster %}
+  {% image page.hero_video_poster width-1600 jpegquality-95 as image_data %}
+{% elif page.hero_image %}
+  {% image page.hero_image width-1600 jpegquality-95 as image_data %}
+{% elif page.hero_images.count %}
+  {% image page.hero_images.all.0.image width-1600 jpegquality-95 as image_data %}
+{% endif %}
+<meta property="og:image" content="{{ page.get_site.root_url }}{{ image_data.url }}" />
+<meta property="og:image:width" content="{{ image_data.width }}" />
+<meta property="og:image:height" content="{{ image_data.height }}" />
+<meta property="og:image:alt" content="{{ image_data.alt }}" />

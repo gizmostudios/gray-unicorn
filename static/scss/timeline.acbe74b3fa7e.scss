@@ -1,0 +1,34 @@
+.timeline {
+  border: solid 1px #A5A7AA;
+  border-top: none;
+  display: flex;
+  height: 2rem;
+  width: 100%;
+  .year {
+    flex: 1;
+    position: relative;
+    transition: all 500ms;
+    &:hover {
+      flex: 2;
+    }
+    &:not(:last-child) {
+      border-right: inherit;
+    }
+    .project {
+      bottom: 0;
+      display: inline-block;
+      height: 100%;
+      left: var(--position);
+      position: absolute;
+      transition: all 500ms;
+      width: 10px;
+      &:hover {
+        height: 150%;
+        width: 10px;
+      }
+    }
+  }
+}
+.year-timeline {
+  margin-top: 2.8rem;
+}

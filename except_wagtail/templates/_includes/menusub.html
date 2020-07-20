@@ -1,0 +1,6 @@
+{% for item in menu_items %}
+  <a class="navbar-item" href="{{ item.href }}">
+    {{ item.text }}
+    <i class="fas fa-chevron-right"></i>
+  </a>
+{% endfor %}

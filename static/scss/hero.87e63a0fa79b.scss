@@ -1,0 +1,126 @@
+.hero {
+  background-color: $light-gray;
+  background-position: center;
+  background-size: cover;
+  min-height: calc(100vh - 64px);
+  position: relative;
+
+  &.halved {
+    min-height: calc(70vh - 64px);
+  }
+  &.halved .glide {
+    height: calc(60vh - 64px) !important;
+  }
+
+  &:after {
+    background: linear-gradient(to top, rgba(0, 0, 0, .5), rgba(0, 0, 0, 0));
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 50%;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 24;
+  }
+  .hero-body {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0;
+    z-index: 25;
+    .container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+      width: 100%;
+
+      & > .titles {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        width: 88%;
+      }
+
+      & > .bcorp {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+
+      .title,
+      .title:before,
+      .subtitle,
+      .date {
+        border-color: #FFF;
+        color: #FFF;
+        max-width: 70%;
+        text-shadow: $shadow;
+      }
+      .title:before {
+        box-shadow: $shadow;
+      }
+      .subtitle {
+        margin-bottom: .5rem;
+        margin-top: -.45rem;
+      }
+    }
+  }
+  .hero-video,
+  .hero-image {
+    display: inline-block !important;
+    height: 100%;
+    left: 0;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+  .glide {
+    height: calc(100vh - 64px);
+    left: 0;
+    position: absolute;
+    top: 0;
+
+    .glide__track,
+    .glide__slides {
+      height: 100%;
+    }
+    ul {
+      margin: 0;
+    }
+    & img {
+      height: 100%;
+      object-fit: cover;
+      width: 100%;
+    }
+  }
+}
+@media screen and (max-width: $tablet) {
+  .hero {
+    min-height: 70vh;
+    position: relative;
+
+    &.halved {
+      min-height: 40vh;
+    }
+    & .glide {
+      height: 70vh !important;
+    }
+    .hero-body {
+      .container {
+        .title,
+        .title:before,
+        .subtitle,
+        .date {
+          max-width: 100%;
+        }
+        .bcorp {
+          display: none;
+        }
+      }
+    }
+  }
+}

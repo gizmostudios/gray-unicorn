@@ -1,0 +1,93 @@
+html{
+  font-size: 1rem;
+  line-height: 1.25;
+  scroll-behavior: smooth;
+}
+body {
+  color: #111;
+  font-family: "Aller";
+  font-kerning: normal;
+  font-size: 1rem;
+  font-weight: 200;
+  line-height: 1.25rem;
+}
+ol > li:not(:last-child),
+ul > li:not(:last-child) {
+  margin-bottom: .5rem;
+}
+.section {
+  margin-bottom: 3rem;
+  margin-top: 5rem;
+  padding: 0;
+  position: relative;
+}
+.bg-purple {
+  background-color: $except-purple;
+}
+figure {
+  &.image-rounded > a > img {
+    background-size: cover;
+    border-radius: 50%;
+  }
+}
+.is-flex-centered-height {
+  align-items: center;
+  display: flex;
+}
+.is-flex-centered-both {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.pagination,
+.pagination-list {
+  align-items: unset;
+}
+.pagination-link.is-current {
+  background-color: $except-purple;
+  border-color: $except-purple;
+}
+.pagination-previous:focus,
+.pagination-next:focus,
+.pagination-link:focus {
+  border-color: $except-purple;
+}
+a.cc-link,
+a.cc-btn {
+  box-shadow: none;
+
+  &:hover,
+  &:focus {
+    background-size: 0 2px;
+  }
+}
+// Mobile (base) version:
+.container {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.hero-bcorp {
+  background-color: #FFF;
+  height: 10rem;
+  padding: .75rem;
+}
+.footer-bcorp {
+  height: 8rem;
+}
+@media screen and (min-width: $fullhd) {
+  .container {
+    // padding-left: 10%;
+    // padding-right: 10%;
+  }
+}
+@media screen and (min-width: $desktop) {
+  .section .is-8-desktop.with-pad,
+  .section .is-6-tablet.with-pad {
+    padding-right: 5rem;
+  }
+}
+@media screen and (max-width: $tablet) {
+  .mobile-block {
+    display: block;
+  }
+}

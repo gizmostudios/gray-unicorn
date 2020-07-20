@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+{% load wagtailsettings_tags %}
+{% load wagtail_modeltranslation %}
+
+{% get_settings use_default_site=True %}
+
+{% block content %}  
+  {% include "_modules/hero.html" with page=page halved=True %}
+  {% include "_includes/navbar.html" with transparent=True inverted=True %}
+
+  <article>
+    <section class="section section-padding">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-8-tablet">
+            <header>
+              <h2 class="h2">{{ page.description_title }}</h2>
+            </header>
+
+            <p class="mt-1">{{ page.description|linebreaks }}</p>
+          </div>
+        </div>
+
+        <div class="columns is-multiline mt-2">
+          {% for people in people_list %}
+            <div class="column is-6-tablet is-3-desktop">
+              <figure class="image portrait">
+                <a class="no-underline" href="{{ people.url }}">
+                  {% image people.person.picture fill-350x400 %}
+                </a>
+                <figcaption>
+                  <h3 class="h3 no-border-top mt-05 has-text-centered">
+                    <a href="{{ people.url }}">
+                      {{ people.person.user.first_name }} {{ people.person.user.last_name }}
+                    </a>
+                  </h3>
+                  <div class="has-text-centered mt-05">
+                    <a href="{{ people.url }}">
+                      {{ people.person.job_title }}
+                    </a>
+                  </div>
+                </figcaption>
+              </figure>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  </article>
+{% endblock content %}
+
+{% block open_graph %}
+  {% include '_includes/og_article.html' with page=page settings=settings %}
+{% endblock %}
+
+{% block ld_json %}
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{% slugurl_trans 'homepage' %}",
+        "name": "{% trans 'Home' %}"
+    }
+    }, {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{% slugurl_trans 'about' %}",
+        "name": "{% trans 'About' %}"
+      }
+    }, {
+      "@type": "ListItem",
+      "position": 3,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{{ page.url }}",
+        "name": "{{ page.description_title }}"
+      }
+    }]
+  }
+</script>
+<script type="application/ld+json">
+  {% include '_includes/ld_article.html' with page=page settings=settings %}
+</script>
+{% endblock %}

@@ -1,0 +1,270 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-04-14 23:38+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: except_wagtail/settings.py:151
+msgid "English"
+msgstr ""
+
+#: except_wagtail/settings.py:152
+msgid "Dutch"
+msgstr ""
+
+#: except_wagtail/templates/404.html:7
+msgid "Page not found"
+msgstr ""
+
+#: except_wagtail/templates/404.html:9
+msgid "Sorry, this page could not be found."
+msgstr ""
+
+#: except_wagtail/templates/_includes/menu-mobile.html:14
+#: except_wagtail/templates/_includes/navbar.html:32
+msgid "ENGLISH"
+msgstr ""
+
+#: except_wagtail/templates/_includes/menu-mobile.html:16
+#: except_wagtail/templates/_includes/navbar.html:34
+msgid "NEDERLANDS"
+msgstr ""
+
+#: except_wagtail/templates/_includes/menu.html:35
+#: except_wagtail/templates/_includes/navbar.html:16
+#: except_wagtail/templates/search/search.html:20
+msgid "Search site"
+msgstr ""
+
+#: except_wagtail/templates/_includes/navbar.html:10
+msgid "Homepage"
+msgstr ""
+
+#: except_wagtail/templates/_includes/navbar.html:36
+msgid "CONTACT"
+msgstr ""
+
+#: except_wagtail/templates/_includes/pagination_next.html:14
+msgid "Load More"
+msgstr ""
+
+#: except_wagtail/templates/_includes/pagination_prev.html:14
+msgid "Load Previous"
+msgstr ""
+
+#: except_wagtail/templates/_includes/project_short.html:22
+#: except_wagtail/templates/knowledge/knowledge_page.html:33
+#: except_wagtail/templates/services/service_index_page.html:80
+msgid "Read more"
+msgstr ""
+
+#: except_wagtail/templates/_modules/author.html:3
+msgid "by"
+msgstr ""
+
+#: except_wagtail/templates/_modules/button_load.html:4
+msgid "View more"
+msgstr ""
+
+#: except_wagtail/templates/_modules/grid_6.html:25
+msgid "Event"
+msgstr ""
+
+#: except_wagtail/templates/_modules/grid_6.html:27
+msgid "People"
+msgstr ""
+
+#: except_wagtail/templates/_modules/hero.html:24
+#: except_wagtail/templates/base.html:123
+msgid "BCorp"
+msgstr ""
+
+#: except_wagtail/templates/_modules/highlighted.html:5
+msgid "Highlighted Projects"
+msgstr ""
+
+#: except_wagtail/templates/_modules/links.html:9
+#: except_wagtail/templates/services/service_pillar_page.html:103
+#: except_wagtail/templates/services/working_area_page.html:109
+msgid "Related projects & articles"
+msgstr ""
+
+#: except_wagtail/templates/_modules/links.html:27
+msgid "Media & Downloads"
+msgstr ""
+
+#: except_wagtail/templates/_modules/timeline.html:5
+msgid "TIMELINE"
+msgstr ""
+
+#: except_wagtail/templates/about/about_page.html:152
+#: except_wagtail/templates/about/career_page.html:64
+#: except_wagtail/templates/about/contact_page.html:44
+#: except_wagtail/templates/about/event_calendar_page.html:53
+#: except_wagtail/templates/about/privacy_page.html:38
+#: except_wagtail/templates/index/home_page.html:227
+#: except_wagtail/templates/knowledge/article_page.html:79
+#: except_wagtail/templates/knowledge/knowledge_page.html:159
+#: except_wagtail/templates/news/news_index_page.html:65
+#: except_wagtail/templates/news/news_page.html:79
+#: except_wagtail/templates/people/people_page.html:68
+#: except_wagtail/templates/people/profile_page.html:98
+#: except_wagtail/templates/projects/project_index_page.html:90
+#: except_wagtail/templates/projects/project_page.html:100
+#: except_wagtail/templates/search/search.html:53
+#: except_wagtail/templates/services/service_index_page.html:157
+#: except_wagtail/templates/services/service_page.html:42
+#: except_wagtail/templates/services/service_pillar_page.html:132
+#: except_wagtail/templates/services/working_area_page.html:138
+msgid "Home"
+msgstr ""
+
+#: except_wagtail/templates/about/career_page.html:27
+msgid "Open positions"
+msgstr ""
+
+#: except_wagtail/templates/about/career_page.html:71
+#: except_wagtail/templates/about/contact_page.html:51
+#: except_wagtail/templates/about/event_calendar_page.html:60
+#: except_wagtail/templates/about/privacy_page.html:45
+#: except_wagtail/templates/news/news_index_page.html:72
+#: except_wagtail/templates/news/news_page.html:86
+#: except_wagtail/templates/people/people_page.html:75
+#: except_wagtail/templates/people/profile_page.html:105
+msgid "About"
+msgstr ""
+
+#: except_wagtail/templates/base.html:112
+#: except_wagtail/templates/services/service_pillar_page.html:91
+#: except_wagtail/templates/services/working_area_page.html:97
+msgid "Contact us"
+msgstr ""
+
+#: except_wagtail/templates/base.html:113
+msgid "Except Integrated Sustainability"
+msgstr ""
+
+#: except_wagtail/templates/base.html:117
+msgid "Contact Hours"
+msgstr ""
+
+#: except_wagtail/templates/base.html:134
+msgid "Privacy Policy"
+msgstr ""
+
+#: except_wagtail/templates/base.html:142
+msgid "This website uses cookies to improve your experience."
+msgstr ""
+
+#: except_wagtail/templates/base.html:143
+msgid "Read privacy policy here."
+msgstr ""
+
+#: except_wagtail/templates/base.html:145
+msgid "Got it!"
+msgstr ""
+
+#: except_wagtail/templates/index/home_page.html:89
+msgid "What we do"
+msgstr ""
+
+#: except_wagtail/templates/index/home_page.html:164
+#: except_wagtail/templates/services/service_page.html:49
+#: except_wagtail/templates/services/service_pillar_page.html:139
+#: except_wagtail/templates/services/working_area_page.html:145
+msgid "Services"
+msgstr ""
+
+#: except_wagtail/templates/index/home_page.html:176
+#: except_wagtail/templates/news/news_index_page.html:18
+#: except_wagtail/templates/news/news_page.html:93
+msgid "Latest news"
+msgstr ""
+
+#: except_wagtail/templates/knowledge/article_page.html:30
+#: except_wagtail/templates/news/news_page.html:30
+msgid "By"
+msgstr ""
+
+#: except_wagtail/templates/knowledge/article_page.html:35
+#: except_wagtail/templates/news/news_page.html:35
+#: except_wagtail/templates/people/profile_page.html:39
+#: except_wagtail/templates/projects/project_page.html:31
+msgid "Contact"
+msgstr ""
+
+#: except_wagtail/templates/knowledge/article_page.html:86
+msgid "Knowledge"
+msgstr ""
+
+#: except_wagtail/templates/knowledge/knowledge_page.html:44
+msgid "Recent Articles"
+msgstr ""
+
+#: except_wagtail/templates/knowledge/knowledge_page.html:113
+msgid "Articles Archive"
+msgstr ""
+
+#: except_wagtail/templates/news/news_index_page.html:24
+#: except_wagtail/templates/people/profile_page.html:66
+msgid "Articles"
+msgstr ""
+
+#: except_wagtail/templates/news/news_index_page.html:29
+msgid "Events"
+msgstr ""
+
+#: except_wagtail/templates/news/news_index_page.html:34
+msgid "Open Positions"
+msgstr ""
+
+#: except_wagtail/templates/people/profile_page.html:19
+msgid "Areas of expertise"
+msgstr ""
+
+#: except_wagtail/templates/people/profile_page.html:29
+msgid "Enjoys"
+msgstr ""
+
+#: except_wagtail/templates/people/profile_page.html:73
+#: except_wagtail/templates/projects/project_page.html:107
+msgid "Projects"
+msgstr ""
+
+#: except_wagtail/templates/projects/project_index_page.html:39
+msgid "Recent projects"
+msgstr ""
+
+#: except_wagtail/templates/projects/project_index_page.html:50
+msgid "Project Archive"
+msgstr ""
+
+#: except_wagtail/templates/projects/project_page.html:40
+msgid "Client & Partners"
+msgstr ""
+
+#: except_wagtail/templates/projects/project_page.html:52
+msgid "Project team"
+msgstr ""
+
+#: except_wagtail/templates/search/search.html:16
+msgid "Search results"
+msgstr ""
+
+#: except_wagtail/templates/services/service_index_page.html:62
+msgid "Working areas"
+msgstr ""

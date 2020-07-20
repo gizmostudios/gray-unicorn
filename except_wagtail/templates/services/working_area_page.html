@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load wagtailimages_tags %}
+{% load wagtailsettings_tags %}
+{% load wagtail_modeltranslation %}
+
+{% get_settings use_default_site=True %}
+
+{% block content %}
+  {% include "_modules/hero.html" with page=page %}
+  {% include "_includes/navbar.html" with transparent=True inverted=True %}
+
+  <section class="section section-padding">
+    <div class="container">
+      <article class="article">
+        <div class="columns">
+          <div class="column is-8">
+            {% if page.introduction|linebreaks %}
+              <h2 class="h2">{{ page.introduction }}</h2>
+            {% endif %}
+            {% if page.details %}
+              <p class="mt-1">{{ page.details|linebreaks }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  {% if highlighted_projects %}
+    {% include '_modules/highlighted.html' with highlighted_projects=highlighted_projects %}
+  {% endif %}
+
+  {% if subservices %}
+    <section class="section services-cards section-padding">
+      <div class="container">
+        <article class="article">
+          <h2 class="h2">Services</h2>
+          <div class="columns is-multiline">
+            {% for service in subservices %}
+              <div class="column is-3 mt-2">
+                <div class="card is-stretched">
+                  <div class="card-image is-front">
+                    <figure class="image">
+                      {% if service.body %}
+                        <a href="{{ service.url }}" class="no-underline">{% image service.image fill-400x200 %}</a>
+                      {% else %}
+                        {% image service.image fill-400x200 %}
+                      {% endif %}
+                    </figure>
+                  </div>
+                  <div class="card-content is-front">
+                    <h4 class="h4 has-two-lines">{{ service.title }}</h4>
+                    {{ service.service_description }}
+                    {% if service.body %}
+                      <a href="{{ service.url }}" class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+            <div class="column is-12 has-text-centered">
+              <a href="{% slugurl_trans 'contact' %}" class="button button-min-12 giant-cta">{% trans 'Contact us' %}</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  {% endif %}
+
+  {% if projects or page.service_linked_articles.count %}
+    <section class="section section-padding">
+      <div class="container">
+        <header>
+          <h3 class="h3">{% trans 'Related projects & articles' %}</h3>
+        </header>
+        <div class="columns is-multiline mt-2">
+          {% for project in projects %}
+            {% include '_includes/card.html' with type='Project' link_type='' obj=project link='' color='blue' no_tag=True %}
+          {% endfor %}
+          {% for article in page.service_linked_articles.all %}
+            {% include '_includes/card.html' with type='Article' link_type='' obj=article.element link='' color='green' %}
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+{% endblock content %}
+
+{% block open_graph %}
+  {% include '_includes/og_article.html' with page=page settings=settings %}
+{% endblock %}
+
+{% block ld_json %}
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{% slugurl_trans 'homepage' %}",
+        "name": "{% trans 'Home' %}"
+    }
+    }, {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{% slugurl_trans 'services' %}",
+        "name": "{% trans 'Services' %}"
+      }
+    }, {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{{ page.url }}",
+        "name": "{{ page.title }}"
+      }
+    }]
+  }
+</script>
+<script type="application/ld+json">
+  {% include '_includes/ld_article.html' with page=page settings=settings %}
+</script>
+{% endblock %}

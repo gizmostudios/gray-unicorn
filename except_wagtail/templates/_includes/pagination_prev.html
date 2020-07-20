@@ -1,0 +1,16 @@
+{% load i18n %}
+{% if posts.paginator.num_pages > 1 and posts.has_previous %}
+  <a class="button button-min-12 giant-cta pagination-link-button" href="
+  {% if active_id %}
+    ?service={{ active_id }}&page={{ posts.previous_page_number }}
+  {% elif news_type %}
+    ?type={{ news_type }}&page={{ posts.previous_page_number }}
+  {% else %}
+    ?page={{ posts.previous_page_number }}
+  {% endif %}
+  {% if query %}&query={{ query }}{% endif %}
+  ">
+    <i class="fa fa-spinner fa-spin"></i>&nbsp;
+    {% trans 'Load Previous' %}
+  </a>
+{% endif %}

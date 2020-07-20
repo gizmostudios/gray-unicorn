@@ -1,0 +1,10 @@
+{% load wagtailimages_tags %}
+{% image self.image width-1600 jpegquality-95 as imagedata %}
+<figure class="image is-fullwidth">
+    <img src="{{ imagedata.url }}" alt="{{ imagedata.alt }}">
+{% if self.attribution and self.caption %}
+    <figcaption  class="caption">{{ self.caption }} - {{ self.attribution }}</figcaption>
+{% elif self.caption %}
+    <figcaption  class="caption">{{ self.caption }}</figcaption>
+{% endif %}
+</figure>

@@ -1,0 +1,42 @@
+{% load i18n %}
+{% load menu_tags %}
+{% load wagtail_modeltranslation %}
+
+{% get_current_language as LANGUAGE_CODE %}
+
+<nav id="topNav" class="navbar is-fixed-top{% if transparent %} is-transparent{% endif %}{% if inverted %} inverted{% endif %}{% if standalone %} no-hero{% endif %}">
+  <div id='navbar' class="container">
+    <div class="navbar-brand">
+      <a class="navbar-item logo no-underline" href="{{ home_page.url }}" aria-label="{% trans 'Homepage' %}">
+        {% include "./logo.html" %}
+      </a>
+      <form class="navbar-item search is-hidden-desktop" action="{% slugurl_trans 'search' %}" method="get">
+        <div class="control has-icons-right">
+          <input class="input" name="query" type="text"
+                 placeholder="{% trans 'Search site' %}" />
+          <span class="icon is-small is-right">
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
+      </form> 
+  
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMobileMenu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    {% flat_menu template="_includes/menu-mobile.html" handle="mobilemenu" %}
+    <div class="top-links is-hidden-touch">
+      {% if LANGUAGE_CODE == 'nl' %}
+        <a href="{% change_lang 'en' %}">{% trans 'ENGLISH' %}</a>
+      {% elif LANGUAGE_CODE == 'en' %}
+        <a href="{% change_lang 'nl' %}">{% trans 'NEDERLANDS' %}</a>
+      {% endif %}
+      <a href="{{ contact_page.url }}">{% trans 'CONTACT' %}</a>
+    </div>
+  </div>
+</nav>
+
+{% main_menu template="_includes/menu.html" sub_menu_template="_includes/menusub.html" apply_active_classes=True %}
+

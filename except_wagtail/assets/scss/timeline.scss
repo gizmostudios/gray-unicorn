@@ -1,0 +1,41 @@
+.timeline {
+  border-bottom: solid 1px #A5A7AA;
+  height: 50px;
+  position: relative;
+  width: 100%;
+  .project {
+    bottom: 0;
+    cursor: pointer;
+    display: inline-block;
+    height: 35px;
+    position: absolute;
+    transition: height 500ms;
+    width: 5px;
+    &:hover {
+      height: 50px;
+    }
+    &.active {
+      height: 50px;
+    }
+  }
+}
+.year-ticks {
+  display: flex;
+  justify-content: space-between;
+  & > span {
+    border-left: 1px solid #A5A7AA;
+    height: 15px;
+    margin-top: -32px;
+    width: 1px;
+  }
+}
+.years {
+  display: flex;
+  font-size: 1.5rem;
+  justify-content: space-between;
+  margin-top: -15px;
+}
+.project-container {
+  border-bottom: 1px solid #A5A7AA;
+  padding-bottom: 3rem;
+}

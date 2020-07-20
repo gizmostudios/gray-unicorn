@@ -1,0 +1,8 @@
+{% load wagtailcore_tags %}
+
+<blockquote class="blockquote">
+    {{ self.text|linebreaks|richtext }}
+</blockquote>
+<footer>
+    <p class="blockquote-name">{{ self.attribute_name }}</p>
+</footer>

@@ -1,0 +1,19 @@
+<div class="columns is-multiline">
+  {% for element in elements %}
+    <div class="column is-6-tablet is-4-widescreen">
+      <div class="card">
+        <div class="card-content has-label no-image">
+          {% if element.url_article %}
+            <a href="{{ element.url_article }}">
+          {% else %}
+            <a href="{{ element.url }}">
+          {% endif %}
+            <h3 class="h3 no-border-top">{{ element.hero_title }}</h3>
+            <p>{{ element.hero_subtitle }}</p>
+            <p class="mt-1">{{ element.date_published|date:"M d, Y" }}</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>

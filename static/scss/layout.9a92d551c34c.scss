@@ -1,0 +1,32 @@
+.section {
+  padding: 0;
+  position: relative;
+
+  &-purple {
+    background-color: $except-purple;
+  }
+  &-padding {
+    padding: 10rem 0;
+  }
+  &-padding-top-only-third {
+    padding: 3rem 0 0;
+  }
+}
+@media screen and (min-width: $desktop) {
+  .container {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+@media screen and (min-width: $widescreen) {
+  .container {
+    padding-left: 6rem;
+    padding-right: 6rem;
+  }
+}
+@media screen and (min-width: $fullhd) {
+  .container {
+    padding-left: 8rem;
+    padding-right: 8rem;
+  }
+}

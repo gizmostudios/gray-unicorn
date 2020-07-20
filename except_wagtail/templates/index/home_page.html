@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% load wagtailimages_tags %}
+{% load wagtailsettings_tags %}
+
+{% load wagtail_modeltranslation %}
+
+{% get_settings use_default_site=True %}
+
+{% block content %}
+    {% include "_modules/hero.html" with page=page %}
+    {% include "_includes/navbar.html" with inverted=True transparent=True %}
+
+    {# First (Intro) section #}
+    {% include "_includes/section_intro.html" with page=page %}
+
+    {# Second (About us) section #}
+    {% if page.aboutus.count %}
+      <section class="section section-padding section-purple">
+        <div class="container">
+          <div id="homepage-glide">
+            <div class="glide__track" data-glide-el="track">
+              <ul class="glide__slides">
+                {% for aboutus in page.aboutus.all %}
+                  <li class="glide__slide">
+                    <div class="columns is-multiline">
+                      <div class="column is-6 is-4-desktop is-offset-1-desktop">
+                        {% image aboutus.image fill-900x900 %}
+                      </div>
+                      <div class="column is-6 is-offset-1-desktop">
+                        <h3 class="h2 is-white mt-1">{{ aboutus.title }}</h3>
+                        <div class="is-white mt-2">{{ aboutus.description|linebreaks }}</div>
+                        {% if aboutus.first_link_title or aboutus.second_link_title %}
+                          <div>
+                            {% if aboutus.first_link_title %}
+                              <a class="button button-min-12 mt-3 mr-1" href="{{ aboutus.first_link_page.url }}">
+                                {{ aboutus.first_link_title }}
+                                <i class="fas fa-chevron-right ml-05"></i>
+                              </a>
+                            {% endif %}
+                            {% if aboutus.second_link_title %}
+                              <a class="button button-min-12 mt-3" href="{{ aboutus.second_link_page.url }}">
+                                {{ aboutus.second_link_title }}
+                                <i class="fas fa-chevron-right ml-05"></i>
+                              </a>
+                            {% endif %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div class="glide__arrows" data-glide-el="controls">
+              <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><i class="fas fa-chevron-left"></i></button>
+              <button class="glide__arrow glide__arrow--right" data-glide-dir=">"><i class="fas fa-chevron-right"></i></button>
+            </div>
+          </div>
+        </div>
+      </section>
+    {% endif %}
+
+    {# Third (Highlighted projects) section #}
+    {% include '_modules/highlighted.html' with highlighted_projects=highlighted_projects %}
+
+    {# Fourth (What We Do) section #}
+    <section class="section section-padding bg-purple">
+      <div class="container">
+        <h3 class="h2 is-white">{% trans 'What we do' %}</h3>
+        <div class="columns is-multiline mt-3 what-we-do-services">
+          <div class="column is-3-tablet has-text-centered">
+            <a class="no-underline no-shadow service-icon"
+               href="{{ page.what_we_do_first_link.url }}">
+              <img src="{{ page.what_we_do_first_icon.url }}">
+            </a>
+            <h4 class="has-font-24 is-all-small-caps no-border-top homepage-icon">
+              <a href="{{ page.what_we_do_first_link.url }}">
+                {{ page.what_we_do_first_text }}
+              </a>
+            </h4>
+          </div>
+          <div class="column is-3-tablet has-text-centered">
+            <a class="no-underline no-shadow service-icon"
+               href="{{ page.what_we_do_second_link.url }}">
+              <img src="{{ page.what_we_do_second_icon.url }}">
+            </a>
+            <h4 class="has-font-24 is-all-small-caps no-border-top homepage-icon">
+              <a href="{{ page.what_we_do_second_link.url }}">
+                {{ page.what_we_do_second_text }}
+              </a>
+            </h4>
+          </div>
+          <div class="column is-3-tablet has-text-centered">
+            <a class="no-underline no-shadow service-icon"
+               href="{{ page.what_we_do_third_link.url }}">
+              <img src="{{ page.what_we_do_third_icon.url }}">
+            </a>
+            <h4 class="has-font-24 is-all-small-caps no-border-top homepage-icon">
+              <a href="{{ page.what_we_do_third_link.url }}">
+                {{ page.what_we_do_third_text }}
+              </a>
+            </h4>
+          </div>
+          <div class="column is-3-tablet has-text-centered">
+            <a class="no-underline no-shadow service-icon"
+               href="{{ page.what_we_do_fourth_link.url }}">
+              <img src="{{ page.what_we_do_fourth_icon.url }}">
+            </a>
+            <h4 class="has-font-24 is-all-small-caps no-border-top homepage-icon">
+              <a href="{{ page.what_we_do_fourth_link.url }}">
+                {{ page.what_we_do_fourth_text }}
+              </a>
+            </h4>
+          </div>
+          <div class="column is-4-tablet has-text-centered mt-1 service-pillar">
+            <a class="no-underline no-shadow"
+               href="{{ page.what_we_do_first_pillar_link.url }}">
+              {% image page.what_we_do_first_pillar_image fill-600x600 %}
+            </a>
+            <h4 class="has-font-24 is-all-small-caps no-border-top">
+              <a href="{{ page.what_we_do_first_pillar_link.url }}">
+                {{ page.what_we_do_first_pillar_text }}
+              </a>
+            </h4>
+          </div>
+          <div class="column is-4-tablet has-text-centered mt-1 service-pillar">
+            <a class="no-underline no-shadow"
+               href="{{ page.what_we_do_second_pillar_link.url }}">
+              {% image page.what_we_do_second_pillar_image fill-600x600 %}
+            </a>
+            <h4 class="has-font-24 is-all-small-caps no-border-top">
+              <a href="{{ page.what_we_do_second_pillar_link.url }}">
+                {{ page.what_we_do_second_pillar_text }}
+              </a>
+            </h4>
+          </div>
+          <div class="column is-4-tablet has-text-centered mt-1 service-pillar">
+            <a class="no-underline no-shadow"
+               href="{{ page.what_we_do_third_pillar_link.url }}">
+              {% image page.what_we_do_third_pillar_image fill-600x600 %}
+            </a>
+            <h4 class="has-font-24 is-all-small-caps no-border-top">
+              <a href="{{ page.what_we_do_third_pillar_link.url }}">
+                {{ page.what_we_do_third_pillar_text }}
+              </a>
+            </h4>
+          </div>
+          <div class="column is-12 has-text-centered">
+            <a href="{% slugurl_trans 'services' %}" class="button button-min-12">
+              {% trans 'Services' %}
+              <i class="fas fa-chevron-right ml-05"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-padding">
+      <div class="container">
+        <h3 class="h2 mb-3">{% trans 'Latest news' %}</h3>
+        <div class="columns is-multiline has-extra-padding">
+          <div class="column is-12-tablet is-8-desktop">
+            <div class="card is-stretched">
+              <div class="card-image">
+                <div id="video-control" class="card-video-button video-control-visible" aria-label="play pause toggle">
+                  <i class="far fa-play-circle"></i>
+                </div>
+                <video id="video-controlled" class="card-video"
+                        {% image page.video_poster fill-600x400 as videoposter %}
+                        poster="{{ videoposter.url }}"
+                        loop muted playsinline="true" disablePictureInPicture>
+                  <source src="{{ page.video.url }}" type="video/mp4">
+                </video>
+              </div>
+              <div class="card-footer is-front">
+                <a href="{{ page.video_link.url }}" class="link">
+                  <span>{{ page.video_text }}</span>
+                  <i class="fas fa-chevron-right"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          {% if highlight_events.0 %}
+            {% include '_includes/card.html' with type='Event' link_type='More events' obj=highlight_events.0 link=link_calendar color='orange' three_in_row=True %}
+          {% else %}
+            {% include '_includes/card.html' with type='Project' link_type='See our projects' obj=highlight_projects.2 link=link_projects color='blue' three_in_row=True %}
+          {% endif %}
+          {% include '_includes/card.html' with type='News' link_type='Read our news' obj=highlight_articles.0 link=link_news color='purple' three_in_row=True %}
+          {% include '_includes/card.html' with type='Project' link_type='See our projects' obj=highlight_projects.0 link=link_projects color='blue' three_in_row=True %}
+          {% include '_includes/card.html' with type='Knowledge' link_type='Read our articles' obj=highlight_resource link=link_resources color='green' three_in_row=True %}
+        </div>
+      </div>
+    </section>
+{% endblock content %}
+
+{% block open_graph %}
+  {% include '_includes/og_article.html' with page=page settings=settings %}
+{% endblock %}
+
+{% block ld_json %}
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{% slugurl_trans 'homepage' %}",
+        "name": "{% trans 'Home' %}"
+    }]
+  }
+</script>
+<script type="application/ld+json">
+  {% include '_includes/ld_article.html' with page=page settings=settings %}
+</script>
+{% endblock %}

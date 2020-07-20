@@ -1,0 +1,6 @@
+{% load i18n %}
+<figure class="image"><img class="is-200x200" src="{{ mediaPath }}{{ author.picture }}">
+  <figcaption class="caption">{% trans 'by' %} {{ author.user.first_name }} {{ author.user.last_name }}</figcaption>
+    <figcaption class="caption"><i class="fas fa-envelope"></i><span>{{ author.user.email }}</span></figcaption>
+    <figcaption class="caption"><i class="fas fa-phone"></i><span>{{ author.phone }}</span></figcaption>
+</figure>

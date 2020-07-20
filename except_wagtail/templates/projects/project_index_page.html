@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load wagtailimages_tags %}
+{% load wagtailsettings_tags %}
+{% load wagtail_modeltranslation %}
+
+{% get_settings use_default_site=True %}
+
+{% block content %}
+  {% include "_modules/hero.html" with page=page %}
+  {% include "_includes/navbar.html" with transparent=True inverted=True %}
+
+  {% include "_includes/section_intro.html" with page=page %}
+
+  {% include '_modules/highlighted.html' with highlighted_projects=highlighted_projects purple=True %}
+
+    <section class="section section-padding">
+      <div class="container">
+        <div class="columns is-multiline">
+          <div class="column is-12 mb-2">
+            <h2 class="h2">{% trans 'Recent projects' %}</h2>
+          </div>
+          {% include "_includes/index_item_cards.html" with posts=recent_projects three_in_row=True subheading=True %}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="columns mt-3 is-multiline">
+          <div class="column is-12 mb-2">
+            <h2 class="h2">{% trans 'Project Archive' %}</h2>
+          </div>
+          {% include "_modules/timeline.html" with years=years elements=all_projects page=page %}
+          <div id="articles" class="column is-12 filters-category has-text-centered mt-3">
+            {% for category in categories %}
+              <a class="filter-category {% if not active_id %}is-active{% elif active_id and active_id == category.id %}is-active{% endif %} is-filter no-underline"
+                 href="{{ page.get_full_url }}{% if not active_id == category.id %}?category={{ category.id }}{% endif %}"
+                 tabindex="0" role="button" aria-pressed="false">
+                <span style="background-color: #{{ category.color }};"></span>
+                {{ category.name }}
+              </a>
+            {% endfor %}
+          </div>
+          <div class="column is-12 has-text-centered" id="nav-prev">
+            {% include "_includes/pagination_prev.html" with posts=posts %}
+          </div>
+          {% include "_includes/index_item_cards.html" with posts=posts %}
+          <div class="column is-12 has-text-centered" id="nav-next">
+            {% include "_includes/pagination_next.html" with posts=posts %}
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock content %}
+
+{% block open_graph %}
+  {% include '_includes/og_article.html' with page=page settings=settings %}
+{% endblock %}
+
+{% block ld_json %}
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{% slugurl_trans 'homepage' %}",
+        "name": "{% trans 'Home' %}"
+    }
+    }, {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{{ page.url }}",
+        "name": "{{ page.title }}"
+      }
+    }]
+  }
+</script>
+<script type="application/ld+json">
+  {% include '_includes/ld_article.html' with page=page settings=settings %}
+</script>
+{% endblock %}

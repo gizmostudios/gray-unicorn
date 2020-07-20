@@ -1,0 +1,35 @@
+{% load wagtailimages_tags %}
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "headline": "{{ page.title }}",
+  "url": "{{ page.get_site.root_url }}{{ page.url }}",
+  {% if page.hero_video_poster %}
+    {% image page.hero_video_poster width-1600 jpegquality-95 as image_data %}
+  {% elif page.hero_image %}
+    {% image page.hero_image width-1600 jpegquality-95 as image_data %}
+  {% elif page.hero_images.count %}
+    {% image page.hero_images.all.0.image width-1600 jpegquality-95 as image_data %}
+  {% endif %}
+  "image": {
+    "@type": "ImageObject",
+    "url": "{{ page.get_site.root_url }}{{ image_data.url }}",
+    "width": "{{ image_data.width }}",
+    "height": "{{ image_data.height }}"
+  },
+  "mainEntityOfPage": "True",
+  "publisher": {% include '_includes/ld_organization.json' with page=page settings=settings %},
+  "dateCreated": "{{ page.first_published_at.isoformat }}",
+  "datePublished": "{{ page.last_published_at.isoformat }}",
+  "dateModified": "{{ page.last_published_at.isoformat }}",
+  {% if page.author.user.first_name or page.author.user.last_name %}
+    "author": "{{ page.author.user.first_name }} {{ page.author.user.last_name }}",
+  {% else %}
+    "author": "{{ settings.except_wagtail.WebsiteSettings.name }}",
+  {% endif %}
+  {% if LANGUAGE_CODE == 'en' %}
+    "inLanguage": "en-US"
+  {% elif LANGUAGE_CODE == 'nl' %}
+    "inLanguage": "nl-NL"
+  {% endif %}
+}

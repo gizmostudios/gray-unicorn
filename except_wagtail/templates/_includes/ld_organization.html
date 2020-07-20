@@ -1,0 +1,32 @@
+{
+  "@type": "Organization",
+  "name": "{{ settings.except_wagtail.WebsiteSettings.name }}",
+  "legalName": "{{ settings.except_wagtail.WebsiteSettings.legal_name }}",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "{{ settings.except_wagtail.WebsiteSettings.address }}",
+    "addressLocality": "{{ settings.except_wagtail.WebsiteSettings.locality }}",
+    "addressRegion": "{{ settings.except_wagtail.WebsiteSettings.region }}",
+    "postalCode": "{{ settings.except_wagtail.WebsiteSettings.postal_code }}",
+    "addressCountry": "{{ settings.except_wagtail.WebsiteSettings.country }}"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "telephone": "{{ settings.except_wagtail.WebsiteSettings.phone }}",
+    "email": "{{ settings.except_wagtail.WebsiteSettings.email }}"
+  },
+  "logo": {
+    "@type": "ImageObject",
+    "url": "{{ page.get_site.root_url }}{{ settings.except_wagtail.WebsiteSettings.logo.url }}",
+    "width": "{{ settings.except_wagtail.WebsiteSettings.logo_w }}",
+    "height": "{{ settings.except_wagtail.WebsiteSettings.logo_h }}"
+  },
+  "url": "{{ page.get_site.root_url }}",
+  "sameAs": [
+    "{{ settings.except_wagtail.WebsiteSettings.facebook }}",
+    "{{ settings.except_wagtail.WebsiteSettings.twitter }}",
+    "{{ settings.except_wagtail.WebsiteSettings.linkedin }}",
+    "{{ settings.except_wagtail.WebsiteSettings.youtube }}"
+  ]
+}

@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load wagtailimages_tags %}
+{% load wagtailsettings_tags %}
+{% load wagtail_modeltranslation %}
+
+{% get_settings use_default_site=True %}
+
+{% block content %}
+  {% include "_modules/hero.html" with page=page halved=True %}
+  {% include "_includes/navbar.html" with transparent=True inverted=True %}
+  
+  <article>
+    <section class="section section-padding">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-8-tablet with-pad">
+            <p class="intro">
+              {{ page.intro|linebreaks }}  
+            </p>
+            {% if page.body %}
+              {{ page.body }}
+            {% endif %}
+          </div>
+          {% if page.author %}
+            <div class="column is-4-tablet">
+              <figure class="image">
+                {% image page.author.picture fill-350x400 %}
+                <h4 class="h4 no-border-top mt-05">
+                  {% trans 'By' %}
+                  {{ page.author.user.first_name }}
+                  {{ page.author.user.last_name }}
+                </h4>
+                {% if page.author.user.email or page.author.user.phone %}
+                  <h5 class="h5 no-border-top mt-1">{% trans 'Contact' %}:</h5>
+                  <ul class="mt-05">
+                    {% if page.author.user.email %}
+                      <li class="profile-item">
+                        <i class="fas fa-envelope mr-05"></i>
+                        <a href="mailto:{{ page.author.user.email }}">
+                          {{ page.author.user.email }}
+                        </a>
+                      </li>
+                    {% endif %}
+                    {% if page.author.phone %}
+                      <li class="profile-item">
+                        <i class="fas fa-phone mr-05"></i>
+                        <a href="tel:{{ page.author.user.phone }}">
+                          {{ page.author.phone }}
+                        </a>
+                      </li>
+                    {% endif %}
+                  </ul>
+                {% endif %}
+              </figure>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+    {% include "_modules/links.html" with page=page %}
+  </article>
+{% endblock content %}
+
+{% block open_graph %}
+  {% include '_includes/og_article.html' with page=page settings=settings %}
+{% endblock %}
+
+{% block ld_json %}
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{% slugurl_trans 'homepage' %}",
+        "name": "{% trans 'Home' %}"
+    }
+    }, {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{% slugurl_trans 'about' %}",
+        "name": "{% trans 'About' %}"
+      }
+    }, {
+      "@type": "ListItem",
+      "position": 3,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{% slugurl_trans 'news' %}",
+        "name": "{% trans 'Latest news' %}"
+      }
+    }, {
+      "@type": "ListItem",
+      "position": 4,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{{ page.url }}",
+        "name": "{{ page.hero_title }}"
+      }
+    }]
+  }
+</script>
+<script type="application/ld+json">
+  {% include '_includes/ld_article.html' with page=page settings=settings %}
+</script>
+{% endblock %}

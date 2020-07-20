@@ -1,0 +1,52 @@
+{% load i18n %}
+{% load static %}
+{% load wagtailimages_tags %}
+
+{% if page.linked_projects.count or page.linked_articles.count %}
+  <section class="section">
+    <div class="container">
+      <header>
+        <h3 class="h3">{% trans 'Related projects & articles' %}</h3>
+      </header>
+      <div class="columns is-multiline mt-2">
+        {% for project in page.linked_projects.all %}
+          {% include '_includes/card.html' with type='Project' link_type='' obj=project.element link='' color='blue' %}
+        {% endfor %}
+        {% for article in page.linked_articles.all %}
+          {% include '_includes/card.html' with type='Article' link_type='' obj=article.element link='' color='green' %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% if page.downloads.count %}
+  <section class="section">
+    <div class="container">
+      <header>
+        <h3 class="h3">{% trans 'Media & Downloads' %}</h3>
+      </header>
+      <div class="columns is-multiline mt-2">
+        {% for downloadable in page.downloads.all %}
+          <div class="column is-3">
+            <div class="card is-stretched">
+              <div class="card-image">
+                <a href="{{ downloadable.fileobj.url }}" class="image no-underline">
+                  {% image downloadable.thumbnail fill-450x300 %}
+                </a>
+              </div>
+              <div class="card-content is-additional">
+                <h4 class="h4">
+                  <a href="{{ downloadable.fileobj.url }}">
+                    {{ downloadable.name }}
+                  </a>
+                </h4>
+                <a class="button is-pulled-right" href="{{ downloadable.fileobj.url }}"><i class="fas fa-chevron-right"></i></a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endif %}

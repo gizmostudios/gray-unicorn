@@ -1,0 +1,34 @@
+{% load i18n %}
+{% load wagtailimages_tags %}
+<div class="column is-12 is-hidden-touch">
+  <div class="columns is-multiline">
+    <div class="column is-12 h3 has-text-centered no-border-top mb-3">{% trans 'TIMELINE' %}</div>
+    <div class="column is-12">
+      <div class="timeline">
+        {% for project in timeline_projects %}
+          <span class="project {% if project.id == page.timeline_project.id %}active{% endif %}"
+                title="{{ project.title }}"
+                data-event="load-project"
+                data-url="{{ project.url }}"
+                style="left: calc({{ project.timeline_position }}% - 5px); background-color: #{{ project.category.color }};">
+          </span>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="column is-12 year-ticks">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="column is-12 years">
+      <span>{{ page.timeline_start }}</span>
+      <span>{{ page.timeline_middle }}</span>
+      <span>{{ timeline_end }}</span>
+    </div>
+    <div class="column is-12 selected-project mt-2 mb-2">
+      {% include '_includes/project_short.html' with page=page.timeline_project %}
+    </div>
+  </div>
+</div>

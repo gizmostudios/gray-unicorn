@@ -1,0 +1,21 @@
+{% load wagtailimages_tags %}
+
+<div class="glide">
+  <div class="glide__track" data-glide-el="track">
+    <ul class="glide__slides">
+      {% for carousel_image in self.image_list %}
+        <li class="glide__slide">
+          {% image carousel_image.image fill-1600x1200 %}
+          {% if item.caption %}
+            <p class="is-blocked description">
+              {{ item.caption }}
+              {% if item.attribution %}
+                - {{ item.attribution }}
+              {% endif %}
+            </p>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,133 @@
+.select:not(.is-multiple):not(.is-loading)::after {
+  border-color: $except-purple;
+}
+.select:not(.is-multiple):not(.is-loading):hover::after {
+  border-color: $except-purple;
+}
+.select select:focus,
+.textarea:focus,
+.input:focus,
+.select select.is-focused,
+.is-focused.textarea,
+.is-focused.input,
+.select select:active,
+.textarea:active,
+.input:active,
+.select select.is-active,
+.is-active.textarea,
+.is-active.input {
+  border-color: $except-purple;
+  box-shadow: 0 0 0 .125em rgba(107, 42, 126, .25);
+}
+.select select::placeholder,
+.textarea::placeholder,
+.input::placeholder {
+  color: rgba(54,54,54,.85);
+}
+.select > select,
+.field > div {
+  max-width: 200px !important;
+  width: 200px;
+}
+.filters,
+.filters-category {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 800px;
+}
+.filter-service {
+  align-items: center;
+  background-color: #E7E7E8;
+  cursor: pointer;
+  display: flex;
+  height: 60px;
+  justify-content: center;
+  margin-right: 1rem;
+  padding: 0 1rem;
+  position: relative;
+  transition: box-shadow .3s;
+  width: 170px;
+
+  &:before {
+    background-color: rgba(255, 255, 255, .4);
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 15px;
+  }
+  &.is-active.is-purple:before {
+    background: $except-purple;
+  }
+  &.is-active.is-blue:before {
+    background: #51C7EA;
+  }
+  &.is-active.is-green:before {
+    background: #8AC43F;
+  }
+  &.is-active.is-orange:before {
+    background: #FFA500;
+  }
+  &:hover,
+  &:focus {
+    box-shadow: $shadow;
+  }
+}
+.filter-category {
+  align-items: center;
+  background-color: #E7E7E8;
+  display: flex;
+  flex: 1 0 calc(100% * (1/4) - 1rem - 1px);
+  height: 40px;
+  justify-content: center;
+  margin-bottom: 1rem;
+  margin-left: .5rem;
+  margin-right: .5rem;
+  max-width: calc(100% * (1/4) - 1rem - 1px);
+  padding: 0 1rem;
+  position: relative;
+  transition: box-shadow .3s;
+
+  & > span {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 15px;
+  }
+  &:not(.is-active) > span {
+    background-color: #D8D8D8 !important;
+  }
+  &:hover,
+  &:focus {
+    box-shadow: $shadow;
+  }
+}
+@media screen and (max-width: $tablet) {
+  .filters > .is-flex {
+    flex-direction: column;
+  }
+  .filters {
+    align-items: center;
+    flex-direction: column;
+  }
+  .filter-service {
+    margin-bottom: 1rem;
+  }
+  .filter-category {
+    flex: 1 0 calc(100% * (1/2) - .5rem - 1px);
+    max-width: calc(100% * (1/2) - .5rem - 1px);
+
+    &:nth-child(odd) {
+      margin-left: 0;
+    }
+    &:nth-child(even) {
+      margin-right: 0;
+    }
+  }
+}

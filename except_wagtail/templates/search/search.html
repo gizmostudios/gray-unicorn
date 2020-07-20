@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% load wagtailimages_tags %}
+{% load wagtailsettings_tags %}
+{% load wagtail_modeltranslation %}
+
+{% get_settings use_default_site=True %}
+
+{% block content %}
+  {% include "_includes/navbar.html" with transparent=True inverted=True standalone=True %}
+
+  <section class="section section-padding">
+    <div class="container">
+      <h1 class="h3 mt-3">{% trans 'Search results' %}</h1>
+      <form class="mt-2" action="{% slugurl_trans 'search' %}" method="get">
+        <div class="control has-icons-right">
+          <input class="input"
+                 name="query"
+                 type="text"
+                 placeholder="{% trans 'Search site' %}"
+                 value="{{ query|default:'' }}"/>
+          <span class="icon is-small is-right">
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
+      </form>
+      <div class="columns mt-1 is-multiline">
+        <div class="column is-12 has-text-centered" id="nav-prev">
+          {% include "_includes/pagination_prev.html" with posts=posts query=query %}
+        </div>
+        {% include "_includes/index_item_search.html" with posts=posts query=query %}
+        <div class="column is-12 has-text-centered" id="nav-next">
+          {% include "_includes/pagination_next.html" with posts=posts query=query %}
+        </div>
+      </div>
+  </section>
+{% endblock content %}
+
+{% block open_graph %}
+  {% include '_includes/og_article.html' with page=page settings=settings %}
+{% endblock %}
+
+{% block ld_json %}
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{% slugurl_trans 'homepage' %}",
+        "name": "{% trans 'Home' %}"
+    }
+    }, {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{{ page.url }}",
+        "name": "{{ page.title }}"
+      }
+    }]
+  }
+</script>
+<script type="application/ld+json">
+  {% include '_includes/ld_article.html' with page=page settings=settings %}
+</script>
+{% endblock %}

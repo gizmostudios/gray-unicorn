@@ -1,0 +1,68 @@
+{% load i18n %}
+{% load wagtailimages_tags %}
+<section class="section section-padding{% if purple %} bg-purple{% endif %}">
+  <div class="container">
+    <h3 class="h2">{% trans 'Highlighted Projects' %}</h3>
+  </div>
+  <div class="highlighted-glide mt-2">
+    <div class="glide__track" data-glide-el="track">
+      <ul class="glide__slides">
+        {% for projects in highlighted_projects %}
+          <li class="glide__slide">
+            <div class="container is-hidden-mobile">
+              <div class="columns">
+                {% for project in projects %}
+                  <div class="column is-6">
+                    <h4 class="h3">
+                      <a href="{{ project.url }}">
+                        {{ project.hero_title }}
+                      </a>
+                    </h4>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="columns is-multiline">
+              {% for project in projects %}
+                <div class="column is-6">
+                  <h4 class="h3 is-hidden-tablet mt-3 mb-1">
+                    <a href="{{ project.url }}">
+                      {{ project.hero_title }}
+                    </a>
+                  </h4>
+                  <a href="{{ project.url }}" class="no-underline">
+                    {% if project.hero_video_poster %}
+                      {% image project.hero_video_poster fill-1200x800 %}
+                    {% elif project.hero_image %}
+                      {% image project.hero_image fill-1200x800 %}
+                    {% else %}
+                      {% image project.hero_images.all.0.image fill-1200x800 %}
+                    {% endif %}
+                  </a>
+                  <a href="{{ project.url }}" class="is-block is-hidden-tablet mt-1 has-font-20">
+                    {{ project.hero_subtitle }}
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
+            <div class="container is-hidden-mobile">
+              <div class="columns">
+                {% for project in projects %}
+                  <div class="column is-6">
+                    <a href="{{ project.url }}" class="has-font-20">
+                      {{ project.hero_subtitle }}
+                    </a>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="glide__arrows" data-glide-el="controls">
+      <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><i class="fas fa-chevron-left"></i></button>
+      <button class="glide__arrow glide__arrow--right" data-glide-dir=">"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </div>
+</section>

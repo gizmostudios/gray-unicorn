@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load wagtailimages_tags %}
+{% load wagtailsettings_tags %}
+{% load wagtail_modeltranslation %}
+
+{% get_settings use_default_site=True %}
+
+{% block content %}
+  {% include "_includes/navbar.html" with transparent=True inverted=True %}
+
+  <article>
+    <section class="section section-padding">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-3-tablet mt-2">
+            {% image person.picture fill-350x400 %}
+            {% if person.expertises.count %}
+              <h4 class="h4 no-border-top mt-1">{% trans 'Areas of expertise' %}:</h4>
+              <ul class="mt-05 profile-point">
+                {% for expertise in person.expertises.all %}
+                  <li class="profile-item">
+                    {{ expertise.competency }}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+            {% if person.hobbies.count %}
+              <h4 class="h4 no-border-top mt-2">{% trans 'Enjoys' %}:</h4>
+              <ul class="mt-05 profile-point">
+                {% for hobby in person.hobbies.all %}
+                  <li class="profile-item">
+                    {{ hobby.activity }}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+            {% if user.email or user.phone %}
+              <h4 class="h4 no-border-top mt-2">{% trans 'Contact' %}:</h4>
+              <ul class="mt-05">
+                {% if user.email %}
+                  <li class="profile-item">
+                    <i class="fas fa-envelope mr-05"></i>
+                    <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+                  </li>
+                {% endif %}
+                {% if person.phone %}
+                  <li class="profile-item">
+                    <i class="fas fa-phone mr-05"></i>
+                    <a href="tel:{{ person.phone }}">{{ person.phone }}</a>
+                  </li>
+                {% endif %}
+              </ul>
+            {% endif %}
+          </div>
+          <div class="column is-9-tablet mt-2">
+            <header>
+              <h2 class="h2 mt-1">{{ user.first_name }} {{ user.last_name }}</h2>
+            </header>
+            {% if person.introduction %}
+              {{ person.introduction }}
+            {% endif %}
+
+            {% if articles %}
+              <section class="section section-padding-top-only-third">
+                <h2 class="h2 mt-2 mb-1">{% trans 'Articles' %}</h2>
+                <div class="columns is-multiline">
+                  {% for article in articles %}
+                    {% include '_includes/card.html' with type='Article' link_type='' obj=article link='' color='blue' no_tag=True three_in_row=True %}
+                  {% endfor %}
+                </div>
+              </section>
+            {% endif %}
+
+            {% if projects %}
+              <section class="section section-padding-top-only-third">
+                <h2 class="h2 mt-2 mb-1">{% trans 'Projects' %}</h2>
+                <div class="columns is-multiline">
+                  {% for project in projects %}
+                    {% include '_includes/card.html' with type='Project' link_type='' obj=project link='' color='blue' no_tag=True three_in_row=True %}
+                  {% endfor %}
+                </div>
+              </section>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+  </article>
+{% endblock content %}
+
+{% block open_graph %}
+  {% include '_includes/og_article.html' with page=page settings=settings %}
+{% endblock %}
+
+{% block ld_json %}
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{% slugurl_trans 'homepage' %}",
+        "name": "{% trans 'Home' %}"
+    }
+    }, {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{% slugurl_trans 'about' %}",
+        "name": "{% trans 'About' %}"
+      }
+    }, {
+      "@type": "ListItem",
+      "position": 3,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{{ parent_page.url }}",
+        "name": "{{ parent_page.description_title }}"
+      }
+    }, {
+      "@type": "ListItem",
+      "position": 4,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{{ page.url }}",
+        "name": "{{ user.first_name }} {{ user.last_name }}"
+      }
+    }]
+  }
+</script>
+<script type="application/ld+json">
+  {% include '_includes/ld_article.html' with page=page settings=settings %}
+</script>
+{% endblock %}

@@ -1,0 +1,12 @@
+.intro-section {
+  padding: 5rem 0;
+}
+.middle-section {
+  padding: 5rem 0;
+  &-text {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,221 @@
+.navbar {
+  transition: background-color .3s;
+  &.is-transparent {
+    background-color: unset;
+    svg,
+    a {
+      color: #FFF;
+      fill: #FFF;
+    }
+  }
+  &.is-sticky {
+    left: 0;
+    position: -webkit-sticky;
+    position:    -moz-sticky;
+    position:     -ms-sticky;
+    position:      -o-sticky;
+    position:         sticky;
+    top: 65px;
+  }
+  & .container {
+    justify-content: space-between;
+  }
+  & .search {
+    display: none;
+  }
+  .logo {
+    transform-origin: left center;
+  }
+  .logo > svg {
+    height: 70px;
+  }
+  .top-links {
+    align-items: center;
+    display: flex;
+    font-weight: 400;
+
+    a:first-of-type {
+      margin-right: 2rem;
+    }
+  }
+  .input {
+    border-radius: 2rem;
+  }
+  &.is-main-desktop {
+    background-color: #E5E6E7;
+    height: 50px;
+
+    .navbar-item:first-child {
+      margin-left: -1rem;
+    }
+    .navbar-item {
+      background-image: linear-gradient(currentColor, currentColor);
+      background-position: 0 100%;
+      background-repeat: no-repeat;
+      background-size: 0 2px;
+      color: #4A4A4A;
+      font-size: 1.5rem;
+      font-variant: all-small-caps;
+      margin-top: -3px;
+      padding: .5rem 1rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: background-size .3s;
+
+      &:hover,
+      &:focus,
+      &:active,
+      &.active,
+      &.ancestor {
+        background-color: unset !important;
+        background-size: 100% 2px;
+        color: #231F20;
+      }
+    }
+    .navbar-item > .navbar-link {
+      background-size: 0;
+      padding: 0;
+
+      &:hover,
+      &:focus,
+      &:active {
+        background-color: unset !important;
+        background-size: 0;
+        color: #231F20;
+      }
+
+      & > i {
+        font-size: 1.4rem;
+        padding-left: .5rem;
+        padding-top: .25rem;
+      }
+    }
+  }
+  .navbar-item.has-dropdown:focus .navbar-link,
+  .navbar-item.has-dropdown:hover .navbar-link,
+  .navbar-item.has-dropdown.is-active .navbar-link {
+    background-color: unset !important;
+  }
+  & .navbar-item.no-underline:hover,
+  & .navbar-item.no-underline:focus,
+  & .navbar-item.no-underline:active {
+    background-size: 0 0 !important;
+  }
+  .has-dropdown .navbar-item:first-child {
+    margin-left: 0;
+  }
+  .navbar-dropdown {
+    background-color: $except-purple;
+    border: 0;
+    border-radius: 0;
+    padding: 1.5rem;
+    width: 400px;
+
+    & a {
+      color: #FFF !important;
+    }
+    & .navbar-item {
+      border-bottom: 1px solid #FFF;
+      display: flex;
+      justify-content: space-between;
+      padding: .5rem 0;
+    }
+    & .navbar-item:last-child {
+      border-bottom: 0;
+    }
+  }
+  .dropdown-up {
+    bottom: 100%;
+    top: unset;
+  }
+  &.opaque {
+    background-color: #FFF;
+
+    .logo > svg {
+      fill: $except-purple;
+    }
+    .top-links > a {
+      color: $except-purple;
+    }
+    .navbar-brand {
+      margin-left: 0;
+      & .logo {
+        padding-left: 0;
+      }
+    }
+  }
+  &.in-process-opaque {
+    .navbar-brand {
+      margin-left: 0;
+      & .logo {
+        padding-left: 0;
+      }
+    }
+  }
+}
+@media screen and (min-width: $desktop) {
+  #topNav .container {
+    margin-top: 100px;
+  }
+}
+@media screen and (max-width: $desktop) {
+  .navbar {
+    &.is-transparent {
+      background-color: $except-purple;
+      a {
+        color: #111;
+        text-transform: uppercase;
+      }
+      a.navbar-burger {
+        color: #FFF;
+      }
+    }
+    &.is-active {
+      background-color: #FFF;
+      box-shadow: $shadow;
+      .logo {
+        display: none;
+      }
+      .search {
+        display: block;
+      }
+      a.navbar-burger {
+        color: #111;
+      }
+    }
+    .logo > svg {
+      height: 36px;
+    }
+    & .navbar-brand > .navbar-item {
+      margin-left: -2rem;
+    }
+    & .navbar-burger {
+      margin-right: -2rem;
+    }
+    & .navbar-menu {
+      box-shadow: unset;
+      padding: 1rem 0;
+      & .navbar-item {
+        font-size: 1.25rem;
+        padding: .5rem 0;
+      }
+    }
+    .logo {
+      align-items: center;
+      display: flex;
+    }
+    &.is-transparent.no-hero {
+      background-color: $except-purple;
+      svg,
+      a {
+        color: #FFF;
+        fill: #FFF;
+      }
+    }
+    & .navbar-start {
+      align-items: flex-end;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

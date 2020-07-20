@@ -1,0 +1,34 @@
+{% load i18n %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+<div class="column is-6-tablet {% if three_in_row %}is-4-desktop{% else %}is-3-desktop{% endif %}">
+  <div class="card is-stretched">
+    <div class="card-image is-front">
+      {% if obj.hero_image %}
+        {% image obj.hero_image fill-450x300 as objimage %}
+      {% else %}
+        {% image obj.hero_images.all.0.image fill-450x300 as objimage %}
+      {% endif %}
+      <figure class="image">
+        <a class="no-underline no-shadow" href="{{ obj.url }}">
+          <img src="{{ objimage.url }}" alt="{{ objimage.alt }}">
+        </a>
+        {% if not no_tag %}<h4 class="h4 label is-{{ color }}">{% trans type %}</h4>{% endif %}
+      </figure>
+    </div>
+    <div class="card-content is-front">
+      <h4 class="font-24" style="font-size: 22px !important;">{{ obj.hero_title }}</h4>
+      <p>{{ obj.hero_subtitle }}</p>
+      <a href="{{ obj.url }}" class="button is-pulled-right"><i class="fas fa-chevron-right"></i></a>
+    </div>
+    {% if link %}
+      <div class="card-footer is-front">
+        <a href="{{ link }}" class="link">
+          <span>
+            {% trans link_type %}
+          </span>
+          <i class="fas fa-chevron-right"></i>
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>

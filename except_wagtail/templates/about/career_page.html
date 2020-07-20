@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load wagtailsettings_tags %}
+{% load wagtail_modeltranslation %}
+
+{% get_settings use_default_site=True %}
+
+{% block content %}
+  {% include "_modules/hero.html" with page=page halved=True %}
+  {% include "_includes/navbar.html" with transparent=True inverted=True %}
+
+  <article>
+    <section class="section section-padding">
+      <div class="container">
+        <div class="columns is-multiline">
+          <div class="column is-8-tablet with-pad">
+            <header>
+              <h2 class="h2">{{ page.body_title }}</h2>
+            </header>
+            {{ page.body }}
+          </div>
+          
+          {% if open_positions %}
+            <div class="column is-4-tablet">
+              <header>
+                <h2 class="h2">{% trans 'Open positions' %}</h2>
+              </header>
+              {% for news in open_positions %}
+                <div class="card mt-1">
+                  <div class="card-content p-1">
+                    <a href="{{ news.url }}">
+                      <h3 class="h3 no-border-top">{{ news.hero_title }}</h3>
+                      {% if news.hero_subtitle %}
+                        <p class="mt-05">{{ news.hero_subtitle }}</p>
+                      {% endif %}
+                      <p class="mt-2">{{ news.date_published }}</p>
+                    </a>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+  </article>
+{% endblock content %}
+
+{% block open_graph %}
+  {% include '_includes/og_article.html' with page=page settings=settings %}
+{% endblock %}
+
+{% block ld_json %}
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{% slugurl_trans 'homepage' %}",
+        "name": "{% trans 'Home' %}"
+    }
+    }, {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{% slugurl_trans 'about' %}",
+        "name": "{% trans 'About' %}"
+      }
+    }, {
+      "@type": "ListItem",
+      "position": 3,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{{ page.url }}",
+        "name": "{{ page.title }}"
+      }
+    }]
+  }
+</script>
+<script type="application/ld+json">
+  {% include '_includes/ld_article.html' with page=page settings=settings %}
+</script>
+{% endblock %}

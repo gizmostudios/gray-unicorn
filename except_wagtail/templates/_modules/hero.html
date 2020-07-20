@@ -1,0 +1,52 @@
+{% load i18n %}
+{% load static %}
+{% load wagtailimages_tags %}
+
+<section class="hero{% if halved %} halved{% endif %}">
+  <div class="hero-body">
+    <div class="container">
+      <div class="titles">
+      {% if page.hero_title %}
+        <h1 class="h1 title">{{ page.hero_title }}</h1>
+      {% endif %}
+      {% if page.hero_subtitle %}
+        <h2 class="h3 subtitle no-border-top">
+          {{ page.hero_subtitle }}
+        </h2>
+      {% endif %}
+      {% if page.date_published %}
+        <div class="date">{{ page.date_published|date:"M d, Y" }}</div>
+      {% endif %}
+      </div>
+      <div class="bcorp">
+        <img class="hero-bcorp"
+             src="{% static 'images/BCorp-logo.svg' %}"
+             alt="{% trans 'BCorp' %}">
+      </div>
+    </div>
+  </div>
+  {% if page.hero_video %}
+    <video class="hero-video"
+           {% if page.hero_video_poster %}
+             {% image page.hero_video_poster width-1280 as videoposter %}
+             poster="{{ videoposter.url }}"
+           {% endif %}
+           autoplay loop muted playsinline="true" disablePictureInPicture>
+      <source src="{{ page.hero_video.url }}" type="video/mp4">
+    </video>
+  {% elif page.hero_image %}
+    {% image page.hero_image width-1600 class="hero-image" %}
+  {% elif page.hero_images.count %}
+    <div class="glide">
+      <div class="glide__track" data-glide-el="track">
+        <ul class="glide__slides">
+          {% for carousel_image in page.hero_images.all %}
+            <li class="glide__slide">
+              {% image carousel_image.image width-1600 %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>    
+  {% endif %}
+</section>

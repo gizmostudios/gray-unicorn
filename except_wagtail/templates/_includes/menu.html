@@ -1,0 +1,45 @@
+{% load i18n %}
+{% load menu_tags %}
+{% load wagtail_modeltranslation %}
+
+{% get_current_language as LANGUAGE_CODE %}
+
+<nav id="mainNav" class="navbar is-main-desktop is-sticky is-hidden-touch" role="navigation" aria-label="main navigation">
+  <div class="container">
+    <div class="navbar-menu">
+      <div class="navbar-start">
+        {% for item in menu_items %}
+            {% if item.has_children_in_menu %}
+              <div class="navbar-item has-dropdown {{item.active_class}}">
+                <a class="navbar-link is-arrowless" href="{{ item.href }}" tabindex="0" aria-haspopup="true">
+                  {{ item.text }}
+                  <i class="fas fa-chevron-down fa-change"></i>
+                </a>
+                <div class="navbar-dropdown" aria-hidden="true" aria-label="submenu">
+                  {% sub_menu template=sub_menu_template menuitem_or_page=item apply_active_classes=True %}
+                </div>
+              </div>
+            {% else %}
+              <a class="navbar-item {{item.active_class}}" href="{{ item.href }}">
+                {{ item.text }}
+              </a>
+            {% endif %}
+        {% endfor %}
+      </div>
+      <div class="navbar-end is-hidden-desktop-only">
+        <div class="navbar-item no-underline">
+          {# 'search' URL is handled before Wagtail therefore Django's standard 'url' tag is used #}
+          <form action="{% slugurl_trans 'search' %}" method="get" style="margin-right: -5px;">
+            <div class="control has-icons-right">
+              <input class="input" name="query" type="text"
+                     placeholder="{% trans 'Search site' %}" />
+              <span class="icon is-small is-right">
+                <i class="fas fa-search"></i>
+              </span>
+            </div>
+          </form> 
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

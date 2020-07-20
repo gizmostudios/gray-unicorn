@@ -1,0 +1,25 @@
+{% load wagtailimages_tags %}
+{% for element in posts %}
+  <div class="column is-4">
+    <a class="no-underline" href="{{ element.specific.url }}">
+      <figure class="card-overlay">
+        {% if element.specific.thumbnail %}
+          {% image element.specific.thumbnail fill-600x400 %}
+        {% elif element.specific.hero_image %}
+          {% image element.specific.hero_image fill-600x400 %}
+        {% else %}
+          {% image element.specific.hero_images.all.0.image fill-600x400 %}
+        {% endif %}
+        <div class="overlay">
+          <p>{{ element.specific.hero_subtitle }}</p>
+          <p class="date">{{ element.specific.date_published|date:"M Y" }}</p>
+        </div>
+      </figure>
+    </a>
+    <h4 class="h4 no-border-top has-text-centered mt-05">
+      <a href="{{ element.specific.url }}">
+        {{ element.specific.hero_title }}
+      </a>
+    </h4>
+  </div>
+{% endfor %}

@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load wagtailimages_tags %}
+{% load wagtailsettings_tags %}
+{% load wagtail_modeltranslation %}
+
+{% get_settings use_default_site=True %}
+
+{% block content %}
+  {% include "_modules/hero.html" with page=page %}
+  {% include "_includes/navbar.html" with transparent=True inverted=True %}
+
+  <article>
+    <section class="section section-padding">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-4">
+            {% if page.selected_article.hero_video_poster %}
+              {% image page.selected_article.hero_video_poster fill-900x750 %}
+            {% elif page.selected_article.hero_image %}
+              {% image page.selected_article.hero_image fill-900x750 %}
+            {% else %}
+              {% image page.selected_article.hero_images.all.0.image fill-900x750 %}
+            {% endif %}
+          </div>
+          <div class="column is-8 project-short-desc">
+            <h2 class="h2 mt-2">{{ page.selected_article.hero_title }}</h3>
+            <p>{{ page.selected_article.intro|truncatechars_html:300 }}</p>
+            <div class="mb-2">
+              <a href="{{ page.selected_article.url }}">
+                <i class="fas fa-chevron-right"></i>
+                {% trans 'Read more' %}
+              </a>
+            </div>
+          </div>
+      </div>
+    </section>
+
+    <section class="section section-padding bg-purple">
+      <div class="container">
+        <div class="columns is-multiline">
+          <div class="column is-12 mb-2">
+            <h2 class="h2">{% trans 'Recent Articles' %}</h2>
+          </div>
+        </div>
+        <div class="columns mt-1 is-multiline negative-margin is-hidden-touch">
+          {% for service in services %}
+            <div class="column is-4">
+              <h3 class="h3 is-white no-border-top has-text-centered">
+                {{ service.hero_title }}
+              </h3>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="columns is-multiline negative-margin">
+          {% for service in services %}
+            <div class="column is-4 knowledge-border-top">
+              {% with service.get_most_recent_article as article %}
+                <div>
+                  <a href="{{ article.url }}" class="no-underline">
+                    {% if article.hero_video_poster %}
+                      {% image article.hero_video_poster fill-900x600 %}
+                    {% elif article.hero_image %}
+                      {% image article.hero_image fill-900x600 %}
+                    {% else %}
+                      {% image article.hero_images.all.0.image fill-900x600 %}
+                    {% endif %}
+                  </a>
+                  <h4 class="h4 mt-05">
+                    <a href="{{ article.url }}" class="font-24">
+                      {{ article.hero_title }}
+                    </a>
+                  </h4>
+                  <p>{{ article.hero_subtitle }}</p>
+                </div>
+              {% endwith %}
+            </div>
+          {% endfor %}
+        </div>
+        <div class="columns is-multiline negative-margin">
+          {% for service in services %}
+            <div class="column is-4 knowledge-border-top">
+              {% with service.get_second_recent_article as article %}
+                <div class="no-border">
+                  <a href="{{ article.url }}" class="no-underline">
+                    {% if article.hero_video_poster %}
+                      {% image article.hero_video_poster fill-900x600 %}
+                    {% elif article.hero_image %}
+                      {% image article.hero_image fill-900x600 %}
+                    {% else %}
+                      {% image article.hero_images.all.0.image fill-900x600 %}
+                    {% endif %}
+                  </a>
+                  <h4 class="h4 mt-05">
+                    <a href="{{ article.url }}" class="font-24">
+                      {{ article.hero_title }}
+                    </a>
+                  </h4>
+                  <p>{{ article.hero_subtitle }}</p>
+                </div>
+              {% endwith %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-padding" id="articles">
+      <div class="container">
+        <div class="columns is-multiline">
+          <div class="column is-12 mb-2">
+            <h2 class="h2">{% trans 'Articles Archive' %}</h2>
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-12">
+            <div class="filters has-text-centered mt-3">
+              {% for service in services %}
+                <a class="filter-service {% if not active_id %}is-active{% elif active_id and active_id == service.id %}is-active{% endif %} is-{{ service.color }} is-filter"
+                  href="{{ page.get_full_url }}{% if not active_id == service.id %}?service={{ service.id }}{% endif %}"
+                  tabindex="0" role="button" aria-pressed="false">
+                  {{ service.hero_title }}
+                </a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="columns mt-1 is-multiline">
+            <div class="column is-12 has-text-centered" id="nav-prev">
+              {% include "_includes/pagination_prev.html" with posts=posts %}
+            </div>
+            {% include "_includes/index_item_cards_knowledge.html" with posts=posts three_in_row=True %}
+            <div class="column is-12 has-text-centered" id="nav-next">
+              {% include "_includes/pagination_next.html" with posts=posts %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </article>
+{% endblock content %}
+
+{% block open_graph %}
+  {% include '_includes/og_article.html' with page=page settings=settings %}
+{% endblock %}
+
+{% block ld_json %}
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{% slugurl_trans 'homepage' %}",
+        "name": "{% trans 'Home' %}"
+    }
+    }, {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{{ page.url }}",
+        "name": "{{ page.title }}"
+      }
+    }]
+  }
+</script>
+<script type="application/ld+json">
+  {% include '_includes/ld_article.html' with page=page settings=settings %}
+</script>
+{% endblock %}

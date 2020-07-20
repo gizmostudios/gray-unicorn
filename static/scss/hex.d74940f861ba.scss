@@ -1,0 +1,35 @@
+svg {
+  &.hex {
+    bottom: -205px;
+    height: 500px;
+    position: absolute;
+    right: -14px;
+    // transform: rotate(45deg);
+    visibility: hidden;
+    width: 500px;
+    z-index: 15;
+  }
+  &.hex.animated .st0,
+  &.hex.animated .st1,
+  &.hex.animated .st2 {
+    animation: dash 45s linear forwards;
+
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+  }
+}
+
+.intro-section svg.hex {
+  bottom: -285px;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@media screen and (max-width: $widescreen) {
+  .hex-container {
+    display: none;
+  }
+}

@@ -1,0 +1,12 @@
+{% load wagtailimages_tags %}
+
+<div class="columns is-multiline mt-2" data-featherlight-gallery data-featherlight-filter="a">
+  {% for image in self.image_list %}
+    {% image image.image width-1000 as imagedata %}
+    <div class="column is-4">
+      <a href="{{ imagedata.url }}" class="no-underline">
+        {% image image.image fill-350x350 %}
+      </a>
+    </div>
+  {% endfor %}
+</div>

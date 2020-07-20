@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% load wagtailcore_tags %}
+{% load wagtailsettings_tags %}
+{% load wagtailimages_tags %}
+{% load wagtail_modeltranslation %}
+
+{% get_settings use_default_site=True %}
+
+{% block content %}
+  {% include "_modules/hero.html" with page=page %}
+  {% include "_includes/navbar.html" with transparent=True inverted=True %}
+
+  <section class="section section-padding">
+    <div class="container">
+      <div class="columns is-multiline">
+        <div class="column is-12-tablet is-8-desktop with-pad">
+          <div class="project-image image is-fullwidth">
+            {% image page.header_image fill-1500x750 %}
+          </div>
+          {% if page.intro %}
+            <strong>{{ page.intro|linebreaks|richtext }}</strong>
+          {% endif %}
+          {% if page.body %}
+            {{ page.body }}
+          {% endif %}
+        </div>
+        <div class="column is-12-tablet is-4-desktop">
+          <div class="project-contact">
+            <h4 class="h4 has-right-underline is-white">{% trans 'Contact' %}</h4>
+            <div class="contact-name">{{ page.author.user.first_name }} {{ page.author.user.last_name }}</div>
+            <div class="contact-job">{{ page.author.job_title }}</div>
+            <div>
+              <span class="caption"><a class="no-underline" href="mailto:{{ page.author.user.email }}"><i class="fas fa-envelope"></i></a></span>
+              <span class="caption"><a class="no-underline" href="tel:{{ page.author.phone }}"><i class="fas fa-phone"></i></a class="no-underline"></span>
+            </div>
+          </div>
+          {% if page.project_partners.count %}
+            <h4 class="h4 project-info mt-2 has-text-right">{% trans 'Client & Partners' %}</h4>
+            <ul>
+            {% for project_partner in page.project_partners.all %}
+              <li class="project-partner">
+                <figure class="image">
+                  {% image project_partner.partner.image width-200 class="is-128x128" %}
+                </figure>
+              </li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+          {% if page.team_members.count %}
+            <h4 class="h4 project-info mt-2 has-text-right">{% trans 'Project team' %}</h4>
+            <ul>
+            {% for team_member in page.team_members.all %}
+              <li class="has-text-right">
+                {% if team_member.get_page %}
+                  <a class="team-member" href="{{ team_member.get_page.url }}">{{ team_member.member.user.first_name }} {{ team_member.member.user.last_name }}</a>
+                  <p class="former-member">{{ team_member.member.job_title }}</p>
+                {% else %}
+                  <figcaption class="team-member">{{ team_member.member.user.first_name }} {{ team_member.member.user.last_name }}</figcaption>
+                  <p class="former-member">{{ team_member.member.job_title }}</p>
+                {% endif %}
+              </li>
+            {% endfor %}
+            {% for team_member in page.external_members.all %}
+              <li class="has-text-right">
+                {% if team_member.get_page %}
+                  <a class="team-member" href="{{ team_member.get_page.url }}">{{ team_member.member.user.first_name }} {{ team_member.member.user.last_name }}</a>
+                  <p class="former-member">{{ team_member.member.job_title }}</figcaption>
+                {% else %}
+                  <figcaption class="team-member">{{ team_member.first_name }} {{ team_member.last_name }}</figcaption>
+                  <p class="former-member">{{ team_member.job_title }} - {{ team_member.company }}</p>
+                {% endif %}
+              </li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% include "_modules/links.html" with page=page %}
+{% endblock content %}
+
+{% block open_graph %}
+  {% include '_includes/og_article.html' with page=page settings=settings %}
+{% endblock %}
+
+{% block ld_json %}
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{% slugurl_trans 'except-integrated-sustainability' %}",
+        "name": "{% trans 'Home' %}"
+    }
+    }, {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{% slugurl_trans 'projects' %}",
+        "name": "{% trans 'Projects' %}"
+      }
+    }, {
+      "@type": "ListItem",
+      "position": 3,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{{ page.url }}",
+        "name": "{{ page.title }}"
+      }
+    }]
+  }
+</script>
+<script type="application/ld+json">
+  {% include '_includes/ld_article.html' with page=page settings=settings %}
+</script>
+{% endblock %}

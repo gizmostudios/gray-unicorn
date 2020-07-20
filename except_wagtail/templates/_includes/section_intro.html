@@ -1,0 +1,22 @@
+{% load wagtailimages_tags %}
+<section class="section section-padding">
+  <div class="container">
+    <div class="columns is-multiline">
+      <div class="column is-12-tablet is-8-widescreen{% if page.intro_image %} has-right-padded-child-widescreen{% endif %}">
+        <div class="has-font-24 has-line-on-top is-bold">
+          {{ page.intro_first|linebreaks }}
+        </div>
+        {% if page.intro_second %}
+          <div class="has-linebreaks">
+            {{ page.intro_second|linebreaks }}
+          </div>
+        {% endif %}
+      </div>
+      {% if page.intro_image %}
+        <div class="column is-12-tablet is-4-widescreen">
+          {% image page.intro_image fill-900x900 %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

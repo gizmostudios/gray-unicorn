@@ -1,0 +1,19 @@
+.gmap {
+  position: relative;
+
+  & > iframe {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}
+@media screen and (max-width: $tablet) {
+  .gmap {
+    & > iframe {
+      height: 400px;
+      position: relative;
+    }
+  }
+}

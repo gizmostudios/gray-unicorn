@@ -1,0 +1,200 @@
+@font-face {
+  font-family: "Aller";
+  font-style: normal;
+  font-weight: 200;
+  src: url("../fonts/Aller_Lt.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Aller";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/Aller_Rg.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Aller";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/Aller_Bd.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Aller";
+  font-style: italic;
+  font-weight: 200;
+  src: url("../fonts/Aller_LtIt.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Aller";
+  font-style: italic;
+  font-weight: 400;
+  src: url("../fonts/Aller_It.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Aller";
+  font-style: italic;
+  font-weight: 700;
+  src: url("../fonts/Aller_BdIt.ttf") format("truetype");
+}
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  color: #111;
+  font-family: "Aller";
+  font-variant: all-small-caps;
+  font-weight: 400;
+  position: relative;
+  &.is-white {
+    color: #FFF;
+  }
+}
+.h1 {
+  font-size: 5.625rem;
+  line-height: 4.5rem;
+}
+.h2 {
+  font-size: 3.125rem;
+  line-height: 2.8rem;
+}
+.h3 {
+  font-size: 1.875rem;
+  line-height: 2rem;
+}
+.h4 {
+  font-size: 1.125rem;
+}
+.h5,
+.h6 {
+  font-size: 1.125rem;
+}
+.h1:before,
+.h2:before,
+.h3:before {
+  border-top: solid 4px $dark-gray;
+  content: "";
+  left: 0;
+  position: absolute;
+  top: -16px;
+  width: 90px;
+}
+.h1.is-white:before,
+.h2.is-white:before,
+.h3.is-white:before {
+  border-top: solid 4px #FFF;
+}
+.h1.no-border-top:before,
+.h2.no-border-top:before,
+.h3.no-border-top:before {
+  border-top: unset;
+}
+p {
+  font-size: 1.125rem;
+  line-height: 1.6rem;
+  max-width: 960px;
+  &.is-white {
+    color: #FFF;
+  }
+}
+.is-white {
+  color: #FFF !important;
+}
+.block-heading_block > h2,
+.block-heading_block > h3,
+.block-heading_block > h4 {
+  margin-top: 5rem;
+}
+.rich-text h2,
+.rich-text h3,
+.rich-text h4 {
+  color: $except-purple;
+  font-variant: all-small-caps;
+  font-weight: 400;
+  margin-top: 1rem;
+}
+.rich-text h2 {
+  font-size: 3rem;
+  line-height: 3.5rem;
+}
+.rich-text h3 {
+  font-size: 2rem;
+  line-height: 2.5rem;
+}
+.rich-text h4 {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+.rich-text p {
+  margin: 2rem 0;
+}
+.rich-text ul,
+ul.profile-point {
+  font-size: 1.125rem;
+  line-height: 1.6rem;
+  list-style-image: url(../images/icons/bullet.png);
+  list-style-position: outside;
+}
+.rich-text ul,
+.rich-text ol,
+ul.profile-point {
+  padding-left: 1rem;
+}
+.bg-purple .rich-text p {
+  color: #FFF;
+}
+.block-paragraph_block,
+.block-heading_block,
+.block-image_block {
+  margin-top: 2rem;
+}
+@media screen and (max-width: $tablet) {
+  .h1 {
+    font-size: 3.125rem;
+    line-height: 3rem;
+  }
+  .h2 {
+    font-size: 1.825rem;
+    line-height: 1.5rem;
+  }
+  .h3 {
+    font-size: 1.4rem;
+    line-height: 1.4rem;
+  }
+  .h4 {
+    font-size: 1rem;
+  }
+}
+@media screen and (min-width: $tablet) and (max-width: $fullhd) {
+  .h1 {
+    font-size: 4.625rem;
+    line-height: 3.5rem;
+  }
+  .h2 {
+    font-size: 2.125rem;
+    line-height: 1.8rem;
+  }
+  .h3 {
+    font-size: 1.375rem;
+    line-height: 1.5rem;
+  }
+  .h4 {
+    font-size: 1.125rem;
+  }
+}
+@media screen and (min-width: $fullhd) {
+  .h1 {
+    font-size: 5.625rem;
+    line-height: 4.5rem;
+  }
+  .h2 {
+    font-size: 3.125rem;
+    line-height: 2.8rem;
+  }
+  .h3 {
+    font-size: 1.875rem;
+    line-height: 2rem;
+  }
+  .h4 {
+    font-size: 1.125rem;
+  }
+}

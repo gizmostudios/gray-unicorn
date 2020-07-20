@@ -1,0 +1,18 @@
+{% comment %}
+    Content is coming from the StandardBlock StreamField
+    class within `blocks.py`
+{% endcomment %}
+
+{% if self.size == 'h2' %}
+  <h2 class="h2">{{ self.heading_text }}</h2>
+{% elif self.size == 'h2nb' %}
+  <h2 class="h2 no-border-top">{{ self.heading_text }}</h2>
+{% elif self.size == 'h3' %}
+  <h3 class="h3">{{ self.heading_text }}</h3>
+{% elif self.size == 'h3nb' %}
+  <h3 class="h3 no-border-top">{{ self.heading_text }}</h3>
+{% elif self.size == 'h4' %}
+  <h4 class="h4">{{ self.heading_text }}</h4>
+{% elif self.size == 'h4nb' %}
+  <h4 class="h4 no-border-top">{{ self.heading_text }}</h4>
+{% endif %}

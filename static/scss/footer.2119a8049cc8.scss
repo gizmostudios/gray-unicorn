@@ -1,0 +1,27 @@
+.footer {
+  background: rgba(35, 31, 32, .7);
+  border-top-color: #FFF;
+  color: #FFF;
+  padding: 4rem 0 3rem;
+  a {
+    color: #FFF;
+  }
+  .h3:before {
+    border-top-color: #FFF;
+  }
+  ul {
+    padding: 0;
+  }
+  li > i + a,
+  li > i + span {
+    margin-left: .25em;
+  }
+  p {
+    font-size: unset;
+    line-height: unset;
+    max-width: unset;
+  }
+  &-bcorp {
+    height: 8rem;
+  }
+}

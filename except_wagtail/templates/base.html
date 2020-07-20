@@ -1,0 +1,141 @@
+{% load compress i18n static wagtailuserbar wagtailsettings_tags wagtail_modeltranslation %}
+{% get_current_language as LANGUAGE_CODE %}{% get_settings use_default_site=True %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+  <head>
+    <meta charset="utf-8" />
+    <title>{% block title %}{% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}{% endblock %}{% block title_suffix %}{% with self.get_site.site_name as site_name %}{% if site_name %} - {{ site_name }}{% endif %}{% endwith %}{% endblock %}</title>
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+    {# Global stylesheets #}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+      crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="{% static 'css/featherlight.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/featherlight.gallery.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/glide.core.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/glide.theme.min.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'images/icons/favicon.ico' %}">
+    {% compress css %}
+      <link type="text/x-scss" href="{% static 'bulma/bulma.sass' %}"
+        rel="stylesheet" media="screen">
+      <link type="text/x-scss" href="{% static 'scss/base.scss' %}"
+        rel="stylesheet" media="screen">
+    {% endcompress %}
+
+    {% block extra_css %}
+      {# Override this in templates to add extra stylesheets #}
+    {% endblock %}
+
+    <script src="{% static 'js/vendor/js.cookie.min.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery.min.js' %}"></script>
+    <script src="{% static 'js/vendor/featherlight.min.js' %}"></script>
+    <script src="{% static 'js/vendor/featherlight.gallery.min.js' %}"></script>
+    <script src="{% static 'js/vendor/glide.min.js' %}"></script>
+    <script>
+      $(document).ready(function() {
+        var cookieConsent = Cookies.get('cookieConsent');
+        if (cookieConsent === undefined) {
+          $('#gdpr-block').fadeIn('slow');
+        }
+        $(document).on('click', '#gdpr-block .button', function() {
+          Cookies.set('cookieConsent', 'true', { expires: 28 });
+          $('#gdpr-block').fadeOut('fast');
+        })
+      });
+    </script>
+
+    {% block open_graph %}{% endblock %}
+
+    {% block ld_json %}{% endblock %}
+  </head>
+
+  <body>
+    {% wagtailuserbar %}
+
+    {% block content %}{% endblock %}
+
+    {# Footer block #}
+    <footer id="footer" class="footer">
+      <div class="container">
+        <div class="columns is-multiline">
+          {% for category in footer_categories %}
+            <div class="column is-6-tablet is-3-desktop is-hidden-mobile">
+              <h6 class="h3 is-white">{{ category.name }}</h6>
+              <ul class="mt-1">
+                {% for link in category.get_links %}
+                  <li>
+                    <i class="fas fa-chevron-right"></i>
+                    {% if link.link_page and link.link_page.url == '/about/event-calendar/' or link.link_page.url == '/nl/about/event-calendar/' %}
+                      <a href="{% slugurl_trans 'news' %}?type=event">
+                        {{ link.name }}
+                      </a>
+                    {% elif link.link_page %}
+                      <a href="{{ link.link_page.url }}">
+                        {{ link.name }}
+                      </a>
+                    {% elif link.link %}
+                      <a href="{{ link.link }}" target="_blank" rel="noopener noreferrer">
+                        {{ link.name }}
+                      </a>
+                    {% else %}
+                      <span class="popup">
+                        <a>{{ link.name }}</a>
+                        <span class="popuptext" id="{{ link.name }}">
+                          {{ link.popup_html|safe }}
+                        </span>
+                      </span>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endfor %}
+          <div class="column is-6-tablet is-3-desktop">
+            <h6 class="h3 is-white">{% trans 'Contact us' %}</h6>
+            <h6 class="h4 is-white mt-1">{% trans 'Except Integrated Sustainability' %}</h6>
+            <div class="mt-05">
+              {{ settings.except_wagtail.WebsiteSettings.footer_contact|linebreaks }}
+            </div>
+            <h6 class="h4 is-white mt-1">{% trans 'Contact Hours' %}</h6>
+            <div class="mt-05">
+              {{ settings.except_wagtail.WebsiteSettings.footer_worktime|linebreaks }}
+            </div>
+          </div>
+          <div class="column is-12">
+            <img class="footer-bcorp" src="{% static 'images/BCorp-text.svg' %}" alt="{% trans 'BCorp' %}">
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    {# Copyright block #}
+    <div class="container has-text-centered mt-1 mb-1">
+      2019 © Except Integrated Sustainability B.V.
+      <span class="ml-05">
+        <i class="fas fa-chevron-right"></i>
+        <a href="{% slugurl_trans 'privacy' %}">
+          {% trans 'Privacy Policy' %}
+        </a>
+      </span>
+    </div>
+
+    {# GDPR block #}
+    <div id="gdpr-block">
+      <div class="content">
+        <span>
+          {% trans 'This website uses cookies to improve your experience.' %}
+          <a href="{% slugurl_trans 'privacy' %}">{% trans 'Read privacy policy here.' %}</a>
+        </span>
+        <button class="button">{% trans 'Got it!' %}</button>
+      </div>
+    </div>
+
+    <script src="{% static 'js/except_wagtail.js' %}"></script>
+    {% block extra_js %}
+      {# Override this in templates to add extra javascript #}
+    {% endblock %}
+  </body>
+</html>

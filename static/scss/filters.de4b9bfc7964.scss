@@ -1,0 +1,88 @@
+.select:not(.is-multiple):not(.is-loading)::after {
+  border-color: $except-purple;
+}
+.select:not(.is-multiple):not(.is-loading):hover::after {
+  border-color: $except-purple;
+}
+.select select:focus,
+.textarea:focus,
+.input:focus,
+.select select.is-focused,
+.is-focused.textarea,
+.is-focused.input,
+.select select:active,
+.textarea:active,
+.input:active,
+.select select.is-active,
+.is-active.textarea,
+.is-active.input {
+  border-color: $except-purple;
+  box-shadow: 0 0 0 .125em rgba(107, 42, 126, .25);
+}
+.select select::placeholder,
+.textarea::placeholder,
+.input::placeholder {
+  color: rgba(54,54,54,.85);
+}
+.select > select,
+.field > div {
+  max-width: 200px !important;
+  width: 200px;
+}
+.filters {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.filter-service {
+  align-items: center;
+  background-color: #E7E7E8;
+  cursor: pointer;
+  display: flex;
+  height: 60px;
+  justify-content: center;
+  margin-right: 1rem;
+  padding: 0 1rem;
+  position: relative;
+  transition: box-shadow .3s;
+  width: 140px;
+
+  &:before {
+    background-color: rgba(255, 255, 255, .4);
+    content: "";
+    height: 15px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 15px;
+  }
+  &.is-active.is-purple:before {
+    background: $except-purple;
+  }
+  &.is-active.is-blue:before {
+    background: #51C7EA;
+  }
+  &.is-active.is-green:before {
+    background: #8AC43F;
+  }
+  &.is-active.is-orange:before {
+    background: #FFA500;
+  }
+  &:hover,
+  &:focus {
+    box-shadow: $shadow;
+  }
+}
+@media screen and (max-width: $tablet) {
+  .filters > .is-flex {
+    flex-direction: column;
+  }
+  .filters {
+    align-items: center;
+    flex-direction: column;
+  }
+  .filter-service {
+    margin-bottom: 1rem;
+  }
+}

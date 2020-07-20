@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+{% load static wagtailuserbar %}
+
+
+{% load static %}
+
+{% block content %}
+  {% with mediaPath="/media/original_images/" %}
+    {% with mediaPathOriginal="/media/original_images/" %}
+
+    {# Main navigation #}
+    {% include "_includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
+    <div class="spacer is-large"></div>
+      <div class="spacer"></div>
+      <section class="section">
+        <div class="container">
+          <div class="columns">
+            <div class="column is-8">
+              {% if page.hero_title %}
+                <h1 class="h1">{{page.hero_title}}</h1>
+              {% endif %}
+              {% if page.hero_subtitle %}
+                <p class="intro">
+                  {{page.hero_subtitle}}
+                </p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </section>
+
+    {# List of all our articles with filter possibilities #}
+    
+    <section class="section">
+      <div class="container">
+        <article class="article">
+          <div class="spacer is-large"></div>
+          <div id="articles" class="columns is-grid grid-loading">
+            {% include "_modules/grid_8.html" with elements=resources is_loadable=True %}
+          </div>
+          <div class='button-load-container'>
+            {% include "_modules/button_load.html" with not_last=not_last %}
+          </div>
+        </article>
+      </div>
+    </section>
+    <script type="text/javascript" src="{% static 'js/carousel_article.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/vendor/muuri.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/loading_more.js' %}"></script>
+    {% endwith %}
+  {% endwith %}
+{% endblock content %}

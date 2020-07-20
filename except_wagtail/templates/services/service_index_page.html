@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load wagtailimages_tags %}
+{% load wagtailsettings_tags %}
+{% load wagtail_modeltranslation %}
+{% load wagtailcore_tags %}
+
+{% get_settings use_default_site=True %}
+
+{% block content %}
+  {% include "_modules/hero.html" with page=page %}
+  {% include "_includes/navbar.html" with transparent=True inverted=True %}
+
+  {% include "_includes/section_intro.html" with page=page %}
+
+  <section class="section section-padding" style="margin-top: -22rem;">
+    <div class="container">
+      <div class="columns is-multiline mt-3 what-we-do-services">
+        <div class="column is-3 has-text-centered">
+          <div class="service-icon">
+            <img src="{{ page.intro_first_icon.url }}">
+          </div>
+          <h4 class="servicepage-icon font-24 is-all-small-caps no-border-top">
+            {{ page.intro_first_text }}
+          </h4>
+        </div>
+        <div class="column is-3 has-text-centered">
+          <div class="service-icon">
+            <img src="{{ page.intro_second_icon.url }}">
+          </div>
+          <h4 class="servicepage-icon font-24 is-all-small-caps no-border-top">
+            {{ page.intro_second_text }}
+          </h4>
+        </div>
+        <div class="column is-3 has-text-centered">
+          <div class="service-icon">
+            <img src="{{ page.intro_third_icon.url }}">
+          </div>
+          <h4 class="servicepage-icon font-24 is-all-small-caps no-border-top">
+            {{ page.intro_third_text }}
+          </h4>
+        </div>
+        <div class="column is-3 has-text-centered">
+          <div class="service-icon">
+            <img src="{{ page.intro_fourth_icon.url }}">
+          </div>
+          <h4 class="servicepage-icon font-24 is-all-small-caps no-border-top">
+            {{ page.intro_fourth_text }}
+          </h4>
+        </div>
+        <div class="column is-12 has-text-centered">
+          <a href="{{ page.intro_link_page.url }}" class="button button-min-12 giant-cta mt-2 mr-1">
+            {{ page.intro_link_title }}
+            <i class="fas fa-chevron-right ml-05"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section section-padding bg-purple">
+    <div class="container">
+      <header>
+        <h2 class="h2 is-white mb-3">{% trans 'Working areas' %}</h2>
+      </header>
+      {% for service in services_list %}
+        <div class="columns">
+          <div class="column is-4{% if not forloop.last %} mb-3{% endif %}">
+            <a class="no-underline" href="{{ service.url }}">
+              {% if service.thumbnail %}
+                {% image service.thumbnail fill-750x650 %}
+              {% else %}
+                {% image service.hero_image fill-750x650 %}
+              {% endif %}
+            </a>
+          </div>
+          <div class="column is-8 project-short-desc{% if not forloop.last %} mb-3{% endif %}">
+            <h2 class="h3 h-services no-border-top mt-1">{{ service.hero_title }}</h2>
+            <p>{{ service.summary }}</p>
+            <div class="mb-2">
+              <a href="{{ service.url }}" class="button">
+                {% trans 'Read more' %}&ensp;
+                <i class="fas fa-chevron-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+  <section class="section section-padding">
+    <div class="container">
+      <header>
+        <h2 class="h2 mb-3">{{ page.info_title }}</h2>
+      </header>
+      <div class="columns is-multiline">
+        <div class="column is-4 mb-3">
+          <a href="{{ page.info_link_page.url }}" class="no-underline">
+            {% image page.info_image fill-750x750 %}
+          </a>
+        </div>
+        <div class="column is-8">
+          <div style="padding-left: 2rem;">
+            {{ page.info_introduction|linebreaks }}
+          <a href="{{ page.info_link_page.url }}" class="button button-min-12 giant-cta mr-1 mt-2">
+            {{ page.info_link_title }}
+            <i class="fas fa-chevron-right ml-05"></i>
+          </a>
+          </div>
+        </div>
+    </div>
+  </section>
+
+  {% if page.quotes %}
+    <section class="section">
+      <div class="container">
+        <article class="article">
+          <div class="quotes-glide">
+            <div class="glide__track" data-glide-el="track">
+              <ul class="glide__slides">
+                {% for quote in page.quotes.all %}
+                  <li class="glide__slide">
+                    <div class="quote">
+                      <blockquote class="blockquote">
+                        {{ quote.text|linebreaks|richtext }}
+                      </blockquote>
+                      <footer>
+                        <p class="blockquote-name">{{ quote.author }}</p>
+                        <p class="blockquote-name">{{ quote.position }}</p>
+                      </footer>
+                    </div>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  {% endif %}
+{% endblock content %}
+
+{% block open_graph %}
+  {% include '_includes/og_article.html' with page=page settings=settings %}
+{% endblock %}
+
+{% block ld_json %}
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{% slugurl_trans 'homepage' %}",
+        "name": "{% trans 'Home' %}"
+    }
+    }, {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@id": "{{ page.get_site.root_url }}{{ page.url }}",
+        "name": "{{ page.title }}"
+      }
+    }]
+  }
+</script>
+<script type="application/ld+json">
+  {% include '_includes/ld_article.html' with page=page settings=settings %}
+</script>
+{% endblock %}

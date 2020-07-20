@@ -1,0 +1,14 @@
+@media screen and (max-width: $tablet) {
+  .about-page {
+    .vision {
+      margin-top: 0;
+    }
+    .vision-image {
+      margin-bottom: 0;
+      padding-top: 2rem;
+    }
+    .vision-text {
+      margin-left: 0;
+    }
+  }
+}

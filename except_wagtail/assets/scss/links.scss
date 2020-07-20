@@ -1,0 +1,36 @@
+a {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0 2px;
+  color: $dark-gray;
+  text-decoration: none;
+  transition: background-size .3s;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-size: 100% 2px;
+  }
+}
+a.no-underline {
+  box-shadow: none;
+
+  &:hover,
+  &:focus {
+    background-size: 0 2px;
+  }
+  & > img {
+    transition: box-shadow .3s;
+  }
+  &:hover > img,
+  &:focus > img {
+    box-shadow: $shadow;
+  }
+}
+.rich-text a {
+  color: $except-purple;
+}
+.no-shadow:hover > img {
+  box-shadow: none !important;
+}

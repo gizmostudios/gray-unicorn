@@ -1,0 +1,22 @@
+{% load wagtailimages_tags wagtailembeds_tags %}
+
+{% with mediaPath="/media/" %}
+  {% for element in elements %}
+    <div class="column is-3 in-grid"
+         data-title="{{ element.title }}"
+         data-url="{{ element.type_of_news }}">
+      <a href="{{ element.url }}">
+        {% image element.hero_image fill-600x400 as project_image %}
+        <figure class="image"><img src="{{ project_image.url }}">
+          <div class="hover-description asset">
+            <p>{{ element.hero_subtitle }}</p>
+            <p class="date">{{ element.date_published|date:"M Y" }}</p>
+          </div>
+        </figure>
+        <h4 class="h4 no-border-top has-text-centered">
+          {{ element.hero_title }}
+        </h4>
+      </a>
+    </div>
+  {% endfor %}
+{% endwith %}

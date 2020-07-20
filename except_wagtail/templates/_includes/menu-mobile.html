@@ -1,0 +1,19 @@
+{% load i18n %}
+{% load wagtail_modeltranslation %}
+
+{% get_current_language as LANGUAGE_CODE %}
+
+<div id="navMobileMenu" class="navbar-menu is-hidden-desktop mobile" role="navigation" aria-label="navigation">
+  <div class="navbar-start">
+    {% for item in menu_items %}
+      <a class="navbar-item" href="{{ item.href }}">
+        {{ item.text }}
+      </a>
+    {% endfor %}
+    {% if LANGUAGE_CODE == 'nl' %}
+      <a class="navbar-item" href="{% change_lang 'en' %}">{% trans 'ENGLISH' %}</a>
+    {% elif LANGUAGE_CODE == 'en' %}
+      <a class="navbar-item" href="{% change_lang 'nl' %}">{% trans 'NEDERLANDS' %}</a>
+    {% endif %}
+  </div>
+</div>

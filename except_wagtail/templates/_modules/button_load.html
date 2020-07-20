@@ -1,0 +1,5 @@
+{% load i18n %}
+
+{% if not_last or not_last == "True" %}
+  <div class="container"><a class="button is-next is-secondary load-more">{% trans 'View more' %}</a></div>
+{% endif %}

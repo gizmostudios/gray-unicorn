@@ -1,0 +1,80 @@
+.intro-section {
+  padding: 5rem 0;
+}
+.middle-section {
+  padding: 5rem 0;
+  &-text {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+  }
+}
+.working-areas {
+  margin-bottom: 7rem;
+  .headings {
+    font-size: 1.4rem;
+  }
+}
+.highlighted-projects {
+  max-width: 100%;
+  padding: 0;
+}
+.homepage-services {
+  .column {
+    padding: 2rem;
+    & .service-svg img {
+      padding: 3rem;
+    }
+  }
+  h3 {
+    border-top: 1px solid #FFF;
+    padding-top: 2rem;
+  }
+  .homepage-service img {
+    border-radius: 50%;
+    padding: 3rem;
+  }
+}
+
+@media screen and (max-width: $fullhd) {
+  .homepage-services {
+    .column {
+      & .service-svg img {
+        padding: 1rem;
+      }
+    }
+    .homepage-service img {
+      border-radius: 50%;
+      padding: 1.5rem;
+    }
+  }
+}
+
+@media screen and (max-width: $tablet) {
+  .homepage-services {
+    .column {
+      & .service-svg img {
+        padding: 6rem;
+      }
+    }
+    .homepage-service img {
+      border-radius: 50%;
+      padding: 8rem;
+    }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .homepage-services {
+    .column {
+      & .service-svg img {
+        padding: 3rem;
+      }
+    }
+    .homepage-service img {
+      border-radius: 50%;
+      padding: 3rem;
+    }
+  }
+}
