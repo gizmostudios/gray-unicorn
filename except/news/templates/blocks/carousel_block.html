@@ -1,0 +1,34 @@
+{% load wagtailimages_tags %}
+{% with mediaPath="/media/original_images/" %}
+<br>
+	<section class="section has-carousel">
+        <div class="container has-carousel full-width" data-count="{{page.carousel_items.all|length}}">
+          <article class="article carousel-inner">
+            {% for item in self.image_list %}
+              <div class="carousel is-carousel-block has-text-centered" style="background-image:url({{ mediaPath }}{{ item.image }})">
+                <div class="container not-full-height">
+                  <p class="is-blocked description">{{ item.caption }}
+                  {% if item.attribution %}
+                     - {{ item.attribution }}
+                  {% endif %}
+                  </p>
+                </div>
+              </div>       
+            {% endfor %}
+          </article>
+        </div>
+      </section>
+      <section class="section has-selectors">
+        <div class="container flex-centered">
+          <div class="buttons">
+            {% for item in self.image_list %}
+              {% if item == self.image_list.0 %}
+                <button class="button is-selector is-primary is-carousel"></button>
+              {% else %}
+                <button class="button is-selector is-secondary is-carousel"></button>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+{% endwith %}

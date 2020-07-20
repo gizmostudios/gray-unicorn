@@ -1,0 +1,12 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+{% load static wagtailuserbar %}
+
+
+{% if not_last or not_last == "True" %}
+	{% if current_language == 'nl' %}
+      <div class="container"><a class="button is-next is-secondary load-more">(NL) View more</a></div>
+    {% elif current_language == 'en' %}
+      <div class="container"><a class="button is-next is-secondary load-more">View more</a></div>
+    {% endif %}
+{% endif %}

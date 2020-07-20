@@ -1,0 +1,11 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+
+{% load static %}
+<br>
+<div  style="background-color: #f4f4f4;">
+	<blockquote class="blockquote">
+    	{{ self.text |richtext}}
+	</blockquote>
+	<footer style="padding-bottom: 1em; padding-left: 1em;"><p class="attribute_name">{{ self.attribute_name}}</p></footer>
+</div>

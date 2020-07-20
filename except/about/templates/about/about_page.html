@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+{% load static wagtailuserbar %}
+
+
+{% load static %}
+
+{% block content %}
+	{% with mediaPath="/media/" %}
+
+	    {# Top Section/Header #}
+	    {% include "modules/top_section.html" with page=page carousel=True compact=False %}
+
+	    {# Main navigation #}
+	    {% include "includes/navbar.html" with inverted=page.navbar_inverted transparent=page.navbar_transparent%}
+
+	    {# Introduction about except #}
+
+	    <a class="anchor" id="first_anchor"></a>
+	    <section class="section is-fullheight">
+	      <div class="container front-container">
+	        <article class="article">
+	          <div class="columns">
+	            <div class="column is-8">
+	              <div class="front-content">
+	                <header>
+	                  {% if page.about_title %}
+	                    <h2 class="h2">{{page.about_title}}</h2>
+	                  {% endif %}
+	                </header>
+	                {% if page.about_text %}
+	                  {{page.about_text}}
+	                {% endif %}
+	              </div>
+	            </div>
+	          </div>
+	        </article>
+	      </div>
+	    </section>
+
+	    {# Except vision #}
+
+	    {# Carousel #}
+	      <section class="section is-fullheight cover-purple compact">
+	        <div class="container front-container">
+	          <article class="article">
+	            <div class="columns">
+	              <div class="column is-6">
+	                <div class="front-content">
+	                  <img src="{{ mediaPath }}{{ page.vision_image.file }}" style="background-size: cover; background-position: center;">
+	                </div>
+	              </div>
+	              <div class="column is-6">
+	                <div class="front-content">
+	                  {% if page.vision_title %}
+	                    <header>
+	                      <h2 class="h2">{{page.vision_title}}</h2>
+	                    </header>
+	                  {% endif %}
+	                  {% if page.vision_text %}
+	                	{{page.vision_text}}
+	                  {% endif %}
+	                </div>
+	              </div>
+	            </div>
+	          </article>
+	        </div>
+	      </section>
+
+
+	    {# Except clients and partners #}
+
+	    <section class="section">
+			<article class="container">
+				<header class="header">
+					{% if current_language == 'nl' %}
+						<h2 class="h2">(NL) Clients &amp; Partners</h2>
+					{% elif current_language == 'en' %}
+						<h2 class="h2">Clients &amp; Partners</h2>
+					{% endif %}
+				<div class="grid">
+					{% for partner in partners %}
+                  		<figure class="image partner-figure"><img src="{{ mediaPath }}{{ partner.image.file }}" style="background-size: cover;"></figure>
+					{% endfor %} 
+				</div>
+			</article>
+		</section>
+  	{% endwith %}
+{% endblock content %}

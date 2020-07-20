@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+
+{% load static %}
+
+{% block content %}
+  {% with mediaPath="/media/original_images/" %}
+
+    {# Top Section/Header #}
+    {% include "modules/top_section.html" with page=page carousel=False %}
+
+    {# Main navigation #}
+    {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
+    <div class="spacer is-large"></div>
+    <section class="section">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-8">
+            <header>
+              {% if page.description_title %}
+                <h2 class="h2">{{page.description_title}}</h2>
+              {% endif %}
+            </header>
+            {% if page.intro %}
+              <p class="intro">
+                {{page.intro}}
+              </p>
+            {% endif %}
+          </div>
+      </div>
+    </section>
+
+    {# Carousel #}
+
+    {# List of all projects with timeline and category filter #}
+    <section class="section">
+      <div class="container">
+        <article class="article">
+          <div class="spacer is-large"></div>
+          <header class="has-text-centered">
+            {% if current_language == 'nl' %}
+              <h3 class="h3">(NL) FILTER</h3>
+            {% elif current_language == 'en' %}
+              <h3 class="h3">FILTER</h3>
+            {% endif %}
+          </header>
+          <div class="spacer"></div>
+          <div class="has-text-centered">
+            {% for service in services %}
+              <label class="button is-filter is-{{service.color}} is-active">
+                <input type="checkbox"><span>{{service.hero_title}}</span>
+              </label>
+            {% endfor %}
+            <div class="button search-news" style="margin-top: 1.4em;">
+              {% if current_language == 'nl' %}
+                <input class="input input-news" name="query" placeholder="(NL) Search projects"/>
+              {% elif current_language == 'en' %}
+                <input class="input input-news" name="query" placeholder="Search projects"/>
+              {% endif %}
+              <i class="fas fa-search"></i>
+            </div>
+          </div>
+          <div class="spacer is-large"></div>
+          <div id="projects" class="columns is-grid grid-loading">
+            {% include "modules/grid_8.html" with elements=resources is_loadable=True %}
+          </div>
+          <div class='button-load-container'>
+            {% include "modules/button_load.html" with not_last=not_last %}
+          </div>
+        </article>
+      </div>
+    </section>
+    <script type="text/javascript" src="{% static 'js/carousel_article.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/vendor/muuri.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/loading_more.js' %}"></script>
+  {% endwith %}
+{% endblock content %}

@@ -1,0 +1,10 @@
+{% load wagtailimages_tags %}
+{% with mediaPath="/media/original_images/" %}
+	<br>
+	<figure class="image is-fullwidth"><img src="{{mediaPath}}{{self.image}}">
+    {% if self.attribution %}
+    	<figcaption  class="caption">{{ self.caption }} - {{ self.attribution }}</figcaption>
+    {% else %}
+    	<figcaption  class="caption">{{ self.caption }}</figcaption>
+    {% endif %}
+{% endwith %}

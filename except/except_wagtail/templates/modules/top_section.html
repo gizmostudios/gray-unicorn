@@ -1,0 +1,57 @@
+{% load wagtailimages_tags wagtailembeds_tags %}
+
+{% if carousel == True %}
+	{% if compact == False %}
+		<section class="hero is-inverted is-darkened">
+	{% else %}
+		<section class="hero is-inverted is-darkened is-compact">
+	{% endif %}
+		<div class='background-dark-cover top-section'></div>
+		<div class="hero-body">
+			<div class="container">
+				<div>
+					{% if page.hero_title %}
+						<h1 class="h1 title">{{ page.hero_title }}</h1>
+					{% endif %}
+					{% if page.hero_subtitle %}
+						<h3 class="h3 subtitle">{{ page.hero_subtitle }}</h3>
+					{% endif %}
+					{% if page.date_published %}
+						<span class="date">{{page.date_published}}</span>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="carousel top-section cover" data-count="{{page.top_images.all|length}}">
+	        <div class="carousel-inner">
+	          	{% for carousel_image in page.top_images.all %}
+	            	{% image carousel_image.image width-1600 jpegquality-95 as carouselimagedata %}
+	            	<article style="background-image: url({{ carouselimagedata.url }})" class="background-fill">
+	            	</article>
+	          	{% endfor %}
+	        </div>
+	     </div>
+	</section>
+{% else %}
+	{% with mediaPath="/media/" %}
+		{% if compact == False %}
+			<section class="hero is-inverted is-darkened" style="background-image: url({{ page.hero_image.url }})">
+		{% else %}
+			<section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ page.hero_image.url }})">
+		{% endif %}
+			<div class='background-dark-cover'></div>
+	      	<div class="hero-body">
+	        	<div class="container">
+	          		<div>
+	           		{% if page.hero_title %}
+	              		<h1 class="h1 title">{{ page.hero_title }}</h1>
+	            	{% endif %}
+	            	{% if page.hero_subtitle %}
+	              		<h3 class="h3 subtitle">{{ page.hero_subtitle }}</h3>
+	            	{% endif %}
+	          		</div>
+	        	</div>
+	      	</div>
+	    </section>
+    {% endwith %}
+{% endif %}

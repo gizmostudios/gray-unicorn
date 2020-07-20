@@ -1,0 +1,9 @@
+<figure class="image"><img class="is-200x200" src="{{ mediaPath }}{{ author.picture }}">
+	{% if current_language == 'nl' %}
+        <figcaption class="caption">(NL) by {{author.user.first_name}} {{author.user.last_name}}</figcaption>
+    {% elif current_language == 'en' %}
+        <figcaption class="caption">by {{author.user.first_name}} {{author.user.last_name}}</figcaption>
+    {% endif %}
+	<figcaption class="caption"><i class="fas fa-envelope"></i><span>{{author.user.email}}</span></figcaption>
+	<figcaption class="caption"><i class="fas fa-phone"></i><span>{{author.phone}}</span></figcaption>
+</figure>

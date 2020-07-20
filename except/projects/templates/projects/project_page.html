@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+{% load static wagtailuserbar %}
+
+
+{% load static %}
+
+{% block content %}
+  {% with mediaPath="/media/original_images/" %}
+
+    {# Top Section/Header #}
+
+    {% if top_images.all %}
+      {% include "modules/top_section.html" with page=page carousel=True %}
+    {% else %}
+      {% with mediaOldPath="http://media.except.nl/media/" %}
+        {% if compact == False %}
+          <section class="hero is-inverted is-darkened" style="background-image: url({{ mediaOldPath }}{{ page.hero_old_image }})">
+        {% else %}
+          <section class="hero is-inverted is-darkened is-compact" style="background-image: url({{ mediaOldPath }}{{ page.hero_old_image }})">
+        {% endif %}
+          <div class='background-dark-cover'></div>
+          <div class="hero-body">
+            <div class="container">
+              <div>
+              {% if page.hero_title %}
+                  <h1 class="h1 title">{{ page.hero_title }}</h1>
+              {% endif %}
+              {% if page.hero_subtitle %}
+                  <h3 class="h3 subtitle">{{ page.hero_subtitle }}</h3>
+              {% endif %}
+              </div>
+            </div>
+          </div>
+        </section>
+      {% endwith %}
+    {% endif %}
+
+    {# Main navigation #}
+    {% include "includes/navbar.html" with transparent=page.navbar_transparent inverted=page.navbar_inverted %}
+
+    <section class="section">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-8">
+            {% if page.intro %}
+              <p class="intro">
+                {{page.intro |richtext}}
+              </p>
+            {% endif %}
+            {% if page.body %}
+              {{ page.body }}
+            {% endif %}
+          </div>
+          <div class="column is-4 has-text-right">
+            {% if page.author %}
+              {% with author=page.author %}
+               {% include "modules/author.html" with author=author %}
+              {% endwith %}
+            {% endif %}
+            <div class="spacer is-large"></div>
+            {% if page.project_partners %}
+              {% if current_language == 'nl' %}
+                <h4 class="h4">(NL) Project partners</h4>
+              {% elif current_language == 'en' %}
+                <h4 class="h4">Project partners</h4>
+              {% endif %}
+              <ul>
+              {% for project_partner in page.project_partners.all %}
+                <li>
+                  <figure class="image"><img class="is-200x200" src="{{ mediaPath }}{{ project_partner.partner.image }}">
+                  </figure>
+                </li>
+              {% endfor %}
+              </ul>
+            {% endif %}
+            <div class="spacer is-large"></div>
+            {% if page.team_members %}
+              {% if current_language == 'nl' %}
+                <h4 class="h4">(NL) Project team</h4>
+              {% elif current_language == 'en' %}
+                <h4 class="h4">Project team</h4>
+              {% endif %}
+              <ul>
+              {% for team_member in page.team_members.all %}
+                <li>
+                  {% if team_member.get_page %}
+                    <a class="team-member" href='{{team_member.get_page.url}}'>{{team_member.member.user.first_name}} {{team_member.member.user.last_name}}</a>
+                    <p class="former-member">{{team_member.member.job_title}}</p>
+                  {% else %}
+                    <figcaption class="caption">{{team_member.member.user.first_name}} {{team_member.member.user.last_name}}</figcaption>
+                    <p class="former-member">{{team_member.member.job_title}}</p>
+                  {% endif %}
+                </li>
+              {% endfor %}
+              {% for team_member in page.external_members.all %}
+                <li>
+                  {% if team_member.get_page %}
+                    <a class="team-member" href='{{team_member.get_page.url}}'>{{team_member.member.user.first_name}} {{team_member.member.user.last_name}}</a>
+                    <p class="former-member">{{team_member.member.job_title}}</figcaption>
+                  {% else %}
+                    <figcaption class="caption">{{team_member.first_name}} {{team_member.last_name}}</figcaption>
+                    <p class="former-member">{{team_member.job_title}} - {{team_member.company}}</p>
+                  {% endif %}
+                </li>
+              {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+    {% include "modules/links.html" with page=page %}
+    <script type="text/javascript" src="{% static 'js/carousel_article.js' %}"></script>
+  {% endwith %}
+{% endblock content %}
